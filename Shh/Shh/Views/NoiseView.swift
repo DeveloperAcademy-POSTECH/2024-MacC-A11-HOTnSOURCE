@@ -10,10 +10,10 @@ import SwiftUI
 // MARK: - 메인 데시벨 뷰
 struct NoiseView: View {
     // MARK: Properties
-    @State private var isAnimating = false
     @State private var drawingStroke = false
+    @State private var isAnimating = false
     
-    private var selectedMenu: String
+    private var selectedMenu: String = "도서관"
     private var status: String = "양호"
     private var decibel: Int = 30
     
@@ -67,6 +67,7 @@ struct NoiseView: View {
     
     private var gradientCircle: some View {
         Circle()
+        // TODO: 추후에 조건 추가되면 3가지 색상으로 재구성할 예정
             .fill(status == "양호" ? .green : .orange)
             .opacity(0.2)
             .scaleEffect(isAnimating ? 1.05 : 1.0)
@@ -84,8 +85,7 @@ struct NoiseView: View {
                 .background {
                     Circle()
                         .trim(from: 0, to: drawingStroke ? 1 : 0)
-                        .stroke(status == "양호" ? .green : .orange,
-                            style: StrokeStyle(lineWidth: 7, lineCap: .round))
+                        .stroke(status == "양호" ? .green : .orange, style: StrokeStyle(lineWidth: 7, lineCap: .round))
                         .padding(-5)
                 }
                 .rotationEffect(.degrees(-90))
@@ -180,6 +180,6 @@ struct NoiseView: View {
     }
 }
 
-//#Preview {
-//    NoiseView()
-//}
+#Preview {
+    NoiseView(selectedMenu: "도서관")
+}
