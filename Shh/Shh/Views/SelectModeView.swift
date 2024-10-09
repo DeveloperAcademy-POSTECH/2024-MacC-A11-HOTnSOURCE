@@ -1,8 +1,8 @@
 //
-//  ContentView.swift
+//  SelectModeView.swift
 //  Shh
 //
-//  Created by Eom Chanwoo on 10/7/24.
+//  Created by Jia Jang on 10/9/24.
 //
 
 import SwiftUI
