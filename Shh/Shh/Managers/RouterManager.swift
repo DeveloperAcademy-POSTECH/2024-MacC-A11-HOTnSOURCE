@@ -22,15 +22,15 @@ class RouterManager: ObservableObject {
         }
     }
     
-    func push(view: ShhView){
+    func push(view: ShhView) {
         path.append(view)
     }
     
-    func pop(){
+    func pop() {
         path.removeLast()
     }
     
-    func backToSelect(){
+    func backToSelect() {
         self.path = NavigationPath()
         path.append(ShhView.selectModeView)
     }
@@ -41,4 +41,3 @@ enum ShhView: Hashable {
     case createModeView
     case noiseView
 }
-
