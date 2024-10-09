@@ -11,6 +11,7 @@ import SwiftUI
 struct SelectModeView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
+    @State private var selectedMenu: String?
     
     let menuList: [String] = ["집", "카페", "도서관"]
     
@@ -19,7 +20,7 @@ struct SelectModeView: View {
         VStack(spacing: 16) {
             ForEach(menuList, id: \.self) { menu in
                 Button {
-                    routerManager.push(view: .noiseView)
+                    routerManager.push(view: .noiseView(selectedMenu: menu))
                 } label: {
                     menuButtonStyle(title: menu, textColor: .white, bgColor: .gray)
                 }

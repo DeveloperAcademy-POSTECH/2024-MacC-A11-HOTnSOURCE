@@ -17,8 +17,8 @@ class RouterManager: ObservableObject {
             SelectModeView()
         case .createModeView:
             CreateModeView()
-        case .noiseView:
-            NoiseView()
+        case .noiseView(let selectedMenu):
+            NoiseView(selectedMenu: selectedMenu)
         }
     }
     
@@ -39,5 +39,5 @@ class RouterManager: ObservableObject {
 enum ShhView: Hashable {
     case selectModeView
     case createModeView
-    case noiseView
+    case noiseView(selectedMenu: String)
 }

@@ -13,8 +13,13 @@ struct NoiseView: View {
     @State private var isAnimating = false
     @State private var drawingStroke = false
     
+    private var selectedMenu: String
     private var status: String = "양호"
     private var decibel: Int = 30
+    
+    init(selectedMenu: String) {
+        self.selectedMenu = selectedMenu
+    }
     
     // MARK: Body
     var body: some View {
@@ -22,8 +27,7 @@ struct NoiseView: View {
             backgroundCard
             cardContents
         }
-        // TODO: 네비게이션 타이틀 동적으로 변경 필요
-        .navigationTitle("도서관")
+        .navigationTitle(selectedMenu)
         .padding(30)
     }
     
@@ -40,7 +44,6 @@ struct NoiseView: View {
             infoArea
             pauseButton
         }
-        .padding(30)
     }
     
     private var statusArea: some View {
@@ -156,6 +159,7 @@ struct NoiseView: View {
                             .frame(width: 18)
                     }
             }
+            .padding(.trailing, 30)
         }
     }
     
@@ -176,6 +180,6 @@ struct NoiseView: View {
     }
 }
 
-#Preview {
-    NoiseView()
-}
+//#Preview {
+//    NoiseView()
+//}

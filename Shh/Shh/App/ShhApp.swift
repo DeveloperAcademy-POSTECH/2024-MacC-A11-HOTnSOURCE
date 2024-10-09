@@ -20,7 +20,7 @@ struct ShhApp: App {
                     }
             }
             .onAppear {
-                routerManager.push(view: .noiseView)
+                routerManager.push(view: .noiseView(selectedMenu: "도서관"))
             }
             .environmentObject(routerManager)
         }
