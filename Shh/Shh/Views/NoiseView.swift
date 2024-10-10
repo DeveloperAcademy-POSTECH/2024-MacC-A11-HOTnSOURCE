@@ -49,10 +49,32 @@ struct NoiseView: View {
     
     private var cardContents: some View {
         VStack(spacing: 45) {
+            helpButton
             statusArea
             infoArea
             pauseButton
         }
+    }
+    
+    private var helpButton: some View {
+        HStack {
+            Spacer()
+            
+            Button {
+                // action
+            } label: {
+                Text("?")
+                    .font(.caption)
+                    .foregroundColor(.white)
+                    .background {
+                        Circle()
+                            .fill(.gray)
+                            .frame(width: 18)
+                    }
+            }
+        }
+        .padding(.trailing, 20)
+        .padding(.top, -10)
     }
     
     private var statusArea: some View {
@@ -64,6 +86,7 @@ struct NoiseView: View {
     }
     
     private var gradientCircles: some View {
+        // TODO: 애니메이션 어긋나는 문제 해결 필요
         ZStack {
             gradientCircle
                 .frame(width: 230)
@@ -89,25 +112,23 @@ struct NoiseView: View {
     }
     
     private var cicularProgressBar: some View {
-        ZStack {
-            Circle()
-                .fill(.black)
-                .frame(width: 160)
-                .background {
-                    Circle()
-                        .trim(from: 0, to: drawingStroke ? 1 : 0)
-                        .stroke(status == "양호" ? .green : .orange, style: StrokeStyle(lineWidth: 7, lineCap: .round))
-                        .padding(-5)
-                }
-                .rotationEffect(.degrees(-90))
-                .onAppear {
-                    DispatchQueue.main.async {
-                        withAnimation(progressBarAnimation) {
-                            drawingStroke.toggle()
-                        }
+        Circle()
+            .fill(.black)
+            .frame(width: 160)
+            .background {
+                Circle()
+                    .trim(from: 0, to: drawingStroke ? 1 : 0)
+                    .stroke(status == "양호" ? .green : .orange, style: StrokeStyle(lineWidth: 7, lineCap: .round))
+                    .padding(-5)
+            }
+            .rotationEffect(.degrees(-90))
+            .onAppear {
+                DispatchQueue.main.async {
+                    withAnimation(progressBarAnimation) {
+                        drawingStroke.toggle()
                     }
                 }
-        }
+            }
     }
     
     private var statusInfo: some View {
@@ -125,13 +146,6 @@ struct NoiseView: View {
     }
     
     private var infoArea: some View {
-        ZStack {
-            infoText
-            helpButton
-        }
-    }
-    
-    private var infoText: some View {
         VStack(spacing: 4) {
             VStack(spacing: 2) {
                 Text("반경 5m")
@@ -151,26 +165,6 @@ struct NoiseView: View {
                     .font(.caption2)
                     .foregroundColor(.gray)
             }
-        }
-    }
-    
-    private var helpButton: some View {
-        HStack {
-            Spacer()
-            
-            Button {
-                // action
-            } label: {
-                Text("?")
-                    .font(.caption)
-                    .foregroundColor(.white)
-                    .background {
-                        Circle()
-                            .fill(.gray)
-                            .frame(width: 18)
-                    }
-            }
-            .padding(.trailing, 30)
         }
     }
     
