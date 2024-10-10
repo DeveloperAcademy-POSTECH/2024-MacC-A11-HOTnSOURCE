@@ -11,8 +11,23 @@ import SwiftUI
 class RouterManager: ObservableObject {
     @Published var path: NavigationPath = NavigationPath()
     
-    @ViewBuilder func view(for route: ShhView) -> some View {
-        switch route {
+    func push(view: ShhView) {
+        path.append(view)
+    }
+    
+    func pop() {
+        path.removeLast()
+    }
+}
+
+enum ShhView: Hashable {
+    case selectModeView
+    case createModeView
+    case noiseView(selectedMenu: String)
+    
+    @ViewBuilder
+    var view: some View {
+        switch self {
         case .selectModeView:
             SelectModeView()
         case .createModeView:
@@ -21,23 +36,4 @@ class RouterManager: ObservableObject {
             NoiseView(selectedMenu: selectedMenu)
         }
     }
-    
-    func push(view: ShhView) {
-        path.append(view)
-    }
-    
-    func pop() {
-        path.removeLast()
-    }
-    
-    func backToSelect() {
-        self.path = NavigationPath()
-        path.append(ShhView.selectModeView)
-    }
-}
-
-enum ShhView: Hashable {
-    case selectModeView
-    case createModeView
-    case noiseView(selectedMenu: String)
 }
