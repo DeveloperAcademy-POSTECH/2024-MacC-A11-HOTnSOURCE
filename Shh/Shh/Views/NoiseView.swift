@@ -17,6 +17,15 @@ struct NoiseView: View {
     private var status: String = "양호"
     private var decibel: Int = 30
     
+    private let gradientCircleAnimation = Animation
+        .linear(duration: 0.8)
+        .repeatForever()
+    
+    private let progressBarAnimation = Animation
+        .easeOut(duration: 6)
+        .repeatForever(autoreverses: false)
+        .delay(0.5)
+    
     init(selectedMenu: String) {
         self.selectedMenu = selectedMenu
     }
@@ -55,7 +64,6 @@ struct NoiseView: View {
     }
     
     private var gradientCircles: some View {
-        // TODO: 애니메이션 어긋나는 문제 해결 필요
         ZStack {
             gradientCircle
                 .frame(width: 230)
@@ -71,9 +79,12 @@ struct NoiseView: View {
             .fill(status == "양호" ? .green : .orange)
             .opacity(0.2)
             .scaleEffect(isAnimating ? 1.05 : 1.0)
-            .animation(Animation.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: isAnimating)
             .onAppear {
-                isAnimating = true
+                DispatchQueue.main.async {
+                    withAnimation(gradientCircleAnimation) {
+                        isAnimating = true
+                    }
+                }
             }
     }
     
@@ -89,12 +100,12 @@ struct NoiseView: View {
                         .padding(-5)
                 }
                 .rotationEffect(.degrees(-90))
-                .animation(Animation
-                    .easeOut(duration: 6)
-                    .repeatForever(autoreverses: false)
-                    .delay(0.5), value: drawingStroke)
                 .onAppear {
-                    drawingStroke.toggle()
+                    DispatchQueue.main.async {
+                        withAnimation(progressBarAnimation) {
+                            drawingStroke.toggle()
+                        }
+                    }
                 }
         }
     }
