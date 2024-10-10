@@ -69,6 +69,14 @@ class AudioManager: ObservableObject {
         }
     }
     
+    /// 측정을 재개합니다.
+    func resumeMetering() {
+        if !isMetering {
+            audioRecorder.record()
+            isMetering = true
+        }
+    }
+    
     /// 데시벨 레벨을 갱신합니다.
     func updateDecibelLevel() {
         audioRecorder.updateMeters()
