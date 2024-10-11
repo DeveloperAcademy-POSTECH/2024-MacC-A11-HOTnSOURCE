@@ -12,7 +12,7 @@ struct EditModeView: View {
     // MARK: Properties
     @State private var name: String = ""
     @State private var averageNoise: Double = 0
-    @State private var distance: Double = 0
+    @State private var distance: Double = 1
     @State private var showSelectAverageNoiseSheet: Bool = false
     
     // MARK: Body
@@ -28,7 +28,7 @@ struct EditModeView: View {
             
             completeButton
         }
-        .navigationTitle("수정하기")
+        .navigationTitle("생성하기")
         .padding(30)
         .sheet(isPresented: $showSelectAverageNoiseSheet) {
             selectAverageNoiseSheet
@@ -88,6 +88,7 @@ struct EditModeView: View {
     private var completeButton: some View {
         Button {
             // TODO: 받아온 완료 액션 수행
+            print("완료")
         } label: {
             Text("완료")
                 .font(.title3)
@@ -97,10 +98,10 @@ struct EditModeView: View {
                 .frame(height: 65)
                 .background(
                     RoundedRectangle(cornerRadius: 15)
-                        .fill(Color.accentColor)
+                        .fill(name.isEmpty || averageNoise.isZero ? .gray : .accent)
                 )
-                .disabled(name.isEmpty || averageNoise.isZero || distance.isZero)
         }
+        .disabled(name.isEmpty || averageNoise.isZero)
     }
     
     private var selectAverageNoiseSheet: some View {
@@ -185,11 +186,11 @@ struct EditModeView: View {
     
     private var distanceSelectButton: some View {
         HStack(spacing: 12) {
-            distanceAdjustButton(isPlus: true)
+            distanceAdjustButton(isPlus: false)
             
             distanceInfo
             
-            distanceAdjustButton(isPlus: false)
+            distanceAdjustButton(isPlus: true)
         }
     }
     
@@ -209,12 +210,12 @@ struct EditModeView: View {
     @ViewBuilder
     private func distanceAdjustButton(isPlus: Bool) -> some View {
         Button {
-            // action
             if isPlus && distance < 3 {
                 distance += 0.5
-            } else if !isPlus && distance > 0 {
+            } else if !isPlus && distance > 1 {
                 distance -= 0.5
             }
+            
         } label: {
             Image(systemName: isPlus ? "plus" : "minus")
                 .font(.caption2)
@@ -225,10 +226,8 @@ struct EditModeView: View {
                         .foregroundStyle(.quaternary)
                 )
         }
-        .contentShape(Rectangle())
         .buttonStyle(.plain)
     }
-        
 }
 
 #Preview {
