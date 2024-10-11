@@ -16,7 +16,7 @@ struct ShhApp: App {
             NavigationStack(path: $routerManager.path) {
                 SelectModeView()
                     .navigationDestination(for: ShhView.self) { shhView in
-                        routerManager.view(for: shhView)
+                        shhView.view
                     }
             }
             .onAppear {
