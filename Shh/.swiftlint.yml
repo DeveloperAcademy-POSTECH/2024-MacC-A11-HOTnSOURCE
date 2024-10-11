@@ -43,7 +43,7 @@ analyzer_rules:
 # 인덴트 커스텀 정의
 indentation_width:
   indentation_width: 4
-  include_comments: true
+  include_comments: false
 
 # 타입 네이밍 커스텀 정의
 type_name:
