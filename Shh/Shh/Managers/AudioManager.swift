@@ -9,7 +9,7 @@ import AVFoundation
 import SwiftUI
 
 // MARK: - 소음을 측정하고 불러오는 역할을 합니다.
-class AudioManager: ObservableObject {
+final class AudioManager: ObservableObject {
     @Published var decibelLevel: Float = 0.0
     @Published var currentDecibel: Float = 0.0
     @Published var isMetering: Bool = false
@@ -20,11 +20,11 @@ class AudioManager: ObservableObject {
     private var buffer: [Float] = []
     
     init?() {
-        let settings = [
+        let settings: [String: Any] = [
             AVFormatIDKey: Int(kAudioFormatAppleLossless),
             AVSampleRateKey: 44100.0,
             AVNumberOfChannelsKey: 1
-        ] as [String: Any]
+        ]
 
         let url = URL(fileURLWithPath: "/dev/null") // 데이터를 저장하지 않음.
 
