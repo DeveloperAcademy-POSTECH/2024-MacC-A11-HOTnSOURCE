@@ -12,10 +12,10 @@ struct NoiseView: View {
     // MARK: Properties
     @State private var drawingStroke = false
     @State private var isAnimating = false
+    @State private var status: String = "양호"
+    @State private var decibel: Int = 30
     
-    private var selectedMenu: String = "도서관"
-    private var status: String = "양호"
-    private var decibel: Int = 30
+    let selectedMenu: String
     
     private let gradientCircleAnimation = Animation
         .linear(duration: 0.8)
@@ -25,10 +25,6 @@ struct NoiseView: View {
         .easeOut(duration: 6)
         .repeatForever(autoreverses: false)
         .delay(0.5)
-    
-    init(selectedMenu: String) {
-        self.selectedMenu = selectedMenu
-    }
     
     // MARK: Body
     var body: some View {
