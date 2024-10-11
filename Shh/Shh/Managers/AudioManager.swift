@@ -64,8 +64,9 @@ final class AudioManager: ObservableObject {
     
             decibelLevel = 0.0
             currentDecibel = 0.0
-            
             buffer.removeAll()
+            
+            timer?.invalidate()
         }
     }
     
@@ -74,22 +75,26 @@ final class AudioManager: ObservableObject {
         if !isMetering {
             audioRecorder.record()
             isMetering = true
+            
+            // 타이머 설정 (0.1초마다 업데이트)
+            timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+                self.updateDecibelLevel()
+            }
         }
     }
     
     /// 측정을 정지합니다.
     func stopMetering() {
         if isMetering {
-            timer?.invalidate()
-            
             audioRecorder.isMeteringEnabled = false
             audioRecorder.stop()
             isMetering = false
             
             decibelLevel = 0.0
             currentDecibel = 0.0
-            
             buffer.removeAll()
+            
+            timer?.invalidate()
         }
     }
     
@@ -125,8 +130,13 @@ final class AudioManager: ObservableObject {
     }
     
     deinit {
-        timer?.invalidate()
         audioRecorder.stop()
         isMetering = false
+        
+        decibelLevel = 0.0
+        currentDecibel = 0.0
+        buffer.removeAll()
+        
+        timer?.invalidate()
     }
 }
