@@ -39,7 +39,7 @@ final class AudioManager: ObservableObject {
     /// 측정을 시작합니다.
     func startMetering() throws {
         do {
-            try AVAudioSession.sharedInstance().setCategory(.record, mode: .measurement, options: [.mixWithOthers, .allowBluetoothA2DP])
+            try AVAudioSession.sharedInstance().setCategory(.record, mode: .measurement, options: [.mixWithOthers, .allowBluetooth])
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             print("오디오 세션을 설정하는 중 오류 발생")
