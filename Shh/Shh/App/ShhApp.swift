@@ -11,16 +11,27 @@ import SwiftUI
 struct ShhApp: App {
     @StateObject private var routerManager = RouterManager()
     
+    @AppStorage("selectedPlace") private var storedSelectedPlace: String = ""
+    
+    @State private var selectedPlace: Place?
+    
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $routerManager.path) {
-                SelectModeView()
+                SelectPlaceView()
                     .navigationDestination(for: ShhView.self) { shhView in
                         shhView.view
                     }
             }
             .onAppear {
-                routerManager.push(view: .noiseView(selectedMenu: "도서관"))
+                if let data = storedSelectedPlace.data(using: .utf8),
+                    let decodedPlaces = try? JSONDecoder().decode(Place.self, from: data) {
+                        selectedPlace = decodedPlaces
+                }
+                
+                if let selectedPlace = self.selectedPlace {
+                    routerManager.push(view: .noiseView(selectedPlace: selectedPlace))
+                }
             }
             .environmentObject(routerManager)
         }

@@ -1,5 +1,5 @@
 //
-//  EditModeView.swift
+//  EditPlaceView.swift
 //  Shh
 //
 //  Created by Jia Jang on 10/9/24.
@@ -8,32 +8,52 @@
 import SwiftUI
 
 // MARK: - 장소 수정 뷰
-struct EditModeView: View {
+struct EditPlaceView: View {
     // MARK: Properties
-    @State private var name: String = ""
-    @State private var averageNoise: Double = 0
-    @State private var distance: Double = 1
+    @EnvironmentObject var routerManager: RouterManager
+    
+    @AppStorage("places") private var storedPlacesData: String = "[]"
+    
+    @FocusState private var isFocused: Bool
+    
+    @State var place: Place
     @State private var showSelectAverageNoiseSheet: Bool = false
     
     // MARK: Body
     var body: some View {
-        VStack(alignment: .leading, spacing: 48) {
-            nameRow
-            
-            averageNoiseRow
-            
-            distanceRow
-            
-            Spacer().frame(height: 4)
-            
-            completeButton
+        ScrollView {
+            VStack(alignment: .leading, spacing: 48) {
+                nameRow
+                
+                averageNoiseRow
+                
+                distanceRow
+                
+                Spacer().frame(height: 0)
+                
+                completeButton
+            }
         }
-        .navigationTitle("생성하기")
+        .navigationTitle("수정하기")
         .padding(30)
         .sheet(isPresented: $showSelectAverageNoiseSheet) {
             selectAverageNoiseSheet
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
+        }
+        .onTapGesture {
+            isFocused = false
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("삭제") {
+                    if deletePlace(place) {
+                        routerManager.pop()
+                        // TODO: Alert
+                    }
+                }
+                .foregroundStyle(.red)
+            }
         }
     }
     
@@ -44,12 +64,13 @@ struct EditModeView: View {
                 .font(.body)
                 .bold()
             
-            TextField("이름을 입력해주세요", text: $name)
+            TextField("이름을 입력해주세요", text: $place.name)
                 .padding(20)
                 .background(
                     RoundedRectangle(cornerRadius: 15)
                         .fill(.tertiary)
                 )
+                .focused($isFocused)
         }
     }
     
@@ -87,8 +108,8 @@ struct EditModeView: View {
     
     private var completeButton: some View {
         Button {
-            // TODO: 받아온 완료 액션 수행
-            print("완료")
+            editPlace(place)
+            routerManager.pop()
         } label: {
             Text("완료")
                 .font(.title3)
@@ -98,10 +119,9 @@ struct EditModeView: View {
                 .frame(height: 65)
                 .background(
                     RoundedRectangle(cornerRadius: 15)
-                        .fill(name.isEmpty || averageNoise.isZero ? .gray : .accent)
                 )
         }
-        .disabled(name.isEmpty || averageNoise.isZero)
+        .disabled(place.name.isEmpty || place.averageNoise.isZero)
     }
     
     private var selectAverageNoiseSheet: some View {
@@ -115,10 +135,10 @@ struct EditModeView: View {
             
             Divider()
             
-            Picker("", selection: $averageNoise) {
-                ForEach(Array(stride(from: 30.0, to: 80.0, by: 5.0)), id: \.self) { value in
+            Picker("", selection: $place.averageNoise) {
+                ForEach(Array(stride(from: 30.0, to: 75.0, by: 5.0)), id: \.self) { value in
                     Text("\(Int(value))")
-                        .tag(value)
+                        .tag(Float(value))
                 }
             }
             .pickerStyle(.wheel)
@@ -149,7 +169,7 @@ struct EditModeView: View {
             showSelectAverageNoiseSheet = true
         } label: {
             HStack(alignment: .bottom, spacing: 3) {
-                Text("\(Int(averageNoise))")
+                Text("\(Int(place.averageNoise))")
                     .font(.title2)
                     .bold()
                 
@@ -196,7 +216,7 @@ struct EditModeView: View {
     
     private var distanceInfo: some View {
         HStack(alignment: .bottom, spacing: 3) {
-            Text("\(String(distance))")
+            Text("\(String(place.distance))")
                 .font(.title2)
                 .bold()
             
@@ -210,10 +230,10 @@ struct EditModeView: View {
     @ViewBuilder
     private func distanceAdjustButton(isPlus: Bool) -> some View {
         Button {
-            if isPlus && distance < 3 {
-                distance += 0.5
-            } else if !isPlus && distance > 1 {
-                distance -= 0.5
+            if isPlus && place.distance < 3 {
+                place.distance += 0.5
+            } else if !isPlus && place.distance > 1 {
+                place.distance -= 0.5
             }
             
         } label: {
@@ -228,8 +248,49 @@ struct EditModeView: View {
         }
         .buttonStyle(.plain)
     }
+    
+    // MARK: Action Handlers
+    private func editPlace(_ place: Place) {
+        var storedPlaces: [Place] = []
+        
+        if let data = storedPlacesData.data(using: .utf8), let decodedPlaces = try? JSONDecoder().decode([Place].self, from: data) {
+            storedPlaces = decodedPlaces
+        }
+        
+        if let index = storedPlaces.firstIndex(where: { $0.id == place.id }) {
+            storedPlaces[index] = place
+        } else {
+            print("해당 장소 없음")
+        }
+        
+        if let encodedData = try? JSONEncoder().encode(storedPlaces), let jsonString = String(data: encodedData, encoding: .utf8) {
+            storedPlacesData = jsonString
+        }
+    }
+    
+    private func deletePlace(_ place: Place) -> Bool {
+        var storedPlaces: [Place] = []
+        
+        if let data = storedPlacesData.data(using: .utf8), let decodedPlaces = try? JSONDecoder().decode([Place].self, from: data) {
+            storedPlaces = decodedPlaces
+        }
+        
+        if storedPlaces.count > 1 {
+            storedPlaces.removeAll { $0.id == place.id }
+            
+            if let encodedData = try? JSONEncoder().encode(storedPlaces),
+                let jsonString = String(data: encodedData, encoding: .utf8) {
+                    storedPlacesData = jsonString
+            }
+            
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
+// MARK: - Preview
 #Preview {
-    EditModeView()
+    EditPlaceView(place: .init(id: UUID(), name: "도서관", averageNoise: 50, distance: 2))
 }

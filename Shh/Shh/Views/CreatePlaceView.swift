@@ -1,5 +1,5 @@
 //
-//  CreateModeView.swift
+//  CreatePlaceView.swift
 //  Shh
 //
 //  Created by Jia Jang on 10/9/24.
@@ -8,25 +8,33 @@
 import SwiftUI
 
 // MARK: - 장소 생성 뷰
-struct CreateModeView: View {
+struct CreatePlaceView: View {
     // MARK: Properties
+    @EnvironmentObject var routerManager: RouterManager
+    
+    @AppStorage("places") private var storedPlacesData: String = "[]"
+    
+    @FocusState private var isFocused: Bool
+    
     @State private var name: String = ""
-    @State private var averageNoise: Double = 0
-    @State private var distance: Double = 1
+    @State private var averageNoise: Float = 0
+    @State private var distance: Float = 1
     @State private var showSelectAverageNoiseSheet: Bool = false
     
     // MARK: Body
     var body: some View {
-        VStack(alignment: .leading, spacing: 48) {
-            nameRow
-            
-            averageNoiseRow
-            
-            distanceRow
-            
-            Spacer().frame(height: 4)
-            
-            completeButton
+        ScrollView {
+            VStack(alignment: .leading, spacing: 48) {
+                nameRow
+                
+                averageNoiseRow
+                
+                distanceRow
+                
+                Spacer().frame(height: 0)
+                
+                completeButton
+            }
         }
         .navigationTitle("생성하기")
         .padding(30)
@@ -34,6 +42,9 @@ struct CreateModeView: View {
             selectAverageNoiseSheet
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
+        }
+        .onTapGesture {
+            isFocused = false
         }
     }
     
@@ -50,6 +61,7 @@ struct CreateModeView: View {
                     RoundedRectangle(cornerRadius: 15)
                         .fill(.tertiary)
                 )
+                .focused($isFocused)
         }
     }
     
@@ -87,8 +99,11 @@ struct CreateModeView: View {
     
     private var completeButton: some View {
         Button {
-            // TODO: 받아온 완료 액션 수행
-            print("완료")
+            let newPlace = Place(id: UUID(), name: name, averageNoise: averageNoise, distance: distance)
+            
+            createPlace(newPlace)
+            
+            routerManager.pop()
         } label: {
             Text("완료")
                 .font(.title3)
@@ -98,7 +113,6 @@ struct CreateModeView: View {
                 .frame(height: 65)
                 .background(
                     RoundedRectangle(cornerRadius: 15)
-                        .fill(name.isEmpty || averageNoise.isZero ? .gray : .accent)
                 )
         }
         .disabled(name.isEmpty || averageNoise.isZero)
@@ -116,9 +130,9 @@ struct CreateModeView: View {
             Divider()
             
             Picker("", selection: $averageNoise) {
-                ForEach(Array(stride(from: 30.0, to: 80.0, by: 5.0)), id: \.self) { value in
+                ForEach(Array(stride(from: 30.0, to: 75.0, by: 5.0)), id: \.self) { value in
                     Text("\(Int(value))")
-                        .tag(value)
+                        .tag(Float(value))
                 }
             }
             .pickerStyle(.wheel)
@@ -228,8 +242,25 @@ struct CreateModeView: View {
         }
         .buttonStyle(.plain)
     }
+    
+    // MARK: Action Handlers
+    private func createPlace(_ place: Place) {
+        var storedPlaces: [Place] = []
+        
+        if let data = storedPlacesData.data(using: .utf8),
+            let decodedPlaces = try? JSONDecoder().decode([Place].self, from: data) {
+                storedPlaces = decodedPlaces
+        }
+        
+        storedPlaces.append(place)
+        
+        if let encodedData = try? JSONEncoder().encode(storedPlaces), let jsonString = String(data: encodedData, encoding: .utf8) {
+            storedPlacesData = jsonString
+        }
+    }
 }
 
+// MARK: - Preview
 #Preview {
-    CreateModeView()
+    CreatePlaceView()
 }
