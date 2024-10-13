@@ -42,7 +42,7 @@ final class AudioManager: ObservableObject {
     // TODO: 이 친구들은 장소 모델로 옮길 예정
     let distances: [Double] = [1, 1.5, 2, 2.5, 3]
     let backgroundDecibelOptions: [Double] = [30, 35, 40, 45, 50, 55, 60]
-
+    
     private let audioRecorder: AVAudioRecorder
     
     private var timer: Timer?
@@ -68,7 +68,7 @@ final class AudioManager: ObservableObject {
     /// 측정을 시작합니다.
     func startMetering() throws {
         do {
-            try AVAudioSession.sharedInstance().setCategory(.record, mode: .measurement, options: [.mixWithOthers, .allowBluetoothA2DP])
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .measurement, options: [.mixWithOthers, .allowBluetoothA2DP])
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             print("오디오 세션을 설정하는 중 오류 발생")
