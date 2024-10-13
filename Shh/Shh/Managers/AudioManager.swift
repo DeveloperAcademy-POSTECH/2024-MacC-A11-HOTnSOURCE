@@ -173,6 +173,7 @@ final class AudioManager: ObservableObject {
         // 4. 배경 소음 대비 바뀐 최종 비율 계산
         loudnessIncreaseRatio = loudnessRatio(originalLoudness: backgroundLoudness, combinedLoudness: combinedLoudnessValue)
         
+        // 5. 증가된 최종 비율에 따라 위험치를 계산
         if loudnessIncreaseRatio > NoiseStatus.loudnessCautionLevel {
             loudnessBuffer.append(loudnessIncreaseRatio)
         } else {
