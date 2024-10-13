@@ -20,48 +20,63 @@ struct SelectPlaceView: View {
     
     // MARK: Body
     var body: some View {
-        VStack(spacing: 16) {
-            ForEach(storedPlaces.indices, id: \.self) { index in
-                let place = storedPlaces[index]
+        ScrollView {
+            VStack(spacing: 16) {
+                placeList
                 
-                ZStack(alignment: .trailing) {
-                    Button {
-                        routerManager.push(view: .noiseView(selectedPlace: place))
-                        selectedPlace = place
-                        saveSelectedPlace()
-                    } label: {
-                        placeButtonStyle(
-                            title: place.name,
-                            textColor: .white,
-                            bgColor: selectedPlace?.id == place.id ? .green : .gray
-                        )
-                    }
-                    
-                    Button {
-                        routerManager.push(view: .editPlaceView(place: place))
-                    } label: {
-                        Image(systemName: "ellipsis")
-                            .foregroundStyle(.white)
-                            .padding()
-                            .contentShape(Rectangle())
-                    }
-                }
-            }
-            
-            Button {
-                routerManager.push(view: .createPlaceView)
-            } label: {
-                placeButtonStyle(title: "+", textColor: .white, bgColor: .gray)
-                    .opacity(0.5)
+                createPlaceButton
             }
         }
         .navigationTitle("장소 선택")
         .onAppear {
             loadPlaces()
         }
+        .scrollIndicators(.hidden)
     }
     
     // MARK: Subviews
+    private var placeList: some View {
+        ForEach(storedPlaces.indices, id: \.self) { index in
+            let place = storedPlaces[index]
+            
+            placeButton(place)
+        }
+    }
+    
+    private var createPlaceButton: some View {
+        Button {
+            routerManager.push(view: .createPlaceView)
+        } label: {
+            placeButtonStyle(title: "+", textColor: .white, bgColor: .gray)
+                .opacity(0.5)
+        }
+    }
+    
+    private func placeButton(_ place: Place) -> some View {
+        ZStack(alignment: .trailing) {
+            Button {
+                routerManager.push(view: .noiseView(selectedPlace: place))
+                selectedPlace = place
+                saveSelectedPlace()
+            } label: {
+                placeButtonStyle(
+                    title: place.name,
+                    textColor: .white,
+                    bgColor: selectedPlace?.id == place.id ? .green : .gray
+                )
+            }
+            
+            Button {
+                routerManager.push(view: .editPlaceView(place: place, storedPlaces: storedPlaces))
+            } label: {
+                Image(systemName: "ellipsis")
+                    .foregroundStyle(.white)
+                    .padding()
+                    .contentShape(Rectangle())
+            }
+        }
+    }
+    
     private func placeButtonStyle(title: String, textColor: Color, bgColor: Color) -> some View {
         Text(title)
             .font(.title3)
@@ -99,59 +114,3 @@ struct SelectPlaceView: View {
 #Preview {
     SelectPlaceView()
 }
-
-////
-////  TempView.swift
-////  Shh
-////
-////  Created by Eom Chanwoo on 10/8/24.
-////
-//
-//import SwiftUI
-//
-//struct TempView: View {
-//    @AppStorage("places") private var storedPlacesData: String = "[]"
-//    @AppStorage("lastPlace") private var storedLastPlace: String = ""
-//    
-//    @State private var storedPlaces: [Place] = []
-//    
-//    var body: some View {
-//        NavigationStack {
-//            VStack {
-////                ForEach($storedPlaces) { $place in
-////                    HStack {
-////                        Text(place.name)
-////                        Text("\(place.averageNoise) dB")
-////                        Text("\(place.distance) km")
-////                        NavigationLink("Edit Place") {
-////                            EditPlaceView(place: $place, onSave: {
-////                                savePlaces() // Place 수정 후 배열 전체를 저장
-////                            })
-////                        }
-////                    }
-////                }
-//                
-////               @State 배열을 바인딩하기 위해선 인덱스 기반 바인딩을 해야한다!!
-//                ForEach(storedPlaces.indices, id: \.self) { index in
-//                    HStack {
-//                        Text(storedPlaces[index].name)
-//                        Text("\(storedPlaces[index].averageNoise) dB")
-//                        Text("\(storedPlaces[index].distance) km")
-//                        NavigationLink("Edit") {
-//                            EditPlaceView(place: $storedPlaces[index], onSave: {
-//                                savePlaces()
-//                            })
-//                        }
-//                    }
-//                }
-//                NavigationLink {
-//                    CreatePlaceView(action: createPlace)
-//                } label: {
-//                    Text("Create")
-//                }
-//
-//            }
-//        }
-//        .onAppear(perform: loadPlaces)
-//    }
-//}

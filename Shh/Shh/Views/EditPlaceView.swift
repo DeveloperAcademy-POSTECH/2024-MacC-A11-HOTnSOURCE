@@ -13,11 +13,15 @@ struct EditPlaceView: View {
     @EnvironmentObject var routerManager: RouterManager
     
     @AppStorage("places") private var storedPlacesData: String = "[]"
+    @AppStorage("selectedPlace") private var storedSelectedPlace: String = ""
     
     @FocusState private var isFocused: Bool
     
     @State var place: Place
+    @State var storedPlaces: [Place]
+    @State private var selectedPlace: Place?
     @State private var showSelectAverageNoiseSheet: Bool = false
+    @State private var showDeleteAlert: Bool = false
     
     // MARK: Body
     var body: some View {
@@ -36,10 +40,20 @@ struct EditPlaceView: View {
         }
         .navigationTitle("수정하기")
         .padding(30)
+        .scrollIndicators(.hidden)
         .sheet(isPresented: $showSelectAverageNoiseSheet) {
             selectAverageNoiseSheet
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
+        }
+        .alert("\(place.name) 삭제", isPresented: $showDeleteAlert) {
+            Button("삭제", role: .destructive) {
+                deletePlace(place)
+                routerManager.pop()
+            }
+            Button("취소", role: .cancel) { }
+        } message: {
+            Text("정말 삭제하시겠습니까?")
         }
         .onTapGesture {
             isFocused = false
@@ -47,12 +61,10 @@ struct EditPlaceView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("삭제") {
-                    if deletePlace(place) {
-                        routerManager.pop()
-                        // TODO: Alert
-                    }
+                    showDeleteAlert = true
                 }
-                .foregroundStyle(.red)
+                .disabled(!canDeletePlace())
+                .foregroundStyle(canDeletePlace() ? .red : .gray)
             }
         }
     }
@@ -268,29 +280,33 @@ struct EditPlaceView: View {
         }
     }
     
-    private func deletePlace(_ place: Place) -> Bool {
-        var storedPlaces: [Place] = []
+    private func canDeletePlace() -> Bool {
+        return storedPlaces.count > 1
+    }
+    
+    private func deletePlace(_ place: Place) {
+        storedPlaces.removeAll { $0.id == place.id }
         
-        if let data = storedPlacesData.data(using: .utf8), let decodedPlaces = try? JSONDecoder().decode([Place].self, from: data) {
-            storedPlaces = decodedPlaces
+        if let encodedData = try? JSONEncoder().encode(storedPlaces), let jsonString = String(data: encodedData, encoding: .utf8) {
+            storedPlacesData = jsonString
         }
         
-        if storedPlaces.count > 1 {
-            storedPlaces.removeAll { $0.id == place.id }
-            
-            if let encodedData = try? JSONEncoder().encode(storedPlaces),
-                let jsonString = String(data: encodedData, encoding: .utf8) {
-                    storedPlacesData = jsonString
-            }
-            
-            return true
-        } else {
-            return false
+        checkIsSelectedPlace()
+    }
+    
+    private func checkIsSelectedPlace() {
+        if let data = storedSelectedPlace.data(using: .utf8),
+            let decodedPlaces = try? JSONDecoder().decode(Place.self, from: data) {
+                selectedPlace = decodedPlaces
+        }
+        
+        if let selectedPlace = self.selectedPlace, selectedPlace == place {
+            storedSelectedPlace = ""
         }
     }
 }
 
 // MARK: - Preview
 #Preview {
-    EditPlaceView(place: .init(id: UUID(), name: "도서관", averageNoise: 50, distance: 2))
+    EditPlaceView(place: .init(id: UUID(), name: "도서관", averageNoise: 50, distance: 2), storedPlaces: [])
 }

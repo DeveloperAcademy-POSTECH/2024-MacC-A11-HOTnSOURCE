@@ -13,6 +13,7 @@ struct CreatePlaceView: View {
     @EnvironmentObject var routerManager: RouterManager
     
     @AppStorage("places") private var storedPlacesData: String = "[]"
+    @AppStorage("selectedPlace") private var storedSelectedPlace: String = ""
     
     @FocusState private var isFocused: Bool
     
@@ -38,6 +39,7 @@ struct CreatePlaceView: View {
         }
         .navigationTitle("생성하기")
         .padding(30)
+        .scrollIndicators(.hidden)
         .sheet(isPresented: $showSelectAverageNoiseSheet) {
             selectAverageNoiseSheet
                 .presentationDetents([.medium])
@@ -103,7 +105,13 @@ struct CreatePlaceView: View {
             
             createPlace(newPlace)
             
+            saveNewSelectedPlace(newPlace)
+            
             routerManager.pop()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                routerManager.push(view: .noiseView(selectedPlace: newPlace))
+            }
         } label: {
             Text("완료")
                 .font(.title3)
@@ -256,6 +264,12 @@ struct CreatePlaceView: View {
         
         if let encodedData = try? JSONEncoder().encode(storedPlaces), let jsonString = String(data: encodedData, encoding: .utf8) {
             storedPlacesData = jsonString
+        }
+    }
+    
+    private func saveNewSelectedPlace(_ newPlace: Place) {
+        if let encodedData = try? JSONEncoder().encode(newPlace), let jsonString = String(data: encodedData, encoding: .utf8) {
+            storedSelectedPlace = jsonString
         }
     }
 }
