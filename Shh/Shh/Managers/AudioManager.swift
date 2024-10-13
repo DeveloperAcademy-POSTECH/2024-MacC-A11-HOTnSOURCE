@@ -135,7 +135,7 @@ final class AudioManager: ObservableObject {
     }
     
     /// 데시벨 레벨을 갱신합니다.
-    func updateDecibelLevel() {
+    private func updateDecibelLevel() {
         audioRecorder.updateMeters()
         // 마이크로 수음한 소리 레벨
         let dBFSDecibel = audioRecorder.averagePower(forChannel: 0)
@@ -158,19 +158,17 @@ final class AudioManager: ObservableObject {
         }
     }
     
-    /// 사용자가 발생한 소리로 부터 일정 거리로 떨어진 상대방이 들리는 최종적인 Loudeness 계산
-    func calculateLoudnessForDistance(backgroundDecibel: Float, distance: Float) {
+    /// 사용자가 발생한 소리로부터 일정 거리로 떨어진 상대방이 들리는 최종적인 Loudness 계산
+    private func calculateLoudnessForDistance(backgroundDecibel: Float, distance: Float) {
         // 1. 배경 소음의 Loudness 계산
         backgroundLoudness = loudnessFromDecibel(Float(backgroundDecibel))
         
-        // 2. 상대방이 느끼는 소음 (내가 내는 소음의 거리 감쇠 적용)
+        // 2. 상대방이 느끼는 소음 (사용자가 내는 소음의 거리 감쇠 적용)
         let distanceRatio = Float(distance) / 0.5
         perceivedDecibel = calculateDecibelAtDistance(originalDecibel: Float(decibelLevel), distanceRatio: distanceRatio)
         
-        perceivedLoudness = loudnessFromDecibel(perceivedDecibel)
-        
-        // 3. 합산된 Loudness 계산
-        combinedLoudnessValue = combinedLoudness(backgroundLoudness: backgroundLoudness, noiseLoudness: perceivedLoudness)
+        // 3. 각각의 dB SPL을 에너지로 변환하여 합산 후, 다시 Loudness로 변환
+        combinedLoudnessValue = combinedLoudness(backgroundDecibel: backgroundDecibel, noiseDecibel: perceivedDecibel)
         
         // 4. 배경 소음 대비 바뀐 최종 비율 계산
         loudnessIncreaseRatio = loudnessRatio(originalLoudness: backgroundLoudness, combinedLoudness: combinedLoudnessValue)
@@ -235,9 +233,19 @@ final class AudioManager: ObservableObject {
     }
     
     /// 상대방이 실제로 느끼는 소리 크기를 계산합니다.
-    /// 배경 소음과 사용자가 내는 소음을 합산하여 계산합니다.
-    private func combinedLoudness(backgroundLoudness: Float, noiseLoudness: Float) -> Float {
-        return sqrt(pow(backgroundLoudness, 2) + pow(noiseLoudness, 2))
+    /// 배경 소음과 사용자가 내는 소음을 각각 점음원으로 생각하여 합산하여 계산합니다.
+    /// 소리 에너지를 기반으로 두 소리를 합산하고 다시 Loudness로 변환합니다.
+    private func combinedLoudness(backgroundDecibel: Float, noiseDecibel: Float) -> Float {
+        // 1. 각각의 dB SPL을 에너지로 변환 (에너지 계산: 10^(dB/10))
+        let backgroundEnergy = pow(10, backgroundDecibel / 10)
+        let noiseEnergy = pow(10, noiseDecibel / 10)
+        
+        // 2. 두 에너지를 합산한 후, 다시 dB SPL로 변환
+        let totalEnergy = backgroundEnergy + noiseEnergy
+        let totalDecibel = 10 * log10(totalEnergy)
+        
+        // 3. 합산된 dB SPL을 다시 Loudness로 변환
+        return loudnessFromDecibel(totalDecibel)
     }
     
     /// 사용자가 낸 소리로 인해 실제로 상대방이 기존보다 얼만큼 큰 소리로 느끼는지에 대한 비율을 계산합니다.
