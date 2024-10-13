@@ -34,19 +34,22 @@ final class AudioManager: ObservableObject {
     
     // 배경 소음이 상대방에게 느껴지는 Loudness 정도
     @Published var backgroundLoudness: Float = 0.0
-
-    // TODO: AppStorage 영역에서 받아올 예정
-    private var backgroundDecibel: Float = 40.0 // 고정된 배경 소음
-    private var distance: Float = 2.0 // 고정된 거리 (2m로 가정)
+    
+    // 현재 사용자의 소음 상태
+    @Published var userNoiseStatus: NoiseStatus = .safe
     
     // TODO: 이 친구들은 장소 모델로 옮길 예정
     let distances: [Float] = [1, 1.5, 2, 2.5, 3]
     let backgroundDecibelOptions: [Float] = [30, 35, 40, 45, 50, 55, 60]
     
     private let audioRecorder: AVAudioRecorder
+    private let decibelMeteringTimeInterval: TimeInterval = 0.1
+    private let decibelBufferSize: Int = 5 // 0.5초 간의 소리로 데시벨을 갱신
+    private let loudnessBufferSize: Int = 4 // 2초 지속됐을 경우 위험도를 갱신
     
     private var timer: Timer?
     private var buffer: [Float] = []
+    private var loudnessBuffer: [Float] = []
     
     init?() {
         let settings: [String: Any] = [
@@ -65,8 +68,9 @@ final class AudioManager: ObservableObject {
         }
     }
     
+    // TODO: 입력 인자를 장소 객체로 리팩토링 예정
     /// 측정을 시작합니다.
-    func startMetering() throws {
+    func startMetering(backgroundDecibel: Float, distance: Float) throws {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .measurement, options: [.mixWithOthers, .allowBluetoothA2DP])
             try AVAudioSession.sharedInstance().setActive(true)
@@ -80,10 +84,10 @@ final class AudioManager: ObservableObject {
         audioRecorder.record()
         isMetering = true
         
-        // 타이머 설정 (0.1초마다 업데이트)
-        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+        // 타이머 설정
+        timer = Timer.scheduledTimer(withTimeInterval: decibelMeteringTimeInterval, repeats: true) { _ in
             self.updateDecibelLevel()
-            self.calculateLoudnessForDistance()
+            self.calculateLoudnessForDistance(backgroundDecibel: backgroundDecibel, distance: distance)
         }
     }
     
@@ -102,15 +106,15 @@ final class AudioManager: ObservableObject {
     }
     
     /// 측정을 재개합니다.
-    func resumeMetering() {
+    func resumeMetering(backgroundDecibel: Float, distance: Float) {
         if !isMetering {
             audioRecorder.record()
             isMetering = true
             
-            // 타이머 설정 (0.1초마다 업데이트)
-            timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+            // 타이머 설정
+            timer = Timer.scheduledTimer(withTimeInterval: decibelMeteringTimeInterval, repeats: true) { _ in
                 self.updateDecibelLevel()
-                self.calculateLoudnessForDistance()
+                self.calculateLoudnessForDistance(backgroundDecibel: backgroundDecibel, distance: distance)
             }
         }
     }
@@ -139,14 +143,14 @@ final class AudioManager: ObservableObject {
         // 음압 레벨(dB SPL)로 변환
         let splDecibel = convertToSPL(dBFS: dBFSDecibel)
         
-        // 버퍼에 값을 저장 (최대 10개 저장)
+        // 버퍼에 값을 저장
         buffer.append(splDecibel)
         
         // 현재 소리 받아오기
         currentDecibel = splDecibel
         
         // 버퍼가 가득차면, 평균치를 계산하여 업데이트
-        if buffer.count == 10 {
+        if buffer.count == decibelBufferSize {
             let bufferAverage = buffer.reduce(0, +) / Float(buffer.count)
             decibelLevel = bufferAverage
             
@@ -155,7 +159,7 @@ final class AudioManager: ObservableObject {
     }
     
     /// 사용자가 발생한 소리로 부터 일정 거리로 떨어진 상대방이 들리는 최종적인 Loudeness 계산
-    func calculateLoudnessForDistance() {
+    func calculateLoudnessForDistance(backgroundDecibel: Float, distance: Float) {
         // 1. 배경 소음의 Loudness 계산
         backgroundLoudness = loudnessFromDecibel(Float(backgroundDecibel))
         
@@ -170,6 +174,23 @@ final class AudioManager: ObservableObject {
         
         // 4. 배경 소음 대비 바뀐 최종 비율 계산
         loudnessIncreaseRatio = loudnessRatio(originalLoudness: backgroundLoudness, combinedLoudness: combinedLoudnessValue)
+        
+        if loudnessIncreaseRatio > NoiseStatus.loudnessCautionLevel {
+            loudnessBuffer.append(loudnessIncreaseRatio)
+        } else {
+            userNoiseStatus = .safe
+            loudnessBuffer.removeAll()
+        }
+        
+        if loudnessBuffer.count >= loudnessBufferSize {
+            var isWarning: Bool = true
+            for value in loudnessBuffer.suffix(loudnessBufferSize) { // 최근 2초만을 관찰
+                if value < NoiseStatus.loudnessWarningLevel {
+                    isWarning = false
+                }
+            }
+            userNoiseStatus = isWarning ? .warning : .caution
+        }
     }
     
     /// dBFS를 dB SPL로 변환합니다.
