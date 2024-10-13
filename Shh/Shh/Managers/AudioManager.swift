@@ -21,27 +21,27 @@ final class AudioManager: ObservableObject {
     
     // TODO: 테스트를 위해 @Published로 선언
     // 사용자가 낸 소리가 상대방에게 인지되는 dB; 거리 감쇠 적용
-    @Published var perceivedDecibel: Double = 0.0
+    @Published var perceivedDecibel: Float = 0.0
     
     // 사용자가 낸 소리가 실제로 상대방의 귀에 느껴지는 Loudness 정도
-    @Published var perceivedLoudness: Double = 0.0
+    @Published var perceivedLoudness: Float = 0.0
     
     // 상대방의 실제 귀에 들어가는 Loudness 정도; 배경 소음 + 사용자가 낸 소리
-    @Published var combinedLoudnessValue: Double = 0.0
+    @Published var combinedLoudnessValue: Float = 0.0
     
     // 배경 소음에 비해, 증가된 Loudness 비율
-    @Published var loudnessIncreaseRatio: Double = 0.0
+    @Published var loudnessIncreaseRatio: Float = 0.0
     
     // 배경 소음이 상대방에게 느껴지는 Loudness 정도
-    @Published var backgroundLoudness: Double = 0.0
+    @Published var backgroundLoudness: Float = 0.0
 
     // TODO: AppStorage 영역에서 받아올 예정
     private var backgroundDecibel: Float = 40.0 // 고정된 배경 소음
     private var distance: Float = 2.0 // 고정된 거리 (2m로 가정)
     
     // TODO: 이 친구들은 장소 모델로 옮길 예정
-    let distances: [Double] = [1, 1.5, 2, 2.5, 3]
-    let backgroundDecibelOptions: [Double] = [30, 35, 40, 45, 50, 55, 60]
+    let distances: [Float] = [1, 1.5, 2, 2.5, 3]
+    let backgroundDecibelOptions: [Float] = [30, 35, 40, 45, 50, 55, 60]
     
     private let audioRecorder: AVAudioRecorder
     
@@ -157,11 +157,11 @@ final class AudioManager: ObservableObject {
     /// 사용자가 발생한 소리로 부터 일정 거리로 떨어진 상대방이 들리는 최종적인 Loudeness 계산
     func calculateLoudnessForDistance() {
         // 1. 배경 소음의 Loudness 계산
-        backgroundLoudness = loudnessFromDecibel(Double(backgroundDecibel))
+        backgroundLoudness = loudnessFromDecibel(Float(backgroundDecibel))
         
         // 2. 상대방이 느끼는 소음 (내가 내는 소음의 거리 감쇠 적용)
-        let distanceRatio = Double(distance) / 0.5
-        perceivedDecibel = calculateDecibelAtDistance(originalDecibel: Double(decibelLevel), distanceRatio: distanceRatio)
+        let distanceRatio = Float(distance) / 0.5
+        perceivedDecibel = calculateDecibelAtDistance(originalDecibel: Float(decibelLevel), distanceRatio: distanceRatio)
         
         perceivedLoudness = loudnessFromDecibel(perceivedDecibel)
         
@@ -179,15 +179,15 @@ final class AudioManager: ObservableObject {
     }
     
     /// 거리에 따라 감소되어 상대방이 느끼는 음압 레벨(dB SPL)을 역제곱 법칙을 통해 계산합니다.
-    private func calculateDecibelAtDistance(originalDecibel: Double, distanceRatio: Double) -> Double {
+    private func calculateDecibelAtDistance(originalDecibel: Float, distanceRatio: Float) -> Float {
         let decibelLoss = 20.0 * log10(distanceRatio)
         return originalDecibel - decibelLoss
     }
     
     // TODO: 거리 선택지가 정해져 있기에, 이는 추후에 Place 모델로 옮길 예정
     /// 거리에 따라 감소되어 상대방이 느끼는 음압 레벨(dB SPL)을 역제곱 법칙을 통해 계산합니다.
-    private func calculateDecibelAtDistance(originalDecibel: Double, distance: Double) -> Double {
-        var decibelLoss: Double = 0.0
+    private func calculateDecibelAtDistance(originalDecibel: Float, distance: Float) -> Float {
+        var decibelLoss: Float = 0.0
         
         switch distance {
         case 1.0:
@@ -209,18 +209,18 @@ final class AudioManager: ObservableObject {
 
     /// Loudness 계산 함수입니다.
     /// 40 dB SPL = 1 sone
-    private func loudnessFromDecibel(_ decibel: Double) -> Double {
+    private func loudnessFromDecibel(_ decibel: Float) -> Float {
         return pow(2.0, (decibel - 40.0) / 10.0)
     }
     
     /// 상대방이 실제로 느끼는 소리 크기를 계산합니다.
     /// 배경 소음과 사용자가 내는 소음을 합산하여 계산합니다.
-    private func combinedLoudness(backgroundLoudness: Double, noiseLoudness: Double) -> Double {
+    private func combinedLoudness(backgroundLoudness: Float, noiseLoudness: Float) -> Float {
         return sqrt(pow(backgroundLoudness, 2) + pow(noiseLoudness, 2))
     }
     
     /// 사용자가 낸 소리로 인해 실제로 상대방이 기존보다 얼만큼 큰 소리로 느끼는지에 대한 비율을 계산합니다.
-    private func loudnessRatio(originalLoudness: Double, combinedLoudness: Double) -> Double {
+    private func loudnessRatio(originalLoudness: Float, combinedLoudness: Float) -> Float {
         return combinedLoudness / originalLoudness
     }
     
