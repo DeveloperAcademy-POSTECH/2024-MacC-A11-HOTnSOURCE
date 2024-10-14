@@ -22,6 +22,8 @@ struct MainView: View {
     
     @State private var isStarted: Bool = false
     
+    let selectedPlace: Place
+    
     // MARK: Body
     var body: some View {
         ZStack {
@@ -54,7 +56,7 @@ struct MainView: View {
             .padding(.horizontal, 24)
 
         }
-        .navigationTitle("도서관") // TODO: 장소 수정 예정
+        .navigationTitle(selectedPlace.name)
     }
     
     // MARK: SubViews
@@ -101,13 +103,14 @@ struct MainView: View {
     
     private var userNoiseStatusInfo: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("양호") // TODO: 수정 예정
+            // TODO: 수정 예정
+            Text("양호")
                 .font(.system(size: 56))
                 .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
             
-            Text("지금 아주 잘하고 있어요!")
             // TODO: 수정 예정
+            Text("지금 아주 잘하고 있어요!")
                 .font(.callout)
                 .fontWeight(.bold)
                 .foregroundStyle(.black)
@@ -116,7 +119,7 @@ struct MainView: View {
     
     private var placeInfo: some View {
         HStack {
-            Text("40dB") // TODO: 수정예정
+            Text("\(Int(selectedPlace.averageNoise)) dB")
                 .font(.body)
                 .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
@@ -125,7 +128,7 @@ struct MainView: View {
                 .fill(.customWhite)
                 .frame(width: 1, height: 18)
             
-            Text("2 m") // TODO: 수정예정
+            Text("\(Int(selectedPlace.distance)) m")
                 .font(.body)
                 .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
@@ -182,5 +185,8 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView()
+    MainView(selectedPlace: Place(id: UUID(),
+                                  name: "도서관",
+                                  averageNoise: 40.0,
+                                  distance: 2.0))
 }
