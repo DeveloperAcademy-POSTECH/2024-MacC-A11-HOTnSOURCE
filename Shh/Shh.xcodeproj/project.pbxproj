@@ -15,9 +15,22 @@
 		67A9E82A2CB426A8003E2A11 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		67A9E9C02CBC40FB003E2A11 /* Exceptions for "Shh" folder in "Shh" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				App/Info.plist,
+			);
+			target = 67A9E8132CB4230E003E2A11 /* Shh */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		67A9E8162CB4230E003E2A11 /* Shh */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				67A9E9C02CBC40FB003E2A11 /* Exceptions for "Shh" folder in "Shh" target */,
+			);
 			path = Shh;
 			sourceTree = "<group>";
 		};
@@ -282,11 +295,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Shh/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 2UWGKS2UN5;
+				DEVELOPMENT_TEAM = 56LCM2KZR8;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Shh/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Shh-!";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -319,11 +334,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Shh/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 2UWGKS2UN5;
+				DEVELOPMENT_TEAM = 56LCM2KZR8;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Shh/App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Shh-!";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
