@@ -32,7 +32,7 @@ struct ShhApp: App {
                 }
                 
                 if let selectedPlace = self.selectedPlace {
-                    routerManager.push(view: .noiseView(selectedPlace: selectedPlace))
+                    routerManager.push(view: .mainView(selectedPlace: selectedPlace))
                 }
             }
             .environmentObject(routerManager)

@@ -51,7 +51,7 @@ final class AudioManager: ObservableObject {
     private var buffer: [Float] = []
     private var loudnessBuffer: [Float] = []
     
-    init?() {
+    init() throws {
         let settings: [String: Any] = [
             AVFormatIDKey: Int(kAudioFormatAppleLossless),
             AVSampleRateKey: 44100.0,
@@ -64,7 +64,7 @@ final class AudioManager: ObservableObject {
             audioRecorder = try AVAudioRecorder(url: url, settings: settings)
         } catch {
             print("오디오 레코더를 설정하는 중 오류 발생")
-            return nil
+            throw error
         }
     }
     
@@ -182,13 +182,13 @@ final class AudioManager: ObservableObject {
         }
         
         if loudnessBuffer.count >= loudnessBufferSize {
-            var isWarning: Bool = true
+            var isDanger: Bool = true
             for value in loudnessBuffer.suffix(loudnessBufferSize) { // 최근 2초만을 관찰
-                if value < NoiseStatus.loudnessWarningLevel {
-                    isWarning = false
+                if value < NoiseStatus.loudnessDangerLevel {
+                    isDanger = false
                 }
             }
-            userNoiseStatus = isWarning ? .warning : .caution
+            userNoiseStatus = isDanger ? .danger : .caution
         }
     }
     
