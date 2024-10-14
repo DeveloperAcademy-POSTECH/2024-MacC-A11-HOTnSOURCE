@@ -56,4 +56,15 @@ extension NoiseStatus {
         }
     }
     
+    var notifiCationType: NotificationType? {
+        switch self {
+        case .safe:
+            return nil
+        case .caution:
+            return .caution
+        case .danger:
+            return .danger
+        }
+    }
+    
 }
