@@ -21,11 +21,13 @@ struct CreatePlaceView: View {
     @State private var averageNoise: Float = 0
     @State private var distance: Float = 1
     @State private var showSelectAverageNoiseSheet: Bool = false
+    @State private var createFail: Bool = false
+    @State private var createResult: CreatePlaceResult?
     
     // MARK: Body
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 48) {
+            VStack(alignment: .leading, spacing: 40) {
                 nameRow
                 
                 averageNoiseRow
@@ -45,6 +47,13 @@ struct CreatePlaceView: View {
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
         }
+        .alert("장소 생성 실패", isPresented: $createFail) {
+            Button("확인", role: .cancel) {
+                name = ""
+            }
+        } message: {
+            Text(createResult?.rawValue ?? CreatePlaceResult.unknown.rawValue)
+        }
         .onTapGesture {
             isFocused = false
         }
@@ -57,13 +66,7 @@ struct CreatePlaceView: View {
                 .font(.body)
                 .bold()
             
-            TextField("이름을 입력해주세요", text: $name)
-                .padding(20)
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(.tertiary)
-                )
-                .focused($isFocused)
+            nameTextField
         }
     }
     
@@ -103,14 +106,16 @@ struct CreatePlaceView: View {
         Button {
             let newPlace = Place(id: UUID(), name: name, averageNoise: averageNoise, distance: distance)
             
-            createPlace(newPlace)
-            
-            saveNewSelectedPlace(newPlace)
-            
-            routerManager.pop()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                routerManager.push(view: .noiseView(selectedPlace: newPlace))
+            if createPlace(newPlace) {
+                saveNewSelectedPlace(newPlace)
+                
+                routerManager.pop()
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                    routerManager.push(view: .noiseView(selectedPlace: newPlace))
+                }
+            } else {
+                createFail = true
             }
         } label: {
             Text("완료")
@@ -118,7 +123,7 @@ struct CreatePlaceView: View {
                 .bold()
                 .foregroundStyle(.white)
                 .frame(maxWidth: 350)
-                .frame(height: 65)
+                .frame(height: 56)
                 .background(
                     RoundedRectangle(cornerRadius: 15)
                 )
@@ -146,6 +151,28 @@ struct CreatePlaceView: View {
             .pickerStyle(.wheel)
         }
         .padding()
+    }
+    
+    private var nameTextField: some View {
+        ZStack(alignment: .trailing) {
+            TextField("이름을 입력해주세요", text: $name)
+                .padding(20)
+                .background(
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(.tertiary)
+                )
+                .focused($isFocused)
+                .onChange(of: name) { newValue in
+                    if newValue.count > 8 {
+                        name = String(newValue.prefix(8))
+                    }
+                }
+            
+            Text("\(name.count)/8")
+                .font(.caption2)
+                .foregroundStyle(.gray)
+                .padding(.trailing)
+        }
     }
     
     private var averageNoiseSelectRow: some View {
@@ -252,7 +279,7 @@ struct CreatePlaceView: View {
     }
     
     // MARK: Action Handlers
-    private func createPlace(_ place: Place) {
+    private func createPlace(_ place: Place) -> Bool {
         var storedPlaces: [Place] = []
         
         if let data = storedPlacesData.data(using: .utf8),
@@ -260,11 +287,25 @@ struct CreatePlaceView: View {
                 storedPlaces = decodedPlaces
         }
         
+        if storedPlaces.contains(where: { $0.name == place.name }) {
+            self.createResult = .duplicateName
+            return false
+        } else if storedPlaces.count > 5 {
+            self.createResult = .overCapacity
+            return false
+        }
+        
         storedPlaces.append(place)
         
         if let encodedData = try? JSONEncoder().encode(storedPlaces), let jsonString = String(data: encodedData, encoding: .utf8) {
             storedPlacesData = jsonString
+            self.createResult = .success
+            return true
         }
+        
+        storedPlaces.removeAll { $0.id == place.id }
+        self.createResult = .unknown
+        return false
     }
     
     private func saveNewSelectedPlace(_ newPlace: Place) {
@@ -272,6 +313,13 @@ struct CreatePlaceView: View {
             storedSelectedPlace = jsonString
         }
     }
+}
+
+enum CreatePlaceResult: String {
+    case success
+    case duplicateName = "중복되는 이름이 존재합니다"
+    case overCapacity = "장소는 최대 5개까지 생성 가능합니다"
+    case unknown = "알 수 없는 오류가 발생했습니다"
 }
 
 // MARK: - Preview

@@ -26,7 +26,7 @@ struct EditPlaceView: View {
     // MARK: Body
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 48) {
+            VStack(alignment: .leading, spacing: 40) {
                 nameRow
                 
                 averageNoiseRow
@@ -35,7 +35,7 @@ struct EditPlaceView: View {
                 
                 Spacer().frame(height: 0)
                 
-                completeButton
+                actionButtonStack
             }
         }
         .navigationTitle("수정하기")
@@ -58,15 +58,6 @@ struct EditPlaceView: View {
         .onTapGesture {
             isFocused = false
         }
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("삭제") {
-                    showDeleteAlert = true
-                }
-                .disabled(!canDeletePlace())
-                .foregroundStyle(canDeletePlace() ? .red : .gray)
-            }
-        }
     }
     
     // MARK: SubViews
@@ -76,13 +67,7 @@ struct EditPlaceView: View {
                 .font(.body)
                 .bold()
             
-            TextField("이름을 입력해주세요", text: $place.name)
-                .padding(20)
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(.tertiary)
-                )
-                .focused($isFocused)
+            nameTextField
         }
     }
     
@@ -118,22 +103,11 @@ struct EditPlaceView: View {
         }
     }
     
-    private var completeButton: some View {
-        Button {
-            editPlace(place)
-            routerManager.pop()
-        } label: {
-            Text("완료")
-                .font(.title3)
-                .bold()
-                .foregroundStyle(.white)
-                .frame(maxWidth: 350)
-                .frame(height: 65)
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                )
+    private var actionButtonStack: some View {
+        VStack {
+            completeButton
+            deleteButton
         }
-        .disabled(place.name.isEmpty || place.averageNoise.isZero)
     }
     
     private var selectAverageNoiseSheet: some View {
@@ -156,6 +130,28 @@ struct EditPlaceView: View {
             .pickerStyle(.wheel)
         }
         .padding()
+    }
+    
+    private var nameTextField: some View {
+        ZStack(alignment: .trailing) {
+            TextField("이름을 입력해주세요", text: $place.name)
+                .padding(20)
+                .background(
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(.tertiary)
+                )
+                .focused($isFocused)
+                .onChange(of: place.name) { newValue in
+                    if newValue.count > 8 {
+                        place.name = String(newValue.prefix(8))
+                    }
+                }
+            
+            Text("\(place.name.count)/8")
+                .font(.caption2)
+                .foregroundStyle(.gray)
+                .padding(.trailing)
+        }
     }
     
     private var averageNoiseSelectRow: some View {
@@ -259,6 +255,33 @@ struct EditPlaceView: View {
                 )
         }
         .buttonStyle(.plain)
+    }
+    
+    private var completeButton: some View {
+        Button {
+            editPlace(place)
+            routerManager.pop()
+        } label: {
+            Text("완료")
+                .font(.title3)
+                .bold()
+                .foregroundStyle(.white)
+                .frame(maxWidth: 350)
+                .frame(height: 56)
+                .background(
+                    RoundedRectangle(cornerRadius: 15)
+                )
+        }
+        .disabled(place.name.isEmpty || place.averageNoise.isZero)
+    }
+    
+    private var deleteButton: some View {
+        Button("삭제하기") {
+            showDeleteAlert = true
+        }
+        .font(.callout)
+        .disabled(!canDeletePlace())
+        .foregroundStyle(canDeletePlace() ? .red : .gray)
     }
     
     // MARK: Action Handlers

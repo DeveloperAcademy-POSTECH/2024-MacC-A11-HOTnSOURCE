@@ -20,12 +20,10 @@ struct SelectPlaceView: View {
     
     // MARK: Body
     var body: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                placeList
-                
-                createPlaceButton
-            }
+        VStack(spacing: 16) {
+            placeList
+            
+            createPlaceButton
         }
         .navigationTitle("장소 선택")
         .onAppear {
@@ -50,6 +48,7 @@ struct SelectPlaceView: View {
             placeButtonStyle(title: "+", textColor: .white, bgColor: .gray)
                 .opacity(0.5)
         }
+        .opacity(storedPlaces.count >= 5 ? 0 : 1)
     }
     
     private func placeButton(_ place: Place) -> some View {
@@ -101,11 +100,30 @@ struct SelectPlaceView: View {
             let decodedPlaces = try? JSONDecoder().decode(Place.self, from: data) {
                 selectedPlace = decodedPlaces
         }
+        
+        if storedPlaces.isEmpty {
+            let defaultPlace: Place = .init(id: UUID(), name: "도서관", averageNoise: 40, distance: 1)
+            
+            storedPlaces = [defaultPlace]
+            selectedPlace = defaultPlace
+            
+            savePlaces()
+            saveSelectedPlace()
+            
+            routerManager.push(view: .noiseView(selectedPlace: defaultPlace))
+        }
+        
     }
 
     private func saveSelectedPlace() {
         if let selectedPlace = self.selectedPlace, let encodedData = try? JSONEncoder().encode(selectedPlace), let jsonString = String(data: encodedData, encoding: .utf8) {
             storedSelectedPlace = jsonString
+        }
+    }
+    
+    private func savePlaces() {
+        if let encodedData = try? JSONEncoder().encode(storedPlaces), let jsonString = String(data: encodedData, encoding: .utf8) {
+            storedPlacesData = jsonString
         }
     }
 }
