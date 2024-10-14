@@ -52,6 +52,7 @@ struct MainView: View {
                         }
                     }
                 }
+                Spacer().frame(height: 40)
             }
             .padding(.horizontal, 24)
 
