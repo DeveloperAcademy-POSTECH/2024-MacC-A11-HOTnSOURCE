@@ -104,14 +104,12 @@ struct MainView: View {
     
     private var userNoiseStatusInfo: some View {
         VStack(alignment: .leading, spacing: 16) {
-            // TODO: 수정 예정
-            Text("양호")
+            Text("\(audioManager.userNoiseStatus.korean)")
                 .font(.system(size: 56))
                 .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
             
-            // TODO: 수정 예정
-            Text("지금 아주 잘하고 있어요!")
+            Text("\(audioManager.userNoiseStatus.writing)")
                 .font(.callout)
                 .fontWeight(.bold)
                 .foregroundStyle(.black)
