@@ -52,6 +52,7 @@ struct MainView: View {
                         }
                     }
                 }
+                
                 Spacer().frame(height: 40)
             }
             .padding(.horizontal, 24)
@@ -69,8 +70,8 @@ struct MainView: View {
             // TODO: 파도 추가 예정
             Rectangle()
                 .fill(audioManager.userNoiseStatus.statusColor)
-            .ignoresSafeArea(edges: .bottom)
-            .frame(height: 200)
+                .ignoresSafeArea(edges: .bottom)
+                .frame(height: 200)
         }
     }
     
@@ -96,7 +97,7 @@ struct MainView: View {
             Rectangle()
                 .fill(.white)
                 .opacity(0.4)
-                .frame(width: 27, height: 4)
+                .frame(width: 27, height: 2)
             
             Spacer()
         }
@@ -157,10 +158,10 @@ struct MainView: View {
                 .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
                 .padding()
-                .background(
+                .background {
                     Circle()
                         .fill(.customBlack)
-                )
+                }
         }
     }
     
@@ -184,8 +185,5 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView(selectedPlace: Place(id: UUID(),
-                                  name: "도서관",
-                                  averageNoise: 40.0,
-                                  distance: 2.0))
+    MainView(selectedPlace: Place(id: UUID(), name: "도서관", averageNoise: 40.0, distance: 2.0))
 }
