@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct ShhApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     @StateObject private var routerManager = RouterManager()
     
     @AppStorage("selectedPlace") private var storedSelectedPlace: String = ""
