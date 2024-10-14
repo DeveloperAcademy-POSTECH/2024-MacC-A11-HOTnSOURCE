@@ -21,19 +21,22 @@ class RouterManager: ObservableObject {
 }
 
 enum ShhView: Hashable {
-    case selectModeView
-    case createModeView
-    case noiseView(selectedMenu: String)
+    case selectPlaceView
+    case createPlaceView
+    case editPlaceView(place: Place, storedPlaces: [Place])
+    case noiseView(selectedPlace: Place)
     
     @ViewBuilder
     var view: some View {
         switch self {
-        case .selectModeView:
-            SelectModeView()
-        case .createModeView:
-            CreateModeView()
-        case .noiseView(let selectedMenu):
-            NoiseView(selectedMenu: selectedMenu)
+        case .selectPlaceView:
+            SelectPlaceView()
+        case .createPlaceView:
+            CreatePlaceView()
+        case .editPlaceView(let place, let storedPlaces):
+            EditPlaceView(place: place, storedPlaces: storedPlaces)
+        case .noiseView(let selectedPlace):
+            NoiseView(selectedPlace: selectedPlace)
         }
     }
 }

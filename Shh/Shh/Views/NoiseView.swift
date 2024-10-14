@@ -15,7 +15,7 @@ struct NoiseView: View {
     @State private var status: String = "양호"
     @State private var decibel: Int = 30
     
-    let selectedMenu: String
+    let selectedPlace: Place
     
     private let gradientCircleAnimation = Animation
         .linear(duration: 0.8)
@@ -32,7 +32,7 @@ struct NoiseView: View {
             backgroundCard
             cardContents
         }
-        .navigationTitle(selectedMenu)
+        .navigationTitle(selectedPlace.name)
         .padding(30)
     }
     
@@ -144,7 +144,7 @@ struct NoiseView: View {
     private var infoArea: some View {
         VStack(spacing: 4) {
             VStack(spacing: 2) {
-                Text("반경 5m")
+                Text("반경 \(String(selectedPlace.distance))m")
                     .font(.title2)
                     .foregroundColor(.white)
                 Text("에서는")
@@ -182,5 +182,5 @@ struct NoiseView: View {
 }
 
 #Preview {
-    NoiseView(selectedMenu: "도서관")
+    NoiseView(selectedPlace: .init(id: UUID(), name: "도서관", averageNoise: 10, distance: 10))
 }
