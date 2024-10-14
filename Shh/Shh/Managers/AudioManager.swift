@@ -182,13 +182,13 @@ final class AudioManager: ObservableObject {
         }
         
         if loudnessBuffer.count >= loudnessBufferSize {
-            var isWarning: Bool = true
+            var isDanger: Bool = true
             for value in loudnessBuffer.suffix(loudnessBufferSize) { // 최근 2초만을 관찰
-                if value < NoiseStatus.loudnessWarningLevel {
-                    isWarning = false
+                if value < NoiseStatus.loudnessDangerLevel {
+                    isDanger = false
                 }
             }
-            userNoiseStatus = isWarning ? .warning : .caution
+            userNoiseStatus = isDanger ? .danger : .caution
         }
     }
     

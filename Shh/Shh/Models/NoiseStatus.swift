@@ -10,7 +10,7 @@ import Foundation
 enum NoiseStatus: String {
     case safe
     case caution
-    case warning
+    case danger
 }
 
 extension NoiseStatus {
@@ -18,5 +18,5 @@ extension NoiseStatus {
     static let loudnessCautionLevel: Float = 1.3
     
     /// 소음 '위험' 단계의 기준치입니다.
-    static let loudnessWarningLevel: Float = 1.5
+    static let loudnessDangerLevel: Float = 1.5
 }
