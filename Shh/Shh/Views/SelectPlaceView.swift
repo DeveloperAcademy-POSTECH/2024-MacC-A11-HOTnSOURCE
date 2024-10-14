@@ -54,7 +54,7 @@ struct SelectPlaceView: View {
     private func placeButton(_ place: Place) -> some View {
         ZStack(alignment: .trailing) {
             Button {
-                routerManager.push(view: .noiseView(selectedPlace: place))
+                routerManager.push(view: .mainView(selectedPlace: place))
                 selectedPlace = place
                 saveSelectedPlace()
             } label: {
@@ -110,7 +110,7 @@ struct SelectPlaceView: View {
             savePlaces()
             saveSelectedPlace()
             
-            routerManager.push(view: .noiseView(selectedPlace: defaultPlace))
+            routerManager.push(view: .mainView(selectedPlace: defaultPlace))
         }
         
     }

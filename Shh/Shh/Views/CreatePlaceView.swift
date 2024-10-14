@@ -112,7 +112,7 @@ struct CreatePlaceView: View {
                 routerManager.pop()
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                    routerManager.push(view: .noiseView(selectedPlace: newPlace))
+                    routerManager.push(view: .mainView(selectedPlace: newPlace))
                 }
             } else {
                 createFail = true
