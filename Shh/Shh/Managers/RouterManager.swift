@@ -24,7 +24,6 @@ enum ShhView: Hashable {
     case selectPlaceView
     case createPlaceView
     case editPlaceView(place: Place, storedPlaces: [Place])
-    case noiseView(selectedPlace: Place)
     case mainView(selectedPlace: Place)
     
     @ViewBuilder
@@ -36,8 +35,6 @@ enum ShhView: Hashable {
             CreatePlaceView()
         case .editPlaceView(let place, let storedPlaces):
             EditPlaceView(place: place, storedPlaces: storedPlaces)
-        case .noiseView(let selectedPlace):
-            NoiseView(selectedPlace: selectedPlace)
         case .mainView(let selectedPlace):
             MainView(selectedPlace: selectedPlace)
         }

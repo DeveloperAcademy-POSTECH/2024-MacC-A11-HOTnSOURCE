@@ -21,44 +21,85 @@ struct MainView: View {
     }()
     
     @State private var isStarted: Bool = false
+    @State private var percent = 20.0
+    @State private var waveOffset = Angle(degrees: 0)
     
     let selectedPlace: Place
+    
+    private let waveMotion = Animation
+        .linear(duration: 3.5)
+        .repeatForever(autoreverses: false)
+    
+    private let heightAnimation = Animation
+        .easeInOut(duration: 0.5)
+    
+    private var animatableData: Double {
+        get { waveOffset.degrees }
+        set { waveOffset = Angle(degrees: newValue) }
+    }
     
     private let notificationManager: NotificationManager = .init()
     
     // MARK: Body
     var body: some View {
         ZStack {
-            // 배경
-            backgroundWave
-            
-            // 눈금
+            content
             beaker
+        }
+        .navigationTitle(selectedPlace.name)
+        .onAppear { startWaveAnimation() }
+        .onChange(of: CGFloat(audioManager.loudnessIncreaseRatio)) { loudnessIncreaseRatio in
+            changeHeightAnimation(loudness: loudnessIncreaseRatio)
+        }
+    }
+    
+    // MARK: SubViews
+    private var content: some View {
+        VStack {
+            Spacer()
             
-            // 내용
-            VStack {
+            if !audioManager.isMetering {
+                pauseText
                 Spacer()
-                
-                HStack {
+                Spacer()
+            }
+            
+            HStack {
+                if audioManager.isMetering {
                     userNoiseStatusInfo
                     
                     Spacer()
                     
                     VStack(spacing: 14) {
                         placeInfo
-                        
-                        HStack {
-                            meteringToggleButton
-                            
-                            meteringStopButton
-                        }
+                        recordButtons
                     }
+                } else {
+                    Spacer()
+                    recordButtons
                 }
-                
-                Spacer().frame(height: 40)
             }
-            .padding(.horizontal, 24)
-
+            
+            Spacer().frame(height: 40)
+        }
+        .padding(.horizontal, 24)
+        .background(backgroundWave)
+    }
+    
+    private var pauseText: some View {
+        VStack(alignment: .center) {
+            Text("아래 버튼을 눌러")
+            Text("측정을 시작해주세요")
+        }
+        .font(.title2)
+        .bold()
+        .foregroundStyle(.gray)
+    }
+    
+    private var recordButtons: some View {
+        HStack {
+            meteringToggleButton
+            meteringStopButton
         }
         .navigationTitle(selectedPlace.name)
         .onChange(of: audioManager.userNoiseStatus) { newValue in
@@ -70,22 +111,20 @@ struct MainView: View {
         }
     }
     
-    // MARK: SubViews
     private var backgroundWave: some View {
         VStack {
             Spacer()
-            
-            // TODO: 높이 수정 예정
-            // TODO: 파도 추가 예정
-            Rectangle()
-                .fill(audioManager.userNoiseStatus.statusColor)
-                .ignoresSafeArea(edges: .bottom)
-                .frame(height: 200)
+            waveAnimation(percent: percent, waveOffset: waveOffset)
         }
     }
     
+    private func waveAnimation(percent: Double, waveOffset: Angle) -> some View {
+        Wave(offSet: Angle(degrees: audioManager.isMetering ? waveOffset.degrees : 0.0), percent: audioManager.isMetering ? percent : 20.0)
+            .fill(audioManager.isMetering ? audioManager.userNoiseStatus.statusColor : .gray)
+            .ignoresSafeArea(.all)
+    }
+    
     private var beaker: some View {
-        // TODO: 간격 수정 예정
         VStack {
             Spacer().frame(height: 80)
             
@@ -189,6 +228,42 @@ struct MainView: View {
                     Circle()
                         .fill(.customBlack)
                 )
+        }
+    }
+    
+    // MARK: Functions
+    private func startWaveAnimation() {
+        DispatchQueue.main.async {
+            withAnimation(waveMotion) {
+                self.waveOffset = Angle(degrees: 360)
+            }
+        }
+    }
+    
+    private func changeHeightAnimation(loudness: CGFloat) {
+        DispatchQueue.main.async {
+            withAnimation(.easeInOut(duration: 0.5)) {
+                let minRatio: CGFloat = 1.0
+                let maxRatio: CGFloat = 1.5
+                
+                switch loudness {
+                case maxRatio...:
+                    self.percent = 100.0
+                    audioManager.userNoiseStatus = .danger
+                    
+                case 1.3..<maxRatio:
+                    self.percent = 75.0
+                    audioManager.userNoiseStatus = .caution
+                    
+                case minRatio..<1.3:
+                    self.percent = 45.0 + (loudness - minRatio) / (maxRatio - minRatio) * 30.0
+                    audioManager.userNoiseStatus = .safe
+                    
+                default:
+                    self.percent = 45.0
+                    audioManager.userNoiseStatus = .safe
+                }
+            }
         }
     }
 }

@@ -80,7 +80,7 @@ struct SelectPlaceView: View {
         Text(title)
             .font(.title3)
             .bold()
-            .foregroundColor(textColor)
+            .foregroundStyle(textColor)
             .padding(.vertical, 20)
             .frame(width: 300)
             .background(
