@@ -38,10 +38,6 @@ final class AudioManager: ObservableObject {
     // 현재 사용자의 소음 상태
     @Published var userNoiseStatus: NoiseStatus = .safe
     
-    // TODO: 이 친구들은 장소 모델로 옮길 예정
-    let distances: [Float] = [1, 1.5, 2, 2.5, 3]
-    let backgroundDecibelOptions: [Float] = [30, 35, 40, 45, 50, 55, 60]
-    
     private let audioRecorder: AVAudioRecorder
     private let decibelMeteringTimeInterval: TimeInterval = 0.1
     private let decibelBufferSize: Int = 5 // 0.5초 간의 소리로 데시벨을 갱신

@@ -106,6 +106,9 @@ struct EditPlaceView: View {
     private var actionButtonStack: some View {
         VStack {
             completeButton
+            
+            Spacer().frame(height: 20)
+            
             deleteButton
         }
     }
@@ -113,11 +116,21 @@ struct EditPlaceView: View {
     private var selectAverageNoiseSheet: some View {
         VStack(spacing: 30) {
             VStack {
-                Text("조용한 카페에서의")
-                Text("소음이에요")
+                // TODO: 위아래 패딩 수정 예정
+                Text(Place.decibelWriting(decibel: place.averageNoise))
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(10)
+                
+                // TODO: 예시 추가 예정
+//                Text(Place.decibelExample(decibel: averageNoise))
+//                    .font(.callout)
+//                    .fontWeight(.medium)
+//                    .foregroundStyle(.gray)
+//                    .lineLimit(8)
             }
-            .font(.title)
-            .fontWeight(.semibold)
             
             Divider()
             
@@ -276,8 +289,10 @@ struct EditPlaceView: View {
     }
     
     private var deleteButton: some View {
-        Button("삭제하기") {
+        Button {
             showDeleteAlert = true
+        } label: {
+            Label("장소 삭제하기", systemImage: "trash")
         }
         .font(.callout)
         .disabled(!canDeletePlace())

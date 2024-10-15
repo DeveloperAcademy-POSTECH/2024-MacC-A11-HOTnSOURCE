@@ -38,6 +38,8 @@ struct MainView: View {
         set { waveOffset = Angle(degrees: newValue) }
     }
     
+    private let notificationManager: NotificationManager = .init()
+    
     // MARK: Body
     var body: some View {
         ZStack {
@@ -98,6 +100,14 @@ struct MainView: View {
         HStack {
             meteringToggleButton
             meteringStopButton
+        }
+        .navigationTitle(selectedPlace.name)
+        .onChange(of: audioManager.userNoiseStatus) { newValue in
+            Task {
+                if let type = newValue.notificationType {
+                    await notificationManager.sendNotification(type: type)
+                }
+            }
         }
     }
     
