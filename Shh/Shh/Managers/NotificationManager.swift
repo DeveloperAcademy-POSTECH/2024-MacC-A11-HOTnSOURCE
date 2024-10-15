@@ -28,15 +28,6 @@ actor NotificationManager {
         }
     }
     
-    /// 30초 동안 한 번만 푸시 알림 전송 제한
-    private func canSendNotification() -> Bool {
-        if let lastTime = lastNotificationTime {
-            let timeInterval = Date().timeIntervalSince(lastTime)
-            return timeInterval >= 30
-        }
-        return true
-    }
-    
     /// 푸시 알림 전송
     ///
     /// 타입에 맞는 알림을 전송합니다.
@@ -63,41 +54,6 @@ actor NotificationManager {
         }
     }
     
-    /// 주의 알림 전송
-    private func sendCautionNotification() {
-        let content = createNotificationContent(subtitle: "주의", body: "조심하세요!")
-        scheduleNotification(content: content)
-    }
-    
-    /// 위험 알림 전송
-    private func sendDangerNotification() {
-        let content = createNotificationContent(subtitle: "위험", body: "시끄러워요!")
-        scheduleNotification(content: content)
-    }
-    
-    /// 푸시 알림 내용 생성
-    private func createNotificationContent(subtitle: String? = nil, body: String, sound: UNNotificationSound = .default) -> UNMutableNotificationContent {
-        let content = UNMutableNotificationContent()
-        content.sound = sound
-        content.subtitle = subtitle ?? ""
-        content.body = body
-        return content
-    }
-    
-    /// 푸시 알림 전송(예약)
-    private func scheduleNotification(content: UNMutableNotificationContent) {
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-        
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error = error {
-                print("알림 예약 실패: \(error.localizedDescription)")
-            } else {
-                print("알림 예약 성공: \(request.identifier)")
-            }
-        }
-    }
-    
     /// 푸시 알림 설정 확인
     func check(completion: @escaping (Bool) -> Void) {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
@@ -120,9 +76,52 @@ actor NotificationManager {
             }
         }
     }
+    
+    /// 주의 알림 전송
+    private func sendCautionNotification() {
+        let content = createNotificationContent(subtitle: NoiseStatus.caution.korean, body: NoiseStatus.caution.writing)
+        scheduleNotification(content: content)
+    }
+    
+    /// 위험 알림 전송
+    private func sendDangerNotification() {
+        let content = createNotificationContent(subtitle: NoiseStatus.danger.korean, body: NoiseStatus.danger.writing)
+        scheduleNotification(content: content)
+    }
+    
+    /// 푸시 알림 내용 생성
+    private func createNotificationContent(subtitle: String? = nil, body: String, sound: UNNotificationSound = .default) -> UNMutableNotificationContent {
+        let content = UNMutableNotificationContent()
+        content.sound = .default
+        content.subtitle = subtitle ?? ""
+        content.body = body
+        return content
+    }
+    
+    /// 푸시 알림 전송(예약)
+    private func scheduleNotification(content: UNMutableNotificationContent) {
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("알림 예약 실패: \(error.localizedDescription)")
+            } else {
+                print("알림 예약 성공: \(request.identifier)")
+            }
+        }
+    }
+    
+    /// 30초 동안 한 번만 푸시 알림 전송 제한
+    private func canSendNotification() -> Bool {
+        if let lastTime = lastNotificationTime {
+            let timeInterval = Date().timeIntervalSince(lastTime)
+            return timeInterval >= 30
+        }
+        return true
+    }
 }
 
-// MARK: - NotificationType Enum
 enum NotificationType {
     case caution
     case danger
