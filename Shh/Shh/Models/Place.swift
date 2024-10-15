@@ -10,7 +10,7 @@ import Foundation
 struct Place: Identifiable, Hashable, Codable {
     let id: UUID
     var name: String
-    var averageNoise: Float
+    var backgroundDecibel: Float
     var distance: Float
 }
 

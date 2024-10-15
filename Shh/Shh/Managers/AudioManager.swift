@@ -87,6 +87,54 @@ final class AudioManager: ObservableObject {
         }
     }
     
+    /// 배경의 평균 소음을 측정합니다.
+    func meteringBackgroundNoise(completion: @escaping (Float) -> Void) throws {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .measurement, options: [.mixWithOthers, .allowBluetoothA2DP])
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("오디오 세션을 설정하는 중 오류 발생")
+            throw error
+        }
+
+        // 측정 시작
+        audioRecorder.isMeteringEnabled = true
+        audioRecorder.record()
+        
+        // 측정 데이터 저장용 변수
+        var decibelSum: Float = 0.0
+        var measurementCount: Int = 0
+        
+        // 3초간 소음을 측정하기 위한 타이머 (0.1초 간격으로 데시벨 측정)
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] timer in
+            guard let self = self else { return }
+            
+            // 데시벨 값 갱신
+            self.audioRecorder.updateMeters()
+            let dBFSDecibel = self.audioRecorder.averagePower(forChannel: 0)
+            let splDecibel = self.convertToSPL(dBFS: dBFSDecibel)
+            
+            // 측정된 데시벨 값의 합계를 저장하고 측정 횟수를 증가시킴
+            decibelSum += splDecibel
+            measurementCount += 1
+            
+            // 3초(30회) 경과 후 평균값 계산 및 리턴
+            if measurementCount >= 30 { // 0.1초 간격으로 3초간 측정(총 30회)
+                let averageDecibel = decibelSum / Float(measurementCount)
+                
+                // 타이머 종료
+                timer.invalidate()
+                
+                // 측정 종료
+                audioRecorder.isMeteringEnabled = false
+                audioRecorder.stop()
+                
+                // 측정 완료 후 평균값을 completion 핸들러로 전달
+                completion(averageDecibel)
+            }
+        }
+    }
+    
     /// 측정을 일시정지합니다.
     func pauseMetering() {
         if isMetering {

@@ -51,6 +51,9 @@ struct MainView: View {
         .onChange(of: CGFloat(audioManager.loudnessIncreaseRatio)) { loudnessIncreaseRatio in
             changeHeightAnimation(loudness: loudnessIncreaseRatio)
         }
+        .onDisappear {
+            audioManager.stopMetering()
+        }
     }
     
     // MARK: SubViews
@@ -167,7 +170,7 @@ struct MainView: View {
     
     private var placeInfo: some View {
         HStack {
-            Text("\(Int(selectedPlace.averageNoise)) dB")
+            Text("\(Int(selectedPlace.backgroundDecibel)) dB")
                 .font(.body)
                 .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
@@ -269,5 +272,5 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView(selectedPlace: Place(id: UUID(), name: "도서관", averageNoise: 40.0, distance: 2.0))
+    MainView(selectedPlace: Place(id: UUID(), name: "도서관", backgroundDecibel: 40.0, distance: 2.0))
 }

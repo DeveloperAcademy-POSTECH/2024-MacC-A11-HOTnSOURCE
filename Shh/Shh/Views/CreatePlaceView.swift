@@ -18,32 +18,43 @@ struct CreatePlaceView: View {
     @FocusState private var isFocused: Bool
     
     @State private var name: String = ""
-    @State private var averageNoise: Float = 0
+    @State private var backgroundDecibel: Float = 0
     @State private var distance: Float = 1
-    @State private var showSelectAverageNoiseSheet: Bool = false
+    @State private var showSelectBackgroundDecibelSheet: Bool = false
     @State private var createFail: Bool = false
     @State private var createResult: CreatePlaceResult?
+    @State private var isShowingProgressView: Bool = false
     
     // MARK: Body
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 40) {
-                nameRow
+        ZStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 40) {
+                    nameRow
+                    
+                    backgroundDecibelRow
+                    
+                    distanceRow
+                    
+                    Spacer().frame(height: 0)
+                    
+                    completeButton
+                }
+            }
+            
+            if isShowingProgressView {
+                Color(.black)
+                    .opacity(0.4)
+                    .ignoresSafeArea(.all)
                 
-                averageNoiseRow
-                
-                distanceRow
-                
-                Spacer().frame(height: 0)
-                
-                completeButton
+                ProgressView()
             }
         }
         .navigationTitle("생성하기")
         .padding(30)
         .scrollIndicators(.hidden)
-        .sheet(isPresented: $showSelectAverageNoiseSheet) {
-            selectAverageNoiseSheet
+        .sheet(isPresented: $showSelectBackgroundDecibelSheet) {
+            selectBackgroundDecibelSheet
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
         }
@@ -70,19 +81,24 @@ struct CreatePlaceView: View {
         }
     }
     
-    private var averageNoiseRow: some View {
+    private var backgroundDecibelRow: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("평균 소음")
-                .font(.body)
-                .bold()
-            
-            Text("기준이 될 현장의 평균 소음을 측정하거나 입력해주세요\n기준보다 큰 소리를 내시면 알려드릴게요")
+            HStack(alignment: .bottom) {
+                Text("배경 소음")
+                    .font(.body)
+                    .bold()
+                
+                Spacer()
+                
+                BackgroundDecibelMeteringButton(backgroundDecibel: $backgroundDecibel, isShowingProgressView: $isShowingProgressView)
+            }
+            Text("기준이 될 현장의 배경 소음을 측정하거나 입력해주세요\n기준보다 큰 소리를 내시면 알려드릴게요")
                 .font(.caption2)
                 .foregroundStyle(.gray)
             
             Spacer().frame(height: 5)
             
-            averageNoiseSelectRow
+            backgroundDecibelSelectRow
         }
     }
     
@@ -104,7 +120,7 @@ struct CreatePlaceView: View {
     
     private var completeButton: some View {
         Button {
-            let newPlace = Place(id: UUID(), name: name, averageNoise: averageNoise, distance: distance)
+            let newPlace = Place(id: UUID(), name: name, backgroundDecibel: backgroundDecibel, distance: distance)
             
             if createPlace(newPlace) {
                 saveNewSelectedPlace(newPlace)
@@ -128,14 +144,14 @@ struct CreatePlaceView: View {
                     RoundedRectangle(cornerRadius: 15)
                 }
         }
-        .disabled(name.isEmpty || averageNoise.isZero)
+        .disabled(name.isEmpty || backgroundDecibel.isZero)
     }
     
-    private var selectAverageNoiseSheet: some View {
+    private var selectBackgroundDecibelSheet: some View {
         VStack(spacing: 30) {
             VStack {
                 // TODO: 위아래 패딩 수정 예정
-                Text(Place.decibelWriting(decibel: averageNoise))
+                Text(Place.decibelWriting(decibel: backgroundDecibel))
                     .font(.title2)
                     .fontWeight(.semibold)
                     .foregroundStyle(.white)
@@ -143,7 +159,7 @@ struct CreatePlaceView: View {
                     .lineLimit(10)
                 
                 // TODO: 예시 추가 예정
-//                Text(Place.decibelExample(decibel: averageNoise))
+//                Text(Place.decibelExample(decibel: backgroundDecibel))
 //                    .font(.callout)
 //                    .fontWeight(.medium)
 //                    .foregroundStyle(.gray)
@@ -152,7 +168,7 @@ struct CreatePlaceView: View {
             
             Divider()
             
-            Picker("", selection: $averageNoise) {
+            Picker("", selection: $backgroundDecibel) {
                 ForEach(Array(stride(from: 30.0, to: 75.0, by: 5.0)), id: \.self) { value in
                     Text("\(Int(value))")
                         .tag(Float(value))
@@ -185,7 +201,7 @@ struct CreatePlaceView: View {
         }
     }
     
-    private var averageNoiseSelectRow: some View {
+    private var backgroundDecibelSelectRow: some View {
         HStack {
             Text("크기")
                 .font(.callout)
@@ -193,7 +209,7 @@ struct CreatePlaceView: View {
             
             Spacer()
             
-            averageNoiseSelectButton
+            backgroundDecibelSelectButton
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
@@ -203,12 +219,12 @@ struct CreatePlaceView: View {
         )
     }
     
-    private var averageNoiseSelectButton: some View {
+    private var backgroundDecibelSelectButton: some View {
         Button {
-            showSelectAverageNoiseSheet = true
+            showSelectBackgroundDecibelSheet = true
         } label: {
             HStack(alignment: .bottom, spacing: 3) {
-                Text("\(Int(averageNoise))")
+                Text("\(Int(backgroundDecibel))")
                     .font(.title2)
                     .bold()
                 
