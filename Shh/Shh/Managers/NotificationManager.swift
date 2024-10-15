@@ -79,13 +79,13 @@ actor NotificationManager {
     
     /// 주의 알림 전송
     private func sendCautionNotification() {
-        let content = createNotificationContent(subtitle: NoiseStatus.caution.korean, body: NoiseStatus.caution.writing)
+        let content = createNotificationContent(subtitle: "소음 수준: \(NoiseStatus.caution.korean)", body: NoiseStatus.caution.writing)
         scheduleNotification(content: content)
     }
     
     /// 위험 알림 전송
     private func sendDangerNotification() {
-        let content = createNotificationContent(subtitle: NoiseStatus.danger.korean, body: NoiseStatus.danger.writing)
+        let content = createNotificationContent(subtitle: "소음 수준: \(NoiseStatus.danger.korean)", body: NoiseStatus.danger.writing)
         scheduleNotification(content: content)
     }
     
