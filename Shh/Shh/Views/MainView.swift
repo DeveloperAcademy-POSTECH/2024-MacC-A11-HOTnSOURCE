@@ -21,58 +21,95 @@ struct MainView: View {
     }()
     
     @State private var isStarted: Bool = false
+    @State private var percent = 20.0
+    @State private var waveOffset = Angle(degrees: 0)
     
     let selectedPlace: Place
+    
+    private let waveMotion = Animation
+        .linear(duration: 3.5)
+        .repeatForever(autoreverses: false)
+    
+    private let heightAnimation = Animation
+        .easeInOut(duration: 0.5)
+    
+    private var animatableData: Double {
+        get { waveOffset.degrees }
+        set { waveOffset = Angle(degrees: newValue) }
+    }
     
     // MARK: Body
     var body: some View {
         ZStack {
-            // 배경
-            backgroundWave
-            
-            // 눈금
             beaker
+            content
+        }
+        .navigationTitle(selectedPlace.name)
+        .onChange(of: audioManager.loudnessIncreaseRatio) { loudnessIncreaseRatio in
+            withAnimation(.easeInOut(duration: 0.5)) {
+                if loudnessIncreaseRatio >= 1.5 {
+                    self.percent = 20.0 + Double(loudnessIncreaseRatio * 40)
+                } else if loudnessIncreaseRatio >= 1.3 {
+                    self.percent = 20.0 + Double(loudnessIncreaseRatio * 20)
+                } else {
+                    self.percent = 20.0 + Double(loudnessIncreaseRatio * 20)
+                }
+            }
+        }
+    }
+    
+    // MARK: SubViews
+    private var content: some View {
+        VStack {
+            Spacer()
             
-            // 내용
-            VStack {
-                Spacer()
-                
-                HStack {
+            HStack {
+                if audioManager.isMetering {
                     userNoiseStatusInfo
                     
                     Spacer()
                     
                     VStack(spacing: 14) {
                         placeInfo
-                        
-                        HStack {
-                            meteringToggleButton
-                            
-                            meteringStopButton
-                        }
+                        recordButtons
                     }
+                } else {
+                    Spacer()
+                    recordButtons
                 }
-                
-                Spacer().frame(height: 40)
             }
-            .padding(.horizontal, 24)
-
+            
+            Spacer().frame(height: 40)
         }
-        .navigationTitle(selectedPlace.name)
+        .padding(.horizontal, 24)
+        .background(backgroundWave)
     }
     
-    // MARK: SubViews
+    private var recordButtons: some View {
+        HStack {
+            meteringToggleButton
+            meteringStopButton
+        }
+    }
+    
     private var backgroundWave: some View {
         VStack {
             Spacer()
-            
-            // TODO: 높이 수정 예정
-            // TODO: 파도 추가 예정
-            Rectangle()
-                .fill(audioManager.userNoiseStatus.statusColor)
-                .ignoresSafeArea(edges: .bottom)
-                .frame(height: 200)
+            waveAnimation(percent: percent, waveOffset: waveOffset)
         }
+    }
+    
+    private func waveAnimation(percent: Double, waveOffset: Angle) -> some View {
+        Wave(offSet: Angle(degrees: waveOffset.degrees), percent: audioManager.isMetering ? percent : 20.0)
+            .fill(audioManager.isMetering ? audioManager.userNoiseStatus.statusColor : .gray)
+            .ignoresSafeArea(.all)
+            .onAppear {
+                DispatchQueue.main.async {
+                    withAnimation(waveMotion) {
+                        self.waveOffset = Angle(degrees: 360)
+                    }
+                }
+            }
     }
     
     private var beaker: some View {
