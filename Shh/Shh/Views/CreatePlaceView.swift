@@ -119,14 +119,14 @@ struct CreatePlaceView: View {
             }
         } label: {
             Text("완료")
-                .font(.title3)
+                .font(.title2)
                 .bold()
                 .foregroundStyle(.white)
                 .frame(maxWidth: 350)
                 .frame(height: 56)
-                .background(
+                .background {
                     RoundedRectangle(cornerRadius: 15)
-                )
+                }
         }
         .disabled(name.isEmpty || averageNoise.isZero)
     }
@@ -134,11 +134,21 @@ struct CreatePlaceView: View {
     private var selectAverageNoiseSheet: some View {
         VStack(spacing: 30) {
             VStack {
-                Text("조용한 카페에서의")
-                Text("소음이에요")
+                // TODO: 위아래 패딩 수정 예정
+                Text(Place.decibelWriting(decibel: averageNoise))
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(10)
+                
+                // TODO: 예시 추가 예정
+//                Text(Place.decibelExample(decibel: averageNoise))
+//                    .font(.callout)
+//                    .fontWeight(.medium)
+//                    .foregroundStyle(.gray)
+//                    .lineLimit(8)
             }
-            .font(.title)
-            .fontWeight(.semibold)
             
             Divider()
             
