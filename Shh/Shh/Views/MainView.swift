@@ -41,8 +41,8 @@ struct MainView: View {
     // MARK: Body
     var body: some View {
         ZStack {
-            beaker
             content
+            beaker
         }
         .navigationTitle(selectedPlace.name)
         .onChange(of: audioManager.loudnessIncreaseRatio) { loudnessIncreaseRatio in
