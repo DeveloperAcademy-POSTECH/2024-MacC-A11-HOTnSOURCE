@@ -45,16 +45,9 @@ struct MainView: View {
             beaker
         }
         .navigationTitle(selectedPlace.name)
-        .onChange(of: audioManager.loudnessIncreaseRatio) { loudnessIncreaseRatio in
-            withAnimation(.easeInOut(duration: 0.5)) {
-                if loudnessIncreaseRatio >= 1.5 {
-                    self.percent = 20.0 + Double(loudnessIncreaseRatio * 40)
-                } else if loudnessIncreaseRatio >= 1.3 {
-                    self.percent = 20.0 + Double(loudnessIncreaseRatio * 20)
-                } else {
-                    self.percent = 20.0 + Double(loudnessIncreaseRatio * 20)
-                }
-            }
+        .onAppear { startWaveAnimation() }
+        .onChange(of: CGFloat(audioManager.loudnessIncreaseRatio)) { loudnessIncreaseRatio in
+            changeHeightAnimation(loudness: loudnessIncreaseRatio)
         }
     }
     
@@ -64,14 +57,7 @@ struct MainView: View {
             Spacer()
             
             if !audioManager.isMetering {
-                VStack(alignment: .center) {
-                    Text("아래 버튼을 눌러")
-                    Text("측정을 시작해주세요")
-                }
-                .font(.title2)
-                .bold()
-                .foregroundStyle(.gray)
-                
+                pauseText
                 Spacer()
                 Spacer()
             }
@@ -98,6 +84,16 @@ struct MainView: View {
         .background(backgroundWave)
     }
     
+    private var pauseText: some View {
+        VStack(alignment: .center) {
+            Text("아래 버튼을 눌러")
+            Text("측정을 시작해주세요")
+        }
+        .font(.title2)
+        .bold()
+        .foregroundStyle(.gray)
+    }
+    
     private var recordButtons: some View {
         HStack {
             meteringToggleButton
@@ -113,20 +109,12 @@ struct MainView: View {
     }
     
     private func waveAnimation(percent: Double, waveOffset: Angle) -> some View {
-        Wave(offSet: Angle(degrees: waveOffset.degrees), percent: audioManager.isMetering ? percent : 20.0)
+        Wave(offSet: Angle(degrees: audioManager.isMetering ? waveOffset.degrees : 0.0), percent: audioManager.isMetering ? percent : 20.0)
             .fill(audioManager.isMetering ? audioManager.userNoiseStatus.statusColor : .gray)
             .ignoresSafeArea(.all)
-            .onAppear {
-                DispatchQueue.main.async {
-                    withAnimation(waveMotion) {
-                        self.waveOffset = Angle(degrees: 360)
-                    }
-                }
-            }
     }
     
     private var beaker: some View {
-        // TODO: 간격 수정 예정
         VStack {
             Spacer().frame(height: 80)
             
@@ -230,6 +218,42 @@ struct MainView: View {
                     Circle()
                         .fill(.customBlack)
                 )
+        }
+    }
+    
+    // MARK: Functions
+    private func startWaveAnimation() {
+        DispatchQueue.main.async {
+            withAnimation(waveMotion) {
+                self.waveOffset = Angle(degrees: 360)
+            }
+        }
+    }
+    
+    private func changeHeightAnimation(loudness: CGFloat) {
+        DispatchQueue.main.async {
+            withAnimation(.easeInOut(duration: 0.5)) {
+                let minRatio: CGFloat = 1.0
+                let maxRatio: CGFloat = 1.5
+                
+                switch loudness {
+                case maxRatio...:
+                    self.percent = 100.0
+                    audioManager.userNoiseStatus = .danger
+                    
+                case 1.3..<maxRatio:
+                    self.percent = 75.0
+                    audioManager.userNoiseStatus = .caution
+                    
+                case minRatio..<1.3:
+                    self.percent = 45.0 + (loudness - minRatio) / (maxRatio - minRatio) * 30.0
+                    audioManager.userNoiseStatus = .safe
+                    
+                default:
+                    self.percent = 45.0
+                    audioManager.userNoiseStatus = .safe
+                }
+            }
         }
     }
 }
