@@ -18,9 +18,6 @@ final class AudioManager: ObservableObject {
     
     // 현재 수음 상황
     @Published var isMetering: Bool = false
-
-    // 백그라운드 소음 측정이 진행되고 있는지
-    @Published var isBackgroundMetering: Bool = false
     
     // TODO: 테스트를 위해 @Published로 선언
     // 사용자가 낸 소리가 상대방에게 인지되는 dB; 거리 감쇠 적용
@@ -90,6 +87,7 @@ final class AudioManager: ObservableObject {
         }
     }
     
+    /// 배경의 평균 소음을 측정합니다.
     func meteringBackgroundNoise(completion: @escaping (Float) -> Void) throws {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .measurement, options: [.mixWithOthers, .allowBluetoothA2DP])
@@ -102,7 +100,6 @@ final class AudioManager: ObservableObject {
         // 측정 시작
         audioRecorder.isMeteringEnabled = true
         audioRecorder.record()
-        isBackgroundMetering = true
         
         // 측정 데이터 저장용 변수
         var decibelSum: Float = 0.0
@@ -131,7 +128,6 @@ final class AudioManager: ObservableObject {
                 // 측정 종료
                 audioRecorder.isMeteringEnabled = false
                 audioRecorder.stop()
-                isBackgroundMetering = false
                 
                 // 측정 완료 후 평균값을 completion 핸들러로 전달
                 completion(averageDecibel)
