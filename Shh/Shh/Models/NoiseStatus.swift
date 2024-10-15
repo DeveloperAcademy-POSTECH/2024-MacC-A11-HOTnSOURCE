@@ -50,10 +50,21 @@ extension NoiseStatus {
         case .safe:
             return "지금 아주 잘하고 있어요!"
         case .caution:
-            return "이제 조금 조심해야 해요."
+            return "이제 조금 조심해야 해요"
         case .danger:
             return "지금 바로 조용히 해야 해요!"
         }
     }
     
+    /// 위험도에 따른 노티피케이션 유형입니다. 양호한 경우는 알림을 보내지 않습니다.
+    var notificationType: NotificationType? {
+        switch self {
+        case .safe:
+            return nil
+        case .caution:
+            return .caution
+        case .danger:
+            return .danger
+        }
+    }
 }

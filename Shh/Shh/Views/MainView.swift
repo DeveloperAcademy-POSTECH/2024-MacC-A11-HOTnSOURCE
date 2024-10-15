@@ -24,6 +24,8 @@ struct MainView: View {
     
     let selectedPlace: Place
     
+    private let notificationManager: NotificationManager = .init()
+    
     // MARK: Body
     var body: some View {
         ZStack {
@@ -59,6 +61,13 @@ struct MainView: View {
 
         }
         .navigationTitle(selectedPlace.name)
+        .onChange(of: audioManager.userNoiseStatus) { newValue in
+            Task {
+                if let type = newValue.notificationType {
+                    await notificationManager.sendNotification(type: type)
+                }
+            }
+        }
     }
     
     // MARK: SubViews
