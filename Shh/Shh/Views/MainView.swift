@@ -63,6 +63,19 @@ struct MainView: View {
         VStack {
             Spacer()
             
+            if !audioManager.isMetering {
+                VStack(alignment: .center) {
+                    Text("아래 버튼을 눌러")
+                    Text("측정을 시작해주세요")
+                }
+                .font(.title2)
+                .bold()
+                .foregroundStyle(.gray)
+                
+                Spacer()
+                Spacer()
+            }
+            
             HStack {
                 if audioManager.isMetering {
                     userNoiseStatusInfo
