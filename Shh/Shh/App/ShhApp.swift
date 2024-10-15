@@ -17,6 +17,8 @@ struct ShhApp: App {
     
     @State private var selectedPlace: Place?
     
+    private let notificationManager: NotificationManager = NotificationManager()
+    
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $routerManager.path) {
@@ -33,6 +35,10 @@ struct ShhApp: App {
                 
                 if let selectedPlace = self.selectedPlace {
                     routerManager.push(view: .mainView(selectedPlace: selectedPlace))
+                }
+                
+                Task {
+                    await notificationManager.requestPermission()
                 }
             }
             .environmentObject(routerManager)
