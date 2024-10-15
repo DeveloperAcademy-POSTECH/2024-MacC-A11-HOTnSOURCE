@@ -51,6 +51,9 @@ struct MainView: View {
         .onChange(of: CGFloat(audioManager.loudnessIncreaseRatio)) { loudnessIncreaseRatio in
             changeHeightAnimation(loudness: loudnessIncreaseRatio)
         }
+        .onDisappear {
+            audioManager.stopMetering()
+        }
     }
     
     // MARK: SubViews
