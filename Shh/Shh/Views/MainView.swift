@@ -46,6 +46,7 @@ struct MainView: View {
             content
             beaker
         }
+        .background(backgroundWave)
         .navigationTitle(selectedPlace.name)
         .onAppear { startWaveAnimation() }
         .onChange(of: CGFloat(audioManager.loudnessIncreaseRatio)) { loudnessIncreaseRatio in
@@ -86,7 +87,6 @@ struct MainView: View {
             Spacer().frame(height: 40)
         }
         .padding(.horizontal, 24)
-        .background(backgroundWave)
     }
     
     private var pauseText: some View {
