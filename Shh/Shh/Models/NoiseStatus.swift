@@ -33,7 +33,7 @@ extension NoiseStatus {
     }
     
     /// 위험도에 해당하는 한국어입니다.
-    var korean: String {
+    var korean: LocalizedStringKey {
         switch self {
         case .safe:
             return "양호"
@@ -45,7 +45,7 @@ extension NoiseStatus {
     }
     
     /// 위험도에 따른 안내 문구입니다.
-    var writing: String {
+    var writing: LocalizedStringKey {
         switch self {
         case .safe:
             return "지금 아주 잘하고 있어요!"
