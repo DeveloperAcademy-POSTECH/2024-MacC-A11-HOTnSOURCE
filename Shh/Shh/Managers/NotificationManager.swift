@@ -81,8 +81,8 @@ actor NotificationManager {
     /// 주의 알림 전송
     private func sendCautionNotification() {
         let content = createNotificationContent(
-            subtitle: NoiseStatus.caution.korean,
-            body: NoiseStatus.caution.writing
+            subtitle: LocalizedStringKey("소음 수준: ").toString() + NoiseStatus.caution.korean.toString(),
+            body: NoiseStatus.caution.writing.toString()
         )
         scheduleNotification(content: content)
     }
@@ -90,18 +90,18 @@ actor NotificationManager {
     /// 위험 알림 전송
     private func sendDangerNotification() {
         let content = createNotificationContent(
-            subtitle: NoiseStatus.danger.korean,
-            body: NoiseStatus.danger.writing
+            subtitle: LocalizedStringKey("소음 수준: ").toString() + NoiseStatus.danger.korean.toString(),
+            body: NoiseStatus.danger.writing.toString()
         )
         scheduleNotification(content: content)
     }
     
     /// 푸시 알림 내용 생성
-    private func createNotificationContent(subtitle: LocalizedStringKey? = nil, body: LocalizedStringKey, sound: UNNotificationSound = .default) -> UNMutableNotificationContent {
+    private func createNotificationContent(subtitle: String? = nil, body: String, sound: UNNotificationSound = .default) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         content.sound = sound
-        content.subtitle = subtitle?.toString() ?? ""
-        content.body = body.toString()
+        content.subtitle = subtitle ?? ""
+        content.body = body
         return content
     }
     
