@@ -63,7 +63,14 @@ struct MainView: View {
             Spacer()
             
             if !audioManager.isMetering {
-                pauseText
+                VStack(alignment: .center) {
+                    Text("아래 버튼을 눌러")
+                    Text("측정을 시작해주세요")
+                }
+                .font(.title2)
+                .bold()
+                .foregroundStyle(.gray)
+                
                 Spacer()
                 Spacer()
             }
@@ -71,47 +78,33 @@ struct MainView: View {
             HStack {
                 if audioManager.isMetering {
                     userNoiseStatusInfo
-                    
-                    Spacer()
-                    
-                    VStack(spacing: 14) {
+                }
+                
+                Spacer()
+                
+                VStack(spacing: 14) {
+                    if audioManager.isMetering {
                         placeInfo
-                        recordButtons
                     }
-                } else {
-                    Spacer()
-                    recordButtons
+                    
+                    HStack {
+                        meteringToggleButton
+                        meteringStopButton
+                    }
+                    .navigationTitle(selectedPlace.name)
+                    .onChange(of: audioManager.userNoiseStatus) { newValue in
+                        Task {
+                            if let type = newValue.notificationType {
+                                await notificationManager.sendNotification(type: type)
+                            }
+                        }
+                    }
                 }
             }
             
             Spacer().frame(height: 40)
         }
         .padding(.horizontal, 24)
-    }
-    
-    private var pauseText: some View {
-        VStack(alignment: .center) {
-            Text("아래 버튼을 눌러")
-            Text("측정을 시작해주세요")
-        }
-        .font(.title2)
-        .bold()
-        .foregroundStyle(.gray)
-    }
-    
-    private var recordButtons: some View {
-        HStack {
-            meteringToggleButton
-            meteringStopButton
-        }
-        .navigationTitle(selectedPlace.name)
-        .onChange(of: audioManager.userNoiseStatus) { newValue in
-            Task {
-                if let type = newValue.notificationType {
-                    await notificationManager.sendNotification(type: type)
-                }
-            }
-        }
     }
     
     private var backgroundWave: some View {
