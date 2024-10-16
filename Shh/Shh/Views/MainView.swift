@@ -157,13 +157,12 @@ struct MainView: View {
     private var userNoiseStatusInfo: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("\(audioManager.userNoiseStatus.korean)")
-                .font(.system(size: 56))
-                .fontWeight(.bold)
+                .font(.system(size: 56, weight: .bold, design: .default))
                 .foregroundStyle(.customWhite)
             
             Text("\(audioManager.userNoiseStatus.writing)")
                 .font(.callout)
-                .fontWeight(.bold)
+                .bold()
                 .foregroundStyle(.black)
         }
     }
@@ -172,7 +171,7 @@ struct MainView: View {
         HStack {
             Text("\(Int(selectedPlace.backgroundDecibel)) dB")
                 .font(.body)
-                .fontWeight(.bold)
+                .bold()
                 .foregroundStyle(.customWhite)
             
             Rectangle()
@@ -181,7 +180,7 @@ struct MainView: View {
             
             Text("\(Int(selectedPlace.distance)) m")
                 .font(.body)
-                .fontWeight(.bold)
+                .bold()
                 .foregroundStyle(.customWhite)
         }
     }
@@ -206,7 +205,7 @@ struct MainView: View {
         } label: {
             Image(systemName: audioManager.isMetering ? "pause.fill" : "play.fill")
                 .font(.title3)
-                .fontWeight(.bold)
+                .bold()
                 .foregroundStyle(.customWhite)
                 .padding()
                 .background {
@@ -214,6 +213,8 @@ struct MainView: View {
                         .fill(.customBlack)
                 }
         }
+        .accessibilityLabel(audioManager.isMetering ? "Pause metering" : "Resume metering")
+        .accessibilityHint("Starts or pauses noise metering")
     }
     
     private var meteringStopButton: some View {
@@ -224,14 +225,16 @@ struct MainView: View {
         } label: {
             Image(systemName: "xmark")
                 .font(.title3)
-                .fontWeight(.bold)
+                .bold()
                 .foregroundStyle(.customWhite)
                 .padding()
-                .background(
+                .background {
                     Circle()
                         .fill(.customBlack)
-                )
+                }
         }
+        .accessibilityLabel("Stop metering")
+        .accessibilityHint("Stop noise metering")
     }
     
     // MARK: Functions
