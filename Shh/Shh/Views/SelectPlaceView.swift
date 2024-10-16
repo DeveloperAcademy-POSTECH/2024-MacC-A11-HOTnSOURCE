@@ -102,7 +102,9 @@ struct SelectPlaceView: View {
         }
         
         if storedPlaces.isEmpty {
-            let defaultPlace: Place = .init(id: UUID(), name: "도서관", backgroundDecibel: 40, distance: 1)
+            let defaultPlaceName = NSLocalizedString("도서관", comment: "기본 장소 이름")
+            let defaultPlace: Place = .init(id: UUID(), name: defaultPlaceName, backgroundDecibel: 40, distance: 1)
+            
             
             storedPlaces = [defaultPlace]
             selectedPlace = defaultPlace
