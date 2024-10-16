@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import UserNotifications
 
 // MARK: - 로컬 푸시 알림 담당 매니저 (actor 적용)
@@ -79,22 +80,28 @@ actor NotificationManager {
     
     /// 주의 알림 전송
     private func sendCautionNotification() {
-        let content = createNotificationContent(subtitle: "소음 수준: \(NoiseStatus.caution.korean)", body: NoiseStatus.caution.writing)
+        let content = createNotificationContent(
+            subtitle: NoiseStatus.caution.korean,
+            body: NoiseStatus.caution.writing
+        )
         scheduleNotification(content: content)
     }
     
     /// 위험 알림 전송
     private func sendDangerNotification() {
-        let content = createNotificationContent(subtitle: "소음 수준: \(NoiseStatus.danger.korean)", body: NoiseStatus.danger.writing)
+        let content = createNotificationContent(
+            subtitle: NoiseStatus.danger.korean,
+            body: NoiseStatus.danger.writing
+        )
         scheduleNotification(content: content)
     }
     
     /// 푸시 알림 내용 생성
-    private func createNotificationContent(subtitle: String? = nil, body: String, sound: UNNotificationSound = .default) -> UNMutableNotificationContent {
+    private func createNotificationContent(subtitle: LocalizedStringKey? = nil, body: LocalizedStringKey, sound: UNNotificationSound = .default) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
-        content.sound = .default
-        content.subtitle = subtitle ?? ""
-        content.body = body
+        content.sound = sound
+        content.subtitle = subtitle?.toString() ?? ""
+        content.body = body.toString()
         return content
     }
     
