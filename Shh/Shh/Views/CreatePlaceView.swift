@@ -53,6 +53,7 @@ struct CreatePlaceView: View {
         .navigationTitle("생성하기")
         .padding(.horizontal, 30)
         .scrollIndicators(.hidden)
+        .scrollDisabled(true)
         .sheet(isPresented: $showSelectBackgroundDecibelSheet) {
             selectBackgroundDecibelSheet
                 .presentationDetents([.medium])
