@@ -52,6 +52,7 @@ struct EditPlaceView: View {
         .navigationTitle("수정하기")
         .padding(.horizontal, 30)
         .scrollIndicators(.hidden)
+        .scrollDisabled(true)
         .sheet(isPresented: $showSelectBackgroundDecibelSheet) {
             selectBackgroundDecibelSheet
                 .presentationDetents([.medium])
