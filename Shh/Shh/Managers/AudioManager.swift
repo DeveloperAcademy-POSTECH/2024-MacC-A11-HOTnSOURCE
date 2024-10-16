@@ -19,21 +19,8 @@ final class AudioManager: ObservableObject {
     // 현재 수음 상황
     @Published var isMetering: Bool = false
     
-    // TODO: 테스트를 위해 @Published로 선언
-    // 사용자가 낸 소리가 상대방에게 인지되는 dB; 거리 감쇠 적용
-    @Published var perceivedDecibel: Float = 0.0
-    
-    // 사용자가 낸 소리가 실제로 상대방의 귀에 느껴지는 Loudness 정도
-    @Published var perceivedLoudness: Float = 0.0
-    
-    // 상대방의 실제 귀에 들어가는 Loudness 정도; 배경 소음 + 사용자가 낸 소리
-    @Published var combinedLoudnessValue: Float = 0.0
-    
     // 배경 소음에 비해, 증가된 Loudness 비율
     @Published var loudnessIncreaseRatio: Float = 0.0
-    
-    // 배경 소음이 상대방에게 느껴지는 Loudness 정도
-    @Published var backgroundLoudness: Float = 0.0
     
     // 현재 사용자의 소음 상태
     @Published var userNoiseStatus: NoiseStatus = .safe
@@ -205,14 +192,16 @@ final class AudioManager: ObservableObject {
     /// 사용자가 발생한 소리로부터 일정 거리로 떨어진 상대방이 들리는 최종적인 Loudness 계산
     private func calculateLoudnessForDistance(backgroundDecibel: Float, distance: Float) {
         // 1. 배경 소음의 Loudness 계산
-        backgroundLoudness = loudnessFromDecibel(Float(backgroundDecibel))
+        let backgroundLoudness = loudnessFromDecibel(Float(backgroundDecibel))
         
         // 2. 상대방이 느끼는 소음 (사용자가 내는 소음의 거리 감쇠 적용)
         let distanceRatio = Float(distance) / 0.5
-        perceivedDecibel = calculateDecibelAtDistance(originalDecibel: Float(decibelLevel), distanceRatio: distanceRatio)
+        let perceivedDecibel = calculateDecibelAtDistance(originalDecibel: Float(decibelLevel), distanceRatio: distanceRatio)
         
         // 3. 각각의 dB SPL을 에너지로 변환하여 합산 후, 다시 Loudness로 변환
-        combinedLoudnessValue = combinedLoudness(backgroundDecibel: backgroundDecibel, noiseDecibel: perceivedDecibel)
+        // 상대방의 실제 귀에 들어가는 Loudness 정도; 배경 소음 + 사용자가 낸 소리
+        let combinedLoudnessValue = combinedLoudness(backgroundDecibel: backgroundDecibel, noiseDecibel: perceivedDecibel)
+        
         
         // 4. 배경 소음 대비 바뀐 최종 비율 계산
         loudnessIncreaseRatio = loudnessRatio(originalLoudness: backgroundLoudness, combinedLoudness: combinedLoudnessValue)
