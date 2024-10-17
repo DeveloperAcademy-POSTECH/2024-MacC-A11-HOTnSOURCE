@@ -82,25 +82,32 @@ struct MainView: View {
                 
                 Spacer()
                 
-                VStack(spacing: 14) {
-                    if audioManager.isMetering {
-                        placeInfo
-                    }
+                VStack {
+                    Spacer()
                     
-                    HStack {
-                        meteringToggleButton
-                        meteringStopButton
-                    }
-                    .navigationTitle(selectedPlace.name)
-                    .onChange(of: audioManager.userNoiseStatus) { newValue in
-                        Task {
-                            if let type = newValue.notificationType {
-                                await notificationManager.sendNotification(type: type)
+                    VStack(spacing: 14) {
+                        if audioManager.isMetering {
+                            placeInfo
+                        } else {
+                            Spacer()
+                        }
+                        
+                        HStack {
+                            meteringToggleButton
+                            meteringStopButton
+                        }
+                        .navigationTitle(selectedPlace.name)
+                        .onChange(of: audioManager.userNoiseStatus) { newValue in
+                            Task {
+                                if let type = newValue.notificationType {
+                                    await notificationManager.sendNotification(type: type)
+                                }
                             }
                         }
                     }
                 }
             }
+            .frame(height: 100)
             
             Spacer().frame(height: 40)
         }
