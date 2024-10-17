@@ -79,7 +79,7 @@ struct SelectPlaceView: View {
     private func placeButtonStyle(title: String, textColor: Color, bgColor: Color) -> some View {
         Text(title)
             .font(.title3)
-            .bold()
+            .fontWeight(.bold)
             .foregroundStyle(textColor)
             .padding(.vertical, 20)
             .frame(width: 300)

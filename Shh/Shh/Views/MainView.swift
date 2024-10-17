@@ -46,6 +46,7 @@ struct MainView: View {
             content
             beaker
         }
+        .background(backgroundWave)
         .navigationTitle(selectedPlace.name)
         .onAppear { startWaveAnimation() }
         .onChange(of: CGFloat(audioManager.loudnessIncreaseRatio)) { loudnessIncreaseRatio in
@@ -62,7 +63,14 @@ struct MainView: View {
             Spacer()
             
             if !audioManager.isMetering {
-                pauseText
+                VStack(alignment: .center) {
+                    Text("아래 버튼을 눌러")
+                    Text("측정을 시작해주세요")
+                }
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundStyle(.gray)
+                
                 Spacer()
                 Spacer()
             }
@@ -70,48 +78,40 @@ struct MainView: View {
             HStack {
                 if audioManager.isMetering {
                     userNoiseStatusInfo
-                    
+                }
+                
+                Spacer()
+                
+                VStack {
                     Spacer()
                     
                     VStack(spacing: 14) {
-                        placeInfo
-                        recordButtons
+                        if audioManager.isMetering {
+                            placeInfo
+                        } else {
+                            Spacer()
+                        }
+                        
+                        HStack {
+                            meteringToggleButton
+                            meteringStopButton
+                        }
+                        .navigationTitle(selectedPlace.name)
+                        .onChange(of: audioManager.userNoiseStatus) { newValue in
+                            Task {
+                                if let type = newValue.notificationType {
+                                    await notificationManager.sendNotification(type: type)
+                                }
+                            }
+                        }
                     }
-                } else {
-                    Spacer()
-                    recordButtons
                 }
             }
+            .frame(height: 100)
             
             Spacer().frame(height: 40)
         }
         .padding(.horizontal, 24)
-        .background(backgroundWave)
-    }
-    
-    private var pauseText: some View {
-        VStack(alignment: .center) {
-            Text("아래 버튼을 눌러")
-            Text("측정을 시작해주세요")
-        }
-        .font(.title2)
-        .bold()
-        .foregroundStyle(.gray)
-    }
-    
-    private var recordButtons: some View {
-        HStack {
-            meteringToggleButton
-            meteringStopButton
-        }
-        .navigationTitle(selectedPlace.name)
-        .onChange(of: audioManager.userNoiseStatus) { newValue in
-            Task {
-                if let type = newValue.notificationType {
-                    await notificationManager.sendNotification(type: type)
-                }
-            }
-        }
     }
     
     private var backgroundWave: some View {
@@ -157,8 +157,7 @@ struct MainView: View {
     private var userNoiseStatusInfo: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text(audioManager.userNoiseStatus.korean)
-                .font(.system(size: 56))
-                .fontWeight(.bold)
+                .font(.system(size: 56, weight: .bold, design: .default))
                 .foregroundStyle(.customWhite)
             
             Text(audioManager.userNoiseStatus.writing)
@@ -214,6 +213,8 @@ struct MainView: View {
                         .fill(.customBlack)
                 }
         }
+        .accessibilityLabel(audioManager.isMetering ? "Pause metering" : "Resume metering")
+        .accessibilityHint("Starts or pauses noise metering")
     }
     
     private var meteringStopButton: some View {
@@ -227,11 +228,13 @@ struct MainView: View {
                 .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
                 .padding()
-                .background(
+                .background {
                     Circle()
                         .fill(.customBlack)
-                )
+                }
         }
+        .accessibilityLabel("Stop metering")
+        .accessibilityHint("Stop noise metering")
     }
     
     // MARK: Functions
