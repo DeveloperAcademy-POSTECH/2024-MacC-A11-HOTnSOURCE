@@ -59,7 +59,7 @@ final class AudioManager: ObservableObject {
         }
     }
     
-    // MARK: methods
+    // MARK: Methods
     /// 해당 장소의 소음 측정을 시작합니다.
     func startMetering(place: Place) throws {
         do {
