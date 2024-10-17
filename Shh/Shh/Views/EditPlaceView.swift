@@ -77,7 +77,7 @@ struct EditPlaceView: View {
         VStack(alignment: .leading) {
             Text("이름")
                 .font(.body)
-                .bold()
+                .fontWeight(.bold)
             
             nameTextField
         }
@@ -88,7 +88,7 @@ struct EditPlaceView: View {
             HStack(alignment: .bottom) {
                 Text("배경 소음")
                     .font(.body)
-                    .bold()
+                    .fontWeight(.bold)
                 
                 Spacer()
                 
@@ -108,7 +108,7 @@ struct EditPlaceView: View {
         VStack(alignment: .leading, spacing: 4) {
             Text("측정 반경")
                 .font(.callout)
-                .bold()
+                .fontWeight(.bold)
             
             Text("조심해야할 대상과의 거리를 측정하거나 입력해주세요\n그 곳에서 느낄 당신의 소리 크기를 알려드릴게요")
                 .font(.caption2)
@@ -188,7 +188,7 @@ struct EditPlaceView: View {
         HStack {
             Text("크기")
                 .font(.callout)
-                .bold()
+                .fontWeight(.bold)
             
             Spacer()
             
@@ -209,7 +209,7 @@ struct EditPlaceView: View {
             HStack(alignment: .bottom, spacing: 3) {
                 Text("\(Int(place.backgroundDecibel))")
                     .font(.title2)
-                    .bold()
+                    .fontWeight(.bold)
                 
                 Text("dB")
                     .font(.subheadline)
@@ -228,7 +228,7 @@ struct EditPlaceView: View {
         HStack {
             Text("거리")
                 .font(.callout)
-                .bold()
+                .fontWeight(.bold)
             
             Spacer()
             
@@ -256,7 +256,7 @@ struct EditPlaceView: View {
         HStack(alignment: .bottom, spacing: 3) {
             Text("\(String(place.distance))")
                 .font(.title2)
-                .bold()
+                .fontWeight(.bold)
             
             Text("m")
                 .font(.subheadline)
@@ -294,7 +294,7 @@ struct EditPlaceView: View {
         } label: {
             Text("완료")
                 .font(.title3)
-                .bold()
+                .fontWeight(.bold)
                 .foregroundStyle(.white)
                 .frame(maxWidth: 350)
                 .frame(height: 56)

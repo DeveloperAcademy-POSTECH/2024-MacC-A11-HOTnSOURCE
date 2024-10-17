@@ -68,7 +68,7 @@ struct MainView: View {
                     Text("측정을 시작해주세요")
                 }
                 .font(.title2)
-                .bold()
+                .fontWeight(.bold)
                 .foregroundStyle(.gray)
                 
                 Spacer()
@@ -155,7 +155,7 @@ struct MainView: View {
             
             Text(audioManager.userNoiseStatus.writing)
                 .font(.callout)
-                .bold()
+                .fontWeight(.bold)
                 .foregroundStyle(.black)
         }
     }
@@ -164,7 +164,7 @@ struct MainView: View {
         HStack {
             Text("\(Int(selectedPlace.backgroundDecibel)) dB")
                 .font(.body)
-                .bold()
+                .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
             
             Rectangle()
@@ -173,7 +173,7 @@ struct MainView: View {
             
             Text("\(Int(selectedPlace.distance)) m")
                 .font(.body)
-                .bold()
+                .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
         }
     }
@@ -198,7 +198,7 @@ struct MainView: View {
         } label: {
             Image(systemName: audioManager.isMetering ? "pause.fill" : "play.fill")
                 .font(.title3)
-                .bold()
+                .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
                 .padding()
                 .background {
@@ -218,7 +218,7 @@ struct MainView: View {
         } label: {
             Image(systemName: "xmark")
                 .font(.title3)
-                .bold()
+                .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
                 .padding()
                 .background {
