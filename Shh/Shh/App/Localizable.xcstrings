@@ -125,6 +125,16 @@
         }
       }
     },
+    "소음 수준: " : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noise Level: "
+          }
+        }
+      }
+    },
     "수정하기" : {
       "localizations" : {
         "en" : {
@@ -210,7 +220,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete place"
+            "value" : "Delete Place"
           }
         }
       }
@@ -230,7 +240,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select place"
+            "value" : "Select Place"
           }
         }
       }
@@ -330,7 +340,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sound level"
+            "value" : "Noise Level"
           }
         }
       }
