@@ -193,7 +193,7 @@ struct MainView: View {
             } else {
                 if !isStarted {
                     do {
-                        try audioManager.startMetering(backgroundDecibel: 40.0, distance: 2.0)
+                        try audioManager.startMetering(place: selectedPlace)
                         isStarted = true
                     } catch {
                         // TODO: 재생버튼 다시 눌러달라는 알러트 일단은 팝
