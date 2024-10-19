@@ -197,23 +197,19 @@ final class AudioManager: ObservableObject {
     private func calculateLoudnessForDistance(backgroundDecibel: Float, distance: Float) {
         // 1. 배경 소음의 Loudness 계산
         let backgroundLoudness = convertToLoudness(decibel: backgroundDecibel)
-        print("backgroundLoudness: \(backgroundLoudness)")
         
         // 2. 상대방이 느끼는 소음 (사용자가 내는 소음의 거리 감쇠 적용)
         let distanceRatio = distance / 0.5
         let perceivedDecibel = calculateDecibelAtDistance(originalDecibel: decibelLevel, distanceRatio: distanceRatio)
-        print("percievedDecibel: \(perceivedDecibel)")
+        
         // 3. 배경음과 상대방이 느끼는 소음의 dB 합 계산
         let combinedDecibel = combineDecibels(backgroundDecibel: backgroundDecibel, noiseDecibel: perceivedDecibel)
-        print("combinedDecibel: \(combinedDecibel)")
         
         // 4. 합산된 dB를 Loudness로 변환하여 실제 상대방이 느끼는 소음 수준을 계산
         let combinedLoudness = convertToLoudness(decibel: combinedDecibel)
-        print("combinedLoudness: \(combinedLoudness)")
         
         // 5. 배경 소음 대비 바뀐 최종 비율 계산
         loudnessIncreaseRatio = loudnessRatio(originalLoudness: backgroundLoudness, combinedLoudness: combinedLoudness)
-        print("loundnessIncreaseRatio: \(loudnessIncreaseRatio)")
         
         // 6. 증가된 최종 비율에 따라 위험치를 계산
         if loudnessIncreaseRatio > NoiseStatus.loudnessCautionLevel {
