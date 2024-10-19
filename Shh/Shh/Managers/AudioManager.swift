@@ -40,7 +40,6 @@ final class AudioManager: ObservableObject {
     // 위험치를 계산하기 위해 loudness를 저장해두는 버퍼
     private var loudnessBuffer: [Float] = []
     
-    
     // MARK: init
     init() throws {
         let settings: [String: Any] = [
@@ -60,28 +59,6 @@ final class AudioManager: ObservableObject {
     }
     
     // MARK: Methods
-    /// 해당 장소의 소음 측정을 시작합니다.
-    func startMetering(place: Place) throws {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .measurement, options: [.mixWithOthers, .allowBluetoothA2DP])
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print("오디오 세션을 설정하는 중 오류 발생")
-            throw error
-        }
-        
-        // 측정 시작
-        audioRecorder.isMeteringEnabled = true
-        audioRecorder.record()
-        isMetering = true
-        
-        // 타이머 설정
-        timer = Timer.scheduledTimer(withTimeInterval: decibelMeteringTimeInterval, repeats: true) { _ in
-            self.updateDecibelLevel()
-            self.calculateLoudnessForDistance(backgroundDecibel: place.backgroundDecibel, distance: place.distance)
-        }
-    }
-    
     /// 배경의 평균 소음을 측정합니다.
     func meteringBackgroundNoise(completion: @escaping (Float) -> Void) throws {
         do {
@@ -101,7 +78,7 @@ final class AudioManager: ObservableObject {
         var measurementCount: Int = 0
         
         // 3초간 소음을 측정하기 위한 타이머 (0.1초 간격으로 데시벨 측정)
-        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] timer in
+        timer = Timer.scheduledTimer(withTimeInterval: decibelMeteringTimeInterval, repeats: true) { [weak self] timer in
             guard let self = self else { return }
             
             // 데시벨 값 갱신
@@ -130,15 +107,35 @@ final class AudioManager: ObservableObject {
         }
     }
     
+    /// 해당 장소의 소음 측정을 시작합니다.
+    func startMetering(place: Place) throws {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .measurement, options: [.mixWithOthers, .allowBluetoothA2DP])
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("오디오 세션을 설정하는 중 오류 발생")
+            throw error
+        }
+        
+        // 측정 시작
+        audioRecorder.isMeteringEnabled = true
+        audioRecorder.record()
+        isMetering = true
+        
+        // 타이머 설정
+        timer = Timer.scheduledTimer(withTimeInterval: decibelMeteringTimeInterval, repeats: true) { _ in
+            self.updateDecibelLevel()
+            self.calculateLoudnessForDistance(backgroundDecibel: place.backgroundDecibel, distance: place.distance)
+        }
+    }
+    
     /// 소음 측정을 일시정지합니다.
     func pauseMetering() {
         if isMetering {
             audioRecorder.pause()
             isMetering = false
     
-            decibelLevel = 0.0
-            currentDecibel = 0.0
-            decibelBuffer.removeAll()
+            initializeProperties() // 프로퍼티 초기화
             
             timer?.invalidate()
         }
@@ -165,14 +162,11 @@ final class AudioManager: ObservableObject {
             audioRecorder.stop()
             isMetering = false
             
-            decibelLevel = 0.0
-            currentDecibel = 0.0
-            decibelBuffer.removeAll()
+            initializeProperties() // 프로퍼티 초기화
             
             timer?.invalidate()
         }
     }
-    
     
     // MARK: internal methods
     /// 데시벨 레벨을 갱신합니다.
@@ -203,19 +197,23 @@ final class AudioManager: ObservableObject {
     private func calculateLoudnessForDistance(backgroundDecibel: Float, distance: Float) {
         // 1. 배경 소음의 Loudness 계산
         let backgroundLoudness = convertToLoudness(decibel: backgroundDecibel)
+        print("backgroundLoudness: \(backgroundLoudness)")
         
         // 2. 상대방이 느끼는 소음 (사용자가 내는 소음의 거리 감쇠 적용)
         let distanceRatio = distance / 0.5
         let perceivedDecibel = calculateDecibelAtDistance(originalDecibel: decibelLevel, distanceRatio: distanceRatio)
-        
+        print("percievedDecibel: \(perceivedDecibel)")
         // 3. 배경음과 상대방이 느끼는 소음의 dB 합 계산
         let combinedDecibel = combineDecibels(backgroundDecibel: backgroundDecibel, noiseDecibel: perceivedDecibel)
+        print("combinedDecibel: \(combinedDecibel)")
         
         // 4. 합산된 dB를 Loudness로 변환하여 실제 상대방이 느끼는 소음 수준을 계산
         let combinedLoudness = convertToLoudness(decibel: combinedDecibel)
+        print("combinedLoudness: \(combinedLoudness)")
         
         // 5. 배경 소음 대비 바뀐 최종 비율 계산
         loudnessIncreaseRatio = loudnessRatio(originalLoudness: backgroundLoudness, combinedLoudness: combinedLoudness)
+        print("loundnessIncreaseRatio: \(loudnessIncreaseRatio)")
         
         // 6. 증가된 최종 비율에 따라 위험치를 계산
         if loudnessIncreaseRatio > NoiseStatus.loudnessCautionLevel {
@@ -272,6 +270,14 @@ final class AudioManager: ObservableObject {
         return combinedLoudness / originalLoudness
     }
     
+    /// 측정이 멈출 때, 값들을 초기화합니다.
+    private func initializeProperties() {
+        decibelLevel = 0.0
+        currentDecibel = 0.0
+        loudnessIncreaseRatio = 0.0
+        decibelBuffer.removeAll()
+        loudnessBuffer.removeAll()
+    }
     
     // MARK: deinit
     deinit {
