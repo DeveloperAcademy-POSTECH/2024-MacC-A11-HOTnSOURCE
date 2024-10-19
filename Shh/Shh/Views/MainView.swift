@@ -199,7 +199,8 @@ struct MainView: View {
                         routerManger.pop()
                     }
                 } else {
-                    audioManager.resumeMetering(backgroundDecibel: 40.0, distance: 2.0)
+                    audioManager.resumeMetering(backgroundDecibel: selectedPlace
+                        .backgroundDecibel, distance: selectedPlace.distance)
                 }
             }
         } label: {
