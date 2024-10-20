@@ -18,10 +18,8 @@ struct MeteringInfoView: View {
             }
             .padding()
         }
-        .navigationTitle("측정 정보")
-        
+        .navigationTitle("자주 묻는 질문")
     }
-    
 }
 
 #Preview {
