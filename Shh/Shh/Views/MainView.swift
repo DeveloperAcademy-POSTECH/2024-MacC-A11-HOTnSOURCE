@@ -48,6 +48,18 @@ struct MainView: View {
         }
         .background(backgroundWave)
         .navigationTitle(selectedPlace.name)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    routerManger.push(view: .meteringInfoView)//
+                } label: {
+                    Label("정보", systemImage: "info.circle.fill")
+                        .font(.title2)
+                        .fontWeight(.medium)
+                        .foregroundStyle(.gray)
+                }
+            }
+        }
         .onAppear { startWaveAnimation() }
         .onChange(of: CGFloat(audioManager.loudnessIncreaseRatio)) { loudnessIncreaseRatio in
             changeHeightAnimation(loudness: loudnessIncreaseRatio)
