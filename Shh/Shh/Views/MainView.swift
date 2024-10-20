@@ -53,10 +53,9 @@ struct MainView: View {
                 Button {
                     routerManger.push(view: .meteringInfoView)//
                 } label: {
-                    Label("정보", systemImage: "info.circle.fill")
+                    Label("정보", systemImage: "info.circle")
                         .font(.title2)
                         .fontWeight(.medium)
-                        .foregroundStyle(.gray)
                 }
             }
         }
