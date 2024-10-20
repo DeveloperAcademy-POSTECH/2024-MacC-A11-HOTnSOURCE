@@ -20,7 +20,7 @@ struct InfoRow: View {
                 .padding(.bottom)
             
             VStack(alignment: .leading, spacing: 10) {
-                ForEach(item.description, id: \.self) { description in
+                ForEach(Array(item.description.enumerated()), id: \.offset) { _, description in
                     Text(description)
                         .font(.body)
                         .fontWeight(.medium)

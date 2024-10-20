@@ -11,7 +11,7 @@ struct MeteringInfoView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 60) {
-                ForEach(InfoItem.infoItemList, id: \.title) { infoItem in
+                ForEach(Array(InfoItem.infoItemList.enumerated()), id: \.offset) { _, infoItem in
                     InfoRow(item: infoItem)
                 }
                 Spacer()

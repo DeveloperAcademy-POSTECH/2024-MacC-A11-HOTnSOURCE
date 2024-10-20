@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct InfoItem {
-    let title: String
-    let description: [String]
+    let title: LocalizedStringKey
+    let description: [LocalizedStringKey]
 }
 
 extension InfoItem {
