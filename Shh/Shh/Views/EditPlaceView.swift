@@ -24,6 +24,15 @@ struct EditPlaceView: View {
     @State private var showDeleteAlert: Bool = false
     @State private var isShowingProgressView: Bool = false
     
+    private var nameMaxLength: Int {
+        let currentLocale = Locale.current.language.languageCode?.identifier // 현재 언어 가져오기
+        switch currentLocale {
+        case "en": return 15
+        case "ko": return 8
+        default: return 8
+        }
+    }
+    
     // MARK: Body
     var body: some View {
         ZStack {
@@ -174,12 +183,12 @@ struct EditPlaceView: View {
                 )
                 .focused($isFocused)
                 .onChange(of: place.name) { newValue in
-                    if newValue.count > 8 {
-                        place.name = String(newValue.prefix(8))
+                    if newValue.count > nameMaxLength {
+                        place.name = String(newValue.prefix(nameMaxLength))
                     }
                 }
             
-            Text("\(place.name.count)/8")
+            Text("\(place.name.count)/\(nameMaxLength)")
                 .font(.caption2)
                 .foregroundStyle(.gray)
                 .padding(.trailing)

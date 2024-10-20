@@ -25,6 +25,15 @@ struct CreatePlaceView: View {
     @State private var createResult: CreatePlaceResult?
     @State private var isShowingProgressView: Bool = false
     
+    private var nameMaxLength: Int {
+        let currentLocale = Locale.current.language.languageCode?.identifier
+        switch currentLocale {
+        case "en": return 15
+        case "ko": return 8
+        default: return 8
+        }
+    }
+    
     // MARK: Body
     var body: some View {
         ZStack {
@@ -38,7 +47,7 @@ struct CreatePlaceView: View {
                     
                     distanceRow
                     
-                    Spacer().frame(height: 0)
+                    Spacer().frame(height: 20)
                     
                     completeButton
                 }
@@ -192,12 +201,12 @@ struct CreatePlaceView: View {
                 )
                 .focused($isFocused)
                 .onChange(of: name) { newValue in
-                    if newValue.count > 8 {
-                        name = String(newValue.prefix(8))
+                    if newValue.count > nameMaxLength {
+                        name = String(newValue.prefix(nameMaxLength))
                     }
                 }
             
-            Text("\(name.count)/8")
+            Text("\(name.count)/\(nameMaxLength)")
                 .font(.caption2)
                 .foregroundStyle(.gray)
                 .padding(.trailing)
