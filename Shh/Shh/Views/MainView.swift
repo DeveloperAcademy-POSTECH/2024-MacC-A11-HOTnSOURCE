@@ -51,7 +51,7 @@ struct MainView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    routerManger.push(view: .meteringInfoView)//
+                    routerManger.push(view: .meteringInfoView)
                 } label: {
                     Label("정보", systemImage: "info.circle")
                         .font(.title2)
