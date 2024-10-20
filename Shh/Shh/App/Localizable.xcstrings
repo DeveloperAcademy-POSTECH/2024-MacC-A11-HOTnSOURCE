@@ -4,6 +4,106 @@
     "" : {
 
     },
+    "- '위험' 에 해당하는 소음이 발생하면 즉시 알림을 보냅니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- If a noise corresponding to 'Danger' occurs, a notification is sent immediately."
+          }
+        }
+      }
+    },
+    "- '주의'에 해당하는 소음이 일정시간 지속되면 알림을 보냅니다. 과도한 알림 방지를 위해, 다음 알림은 최소한 30초 뒤에 옵니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- If the noise corresponding to 'caution' persists for a certain period of time, a notification will be sent. To prevent excessive notifications, the next notification will come at least 30 seconds later."
+          }
+        }
+      }
+    },
+    "- 경고(파란색): 상대방이 내 소리를 인지하지만 아직 큰 영향은 끼치지 않아요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Warning (Blue): The other person recognizes your sound, but it doesn't have much impact yet."
+          }
+        }
+      }
+    },
+    "- 높이가 높을수록 상대방은 시끄럽다고 느껴요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- The higher the height, the louder the other person feels."
+          }
+        }
+      }
+    },
+    "- 안전(초록색): 내가 낸 소리가 상대방에게 영향을 크게 미치지 않아요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Safety (green): The sound you make doesn't really affect the other person."
+          }
+        }
+      }
+    },
+    "- 앱에서 나가거나 화면을 잠궈도 백그라운드에서 측정이 계속 이루어져요. (기기 상단에 노란 점이 켜져 있을 경우 마이크 사용중)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Even if you leave the app or lock the screen, the measurement continues in the background. (While using the microphone, the yellow dot is on at the top of the device)"
+          }
+        }
+      }
+    },
+    "- 위험(분홍색): 상대방이 내 소리를 명백한 소음으로 인식해요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- Dangers (pink): The other person recognizes your sound as obvious noise."
+          }
+        }
+      }
+    },
+    "- 조심해야 할 경우 푸시 알림으로 알려드려요. 화면을 매번 볼 필요 없이 핸드폰을 내려놓고 편안하게 작업하세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- If you need to be careful, we'll notify you with a push notification. Put your phone down and work comfortably without having to look at the screen every time."
+          }
+        }
+      }
+    },
+    "- 측정된 소음 정보는 저장하지 않아요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- We does not store the measured noise information."
+          }
+        }
+      }
+    },
+    "'내가 낸 소리가 상대방에게 얼마나 크게 들릴지'를 측정하기 위해 기기의 마이크를 사용합니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shh-! app uses the microphone of device to check 'how loud my sound will be to the other person'."
+          }
+        }
+      }
+    },
     "%@" : {
 
     },
@@ -28,6 +128,46 @@
     },
     "%lld/8" : {
 
+    },
+    "✅ Shh-!의 소음 측정은 어떻게 이루어지나요?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✅ How is the noise measurement done for this app?"
+          }
+        }
+      }
+    },
+    "✅ 내가 시끄러운지 어떻게 알 수 있나요?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✅ How do I know if I'm loud?"
+          }
+        }
+      }
+    },
+    "✅ 메인 화면의 색상은 무엇을 나타내나요?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✅ What does the color of the main screen represent?"
+          }
+        }
+      }
+    },
+    "✅ 알림은 언제 오나요?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✅ When do I get the notification?"
+          }
+        }
+      }
     },
     "dB" : {
       "localizations" : {
@@ -91,6 +231,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Library"
+          }
+        }
+      }
+    },
+    "메인 화면에서 보이는 물결의 높낮이는 내 소리가 얼마나 시끄러운지를 나타냅니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The highness of the wave you see on the main screen indicates how loud your sound is."
+          }
+        }
+      }
+    },
+    "메인 화면의 색상은 '위험 수준'을 나타내요. 이 앱에서는 상대방이 내 소리를 인지하는 정도에 따라, 위험 수준을 세 단계로 구분합니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The color on the main screen represents the \"risk level.\" There’s three risk levels, depending on the degree to which the other person perceives your sound."
           }
         }
       }
@@ -215,6 +375,16 @@
         }
       }
     },
+    "자주 묻는 질문" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FAQ"
+          }
+        }
+      }
+    },
     "장소 삭제하기" : {
       "localizations" : {
         "en" : {
@@ -251,6 +421,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Are you sure you want to delete?"
+          }
+        }
+      }
+    },
+    "정보" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Information"
           }
         }
       }

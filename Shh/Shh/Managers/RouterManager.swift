@@ -25,7 +25,7 @@ enum ShhView: Hashable {
     case createPlaceView
     case editPlaceView(place: Place, storedPlaces: [Place])
     case mainView(selectedPlace: Place)
-    
+    case meteringInfoView
     @ViewBuilder
     var view: some View {
         switch self {
@@ -37,6 +37,8 @@ enum ShhView: Hashable {
             EditPlaceView(place: place, storedPlaces: storedPlaces)
         case .mainView(let selectedPlace):
             MainView(selectedPlace: selectedPlace)
+        case .meteringInfoView:
+            MeteringInfoView()
         }
     }
 }
