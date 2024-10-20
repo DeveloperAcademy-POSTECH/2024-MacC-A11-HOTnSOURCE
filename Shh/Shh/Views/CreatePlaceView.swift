@@ -29,6 +29,8 @@ struct CreatePlaceView: View {
     var body: some View {
         ZStack {
             ScrollView {
+                Spacer().frame(height: 20)
+                
                 VStack(alignment: .leading, spacing: 40) {
                     nameRow
                     
@@ -351,5 +353,7 @@ enum CreatePlaceResult: String {
 
 // MARK: - Preview
 #Preview {
-    CreatePlaceView()
+    NavigationView {
+        CreatePlaceView()
+    }
 }

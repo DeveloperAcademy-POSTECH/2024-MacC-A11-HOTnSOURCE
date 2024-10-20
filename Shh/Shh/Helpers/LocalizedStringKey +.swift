@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension LocalizedStringKey {
-    func toString(locale: Locale = .current) -> String {
+    func toString() -> String {
         let mirror = Mirror(reflecting: self)
         if let key = mirror.children.first(where: { $0.label == "key" })?.value as? String {
             return NSLocalizedString(key, comment: "")

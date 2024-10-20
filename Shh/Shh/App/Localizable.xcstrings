@@ -26,8 +26,15 @@
     "%lld m" : {
 
     },
-    "%lld/8" : {
-
+    "%lld/%lld" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld"
+          }
+        }
+      }
     },
     "dB" : {
       "localizations" : {

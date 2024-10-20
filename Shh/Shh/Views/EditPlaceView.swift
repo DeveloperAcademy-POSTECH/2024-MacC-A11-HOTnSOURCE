@@ -28,6 +28,8 @@ struct EditPlaceView: View {
     var body: some View {
         ZStack {
             ScrollView {
+                Spacer().frame(height: 20)
+                
                 VStack(alignment: .leading, spacing: 40) {
                     nameRow
                     
@@ -363,5 +365,7 @@ struct EditPlaceView: View {
 
 // MARK: - Preview
 #Preview {
-    EditPlaceView(place: .init(id: UUID(), name: "도서관", backgroundDecibel: 50, distance: 2), storedPlaces: [])
+    NavigationView {
+        EditPlaceView(place: .init(id: UUID(), name: "도서관", backgroundDecibel: 50, distance: 2), storedPlaces: [])
+    }
 }
