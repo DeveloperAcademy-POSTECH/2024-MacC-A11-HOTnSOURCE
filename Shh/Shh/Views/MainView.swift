@@ -48,6 +48,17 @@ struct MainView: View {
         }
         .background(backgroundWave)
         .navigationTitle(selectedPlace.name)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    routerManger.push(view: .meteringInfoView)
+                } label: {
+                    Label("정보", systemImage: "info.circle")
+                        .font(.title2)
+                        .fontWeight(.medium)
+                }
+            }
+        }
         .onAppear { startWaveAnimation() }
         .onChange(of: CGFloat(audioManager.loudnessIncreaseRatio)) { loudnessIncreaseRatio in
             changeHeightAnimation(loudness: loudnessIncreaseRatio)
@@ -164,6 +175,7 @@ struct MainView: View {
                 .font(.callout)
                 .fontWeight(.bold)
                 .foregroundStyle(.black)
+                .lineLimit(2, reservesSpace: true)
         }
     }
     
