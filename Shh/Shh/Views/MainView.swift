@@ -164,6 +164,7 @@ struct MainView: View {
                 .font(.callout)
                 .fontWeight(.bold)
                 .foregroundStyle(.black)
+                .lineLimit(2, reservesSpace: true)
         }
     }
     
