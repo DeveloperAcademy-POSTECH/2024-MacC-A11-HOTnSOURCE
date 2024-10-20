@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Place: Identifiable, Hashable, Codable {
     let id: UUID
@@ -22,7 +23,7 @@ extension Place {
     static let backgroundDecibelOptions: [Float] = [30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0]
     
     /// 해당 데시벨에 대한 설명입니다. 이를 통해 사용자가 데시벨 정도를 가늠할 수 있습니다.
-    static func decibelWriting(decibel: Float) -> String {
+    static func decibelWriting(decibel: Float) -> LocalizedStringKey {
         let intDecibel = Int(decibel)
         
         switch intDecibel {
