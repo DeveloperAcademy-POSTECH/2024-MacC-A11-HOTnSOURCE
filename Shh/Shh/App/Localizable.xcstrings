@@ -126,8 +126,15 @@
     "%lld m" : {
 
     },
-    "%lld/8" : {
-
+    "%lld/%lld" : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld"
+          }
+        }
+      }
     },
     "✅ Shh-!의 소음 측정은 어떻게 이루어지나요?" : {
       "localizations" : {
@@ -224,6 +231,36 @@
         }
       }
     },
+    "냉장고, 바람 소리가 들리는 정도의 실내 소음" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indoor noise level similar to the sound of a refrigerator or wind"
+          }
+        }
+      }
+    },
+    "데시벨 설명 없음" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No decibel explanation"
+          }
+        }
+      }
+    },
+    "도로변에서 들리는 자동차와 사람들 소리" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The noise level of cars and people typically heard near a roadside"
+          }
+        }
+      }
+    },
     "도서관" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -305,12 +342,32 @@
         }
       }
     },
+    "시끄러운 사무실이나 사람들 간의 활발한 토론 소리" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The noise of a loud office or lively discussions between people"
+          }
+        }
+      }
+    },
     "아래 버튼을 눌러" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "By pressing the button below"
+          }
+        }
+      }
+    },
+    "아주 조용한 방에서의 환경음" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The ambient noise in a very quiet room"
           }
         }
       }
@@ -371,6 +428,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You need to be a little cautious now"
+          }
+        }
+      }
+    },
+    "일상적인 대화 소리, 도로에서의 자동차 소음" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The sound of everyday conversations and traffic noise from the road"
           }
         }
       }
@@ -445,6 +512,26 @@
         }
       }
     },
+    "조용한 사무실에서 들리는 일반적인 실내 소음" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Typical indoor noise heard in a quiet office"
+          }
+        }
+      }
+    },
+    "조용한 카페에서 나오는 배경 소음" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Background noise in a quiet café"
+          }
+        }
+      }
+    },
     "주변 소음 측정" : {
       "localizations" : {
         "en" : {
@@ -461,6 +548,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Caution"
+          }
+        }
+      }
+    },
+    "주택가에서 들리는 적당한 실내 소음" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moderate indoor noise heard in a residential area"
           }
         }
       }
@@ -521,6 +618,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Noise Level"
+          }
+        }
+      }
+    },
+    "평소 대화 소리나 가정에서의 일상 소음" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Everyday conversation sounds or typical household noise"
           }
         }
       }
