@@ -242,10 +242,7 @@ final class AudioManager: ObservableObject {
                 userNoiseStatus = .safe
             }
             
-            print(loudnessBuffer)
             loudnessBuffer.removeFirst(2)
-            print(loudnessBuffer)
-            print("\n")
         }
     }
     
