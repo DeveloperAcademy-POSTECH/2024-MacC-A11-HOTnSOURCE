@@ -24,8 +24,11 @@ final class AudioManager: ObservableObject {
     @Published var userNoiseStatus: NoiseStatus = .safe
     
     private let audioRecorder: AVAudioRecorder
+    
     private let decibelMeteringTimeInterval: TimeInterval = 0.1
     private let decibelBufferSize: Int = 5 // 0.5초 간의 소리로 데시벨을 갱신
+    
+    private let loudnessMeteringTimeInterval: TimeInterval = 0.5
     private let loudnessBufferSize: Int = 4 // 2초 지속됐을 경우 위험도를 갱신
     
     // 현 시점의 사용자의 dB; 0.1초 간격으로 측정
@@ -168,7 +171,7 @@ final class AudioManager: ObservableObject {
         }
     }
     
-    // MARK: internal methods
+    // MARK: Internal methods
     /// 데시벨 레벨을 갱신합니다.
     private func updateDecibelLevel() {
         audioRecorder.updateMeters()
@@ -186,8 +189,8 @@ final class AudioManager: ObservableObject {
         
         // 버퍼가 가득차면, 평균치를 계산하여 업데이트
         if decibelBuffer.count == decibelBufferSize {
-            let bufferAverage = decibelBuffer.reduce(0, +) / Float(decibelBuffer.count)
-            decibelLevel = bufferAverage
+            let averageDecibel = decibelBuffer.reduce(0, +) / Float(decibelBuffer.count)
+            decibelLevel = averageDecibel
             
             decibelBuffer.removeAll() // 초기 위치에 다시 저장, 새로운 메모리 할당하지 않음
         }
@@ -212,21 +215,21 @@ final class AudioManager: ObservableObject {
         loudnessIncreaseRatio = loudnessRatio(originalLoudness: backgroundLoudness, combinedLoudness: combinedLoudness)
         
         // 6. 증가된 최종 비율에 따라 위험치를 계산
-        if loudnessIncreaseRatio > NoiseStatus.loudnessCautionLevel {
-            loudnessBuffer.append(loudnessIncreaseRatio)
-        } else {
-            userNoiseStatus = .safe
-            loudnessBuffer.removeAll()
-        }
+        loudnessBuffer.append(loudnessIncreaseRatio)
         
         if loudnessBuffer.count >= loudnessBufferSize {
-            var isDanger: Bool = true
-            for value in loudnessBuffer.suffix(loudnessBufferSize) { // 최근 2초만을 관찰
-                if value < NoiseStatus.loudnessDangerLevel {
-                    isDanger = false
-                }
+            let loudnessAverage: Float = loudnessBuffer.reduce(0, +) / Float(loudnessBufferSize)
+            
+            if loudnessAverage > NoiseStatus.loudnessCautionLevel {
+                userNoiseStatus = .caution
+            } else {
+                userNoiseStatus = .safe
             }
-            userNoiseStatus = isDanger ? .danger : .caution
+            
+            print(loudnessBuffer)
+            loudnessBuffer.removeFirst(2)
+            print(loudnessBuffer)
+            print("\n")
         }
     }
     
