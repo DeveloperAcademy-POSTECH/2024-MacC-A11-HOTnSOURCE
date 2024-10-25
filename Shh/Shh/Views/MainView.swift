@@ -211,8 +211,7 @@ struct MainView: View {
                         routerManger.pop()
                     }
                 } else {
-                    audioManager.resumeMetering(backgroundDecibel: selectedPlace
-                        .backgroundDecibel, distance: selectedPlace.distance)
+                    audioManager.resumeMetering(place: selectedPlace)
                 }
             }
         } label: {
@@ -268,19 +267,15 @@ struct MainView: View {
                 switch loudness {
                 case maxRatio...:
                     self.percent = 100.0
-                    audioManager.userNoiseStatus = .danger
                     
                 case 1.3..<maxRatio:
                     self.percent = 75.0
-                    audioManager.userNoiseStatus = .caution
                     
                 case minRatio..<1.3:
                     self.percent = 45.0 + (loudness - minRatio) / (maxRatio - minRatio) * 30.0
-                    audioManager.userNoiseStatus = .safe
                     
                 default:
                     self.percent = 45.0
-                    audioManager.userNoiseStatus = .safe
                 }
             }
         }
