@@ -25,6 +25,8 @@ final class AudioManager: ObservableObject {
     
     private let audioRecorder: AVAudioRecorder
     
+    private let backgroundNoiseMeteringTime: Int = 3 // 3초 간의 소리를 받아와 배경 소음을 갱신
+    
     private let decibelMeteringTimeInterval: TimeInterval = 0.1
     private let decibelBufferSize: Int = 5 // 0.5초 간의 소리로 데시벨을 갱신
     
@@ -76,11 +78,10 @@ final class AudioManager: ObservableObject {
         audioRecorder.isMeteringEnabled = true
         audioRecorder.record()
         
-        // 측정 데이터 저장용 변수
+        // 3초간 소음을 측정하기 위한 타이머
         var decibelSum: Float = 0.0
         var measurementCount: Int = 0
         
-        // 3초간 소음을 측정하기 위한 타이머 (0.1초 간격으로 데시벨 측정)
         timer = Timer.scheduledTimer(withTimeInterval: decibelMeteringTimeInterval, repeats: true) { [weak self] timer in
             guard let self = self else { return }
             
@@ -94,8 +95,8 @@ final class AudioManager: ObservableObject {
             measurementCount += 1
             
             // 3초(30회) 경과 후 평균값 계산 및 리턴
-            if measurementCount >= 30 { // 0.1초 간격으로 3초간 측정(총 30회)
-                let averageDecibel = decibelSum / Float(measurementCount)
+            if measurementCount >= Int(Double(backgroundNoiseMeteringTime) / decibelMeteringTimeInterval.magnitude) { // 0.1초 간격으로 3초간 측정(총 30회)
+                let decibelAverage = decibelSum / Float(measurementCount)
                 
                 // 타이머 종료
                 timer.invalidate()
@@ -105,7 +106,7 @@ final class AudioManager: ObservableObject {
                 audioRecorder.stop()
                 
                 // 측정 완료 후 평균값을 completion 핸들러로 전달
-                completion(averageDecibel)
+                completion(decibelAverage)
             }
         }
     }
@@ -126,9 +127,16 @@ final class AudioManager: ObservableObject {
         isMetering = true
         
         // 타이머 설정
+        var loudnessCounter: Int = 0 // decibel과 loudness 갱신 타이밍을 다르게 하기 위한 카운터
+        
         timer = Timer.scheduledTimer(withTimeInterval: decibelMeteringTimeInterval, repeats: true) { _ in
             self.updateDecibelLevel()
-            self.calculateLoudnessForDistance(backgroundDecibel: place.backgroundDecibel, distance: place.distance)
+            
+            if loudnessCounter % Int(self.loudnessMeteringTimeInterval / self.decibelMeteringTimeInterval) == 0 {
+                self.calculateLoudnessForDistance(backgroundDecibel: place.backgroundDecibel, distance: place.distance)
+            }
+            
+            loudnessCounter += 1
         }
     }
     
@@ -145,16 +153,24 @@ final class AudioManager: ObservableObject {
     }
     
     /// 소음 측정을 재개합니다.
-    func resumeMetering(backgroundDecibel: Float, distance: Float) {
+    func resumeMetering(place: Place) {
         if !isMetering {
             audioRecorder.record()
             isMetering = true
             
             // 타이머 설정
+            var loudnessCounter: Int = 0 // decibel과 loudness 갱신 타이밍을 다르게 하기 위한 카운터
+            
             timer = Timer.scheduledTimer(withTimeInterval: decibelMeteringTimeInterval, repeats: true) { _ in
                 self.updateDecibelLevel()
-                self.calculateLoudnessForDistance(backgroundDecibel: backgroundDecibel, distance: distance)
+                
+                if loudnessCounter % Int(self.loudnessMeteringTimeInterval / self.decibelMeteringTimeInterval) == 0 {
+                    self.calculateLoudnessForDistance(backgroundDecibel: place.backgroundDecibel, distance: place.distance)
+                }
+                
+                loudnessCounter += 1
             }
+
         }
     }
     
