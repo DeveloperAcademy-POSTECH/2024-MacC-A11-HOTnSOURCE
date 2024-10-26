@@ -457,7 +457,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete Place"
+            "value" : "Delete Location"
           }
         }
       }
@@ -467,7 +467,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Failed to create new place"
+            "value" : "Failed to create new location"
           }
         }
       }
@@ -477,7 +477,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select Place"
+            "value" : "Select Location"
           }
         }
       }

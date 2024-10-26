@@ -24,7 +24,7 @@ struct MainView: View {
     @State private var percent = 20.0
     @State private var waveOffset = Angle(degrees: 0)
     
-    let selectedPlace: Place
+    let selectedLocation: Location
     
     private let waveMotion = Animation
         .linear(duration: 3.5)
@@ -47,7 +47,7 @@ struct MainView: View {
             beaker
         }
         .background(backgroundWave)
-        .navigationTitle(selectedPlace.name)
+        .navigationTitle(selectedLocation.name)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -98,7 +98,7 @@ struct MainView: View {
                     
                     VStack(spacing: 14) {
                         if audioManager.isMetering {
-                            placeInfo
+                            locationInfo
                         } else {
                             Spacer()
                         }
@@ -107,7 +107,7 @@ struct MainView: View {
                             meteringToggleButton
                             meteringStopButton
                         }
-                        .navigationTitle(selectedPlace.name)
+                        .navigationTitle(selectedLocation.name)
                         .onChange(of: audioManager.userNoiseStatus) { newValue in
                             Task {
                                 if let type = newValue.notificationType {
@@ -179,9 +179,9 @@ struct MainView: View {
         }
     }
     
-    private var placeInfo: some View {
+    private var locationInfo: some View {
         HStack {
-            Text("\(Int(selectedPlace.backgroundDecibel)) dB")
+            Text("\(Int(selectedLocation.backgroundDecibel)) dB")
                 .font(.body)
                 .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
@@ -190,7 +190,7 @@ struct MainView: View {
                 .fill(.customWhite)
                 .frame(width: 1, height: 18)
             
-            Text("\(Int(selectedPlace.distance)) m")
+            Text("\(Int(selectedLocation.distance)) m")
                 .font(.body)
                 .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
@@ -204,14 +204,14 @@ struct MainView: View {
             } else {
                 if !isStarted {
                     do {
-                        try audioManager.startMetering(place: selectedPlace)
+                        try audioManager.startMetering(location: selectedLocation)
                         isStarted = true
                     } catch {
                         // TODO: 재생버튼 다시 눌러달라는 알러트 일단은 팝
                         routerManger.pop()
                     }
                 } else {
-                    audioManager.resumeMetering(place: selectedPlace)
+                    audioManager.resumeMetering(location: selectedLocation)
                 }
             }
         } label: {
@@ -283,5 +283,5 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView(selectedPlace: Place(id: UUID(), name: "도서관", backgroundDecibel: 40.0, distance: 2.0))
+    MainView(selectedLocation: Location(id: UUID(), name: "도서관", backgroundDecibel: 40.0, distance: 2.0))
 }

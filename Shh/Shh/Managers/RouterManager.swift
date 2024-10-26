@@ -21,22 +21,22 @@ class RouterManager: ObservableObject {
 }
 
 enum ShhView: Hashable {
-    case selectPlaceView
-    case createPlaceView
-    case editPlaceView(place: Place, storedPlaces: [Place])
-    case mainView(selectedPlace: Place)
+    case selectLocationView
+    case createLocationView
+    case editLocationView(location: Location, storedLocations: [Location])
+    case mainView(selectedLocation: Location)
     case meteringInfoView
     @ViewBuilder
     var view: some View {
         switch self {
-        case .selectPlaceView:
-            SelectPlaceView()
-        case .createPlaceView:
-            CreatePlaceView()
-        case .editPlaceView(let place, let storedPlaces):
-            EditPlaceView(place: place, storedPlaces: storedPlaces)
-        case .mainView(let selectedPlace):
-            MainView(selectedPlace: selectedPlace)
+        case .selectLocationView:
+            SelectLocationView()
+        case .createLocationView:
+            CreateLocationView()
+        case .editLocationView(let location, let storedLocations):
+            EditLocationView(location: location, storedLocations: storedLocations)
+        case .mainView(let selectedLocation):
+            MainView(selectedLocation: selectedLocation)
         case .meteringInfoView:
             MeteringInfoView()
         }

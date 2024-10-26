@@ -1,5 +1,5 @@
 //
-//  EditPlaceView.swift
+//  CreateLocationView.swift
 //  Shh
 //
 //  Created by Jia Jang on 10/9/24.
@@ -7,25 +7,26 @@
 
 import SwiftUI
 
-// MARK: - 장소 수정 뷰
-struct EditPlaceView: View {
+// MARK: - 장소 생성 뷰
+struct CreateLocationView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
     
-    @AppStorage("places") private var storedPlacesData: String = "[]"
-    @AppStorage("selectedPlace") private var storedSelectedPlace: String = ""
+    @AppStorage("locations") private var storedLocationsData: String = "[]"
+    @AppStorage("selectedLocation") private var storedSelectedLocation: String = ""
     
     @FocusState private var isFocused: Bool
     
-    @State var place: Place
-    @State var storedPlaces: [Place]
-    @State private var selectedPlace: Place?
+    @State private var name: String = ""
+    @State private var backgroundDecibel: Float = 0
+    @State private var distance: Float = 1
     @State private var showSelectBackgroundDecibelSheet: Bool = false
-    @State private var showDeleteAlert: Bool = false
+    @State private var createFail: Bool = false
+    @State private var createResult: CreateLocationResult?
     @State private var isShowingProgressView: Bool = false
     
     private var nameMaxLength: Int {
-        let currentLocale = Locale.current.language.languageCode?.identifier // 현재 언어 가져오기
+        let currentLocale = Locale.current.language.languageCode?.identifier
         switch currentLocale {
         case "en": return 15
         case "ko": return 8
@@ -46,9 +47,9 @@ struct EditPlaceView: View {
                     
                     distanceRow
                     
-                    Spacer().frame(height: 0)
+                    Spacer().frame(height: 20)
                     
-                    actionButtonStack
+                    completeButton
                 }
             }
             
@@ -60,7 +61,7 @@ struct EditPlaceView: View {
                 ProgressView()
             }
         }
-        .navigationTitle("수정하기")
+        .navigationTitle("생성하기")
         .padding(.horizontal, 30)
         .scrollIndicators(.hidden)
         .scrollDisabled(true)
@@ -69,14 +70,12 @@ struct EditPlaceView: View {
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
         }
-        .alert("\(place.name) 삭제", isPresented: $showDeleteAlert) {
-            Button("삭제", role: .destructive) {
-                deletePlace(place)
-                routerManager.pop()
+        .alert("장소 생성 실패", isPresented: $createFail) {
+            Button("확인", role: .cancel) {
+                name = ""
             }
-            Button("취소", role: .cancel) { }
         } message: {
-            Text("정말 삭제하시겠습니까?")
+            Text(createResult?.rawValue ?? CreateLocationResult.unknown.rawValue)
         }
         .onTapGesture {
             isFocused = false
@@ -103,7 +102,7 @@ struct EditPlaceView: View {
                 
                 Spacer()
                 
-                BackgroundDecibelMeteringButton(backgroundDecibel: $place.backgroundDecibel, isShowingProgressView: $isShowingProgressView)
+                BackgroundDecibelMeteringButton(backgroundDecibel: $backgroundDecibel, isShowingProgressView: $isShowingProgressView)
             }
             Text("기준이 될 현장의 배경 소음을 측정하거나 입력해주세요\n기준보다 큰 소리를 내시면 알려드릴게요")
                 .font(.caption2)
@@ -131,21 +130,40 @@ struct EditPlaceView: View {
         }
     }
     
-    private var actionButtonStack: some View {
-        VStack {
-            completeButton
+    private var completeButton: some View {
+        Button {
+            let newLocation = Location(id: UUID(), name: name, backgroundDecibel: backgroundDecibel, distance: distance)
             
-            Spacer().frame(height: 20)
-            
-            deleteButton
+            if createLocation(newLocation) {
+                saveNewSelectedLocation(newLocation)
+                
+                routerManager.pop()
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                    routerManager.push(view: .mainView(selectedLocation: newLocation))
+                }
+            } else {
+                createFail = true
+            }
+        } label: {
+            Text("완료")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundStyle(.white)
+                .frame(maxWidth: 350)
+                .frame(height: 56)
+                .background {
+                    RoundedRectangle(cornerRadius: 15)
+                }
         }
+        .disabled(name.isEmpty || backgroundDecibel.isZero)
     }
     
     private var selectBackgroundDecibelSheet: some View {
         VStack(spacing: 30) {
             VStack {
                 // TODO: 위아래 패딩 수정 예정
-                Text(Place.decibelWriting(decibel: place.backgroundDecibel))
+                Text(Location.decibelWriting(decibel: backgroundDecibel))
                     .font(.title2)
                     .fontWeight(.semibold)
                     .foregroundStyle(.white)
@@ -153,7 +171,7 @@ struct EditPlaceView: View {
                     .lineLimit(10)
                 
                 // TODO: 예시 추가 예정
-//                Text(Place.decibelExample(decibel: backgroundDecibel))
+//                Text(Location.decibelExample(decibel: backgroundDecibel))
 //                    .font(.callout)
 //                    .fontWeight(.medium)
 //                    .foregroundStyle(.gray)
@@ -162,7 +180,7 @@ struct EditPlaceView: View {
             
             Divider()
             
-            Picker("", selection: $place.backgroundDecibel) {
+            Picker("", selection: $backgroundDecibel) {
                 ForEach(Array(stride(from: 30.0, to: 75.0, by: 5.0)), id: \.self) { value in
                     Text("\(Int(value))")
                         .tag(Float(value))
@@ -175,20 +193,20 @@ struct EditPlaceView: View {
     
     private var nameTextField: some View {
         ZStack(alignment: .trailing) {
-            TextField("이름을 입력해주세요", text: $place.name)
+            TextField("이름을 입력해주세요", text: $name)
                 .padding(20)
                 .background(
                     RoundedRectangle(cornerRadius: 15)
                         .fill(.tertiary)
                 )
                 .focused($isFocused)
-                .onChange(of: place.name) { newValue in
+                .onChange(of: name) { newValue in
                     if newValue.count > nameMaxLength {
-                        place.name = String(newValue.prefix(nameMaxLength))
+                        name = String(newValue.prefix(nameMaxLength))
                     }
                 }
             
-            Text("\(place.name.count)/\(nameMaxLength)")
+            Text("\(name.count)/\(nameMaxLength)")
                 .font(.caption2)
                 .foregroundStyle(.gray)
                 .padding(.trailing)
@@ -218,7 +236,7 @@ struct EditPlaceView: View {
             showSelectBackgroundDecibelSheet = true
         } label: {
             HStack(alignment: .bottom, spacing: 3) {
-                Text("\(Int(place.backgroundDecibel))")
+                Text("\(Int(backgroundDecibel))")
                     .font(.title2)
                     .fontWeight(.bold)
                 
@@ -265,7 +283,7 @@ struct EditPlaceView: View {
     
     private var distanceInfo: some View {
         HStack(alignment: .bottom, spacing: 3) {
-            Text("\(String(place.distance))")
+            Text("\(String(distance))")
                 .font(.title2)
                 .fontWeight(.bold)
             
@@ -279,10 +297,10 @@ struct EditPlaceView: View {
     @ViewBuilder
     private func distanceAdjustButton(isPlus: Bool) -> some View {
         Button {
-            if isPlus && place.distance < 3 {
-                place.distance += 0.5
-            } else if !isPlus && place.distance > 1 {
-                place.distance -= 0.5
+            if isPlus && distance < 3 {
+                distance += 0.5
+            } else if !isPlus && distance > 1 {
+                distance -= 0.5
             }
             
         } label: {
@@ -298,83 +316,53 @@ struct EditPlaceView: View {
         .buttonStyle(.plain)
     }
     
-    private var completeButton: some View {
-        Button {
-            editPlace(place)
-            routerManager.pop()
-        } label: {
-            Text("완료")
-                .font(.title3)
-                .fontWeight(.bold)
-                .foregroundStyle(.white)
-                .frame(maxWidth: 350)
-                .frame(height: 56)
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                )
-        }
-        .disabled(place.name.isEmpty || place.backgroundDecibel.isZero)
-    }
-    
-    private var deleteButton: some View {
-        Button {
-            showDeleteAlert = true
-        } label: {
-            Label("장소 삭제하기", systemImage: "trash")
-        }
-        .font(.callout)
-        .disabled(!canDeletePlace())
-        .foregroundStyle(canDeletePlace() ? .red : .gray)
-    }
-    
     // MARK: Action Handlers
-    private func editPlace(_ place: Place) {
-        var storedPlaces: [Place] = []
+    private func createLocation(_ location: Location) -> Bool {
+        var storedLocations: [Location] = []
         
-        if let data = storedPlacesData.data(using: .utf8), let decodedPlaces = try? JSONDecoder().decode([Place].self, from: data) {
-            storedPlaces = decodedPlaces
+        if let data = storedLocationsData.data(using: .utf8),
+            let decodedLocations = try? JSONDecoder().decode([Location].self, from: data) {
+                storedLocations = decodedLocations
         }
         
-        if let index = storedPlaces.firstIndex(where: { $0.id == place.id }) {
-            storedPlaces[index] = place
-        } else {
-            print("해당 장소 없음")
+        if storedLocations.contains(where: { $0.name == location.name }) {
+            self.createResult = .duplicateName
+            return false
+        } else if storedLocations.count > 5 {
+            self.createResult = .overCapacity
+            return false
         }
         
-        if let encodedData = try? JSONEncoder().encode(storedPlaces), let jsonString = String(data: encodedData, encoding: .utf8) {
-            storedPlacesData = jsonString
+        storedLocations.append(location)
+        
+        if let encodedData = try? JSONEncoder().encode(storedLocations), let jsonString = String(data: encodedData, encoding: .utf8) {
+            storedLocationsData = jsonString
+            self.createResult = .success
+            return true
         }
+        
+        storedLocations.removeAll { $0.id == location.id }
+        self.createResult = .unknown
+        return false
     }
     
-    private func canDeletePlace() -> Bool {
-        return storedPlaces.count > 1
-    }
-    
-    private func deletePlace(_ place: Place) {
-        storedPlaces.removeAll { $0.id == place.id }
-        
-        if let encodedData = try? JSONEncoder().encode(storedPlaces), let jsonString = String(data: encodedData, encoding: .utf8) {
-            storedPlacesData = jsonString
-        }
-        
-        checkIsSelectedPlace()
-    }
-    
-    private func checkIsSelectedPlace() {
-        if let data = storedSelectedPlace.data(using: .utf8),
-            let decodedPlaces = try? JSONDecoder().decode(Place.self, from: data) {
-                selectedPlace = decodedPlaces
-        }
-        
-        if let selectedPlace = self.selectedPlace, selectedPlace == place {
-            storedSelectedPlace = ""
+    private func saveNewSelectedLocation(_ newLocation: Location) {
+        if let encodedData = try? JSONEncoder().encode(newLocation), let jsonString = String(data: encodedData, encoding: .utf8) {
+            storedSelectedLocation = jsonString
         }
     }
+}
+
+enum CreateLocationResult: String {
+    case success
+    case duplicateName = "중복되는 이름이 존재합니다"
+    case overCapacity = "장소는 최대 5개까지 생성 가능합니다"
+    case unknown = "알 수 없는 오류가 발생했습니다"
 }
 
 // MARK: - Preview
 #Preview {
     NavigationView {
-        EditPlaceView(place: .init(id: UUID(), name: "도서관", backgroundDecibel: 50, distance: 2), storedPlaces: [])
+        CreateLocationView()
     }
 }

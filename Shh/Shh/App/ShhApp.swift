@@ -13,28 +13,28 @@ struct ShhApp: App {
     
     @StateObject private var routerManager = RouterManager()
     
-    @AppStorage("selectedPlace") private var storedSelectedPlace: String = ""
+    @AppStorage("selectedLocation") private var storedSelectedLocation: String = ""
     
-    @State private var selectedPlace: Place?
+    @State private var selectedLocation: Location?
     
     private let notificationManager: NotificationManager = NotificationManager()
     
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $routerManager.path) {
-                SelectPlaceView()
+                SelectLocationView()
                     .navigationDestination(for: ShhView.self) { shhView in
                         shhView.view
                     }
             }
             .onAppear {
-                if let data = storedSelectedPlace.data(using: .utf8),
-                    let decodedPlaces = try? JSONDecoder().decode(Place.self, from: data) {
-                        selectedPlace = decodedPlaces
+                if let data = storedSelectedLocation.data(using: .utf8),
+                    let decodedLocations = try? JSONDecoder().decode(Location.self, from: data) {
+                        selectedLocation = decodedLocations
                 }
                 
-                if let selectedPlace = self.selectedPlace {
-                    routerManager.push(view: .mainView(selectedPlace: selectedPlace))
+                if let selectedLocation = self.selectedLocation {
+                    routerManager.push(view: .mainView(selectedLocation: selectedLocation))
                 }
                 
                 Task {
