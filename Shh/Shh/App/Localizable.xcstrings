@@ -392,17 +392,6 @@
         }
       }
     },
-    "위험" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Danger"
-          }
-        }
-      }
-    },
     "이름" : {
       "localizations" : {
         "en" : {

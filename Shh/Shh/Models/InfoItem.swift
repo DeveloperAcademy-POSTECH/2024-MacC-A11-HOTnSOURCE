@@ -13,6 +13,7 @@ struct InfoItem {
 }
 
 extension InfoItem {
+    // TODO: 위험치 로직 갱신 후 수정 예정
     static let infoItemList: [InfoItem] = [
         InfoItem(
             title: "✅ Shh-!의 소음 측정은 어떻게 이루어지나요?",
