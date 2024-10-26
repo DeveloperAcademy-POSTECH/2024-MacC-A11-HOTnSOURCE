@@ -392,16 +392,6 @@
         }
       }
     },
-    "위험" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Danger"
-          }
-        }
-      }
-    },
     "이름" : {
       "localizations" : {
         "en" : {
@@ -558,16 +548,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Moderate indoor noise heard in a residential area"
-          }
-        }
-      }
-    },
-    "지금 바로 조용히 해야 해요!" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You need to be quiet right now!"
           }
         }
       }
