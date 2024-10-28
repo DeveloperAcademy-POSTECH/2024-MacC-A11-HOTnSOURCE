@@ -71,7 +71,9 @@ final class LocationManager: ObservableObject {
     }
     
     private func saveSelectedLocation() {
-        storedSelectedLocation = selectedLocation.flatMap { encodeData($0) } ?? ""
+        if let selectedLocation = selectedLocation {
+            storedSelectedLocation = encodeData(selectedLocation) ?? ""
+        }
     }
     
     private func encodeData<T: Encodable>(_ data: T) -> String? {
