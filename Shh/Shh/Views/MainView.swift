@@ -258,6 +258,7 @@ struct MainView: View {
         }
     }
     
+    // TODO: 해당 애니메이션 수정 예정 현재는 높이에 맞지 않게 변함
     private func changeHeightAnimation(loudness: CGFloat) {
         DispatchQueue.main.async {
             withAnimation(.easeInOut(duration: 0.5)) {

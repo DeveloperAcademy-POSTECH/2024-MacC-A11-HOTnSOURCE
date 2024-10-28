@@ -40,12 +40,8 @@ actor NotificationManager {
             await requestPermission()
         case .authorized, .provisional:
             if canSendNotification() {
-                switch type {
-                case .caution:
-                    sendCautionNotification()
-                case .danger:
-                    sendDangerNotification()
-                }
+                sendCautionNotification() // '주의'인 경우에만 알림을 보내도록.
+                
                 lastNotificationTime = Date() // 알림을 전송한 시간을 기록
             }
         case .denied:
@@ -87,15 +83,6 @@ actor NotificationManager {
         scheduleNotification(content: content)
     }
     
-    /// 위험 알림 전송
-    private func sendDangerNotification() {
-        let content = createNotificationContent(
-            subtitle: LocalizedStringKey("소음 수준: ").toString() + NoiseStatus.danger.korean.toString(),
-            body: NoiseStatus.danger.writing.toString()
-        )
-        scheduleNotification(content: content)
-    }
-    
     /// 푸시 알림 내용 생성
     private func createNotificationContent(subtitle: String? = nil, body: String, sound: UNNotificationSound = .default) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
@@ -129,6 +116,7 @@ actor NotificationManager {
     }
 }
 
+// TODO: 위험치 로직 및 알림 로직 개선 이후 제거할 예정
 enum NotificationType {
     case caution
     case danger
