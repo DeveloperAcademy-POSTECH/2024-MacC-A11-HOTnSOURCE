@@ -60,6 +60,22 @@
 			);
 			target = FB8E69CE2CCD349C00882A0F /* DynamicIslandWidgetExtension */;
 		};
+		FB8E69EC2CCF589400882A0F /* Exceptions for "Shh" folder in "DynamicIslandWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Models/Place.swift,
+			);
+			target = FB8E69CE2CCD349C00882A0F /* DynamicIslandWidgetExtension */;
+		};
+		FB8E69EE2CCF58BC00882A0F /* Exceptions for "DynamicIslandWidget" folder in "Shh" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				DynamicIslandWidgetControl.swift,
+				DynamicIslandWidgetLiveActivity.swift,
+				LockScreenAndBannerView.swift,
+			);
+			target = 67A9E8132CB4230E003E2A11 /* Shh */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -67,6 +83,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				67A9E9C02CBC40FB003E2A11 /* Exceptions for "Shh" folder in "Shh" target */,
+				FB8E69EC2CCF589400882A0F /* Exceptions for "Shh" folder in "DynamicIslandWidgetExtension" target */,
 			);
 			path = Shh;
 			sourceTree = "<group>";
@@ -74,6 +91,7 @@
 		FB8E69D52CCD349C00882A0F /* DynamicIslandWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				FB8E69EE2CCF58BC00882A0F /* Exceptions for "DynamicIslandWidget" folder in "Shh" target */,
 				FB8E69E92CCD349D00882A0F /* Exceptions for "DynamicIslandWidget" folder in "DynamicIslandWidgetExtension" target */,
 			);
 			path = DynamicIslandWidget;

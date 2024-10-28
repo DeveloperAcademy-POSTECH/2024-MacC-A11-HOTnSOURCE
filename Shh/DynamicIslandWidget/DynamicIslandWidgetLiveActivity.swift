@@ -6,75 +6,110 @@
 //
 
 import ActivityKit
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
+// MARK: - Live Activity Attributes
 struct DynamicIslandWidgetAttributes: ActivityAttributes {
+    // MARK: Properties
     public struct ContentState: Codable, Hashable {
-        // Dynamic stateful properties about your activity go here!
-        var emoji: String
+        // 가변 Properties
+        var isMetering: Bool
     }
-
-    // Fixed non-changing properties about your activity go here!
-    var name: String
+    
+    // 불변 Properties
+    var place: Place
 }
 
+// MARK: - Live Activity 뷰
 struct DynamicIslandWidgetLiveActivity: Widget {
+    // MARK: Body
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: DynamicIslandWidgetAttributes.self) { context in
-            // Lock screen/banner UI goes here
-            VStack {
-                Text("Hello \(context.state.emoji)")
-            }
-            .activityBackgroundTint(Color.cyan)
-            .activitySystemActionForegroundColor(Color.black)
-
+            // Lock screen/banner
+            LockScreenAndBannerView(place: context.attributes.place)
         } dynamicIsland: { context in
             DynamicIsland {
                 // Expanded UI goes here.  Compose the expanded UI through
                 // various regions, like leading/trailing/center/bottom
+                // TODO: 현지화 예정
                 DynamicIslandExpandedRegion(.leading) {
-                    Text("Leading")
+                    Text("Shh-!")
+                        .font(.caption)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.white)
+                        .padding(.leading)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text("Trailing")
+                    VStack {
+                        Spacer()
+                        Text("🤫")
+                            .font(.largeTitle)
+                            .fontWeight(.black)
+                    }
+                }
+                DynamicIslandExpandedRegion(.center) {
+                    
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    Text("Bottom \(context.state.emoji)")
-                    // more content
+                    HStack {
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("지금 소리를 듣는 중이에요!")
+                                .font(.callout)
+                                .fontWeight(.medium)
+                                .foregroundStyle(.white)
+                            
+                            Text("\(context.attributes.place.name)")
+                                .font(.caption2)
+                                .fontWeight(.medium)
+                                .foregroundStyle(.gray)
+                        }
+                        Spacer()
+                    }
+                    .padding(.leading)
                 }
             } compactLeading: {
-                Text("L")
+                Text("🤫")
+                    .font(.caption2)
+                    .fontWeight(.regular)
             } compactTrailing: {
-                Text("T \(context.state.emoji)")
+                Text("듣는 중!")
+                    .font(.caption2)
+                    .fontWeight(.regular)
             } minimal: {
-                Text(context.state.emoji)
+                Text("🤫")
+                    .font(.caption2)
+                    .fontWeight(.regular)
             }
             .widgetURL(URL(string: "http://www.apple.com"))
-            .keylineTint(Color.red)
+            .keylineTint(.green)
         }
     }
 }
-
-extension DynamicIslandWidgetAttributes {
-    fileprivate static var preview: DynamicIslandWidgetAttributes {
-        DynamicIslandWidgetAttributes(name: "World")
-    }
-}
-
-extension DynamicIslandWidgetAttributes.ContentState {
-    fileprivate static var smiley: DynamicIslandWidgetAttributes.ContentState {
-        DynamicIslandWidgetAttributes.ContentState(emoji: "😀")
-     }
-     
-     fileprivate static var starEyes: DynamicIslandWidgetAttributes.ContentState {
-         DynamicIslandWidgetAttributes.ContentState(emoji: "🤩")
-     }
-}
-
-#Preview("Notification", as: .content, using: DynamicIslandWidgetAttributes.preview) {
-   DynamicIslandWidgetLiveActivity()
-} contentStates: {
-    DynamicIslandWidgetAttributes.ContentState.smiley
-    DynamicIslandWidgetAttributes.ContentState.starEyes
-}
+//
+//extension DynamicIslandWidgetAttributes{
+//    fileprivate static var preview: DynamicIslandWidgetAttributes {
+//        DynamicIslandWidgetAttributes(place: Place(
+//            id: UUID(),
+//            name: "도서관 5층",
+//            backgroundDecibel: 40.0,
+//            distance: 2.0))
+//    }
+//}
+//
+//extension DynamicIslandWidgetAttributes.ContentState {
+//    fileprivate static var smiley: DynamicIslandWidgetAttributes.ContentState {
+//        DynamicIslandWidgetAttributes.ContentState(isMetering: false)
+//    }
+//    
+//    fileprivate static var starEyes: DynamicIslandWidgetAttributes.ContentState {
+//        DynamicIslandWidgetAttributes.ContentState(isMetering: false)
+//    }
+//}
+//
+//#Preview("Notification", as: .content, using: DynamicIslandWidgetAttributes.preview) {
+//    DynamicIslandWidgetLiveActivity()
+//} contentStates: {
+//    DynamicIslandWidgetAttributes.ContentState.smiley
+//    DynamicIslandWidgetAttributes.ContentState.starEyes
+//}

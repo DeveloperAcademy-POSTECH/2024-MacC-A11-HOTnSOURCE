@@ -5,14 +5,13 @@
 //  Created by sseungwonnn on 10/26/24.
 //
 
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
 @main
 struct DynamicIslandWidgetBundle: WidgetBundle {
     var body: some Widget {
-        DynamicIslandWidget()
-        DynamicIslandWidgetControl()
+//        DynamicIslandWidgetControl()
         DynamicIslandWidgetLiveActivity()
     }
 }
