@@ -11,18 +11,19 @@ import SwiftUI
 struct CreateLocationView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
-    
-    @AppStorage("locations") private var storedLocationsData: String = "[]"
-    @AppStorage("selectedLocation") private var storedSelectedLocation: String = ""
+    @EnvironmentObject var locationManager: LocationManager
     
     @FocusState private var isFocused: Bool
     
     @State private var name: String = ""
     @State private var backgroundDecibel: Float = 0
     @State private var distance: Float = 1
+    
     @State private var showSelectBackgroundDecibelSheet: Bool = false
-    @State private var createFail: Bool = false
+    
+    @State private var createFailed: Bool = false
     @State private var createResult: CreateLocationResult?
+    
     @State private var isShowingProgressView: Bool = false
     
     private var nameMaxLength: Int {
@@ -70,12 +71,12 @@ struct CreateLocationView: View {
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
         }
-        .alert("장소 생성 실패", isPresented: $createFail) {
+        .alert("장소 생성 실패", isPresented: $createFailed) {
             Button("확인", role: .cancel) {
                 name = ""
             }
         } message: {
-            Text(createResult?.rawValue ?? CreateLocationResult.unknown.rawValue)
+            Text(createResult?.message ?? CreateLocationResult.unknown.message)
         }
         .onTapGesture {
             isFocused = false
@@ -134,16 +135,18 @@ struct CreateLocationView: View {
         Button {
             let newLocation = Location(id: UUID(), name: name, backgroundDecibel: backgroundDecibel, distance: distance)
             
-            if createLocation(newLocation) {
-                saveNewSelectedLocation(newLocation)
+            if locationManager.createLocation(newLocation) == .success {
+                locationManager.selectedLocation = newLocation
                 
                 routerManager.pop()
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                    routerManager.push(view: .mainView(selectedLocation: newLocation))
+                if let selectedLocation = locationManager.selectedLocation {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                        routerManager.push(view: .mainView(selectedLocation: selectedLocation))
+                    }
                 }
             } else {
-                createFail = true
+                createFailed = true
             }
         } label: {
             Text("완료")
@@ -315,49 +318,6 @@ struct CreateLocationView: View {
         }
         .buttonStyle(.plain)
     }
-    
-    // MARK: Action Handlers
-    private func createLocation(_ location: Location) -> Bool {
-        var storedLocations: [Location] = []
-        
-        if let data = storedLocationsData.data(using: .utf8),
-            let decodedLocations = try? JSONDecoder().decode([Location].self, from: data) {
-                storedLocations = decodedLocations
-        }
-        
-        if storedLocations.contains(where: { $0.name == location.name }) {
-            self.createResult = .duplicateName
-            return false
-        } else if storedLocations.count > 5 {
-            self.createResult = .overCapacity
-            return false
-        }
-        
-        storedLocations.append(location)
-        
-        if let encodedData = try? JSONEncoder().encode(storedLocations), let jsonString = String(data: encodedData, encoding: .utf8) {
-            storedLocationsData = jsonString
-            self.createResult = .success
-            return true
-        }
-        
-        storedLocations.removeAll { $0.id == location.id }
-        self.createResult = .unknown
-        return false
-    }
-    
-    private func saveNewSelectedLocation(_ newLocation: Location) {
-        if let encodedData = try? JSONEncoder().encode(newLocation), let jsonString = String(data: encodedData, encoding: .utf8) {
-            storedSelectedLocation = jsonString
-        }
-    }
-}
-
-enum CreateLocationResult: String {
-    case success
-    case duplicateName = "중복되는 이름이 존재합니다"
-    case overCapacity = "장소는 최대 5개까지 생성 가능합니다"
-    case unknown = "알 수 없는 오류가 발생했습니다"
 }
 
 // MARK: - Preview

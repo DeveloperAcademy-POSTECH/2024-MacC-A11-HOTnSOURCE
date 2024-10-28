@@ -12,10 +12,7 @@ struct ShhApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     @StateObject private var routerManager = RouterManager()
-    
-    @AppStorage("selectedLocation") private var storedSelectedLocation: String = ""
-    
-    @State private var selectedLocation: Location?
+    @StateObject private var locationManager = LocationManager()
     
     private let notificationManager: NotificationManager = NotificationManager()
     
@@ -27,13 +24,10 @@ struct ShhApp: App {
                         shhView.view
                     }
             }
+            .environmentObject(routerManager)
+            .environmentObject(locationManager)
             .onAppear {
-                if let data = storedSelectedLocation.data(using: .utf8),
-                    let decodedLocations = try? JSONDecoder().decode(Location.self, from: data) {
-                        selectedLocation = decodedLocations
-                }
-                
-                if let selectedLocation = self.selectedLocation {
+                if let selectedLocation = locationManager.selectedLocation {
                     routerManager.push(view: .mainView(selectedLocation: selectedLocation))
                 }
                 
@@ -41,7 +35,6 @@ struct ShhApp: App {
                     await notificationManager.requestPermission()
                 }
             }
-            .environmentObject(routerManager)
         }
     }
 }

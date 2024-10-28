@@ -11,21 +11,20 @@ import SwiftUI
 struct EditLocationView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
-    
-    @AppStorage("locations") private var storedLocationsData: String = "[]"
-    @AppStorage("selectedLocation") private var storedSelectedLocation: String = ""
+    @EnvironmentObject var locationManager: LocationManager
     
     @FocusState private var isFocused: Bool
     
     @State var location: Location
-    @State var storedLocations: [Location]
-    @State private var selectedLocation: Location?
+    
     @State private var showSelectBackgroundDecibelSheet: Bool = false
+    
     @State private var showDeleteAlert: Bool = false
+    
     @State private var isShowingProgressView: Bool = false
     
     private var nameMaxLength: Int {
-        let currentLocale = Locale.current.language.languageCode?.identifier // 현재 언어 가져오기
+        let currentLocale = Locale.current.language.languageCode?.identifier
         switch currentLocale {
         case "en": return 15
         case "ko": return 8
@@ -71,7 +70,7 @@ struct EditLocationView: View {
         }
         .alert("\(location.name) 삭제", isPresented: $showDeleteAlert) {
             Button("삭제", role: .destructive) {
-                deleteLocation(location)
+                locationManager.deleteLocation(location)
                 routerManager.pop()
             }
             Button("취소", role: .cancel) { }
@@ -300,7 +299,7 @@ struct EditLocationView: View {
     
     private var completeButton: some View {
         Button {
-            editLocation(location)
+            locationManager.editLocation(location)
             routerManager.pop()
         } label: {
             Text("완료")
@@ -323,58 +322,14 @@ struct EditLocationView: View {
             Label("장소 삭제하기", systemImage: "trash")
         }
         .font(.callout)
-        .disabled(!canDeleteLocation())
-        .foregroundStyle(canDeleteLocation() ? .red : .gray)
-    }
-    
-    // MARK: Action Handlers
-    private func editLocation(_ location: Location) {
-        var storedLocations: [Location] = []
-        
-        if let data = storedLocationsData.data(using: .utf8), let decodedLocations = try? JSONDecoder().decode([Location].self, from: data) {
-            storedLocations = decodedLocations
-        }
-        
-        if let index = storedLocations.firstIndex(where: { $0.id == location.id }) {
-            storedLocations[index] = location
-        } else {
-            print("해당 장소 없음")
-        }
-        
-        if let encodedData = try? JSONEncoder().encode(storedLocations), let jsonString = String(data: encodedData, encoding: .utf8) {
-            storedLocationsData = jsonString
-        }
-    }
-    
-    private func canDeleteLocation() -> Bool {
-        return storedLocations.count > 1
-    }
-    
-    private func deleteLocation(_ location: Location) {
-        storedLocations.removeAll { $0.id == location.id }
-        
-        if let encodedData = try? JSONEncoder().encode(storedLocations), let jsonString = String(data: encodedData, encoding: .utf8) {
-            storedLocationsData = jsonString
-        }
-        
-        checkIsSelectedLocation()
-    }
-    
-    private func checkIsSelectedLocation() {
-        if let data = storedSelectedLocation.data(using: .utf8),
-            let decodedLocations = try? JSONDecoder().decode(Location.self, from: data) {
-                selectedLocation = decodedLocations
-        }
-        
-        if let selectedLocation = self.selectedLocation, selectedLocation == location {
-            storedSelectedLocation = ""
-        }
+        .disabled(!locationManager.canDeleteLocation())
+        .foregroundStyle(locationManager.canDeleteLocation() ? .red : .gray)
     }
 }
 
 // MARK: - Preview
 #Preview {
     NavigationView {
-        EditLocationView(location: .init(id: UUID(), name: "도서관", backgroundDecibel: 50, distance: 2), storedLocations: [])
+        EditLocationView(location: .init(id: UUID(), name: "도서관", backgroundDecibel: 50, distance: 2))
     }
 }

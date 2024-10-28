@@ -11,12 +11,7 @@ import SwiftUI
 struct SelectLocationView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
-    
-    @AppStorage("locations") private var storedLocationsData: String = "[]"
-    @AppStorage("selectedLocation") private var storedSelectedLocation: String = ""
-
-    @State private var storedLocations: [Location] = []
-    @State private var selectedLocation: Location?
+    @EnvironmentObject var locationManager: LocationManager
     
     // MARK: Body
     var body: some View {
@@ -26,16 +21,13 @@ struct SelectLocationView: View {
             createLocationButton
         }
         .navigationTitle("장소 선택")
-        .onAppear {
-            loadLocations()
-        }
         .scrollIndicators(.hidden)
     }
     
     // MARK: Subviews
     private var locationList: some View {
-        ForEach(storedLocations.indices, id: \.self) { index in
-            let location = storedLocations[index]
+        ForEach(locationManager.locations.indices, id: \.self) { index in
+            let location = locationManager.locations[index]
             
             locationButton(location)
         }
@@ -48,25 +40,24 @@ struct SelectLocationView: View {
             locationButtonStyle(title: "+", textColor: .white, bgColor: .gray)
                 .opacity(0.5)
         }
-        .opacity(storedLocations.count >= 5 ? 0 : 1)
+        .opacity(locationManager.locations.count >= 5 ? 0 : 1)
     }
     
     private func locationButton(_ location: Location) -> some View {
         ZStack(alignment: .trailing) {
             Button {
                 routerManager.push(view: .mainView(selectedLocation: location))
-                selectedLocation = location
-                saveSelectedLocation()
+                locationManager.selectedLocation = location
             } label: {
                 locationButtonStyle(
                     title: location.name,
                     textColor: .white,
-                    bgColor: selectedLocation?.id == location.id ? .green : .gray
+                    bgColor: locationManager.selectedLocation?.id == location.id ? .green : .gray
                 )
             }
             
             Button {
-                routerManager.push(view: .editLocationView(location: location, storedLocations: storedLocations))
+                routerManager.push(view: .editLocationView(location: location))
             } label: {
                 Image(systemName: "ellipsis")
                     .foregroundStyle(.white)
@@ -87,45 +78,6 @@ struct SelectLocationView: View {
                 RoundedRectangle(cornerRadius: 100)
                     .fill(bgColor)
             )
-    }
-    
-    // MARK: Action Handlers
-    private func loadLocations() {
-        if let data = storedLocationsData.data(using: .utf8),
-            let decodedLocations = try? JSONDecoder().decode([Location].self, from: data) {
-                storedLocations = decodedLocations
-        }
-        
-        if let data = storedSelectedLocation.data(using: .utf8),
-            let decodedLocations = try? JSONDecoder().decode(Location.self, from: data) {
-                selectedLocation = decodedLocations
-        }
-        
-        if storedLocations.isEmpty {
-            let defaultLocationName = NSLocalizedString("도서관", comment: "기본 장소 이름")
-            let defaultLocation: Location = .init(id: UUID(), name: defaultLocationName, backgroundDecibel: 40, distance: 1)
-            
-            storedLocations = [defaultLocation]
-            selectedLocation = defaultLocation
-            
-            saveLocations()
-            saveSelectedLocation()
-            
-            routerManager.push(view: .mainView(selectedLocation: defaultLocation))
-        }
-        
-    }
-
-    private func saveSelectedLocation() {
-        if let selectedLocation = self.selectedLocation, let encodedData = try? JSONEncoder().encode(selectedLocation), let jsonString = String(data: encodedData, encoding: .utf8) {
-            storedSelectedLocation = jsonString
-        }
-    }
-    
-    private func saveLocations() {
-        if let encodedData = try? JSONEncoder().encode(storedLocations), let jsonString = String(data: encodedData, encoding: .utf8) {
-            storedLocationsData = jsonString
-        }
     }
 }
 
