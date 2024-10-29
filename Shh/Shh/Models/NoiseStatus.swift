@@ -27,8 +27,8 @@ extension NoiseStatus {
         }
     }
     
-    /// 위험도에 해당하는 한국어입니다.
-    var korean: LocalizedStringKey {
+    /// 위험도에 해당하는 메시지입니다.
+    var message: LocalizedStringKey {
         switch self {
         case .safe:
             return "양호"

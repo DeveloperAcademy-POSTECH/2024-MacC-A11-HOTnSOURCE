@@ -77,7 +77,7 @@ actor NotificationManager {
     /// 주의 알림 전송
     private func sendCautionNotification() {
         let content = createNotificationContent(
-            subtitle: LocalizedStringKey("소음 수준: ").toString() + NoiseStatus.caution.korean.toString(),
+            subtitle: LocalizedStringKey("소음 수준: ").toString() + NoiseStatus.caution.message.toString(),
             body: NoiseStatus.caution.writing.toString()
         )
         scheduleNotification(content: content)

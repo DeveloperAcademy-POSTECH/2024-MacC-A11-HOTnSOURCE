@@ -167,7 +167,7 @@ struct MainView: View {
     
     private var userNoiseStatusInfo: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(audioManager.userNoiseStatus.korean)
+            Text(audioManager.userNoiseStatus.message)
                 .font(.system(size: 56, weight: .bold, design: .default))
                 .foregroundStyle(.customWhite)
             
