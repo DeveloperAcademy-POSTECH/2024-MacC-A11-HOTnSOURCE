@@ -63,6 +63,7 @@
 		FB8E69EC2CCF589400882A0F /* Exceptions for "Shh" folder in "DynamicIslandWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Managers/LiveActivityManager.swift,
 				Models/Place.swift,
 			);
 			target = FB8E69CE2CCD349C00882A0F /* DynamicIslandWidgetExtension */;

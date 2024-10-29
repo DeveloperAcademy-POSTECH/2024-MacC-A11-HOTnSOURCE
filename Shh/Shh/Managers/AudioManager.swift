@@ -5,7 +5,6 @@
 //  Created by sseungwonnn on 10/10/24.
 //
 
-import ActivityKit
 import AVFoundation
 import SwiftUI
 
@@ -45,10 +44,6 @@ final class AudioManager: ObservableObject {
     
     // 위험치를 계산하기 위해 loudness를 저장해두는 버퍼
     private var loudnessBuffer: [Float] = []
-    
-    private var activity: Activity<DynamicIslandWidgetAttributes>?
-    
-    private var cancellation: Task<(), Never>?
     
     // MARK: init
     init() throws {
@@ -190,61 +185,6 @@ final class AudioManager: ObservableObject {
             
             timer?.invalidate()
         }
-    }
-    
-    /// Live Activity를 실행하는 함수
-    func startLiveActivity(selectedPlace: Place) {
-        print(#function)
-        if self.activity == nil {
-            let attributes = DynamicIslandWidgetAttributes(place: selectedPlace)
-            
-            let contentState = DynamicIslandWidgetAttributes.ContentState(
-                isMetering: self.isMetering
-            )
-            let content = ActivityContent(
-                state: contentState,
-                staleDate: nil, // 만료 시간
-                relevanceScore: 0 // 우선 순위
-            )
-            
-            do {
-                self.activity = try Activity<DynamicIslandWidgetAttributes>.request(
-                    attributes: attributes,
-                    content: content,
-                    pushType: nil // TODO: @eomchanu 푸쉬 알림 및 추가
-                )
-            } catch {
-                print("LiveActivityManager: Error in LiveActivityManager: \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    /// Live Activity를 종료하는 함수
-    func endLiveActivity() async {
-        print(#function)
-        if let currentActivity = activity {
-            await currentActivity.end(
-                nil, // content 전달하지 않음
-                dismissalPolicy: .immediate // 즉시 종료
-            )
-            self.activity = nil
-        }
-        
-        cancellation?.cancel()
-        stopMetering()
-    }
-    
-    /// Live Activity를 업데이트하는 함수
-    func updateLiveActivity() async {
-        print(#function)
-        
-        let contentState = DynamicIslandWidgetAttributes.ContentState(
-            isMetering: self.isMetering
-        )
-        await self.activity?.update(ActivityContent<DynamicIslandWidgetAttributes.ContentState>(
-            state: contentState,
-            staleDate: nil
-        ))
     }
     
     // MARK: Internal methods

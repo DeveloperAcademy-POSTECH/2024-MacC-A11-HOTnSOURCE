@@ -209,7 +209,9 @@ struct MainView: View {
                     do {
                         try audioManager.startMetering(place: selectedPlace)
                         isStarted = true
-                        audioManager.startLiveActivity(selectedPlace: selectedPlace)
+                        LiveActivityManager.shared.startLiveActivity(
+                            isMetering: audioManager.isMetering,
+                            selectedPlace: selectedPlace)
                     } catch {
                         // TODO: 재생버튼 다시 눌러달라는 알러트 일단은 팝
                         routerManger.pop()
@@ -239,9 +241,7 @@ struct MainView: View {
             isStarted = false // 시작 상태 초기화
             routerManger.pop() // 정지 시 선택창으로 이동
             
-            Task {
-                await audioManager.endLiveActivity()
-            }
+            LiveActivityManager.shared.endLiveActivity()
             
         } label: {
             Image(systemName: "xmark")
