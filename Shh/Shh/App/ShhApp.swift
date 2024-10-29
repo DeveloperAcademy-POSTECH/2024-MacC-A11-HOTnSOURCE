@@ -12,36 +12,29 @@ struct ShhApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     @StateObject private var routerManager = RouterManager()
-    
-    @AppStorage("selectedPlace") private var storedSelectedPlace: String = ""
-    
-    @State private var selectedPlace: Place?
+    @StateObject private var locationManager = LocationManager()
     
     private let notificationManager: NotificationManager = NotificationManager()
     
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $routerManager.path) {
-                SelectPlaceView()
+                SelectLocationView()
                     .navigationDestination(for: ShhView.self) { shhView in
                         shhView.view
                     }
             }
+            .environmentObject(routerManager)
+            .environmentObject(locationManager)
             .onAppear {
-                if let data = storedSelectedPlace.data(using: .utf8),
-                    let decodedPlaces = try? JSONDecoder().decode(Place.self, from: data) {
-                        selectedPlace = decodedPlaces
-                }
-                
-                if let selectedPlace = self.selectedPlace {
-                    routerManager.push(view: .mainView(selectedPlace: selectedPlace))
+                if let selectedLocation = locationManager.selectedLocation {
+                    routerManager.push(view: .mainView(selectedLocation: selectedLocation))
                 }
                 
                 Task {
                     await notificationManager.requestPermission()
                 }
             }
-            .environmentObject(routerManager)
         }
     }
 }
