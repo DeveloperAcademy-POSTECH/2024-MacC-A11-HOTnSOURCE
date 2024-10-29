@@ -27,8 +27,8 @@ extension NoiseStatus {
         }
     }
     
-    /// 위험도에 해당하는 한국어입니다.
-    var korean: LocalizedStringKey {
+    /// 위험도에 해당하는 메시지입니다.
+    var message: LocalizedStringKey {
         switch self {
         case .safe:
             return "양호"
@@ -44,16 +44,6 @@ extension NoiseStatus {
             return "지금 아주 잘하고 있어요!"
         case .caution:
             return "이제 조금 조심해야 해요"
-        }
-    }
-    
-    /// 위험도에 따른 노티피케이션 유형입니다. 양호한 경우는 알림을 보내지 않습니다.
-    var notificationType: NotificationType? {
-        switch self {
-        case .safe:
-            return nil
-        case .caution:
-            return .caution
         }
     }
 }
