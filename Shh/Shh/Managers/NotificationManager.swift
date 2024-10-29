@@ -11,8 +11,6 @@ import UserNotifications
 
 // MARK: - 로컬 푸시 알림 담당 매니저 (actor 적용)
 actor NotificationManager {
-    private var lastNotificationTime: Date?
-
     /// 푸시 알림 권한 설정
     ///
     /// `.alert`, `.badge`, `.sound`, `.criticalAlert`에 대한 권한을 받습니다.
@@ -39,11 +37,7 @@ actor NotificationManager {
         case .notDetermined:
             await requestPermission()
         case .authorized, .provisional:
-            if canSendNotification() {
-                sendCautionNotification() // '주의'인 경우에만 알림을 보내도록.
-                
-                lastNotificationTime = Date() // 알림을 전송한 시간을 기록
-            }
+            sendCautionNotification()
         case .denied:
             print("푸시 알림 권한이 거부되었습니다.")
         default:
@@ -104,15 +98,6 @@ actor NotificationManager {
                 print("알림 예약 성공: \(request.identifier)")
             }
         }
-    }
-    
-    /// 30초 동안 한 번만 푸시 알림 전송 제한
-    private func canSendNotification() -> Bool {
-        if let lastTime = lastNotificationTime {
-            let timeInterval = Date().timeIntervalSince(lastTime)
-            return timeInterval >= 30
-        }
-        return true
     }
 }
 
