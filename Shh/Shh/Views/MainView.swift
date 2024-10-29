@@ -110,8 +110,8 @@ struct MainView: View {
                         .navigationTitle(selectedPlace.name)
                         .onChange(of: audioManager.userNoiseStatus) { newValue in
                             Task {
-                                if let type = newValue.notificationType {
-                                    await notificationManager.sendNotification(type: type)
+                                if newValue == .caution {
+                                    await notificationManager.sendNotification()
                                 }
                             }
                         }

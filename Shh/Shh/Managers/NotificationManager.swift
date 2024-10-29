@@ -30,7 +30,7 @@ actor NotificationManager {
     /// 푸시 알림 전송
     ///
     /// 타입에 맞는 알림을 전송합니다.
-    func sendNotification(type: NotificationType) async {
+    func sendNotification() async {
         let settings = await UNUserNotificationCenter.current().notificationSettings()
         
         switch settings.authorizationStatus {
@@ -99,10 +99,4 @@ actor NotificationManager {
             }
         }
     }
-}
-
-// TODO: 위험치 로직 및 알림 로직 개선 이후 제거할 예정
-enum NotificationType {
-    case caution
-    case danger
 }
