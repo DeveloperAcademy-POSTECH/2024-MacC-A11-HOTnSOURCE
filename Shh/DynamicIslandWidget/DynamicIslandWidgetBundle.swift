@@ -11,7 +11,6 @@ import WidgetKit
 @main
 struct DynamicIslandWidgetBundle: WidgetBundle {
     var body: some Widget {
-//        DynamicIslandWidgetControl()
         DynamicIslandWidgetLiveActivity()
     }
 }

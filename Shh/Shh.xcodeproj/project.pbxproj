@@ -71,7 +71,6 @@
 		FB8E69EE2CCF58BC00882A0F /* Exceptions for "DynamicIslandWidget" folder in "Shh" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				DynamicIslandWidgetControl.swift,
 				DynamicIslandWidgetLiveActivity.swift,
 				LockScreenAndBannerView.swift,
 			);

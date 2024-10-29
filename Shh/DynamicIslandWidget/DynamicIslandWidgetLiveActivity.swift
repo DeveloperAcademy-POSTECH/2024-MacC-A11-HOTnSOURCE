@@ -30,8 +30,7 @@ struct DynamicIslandWidgetLiveActivity: Widget {
             LockScreenAndBannerView(place: context.attributes.place)
         } dynamicIsland: { context in
             DynamicIsland {
-                // Expanded UI goes here.  Compose the expanded UI through
-                // various regions, like leading/trailing/center/bottom
+                // Expanded UI; leading/trailing/center/bottom 로 구성
                 // TODO: 현지화 예정
                 DynamicIslandExpandedRegion(.leading) {
                     Text("Shh-!")
@@ -81,35 +80,8 @@ struct DynamicIslandWidgetLiveActivity: Widget {
                     .font(.caption2)
                     .fontWeight(.regular)
             }
-            .widgetURL(URL(string: "http://www.apple.com"))
+            .widgetURL(URL(string: "http://www.apple.com")) // 수정하지 않아도 호출한 지점으로 이동
             .keylineTint(.green)
         }
     }
 }
-//
-//extension DynamicIslandWidgetAttributes{
-//    fileprivate static var preview: DynamicIslandWidgetAttributes {
-//        DynamicIslandWidgetAttributes(place: Place(
-//            id: UUID(),
-//            name: "도서관 5층",
-//            backgroundDecibel: 40.0,
-//            distance: 2.0))
-//    }
-//}
-//
-//extension DynamicIslandWidgetAttributes.ContentState {
-//    fileprivate static var smiley: DynamicIslandWidgetAttributes.ContentState {
-//        DynamicIslandWidgetAttributes.ContentState(isMetering: false)
-//    }
-//    
-//    fileprivate static var starEyes: DynamicIslandWidgetAttributes.ContentState {
-//        DynamicIslandWidgetAttributes.ContentState(isMetering: false)
-//    }
-//}
-//
-//#Preview("Notification", as: .content, using: DynamicIslandWidgetAttributes.preview) {
-//    DynamicIslandWidgetLiveActivity()
-//} contentStates: {
-//    DynamicIslandWidgetAttributes.ContentState.smiley
-//    DynamicIslandWidgetAttributes.ContentState.starEyes
-//}
