@@ -8,14 +8,14 @@
 import Foundation
 import SwiftUI
 
-struct Place: Identifiable, Hashable, Codable {
+struct Location: Identifiable, Hashable, Codable {
     let id: UUID
     var name: String
     var backgroundDecibel: Float
     var distance: Float
 }
 
-extension Place {
+extension Location {
     /// 선택 가능한 거리입니다. 현재는 1m 부터, 3m까지 지원합니다.
     static let distanceOptions: [Float] = [1.0, 1.5, 2.0, 2.5, 3.0]
     

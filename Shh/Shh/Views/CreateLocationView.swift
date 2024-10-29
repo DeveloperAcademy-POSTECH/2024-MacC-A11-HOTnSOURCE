@@ -1,5 +1,5 @@
 //
-//  CreatePlaceView.swift
+//  CreateLocationView.swift
 //  Shh
 //
 //  Created by Jia Jang on 10/9/24.
@@ -8,21 +8,22 @@
 import SwiftUI
 
 // MARK: - 장소 생성 뷰
-struct CreatePlaceView: View {
+struct CreateLocationView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
-    
-    @AppStorage("places") private var storedPlacesData: String = "[]"
-    @AppStorage("selectedPlace") private var storedSelectedPlace: String = ""
+    @EnvironmentObject var locationManager: LocationManager
     
     @FocusState private var isFocused: Bool
     
     @State private var name: String = ""
     @State private var backgroundDecibel: Float = 0
     @State private var distance: Float = 1
+    
     @State private var showSelectBackgroundDecibelSheet: Bool = false
-    @State private var createFail: Bool = false
-    @State private var createResult: CreatePlaceResult?
+    
+    @State private var createFailed: Bool = false
+    @State private var createResult: CreateLocationResult?
+    
     @State private var isShowingProgressView: Bool = false
     
     private var nameMaxLength: Int {
@@ -70,12 +71,12 @@ struct CreatePlaceView: View {
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
         }
-        .alert("장소 생성 실패", isPresented: $createFail) {
+        .alert("장소 생성 실패", isPresented: $createFailed) {
             Button("확인", role: .cancel) {
                 name = ""
             }
         } message: {
-            Text(createResult?.rawValue ?? CreatePlaceResult.unknown.rawValue)
+            Text(createResult?.message ?? CreateLocationResult.unknown.message)
         }
         .onTapGesture {
             isFocused = false
@@ -132,18 +133,20 @@ struct CreatePlaceView: View {
     
     private var completeButton: some View {
         Button {
-            let newPlace = Place(id: UUID(), name: name, backgroundDecibel: backgroundDecibel, distance: distance)
+            let newLocation = Location(id: UUID(), name: name, backgroundDecibel: backgroundDecibel, distance: distance)
             
-            if createPlace(newPlace) {
-                saveNewSelectedPlace(newPlace)
+            if locationManager.createLocation(newLocation) == .success {
+                locationManager.selectedLocation = newLocation
                 
                 routerManager.pop()
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                    routerManager.push(view: .mainView(selectedPlace: newPlace))
+                if let selectedLocation = locationManager.selectedLocation {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                        routerManager.push(view: .mainView(selectedLocation: selectedLocation))
+                    }
                 }
             } else {
-                createFail = true
+                createFailed = true
             }
         } label: {
             Text("완료")
@@ -163,7 +166,7 @@ struct CreatePlaceView: View {
         VStack(spacing: 30) {
             VStack {
                 // TODO: 위아래 패딩 수정 예정
-                Text(Place.decibelWriting(decibel: backgroundDecibel))
+                Text(Location.decibelWriting(decibel: backgroundDecibel))
                     .font(.title2)
                     .fontWeight(.semibold)
                     .foregroundStyle(.white)
@@ -171,7 +174,7 @@ struct CreatePlaceView: View {
                     .lineLimit(10)
                 
                 // TODO: 예시 추가 예정
-//                Text(Place.decibelExample(decibel: backgroundDecibel))
+//                Text(Location.decibelExample(decibel: backgroundDecibel))
 //                    .font(.callout)
 //                    .fontWeight(.medium)
 //                    .foregroundStyle(.gray)
@@ -315,54 +318,11 @@ struct CreatePlaceView: View {
         }
         .buttonStyle(.plain)
     }
-    
-    // MARK: Action Handlers
-    private func createPlace(_ place: Place) -> Bool {
-        var storedPlaces: [Place] = []
-        
-        if let data = storedPlacesData.data(using: .utf8),
-            let decodedPlaces = try? JSONDecoder().decode([Place].self, from: data) {
-                storedPlaces = decodedPlaces
-        }
-        
-        if storedPlaces.contains(where: { $0.name == place.name }) {
-            self.createResult = .duplicateName
-            return false
-        } else if storedPlaces.count > 5 {
-            self.createResult = .overCapacity
-            return false
-        }
-        
-        storedPlaces.append(place)
-        
-        if let encodedData = try? JSONEncoder().encode(storedPlaces), let jsonString = String(data: encodedData, encoding: .utf8) {
-            storedPlacesData = jsonString
-            self.createResult = .success
-            return true
-        }
-        
-        storedPlaces.removeAll { $0.id == place.id }
-        self.createResult = .unknown
-        return false
-    }
-    
-    private func saveNewSelectedPlace(_ newPlace: Place) {
-        if let encodedData = try? JSONEncoder().encode(newPlace), let jsonString = String(data: encodedData, encoding: .utf8) {
-            storedSelectedPlace = jsonString
-        }
-    }
-}
-
-enum CreatePlaceResult: String {
-    case success
-    case duplicateName = "중복되는 이름이 존재합니다"
-    case overCapacity = "장소는 최대 5개까지 생성 가능합니다"
-    case unknown = "알 수 없는 오류가 발생했습니다"
 }
 
 // MARK: - Preview
 #Preview {
     NavigationView {
-        CreatePlaceView()
+        CreateLocationView()
     }
 }
