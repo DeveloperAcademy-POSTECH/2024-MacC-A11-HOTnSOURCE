@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     /// 포그라운드에서 알림 수신했을 때 처리
     ///
-    /// 배너, 리스트와 사운드 알림을 표시하도록 설정합니다.
+    /// 배너와 사운드 알림을 표시하도록 설정합니다.
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
-        return [.list, .banner, .sound]
+        return [.banner, .sound]
     }
 }
