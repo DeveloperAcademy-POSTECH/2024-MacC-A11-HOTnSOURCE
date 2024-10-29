@@ -26,27 +26,13 @@ struct MainView: View {
     
     let selectedLocation: Location
     
-    private let waveMotion = Animation
-        .linear(duration: 3.5)
-        .repeatForever(autoreverses: false)
-    
-    private let heightAnimation = Animation
-        .easeInOut(duration: 0.5)
-    
-    private var animatableData: Double {
-        get { waveOffset.degrees }
-        set { waveOffset = Angle(degrees: newValue) }
-    }
-    
     private let notificationManager: NotificationManager = .init()
     
     // MARK: Body
     var body: some View {
         ZStack {
             content
-            beaker
         }
-        .background(backgroundWave)
         .navigationTitle(selectedLocation.name)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -58,10 +44,6 @@ struct MainView: View {
                         .fontWeight(.medium)
                 }
             }
-        }
-        .onAppear { startWaveAnimation() }
-        .onChange(of: CGFloat(audioManager.loudnessIncreaseRatio)) { loudnessIncreaseRatio in
-            changeHeightAnimation(loudness: loudnessIncreaseRatio)
         }
         .onDisappear {
             audioManager.stopMetering()
@@ -123,46 +105,6 @@ struct MainView: View {
             Spacer().frame(height: 40)
         }
         .padding(.horizontal, 24)
-    }
-    
-    private var backgroundWave: some View {
-        VStack {
-            Spacer()
-            waveAnimation(percent: percent, waveOffset: waveOffset)
-        }
-    }
-    
-    private func waveAnimation(percent: Double, waveOffset: Angle) -> some View {
-        Wave(offSet: Angle(degrees: audioManager.isMetering ? waveOffset.degrees : 0.0), percent: audioManager.isMetering ? percent : 20.0)
-            .fill(audioManager.isMetering ? audioManager.userNoiseStatus.statusColor : .gray)
-            .ignoresSafeArea(.all)
-    }
-    
-    private var beaker: some View {
-        VStack {
-            Spacer().frame(height: 80)
-            
-            beakerRow
-            Spacer()
-            
-            beakerRow
-            Spacer()
-            
-            beakerRow
-            Spacer()
-            Spacer()
-        }
-    }
-    
-    private var beakerRow: some View {
-        HStack {
-            Rectangle()
-                .fill(.white)
-                .opacity(0.4)
-                .frame(width: 27, height: 2)
-            
-            Spacer()
-        }
     }
     
     private var userNoiseStatusInfo: some View {
@@ -247,39 +189,6 @@ struct MainView: View {
         }
         .accessibilityLabel("Stop metering")
         .accessibilityHint("Stop noise metering")
-    }
-    
-    // MARK: Functions
-    private func startWaveAnimation() {
-        DispatchQueue.main.async {
-            withAnimation(waveMotion) {
-                self.waveOffset = Angle(degrees: 360)
-            }
-        }
-    }
-    
-    // TODO: 해당 애니메이션 수정 예정 현재는 높이에 맞지 않게 변함
-    private func changeHeightAnimation(loudness: CGFloat) {
-        DispatchQueue.main.async {
-            withAnimation(.easeInOut(duration: 0.5)) {
-                let minRatio: CGFloat = 1.0
-                let maxRatio: CGFloat = 1.5
-                
-                switch loudness {
-                case maxRatio...:
-                    self.percent = 100.0
-                    
-                case 1.3..<maxRatio:
-                    self.percent = 75.0
-                    
-                case minRatio..<1.3:
-                    self.percent = 45.0 + (loudness - minRatio) / (maxRatio - minRatio) * 30.0
-                    
-                default:
-                    self.percent = 45.0
-                }
-            }
-        }
     }
 }
 
