@@ -112,7 +112,7 @@ final class AudioManager: ObservableObject {
     }
     
     /// 해당 장소의 소음 측정을 시작합니다.
-    func startMetering(place: Place) throws {
+    func startMetering(location: Location) throws {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .measurement, options: [.mixWithOthers, .allowBluetoothA2DP])
             try AVAudioSession.sharedInstance().setActive(true)
@@ -133,7 +133,7 @@ final class AudioManager: ObservableObject {
             self.updateDecibelLevel()
             
             if loudnessCounter % Int(self.loudnessMeteringTimeInterval / self.decibelMeteringTimeInterval) == 0 {
-                self.calculateLoudnessForDistance(backgroundDecibel: place.backgroundDecibel, distance: place.distance)
+                self.calculateLoudnessForDistance(backgroundDecibel: location.backgroundDecibel, distance: location.distance)
             }
             
             loudnessCounter += 1
@@ -159,7 +159,7 @@ final class AudioManager: ObservableObject {
     }
     
     /// 소음 측정을 재개합니다.
-    func resumeMetering(place: Place) {
+    func resumeMetering(location: Location) {
         if !isMetering {
             audioRecorder.record()
             isMetering = true
@@ -176,7 +176,7 @@ final class AudioManager: ObservableObject {
                 self.updateDecibelLevel()
                 
                 if loudnessCounter % Int(self.loudnessMeteringTimeInterval / self.decibelMeteringTimeInterval) == 0 {
-                    self.calculateLoudnessForDistance(backgroundDecibel: place.backgroundDecibel, distance: place.distance)
+                    self.calculateLoudnessForDistance(backgroundDecibel: location.backgroundDecibel, distance: location.distance)
                 }
                 
                 loudnessCounter += 1

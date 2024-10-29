@@ -398,6 +398,16 @@
         }
       }
     },
+    "알 수 없는 오류가 발생했습니다" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown error occurred."
+          }
+        }
+      }
+    },
     "양호" : {
       "localizations" : {
         "en" : {
@@ -493,7 +503,17 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete Place"
+            "value" : "Delete Location"
+          }
+        }
+      }
+    },
+    "장소 생성 성공" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create new location complete"
           }
         }
       }
@@ -503,7 +523,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Failed to create new place"
+            "value" : "Failed to create new location"
           }
         }
       }
@@ -513,7 +533,17 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select Place"
+            "value" : "Select Location"
+          }
+        }
+      }
+    },
+    "장소는 최대 5개까지 생성 가능합니다" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can create up to 5 locations"
           }
         }
       }
@@ -601,12 +631,12 @@
         }
       }
     },
-    "지금 소리를 듣는 중이에요!" : {
+    "중복되는 이름이 존재합니다" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We’re hearing the noise now!"
+            "value" : "A duplicate name exists"
           }
         }
       }
