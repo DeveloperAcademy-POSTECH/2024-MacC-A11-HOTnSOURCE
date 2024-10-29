@@ -24,14 +24,14 @@ struct LockScreenAndBannerView: View {
                     .foregroundStyle(.gray)
             }
             Spacer()
-            HStack {
-                // TODO: 수정 예정
-                Text("소음 측정 중이에요!")
+            HStack(alignment: .bottom) {
+                Text("소음을 대신 듣고 있어요!")
                     .font(.headline)
                     .fontWeight(.semibold)
                     .foregroundStyle(.white)
                 Spacer()
                 Button {
+                    // TODO: APP INTENTS 추가 예정
                 } label: {
                     Label("일지정지", systemImage: "pause.circle.fill")
                         .font(.title3)

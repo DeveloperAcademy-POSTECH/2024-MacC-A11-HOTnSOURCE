@@ -279,7 +279,14 @@
       }
     },
     "듣는 중!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hearing!"
+          }
+        }
+      }
     },
     "메인 화면에서 보이는 물결의 높낮이는 내 소리가 얼마나 시끄러운지를 나타냅니다." : {
       "localizations" : {
@@ -341,8 +348,15 @@
         }
       }
     },
-    "소음 측정 중이에요!" : {
-
+    "소음을 대신 듣고 있어요!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We’re hearing the noise instead!"
+          }
+        }
+      }
     },
     "수정하기" : {
       "localizations" : {
@@ -445,7 +459,14 @@
       }
     },
     "일지정지" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause"
+          }
+        }
+      }
     },
     "자주 묻는 질문" : {
       "localizations" : {
@@ -568,7 +589,14 @@
       }
     },
     "지금 소리를 듣는 중이에요!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We’re hearing the noise now!"
+          }
+        }
+      }
     },
     "지금 아주 잘하고 있어요!" : {
       "localizations" : {
