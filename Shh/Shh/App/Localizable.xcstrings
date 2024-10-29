@@ -458,6 +458,16 @@
         }
       }
     },
+    "일시정지됨" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paused"
+          }
+        }
+      }
+    },
     "일지정지" : {
       "localizations" : {
         "en" : {
@@ -507,6 +517,9 @@
           }
         }
       }
+    },
+    "재시작" : {
+
     },
     "정말 삭제하시겠습니까?" : {
       "localizations" : {
@@ -634,6 +647,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Please start the measurement"
+          }
+        }
+      }
+    },
+    "측정이 일시정지되었습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The measurement is paused.\n"
           }
         }
       }

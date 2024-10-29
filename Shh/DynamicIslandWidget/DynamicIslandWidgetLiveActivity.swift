@@ -26,12 +26,14 @@ struct DynamicIslandWidgetLiveActivity: Widget {
     // MARK: Body
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: DynamicIslandWidgetAttributes.self) { context in
-            // Lock screen/banner
-            LockScreenAndBannerView(place: context.attributes.place)
+            // Lock screen / banner
+            LockScreenAndBannerView(
+                isMetering: context.state.isMetering,
+                place: context.attributes.place)
         } dynamicIsland: { context in
             DynamicIsland {
                 // Expanded UI; leading/trailing/center/bottom 로 구성
-                // TODO: 현지화 예정
+                // Compact / minimal UI
                 DynamicIslandExpandedRegion(.leading) {
                     Text("Shh-!")
                         .font(.caption)
@@ -53,7 +55,7 @@ struct DynamicIslandWidgetLiveActivity: Widget {
                 DynamicIslandExpandedRegion(.bottom) {
                     HStack {
                         VStack(alignment: .leading, spacing: 10) {
-                            Text("지금 소리를 듣는 중이에요!")
+                            Text(context.state.isMetering ? "지금 소리를 듣는 중이에요!" : "측정이 일시정지되었습니다.")
                                 .font(.callout)
                                 .fontWeight(.medium)
                                 .foregroundStyle(.white)
@@ -72,7 +74,7 @@ struct DynamicIslandWidgetLiveActivity: Widget {
                     .font(.caption2)
                     .fontWeight(.regular)
             } compactTrailing: {
-                Text("듣는 중!")
+                Text(context.state.isMetering ? "듣는 중!" : "일시정지됨")
                     .font(.caption2)
                     .fontWeight(.regular)
             } minimal: {
