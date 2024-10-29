@@ -549,7 +549,14 @@
       }
     },
     "재시작" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play"
+          }
+        }
+      }
     },
     "정말 삭제하시겠습니까?" : {
       "localizations" : {
@@ -637,6 +644,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "A duplicate name exists"
+          }
+        }
+      }
+    },
+    "지금 소리를 듣는 중이에요!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We’re hearing the noise now!"
           }
         }
       }

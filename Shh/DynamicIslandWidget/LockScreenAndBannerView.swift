@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LockScreenAndBannerView: View {
     let isMetering: Bool
-    let place: Place
+    let location: Location
     
     var body: some View {
         VStack {
@@ -19,7 +19,7 @@ struct LockScreenAndBannerView: View {
                     .fontWeight(.semibold)
                     .foregroundStyle(.white)
                 Spacer()
-                Text("\(place.name)")
+                Text("\(location.name)")
                     .font(.caption2)
                     .fontWeight(.medium)
                     .foregroundStyle(.gray)

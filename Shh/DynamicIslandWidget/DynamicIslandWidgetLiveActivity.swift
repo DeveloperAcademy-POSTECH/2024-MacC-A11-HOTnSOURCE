@@ -18,7 +18,7 @@ struct DynamicIslandWidgetAttributes: ActivityAttributes {
     }
     
     // 불변 Properties
-    var place: Place
+    var location: Location
 }
 
 // MARK: - Live Activity 뷰
@@ -29,7 +29,7 @@ struct DynamicIslandWidgetLiveActivity: Widget {
             // Lock screen / banner
             LockScreenAndBannerView(
                 isMetering: context.state.isMetering,
-                place: context.attributes.place)
+                location: context.attributes.location)
         } dynamicIsland: { context in
             DynamicIsland {
                 // Expanded UI; leading/trailing/center/bottom 로 구성
@@ -60,7 +60,7 @@ struct DynamicIslandWidgetLiveActivity: Widget {
                                 .fontWeight(.medium)
                                 .foregroundStyle(.white)
                             
-                            Text("\(context.attributes.place.name)")
+                            Text("\(context.attributes.location.name)")
                                 .font(.caption2)
                                 .fontWeight(.medium)
                                 .foregroundStyle(.gray)
