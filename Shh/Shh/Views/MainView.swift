@@ -11,14 +11,7 @@ import SwiftUI
 struct MainView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
-    
-    @StateObject private var audioManager: AudioManager = {
-        do {
-            return try AudioManager()
-        } catch {
-            fatalError("AudioManager 초기화 실패: \(error.localizedDescription)")
-        }
-    }()
+    @EnvironmentObject var audioManager: AudioManager
     
     @State private var isStarted: Bool = false
     @State private var percent = 20.0
