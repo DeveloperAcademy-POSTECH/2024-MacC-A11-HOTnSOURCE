@@ -73,13 +73,6 @@
 			);
 			target = 67A9E8132CB4230E003E2A11 /* Shh */;
 		};
-		8DE180C92CD27C280031D8D6 /* Exceptions for "ShhWatch Watch App" folder in "ShhWatch Watch App" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"ShhWatch-Watch-App-Info.plist",
-			);
-			target = 8DE180B52CD27B6F0031D8D6 /* ShhWatch Watch App */;
-		};
 		FB8E69E92CCD349D00882A0F /* Exceptions for "DynamicIslandWidget" folder in "DynamicIslandWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -117,9 +110,6 @@
 		};
 		8DE180B72CD27B6F0031D8D6 /* ShhWatch Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				8DE180C92CD27C280031D8D6 /* Exceptions for "ShhWatch Watch App" folder in "ShhWatch Watch App" target */,
-			);
 			path = "ShhWatch Watch App";
 			sourceTree = "<group>";
 		};
