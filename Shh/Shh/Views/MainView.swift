@@ -12,11 +12,9 @@ struct MainView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
     @EnvironmentObject var audioManager: AudioManager
-    
-    @State private var isStarted: Bool = false
+
     @State private var percent = 20.0
     @State private var waveOffset = Angle(degrees: 0)
-    
     let selectedLocation: Location
     
     private let notificationManager: NotificationManager = .init()
@@ -57,8 +55,17 @@ struct MainView: View {
                             .font(.body)
                             .fontWeight(.regular)
                     }
-                    
                 }
+            }
+        }
+        .onAppear {
+            // TODO: 3,2,1 뷰 나타나기
+            do {
+                try audioManager.setAudioSession()
+            } catch {
+                // TODO: 문제 발생 알러트 띄우기
+                print("오디오 세션 설정 중에 문제가 발생했습니다.")
+                routerManager.pop()
             }
         }
         .onChange(of: audioManager.userNoiseStatus) { newValue in
@@ -104,23 +111,8 @@ struct MainView: View {
     }
     
     private var meteringToggleButton: some View {
-        // TODO: 시작과 재개 함수를 합칠 예정; 오디오 매니저 다루면서 수정 예정
         Button {
-            if audioManager.isMetering {
-                audioManager.pauseMetering()
-            } else {
-                if !isStarted {
-                    do {
-                        try audioManager.startMetering(location: selectedLocation)
-                        isStarted = true
-                    } catch {
-                        // TODO: 재생버튼 다시 눌러달라는 알러트 일단은 팝
-                        routerManager.pop()
-                    }
-                } else {
-                    audioManager.resumeMetering(location: selectedLocation)
-                }
-            }
+            audioManager.isMetering ? audioManager.pauseMetering() : audioManager.startMetering(location: selectedLocation)
         } label: {
             Image(systemName: audioManager.isMetering ? "pause.fill" : "play.fill")
                 .font(.largeTitle)
