@@ -1,5 +1,5 @@
 //
-//  CreateLocationView.swift
+//  PreviousCreateLocationView.swift
 //  Shh
 //
 //  Created by Jia Jang on 10/9/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 // MARK: - 장소 생성 뷰
-struct CreateLocationView: View {
+struct PreviousCreateLocationView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
     @EnvironmentObject var locationManager: LocationManager
@@ -323,6 +323,6 @@ struct CreateLocationView: View {
 // MARK: - Preview
 #Preview {
     NavigationView {
-        CreateLocationView()
+        PreviousCreateLocationView()
     }
 }
