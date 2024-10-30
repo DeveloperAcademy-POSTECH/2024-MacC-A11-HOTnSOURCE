@@ -19,7 +19,7 @@ struct NextStepButton: View {
     
     private func goToNextStep() {
         if let nextStep = CreateLocationStep(rawValue: step.rawValue + 1) {
-            withAnimation {
+            withAnimation(.easeInOut(duration: 0.2)) {
                 step = nextStep
             }
         }
@@ -27,5 +27,5 @@ struct NextStepButton: View {
 }
 
 #Preview {
-    NextStepButton(step: .constant(.backgroundInput))
+    NextStepButton(step: .constant(.backgroundNoiseInput))
 }

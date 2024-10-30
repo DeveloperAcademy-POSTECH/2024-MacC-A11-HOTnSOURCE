@@ -13,7 +13,9 @@ struct CreateLocationView: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var routerManager: RouterManager
     
-    @State private var currentStep: CreateLocationStep = .nameInput
+    // TODO: name input step으로 변경
+//    @State private var currentStep: CreateLocationStep = .nameInput
+    @State private var currentStep: CreateLocationStep = .backgroundNoiseInput
     @State private var name: String = ""
     @State private var backgroundNoise: Float = 0
     @State private var distance: Float = 0
@@ -26,7 +28,7 @@ struct CreateLocationView: View {
             switch currentStep {
             case .nameInput:
                 NameInputView(step: $currentStep, name: $name)
-            case .backgroundInput:
+            case .backgroundNoiseInput:
                 BackgroundNoiseInputView(step: $currentStep, backgroundNoise: $backgroundNoise)
             case .distanceInput:
                 DistanceInputView(step: $currentStep, distance: $distance)
@@ -47,8 +49,11 @@ struct CreateLocationView: View {
     // MARK: SubViews
     private var navigationBarBackButton: some View {
         Button {
-            // TODO: 뒤로 가기
-            print("뒤로 가기")
+            if let previousStep = CreateLocationStep(rawValue: currentStep.rawValue - 1) {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    currentStep = previousStep
+                }
+            }
         } label: {
             Label("뒤로 가기", systemImage: "chevron.left")
                 .labelStyle(.iconOnly)
@@ -60,7 +65,7 @@ struct CreateLocationView: View {
 
 enum CreateLocationStep: Int {
     case nameInput = 1
-    case backgroundInput = 2
+    case backgroundNoiseInput = 2
     case distanceInput = 3
 }
 
