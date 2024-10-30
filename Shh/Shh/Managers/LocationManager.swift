@@ -10,8 +10,12 @@ import SwiftUI
 final class LocationManager: ObservableObject {
     @AppStorage("locations") private var storedLocations: String = "[]"
     @AppStorage("selectedLocation") private var storedSelectedLocation: String = ""
-
-    @Published var locations: [Location] = []
+    
+    @Published var locations: [Location] = [] {
+        didSet {
+            saveLocations()
+        }
+    }
     
     @Published var selectedLocation: Location? {
         didSet {
@@ -19,7 +23,10 @@ final class LocationManager: ObservableObject {
         }
     }
     
-    init() {
+    private let iosConnectivityManager: IOSConnectivityManager
+    
+    init(connectivityManager: IOSConnectivityManager) {
+        self.iosConnectivityManager = connectivityManager
         loadLocations()
     }
     
@@ -34,7 +41,7 @@ final class LocationManager: ObservableObject {
         }
         
         locations.append(location)
-        saveLocations()
+        iosConnectivityManager.sendLocationData(location: locations) // 데이터 추가 시 Watch로 전송
         return .success
     }
     
@@ -42,17 +49,17 @@ final class LocationManager: ObservableObject {
         guard let index = locations.firstIndex(where: { $0.id == location.id }) else { return }
         
         locations[index] = location
-        saveLocations()
+        iosConnectivityManager.sendLocationData(location: locations) // 데이터 수정 시 Watch로 전송
     }
     
     func deleteLocation(_ location: Location) {
         locations.removeAll { $0.id == location.id }
         
-        saveLocations()
-        
         if selectedLocation == location {
             selectedLocation = nil
         }
+        
+        iosConnectivityManager.sendLocationData(location: locations) // 데이터 삭제 시 Watch로 전송
     }
     
     func canDeleteLocation() -> Bool {
