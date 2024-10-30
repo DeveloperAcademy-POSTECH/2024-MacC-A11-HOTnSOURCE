@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BackgroundNoiseInputView: View {
     @Binding var step: CreateLocationStep
+    @Binding var backgroundNoise: Float
     
     var body: some View {
         VStack {
@@ -19,5 +20,5 @@ struct BackgroundNoiseInputView: View {
 }
 
 #Preview {
-    BackgroundNoiseInputView(step: .constant(.backgroundInput))
+    BackgroundNoiseInputView(step: .constant(.backgroundInput), backgroundNoise: .constant(0))
 }

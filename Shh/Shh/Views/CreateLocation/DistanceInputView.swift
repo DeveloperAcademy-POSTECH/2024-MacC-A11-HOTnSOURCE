@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DistanceInputView: View {
     @Binding var step: CreateLocationStep
+    @Binding var distance: Float
     
     var body: some View {
         VStack {
@@ -19,5 +20,5 @@ struct DistanceInputView: View {
 }
 
 #Preview {
-    DistanceInputView(step: .constant(.distanceInput))
+    DistanceInputView(step: .constant(.distanceInput), distance: .constant(0))
 }

@@ -14,6 +14,9 @@ struct CreateLocationView: View {
     @EnvironmentObject var routerManager: RouterManager
     
     @State private var currentStep: CreateLocationStep = .nameInput
+    @State private var name: String = ""
+    @State private var backgroundNoise: Float = 0
+    @State private var distance: Float = 0
     
     // MARK: Body
     var body: some View {
@@ -22,11 +25,11 @@ struct CreateLocationView: View {
             
             switch currentStep {
             case .nameInput:
-                NameInputView(step: $currentStep)
+                NameInputView(step: $currentStep, name: $name)
             case .backgroundInput:
-                BackgroundNoiseInputView(step: $currentStep)
+                BackgroundNoiseInputView(step: $currentStep, backgroundNoise: $backgroundNoise)
             case .distanceInput:
-                DistanceInputView(step: $currentStep)
+                DistanceInputView(step: $currentStep, distance: $distance)
             }
         }
         .padding(20)

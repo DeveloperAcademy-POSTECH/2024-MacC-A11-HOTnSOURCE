@@ -11,8 +11,7 @@ import SwiftUI
 struct NameInputView: View {
     // MARK: Properties
     @Binding var step: CreateLocationStep
-    
-    @State private var name: String = ""
+    @Binding var name: String
     
     private var nameMaxLength: Int {
         let currentLocale = Locale.current.language.languageCode?.identifier
@@ -78,5 +77,5 @@ struct NameInputView: View {
 
 // MARK: - Preview
 #Preview {
-    NameInputView(step: .constant(.nameInput))
+    NameInputView(step: .constant(.nameInput), name: .constant(""))
 }
