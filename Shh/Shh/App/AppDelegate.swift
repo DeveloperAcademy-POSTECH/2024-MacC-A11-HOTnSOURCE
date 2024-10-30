@@ -22,4 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         return [.banner, .sound]
     }
+    
+    /// 앱이 종료될 때 실행하는 메서드로,
+    /// 현재 실행중인 라이브 액티비티를 정지합니다.
+    func applicationWillTerminate(_ application: UIApplication) {
+        print(#function)
+        LiveActivityManager.shared.endLiveActivity()
+    }
 }

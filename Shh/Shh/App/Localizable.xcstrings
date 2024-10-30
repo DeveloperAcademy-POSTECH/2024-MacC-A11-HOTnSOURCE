@@ -176,6 +176,9 @@
         }
       }
     },
+    "🤫" : {
+
+    },
     "dB" : {
       "localizations" : {
         "en" : {
@@ -200,6 +203,9 @@
 
     },
     "Resume metering" : {
+
+    },
+    "Shh-!" : {
 
     },
     "Starts or pauses noise metering" : {
@@ -272,6 +278,16 @@
         }
       }
     },
+    "듣는 중!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hearing!"
+          }
+        }
+      }
+    },
     "메인 화면에서 보이는 물결의 높낮이는 내 소리가 얼마나 시끄러운지를 나타냅니다." : {
       "localizations" : {
         "en" : {
@@ -328,6 +344,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Noise Level: "
+          }
+        }
+      }
+    },
+    "소음을 대신 듣고 있어요!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We’re hearing the noise instead!"
           }
         }
       }
@@ -442,6 +468,26 @@
         }
       }
     },
+    "일시정지됨" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paused"
+          }
+        }
+      }
+    },
+    "일지정지" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause"
+          }
+        }
+      }
+    },
     "자주 묻는 질문" : {
       "localizations" : {
         "en" : {
@@ -498,6 +544,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You can create up to 5 locations"
+          }
+        }
+      }
+    },
+    "재시작" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play"
           }
         }
       }
@@ -592,6 +648,16 @@
         }
       }
     },
+    "지금 소리를 듣는 중이에요!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We’re hearing the noise now!"
+          }
+        }
+      }
+    },
     "지금 아주 잘하고 있어요!" : {
       "localizations" : {
         "en" : {
@@ -628,6 +694,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Please start the measurement"
+          }
+        }
+      }
+    },
+    "측정이 일시정지되었습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The measurement is paused.\n"
           }
         }
       }

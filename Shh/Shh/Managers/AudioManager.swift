@@ -126,6 +126,11 @@ final class AudioManager: ObservableObject {
         audioRecorder.record()
         isMetering = true
         
+        // 라이브 액티비티 시작
+        LiveActivityManager.shared.startLiveActivity(
+            isMetering: self.isMetering,
+            selectedLocation: location
+        )
         // 타이머 설정
         var loudnessCounter: Int = 0 // decibel과 loudness 갱신 타이밍을 다르게 하기 위한 카운터
         
@@ -148,6 +153,11 @@ final class AudioManager: ObservableObject {
     
             initializeProperties() // 프로퍼티 초기화
             
+            // 라이브 액티비티 갱신
+            Task {
+                await LiveActivityManager.shared.updateLiveActivity(isMetering: self.isMetering)
+            }
+            
             timer?.invalidate()
         }
     }
@@ -157,6 +167,11 @@ final class AudioManager: ObservableObject {
         if !isMetering {
             audioRecorder.record()
             isMetering = true
+            
+            // 라이브 액티비티 갱신
+            Task {
+                await LiveActivityManager.shared.updateLiveActivity(isMetering: self.isMetering)
+            }
             
             // 타이머 설정
             var loudnessCounter: Int = 0 // decibel과 loudness 갱신 타이밍을 다르게 하기 위한 카운터
@@ -182,6 +197,8 @@ final class AudioManager: ObservableObject {
             isMetering = false
             
             initializeProperties() // 프로퍼티 초기화
+            
+            LiveActivityManager.shared.endLiveActivity() // 라이브 액티비티 종료
             
             timer?.invalidate()
         }

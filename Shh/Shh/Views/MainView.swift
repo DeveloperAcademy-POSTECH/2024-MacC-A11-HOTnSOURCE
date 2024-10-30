@@ -140,6 +140,7 @@ struct MainView: View {
     }
     
     private var meteringToggleButton: some View {
+        // TODO: 시작과 재개 함수를 합칠 예정; 오디오 매니저 다루면서 수정 예정
         Button {
             if audioManager.isMetering {
                 audioManager.pauseMetering()
