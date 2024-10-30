@@ -22,7 +22,7 @@ struct PageIndicator: View {
                 }
             }
         }
-        .padding()
+        .padding(.bottom)
     }
     
     @ViewBuilder

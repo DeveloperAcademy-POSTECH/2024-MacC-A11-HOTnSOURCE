@@ -15,6 +15,7 @@ struct CustomButton: View {
         Button(action: action) {
             buttonLabel
         }
+        .buttonStyle(.plain)
     }
     
     private var buttonLabel: some View {
@@ -26,7 +27,7 @@ struct CustomButton: View {
             .frame(height: 60)
             .background(
                 RoundedRectangle(cornerRadius: 18)
-                    .fill(.accent)
+                    .foregroundStyle(.accent)
             )
     }
 }

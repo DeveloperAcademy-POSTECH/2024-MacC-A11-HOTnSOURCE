@@ -12,6 +12,17 @@ struct NameInputView: View {
     // MARK: Properties
     @Binding var step: CreateLocationStep
     
+    @State private var name: String = ""
+    
+    private var nameMaxLength: Int {
+        let currentLocale = Locale.current.language.languageCode?.identifier
+        switch currentLocale {
+        case "en": return 15
+        case "ko": return 8
+        default: return 8
+        }
+    }
+    
     // MARK: Body
     var body: some View {
         VStack {
@@ -19,7 +30,13 @@ struct NameInputView: View {
             
             Spacer()
             
+            nameInputRow
+            
+            Spacer()
+            Spacer()
+            
             NextStepButton(step: $step)
+                .disabled(name.isEmpty)
         }
     }
     
@@ -33,6 +50,29 @@ struct NameInputView: View {
                 .foregroundStyle(.secondary)
         }
         .fontWeight(.bold)
+    }
+    
+    private var nameInputRow: some View {
+        VStack(spacing: 8) {
+            ZStack(alignment: .trailing) {
+                TextField("이름을 입력해주세요", text: $name)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .onChange(of: name) { newValue in
+                        if newValue.count > nameMaxLength {
+                            name = String(newValue.prefix(nameMaxLength))
+                        }
+                    }
+                
+                Text("\(name.count)/\(nameMaxLength)")
+                    .font(.callout)
+                    .foregroundStyle(.tertiary)
+            }
+            
+            Rectangle()
+                .frame(height: 3)
+                .foregroundStyle(.accent)
+        }
     }
 }
 

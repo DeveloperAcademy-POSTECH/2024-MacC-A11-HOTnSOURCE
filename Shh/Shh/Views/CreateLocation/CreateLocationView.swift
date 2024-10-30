@@ -38,6 +38,7 @@ struct CreateLocationView: View {
                 navigationBarBackButton
             }
         }
+        .ignoresSafeArea(.keyboard)
     }
     
     // MARK: SubViews

@@ -33,7 +33,7 @@ enum ShhView: Hashable {
         case .selectLocationView:
             SelectLocationView()
         case .createLocationView:
-            PreviousCreateLocationView()
+            CreateLocationView()
         case .editLocationView(let location):
             EditLocationView(location: location)
         case .mainView(let selectedLocation):
