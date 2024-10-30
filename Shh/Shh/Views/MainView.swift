@@ -13,53 +13,47 @@ struct MainView: View {
     @EnvironmentObject var routerManager: RouterManager
     @EnvironmentObject var audioManager: AudioManager
 
-    @State private var percent = 20.0
-    @State private var waveOffset = Angle(degrees: 0)
+    @State private var countdown = 3
+    @State private var showCountdown = true
+    @State private var countdownTimer: Timer?
+    
     let selectedLocation: Location
     
     private let notificationManager: NotificationManager = .init()
     
     // MARK: Body
     var body: some View {
-        VStack {
-            locationInfo
-            Spacer()
-            
-            // TODO: 대충 멋진 에셋
-            
-            HStack(alignment: .center) {
-                userNoiseStatusInfo
+        ZStack {
+            VStack {
+                locationInfo
                 Spacer()
                 
-                meteringToggleButton
+                // TODO: 대충 멋진 에셋
+                
+                HStack(alignment: .center) {
+                    userNoiseStatusInfo
+                    Spacer()
+                    
+                    meteringToggleButton
+                }
+                Spacer().frame(height: 20)
             }
-            Spacer().frame(height: 20)
+            .padding(.horizontal, 16)
+            .opacity(showCountdown ? 0 : 1)
+            
+            if showCountdown {
+                countdownView
+            }
         }
-        .padding(.horizontal, 16)
         .navigationTitle(selectedLocation.name)
+        .navigationBarTitleDisplayMode(.large)
+        .navigationBarHidden(showCountdown)
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
-                HStack(alignment: .center) {
-                    Button {
-                        routerManager.push(view: .editLocationView(location: selectedLocation))
-                    } label: {
-                        Text("수정")
-                            .font(.body)
-                            .fontWeight(.regular)
-                    }
-                    
-                    Button {
-                        routerManager.push(view: .meteringInfoView)
-                    } label: {
-                        Label("정보", systemImage: "info.circle")
-                            .font(.body)
-                            .fontWeight(.regular)
-                    }
-                }
+                toolbarButtons
             }
         }
         .onAppear {
-            // TODO: 3,2,1 뷰 나타나기
             do {
                 try audioManager.setAudioSession()
             } catch {
@@ -77,10 +71,20 @@ struct MainView: View {
         }
         .onDisappear {
             audioManager.stopMetering()
+            stopCountdown()
         }
     }
     
     // MARK: SubViews
+    private var countdownView: some View {
+        Text("\(countdown)")
+            .font(.system(size: 100, weight: .bold, design: .default))
+            .foregroundColor(.customWhite)
+            .transition(.opacity)
+            .onAppear {
+                startCountdown()
+            }
+    }
     private var locationInfo: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -128,10 +132,48 @@ struct MainView: View {
         .accessibilityLabel(audioManager.isMetering ? "Pause metering" : "Resume metering")
         .accessibilityHint("Starts or pauses noise metering")
     }
+    
+    private var toolbarButtons: some View  {
+        HStack(alignment: .center) {
+            Button {
+                routerManager.push(view: .editLocationView(location: selectedLocation))
+            } label: {
+                Text("수정")
+                    .font(.body)
+                    .fontWeight(.regular)
+            }
+            
+            Button {
+                routerManager.push(view: .meteringInfoView)
+            } label: {
+                Label("정보", systemImage: "info.circle")
+                    .font(.body)
+                    .fontWeight(.regular)
+            }
+        }
+    }
 }
 
-#Preview {
-    NavigationStack {
-        MainView(selectedLocation: Location(id: UUID(), name: "도서관", backgroundDecibel: 40.0, distance: 2.0))
+extension MainView {
+    private func startCountdown() {
+        print(#function)
+        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            if countdown > 1 {
+                countdown -= 1
+            } else {
+                stopCountdown()
+                
+                withAnimation {
+                    showCountdown = false
+                }
+                audioManager.startMetering(location: selectedLocation)
+            }
+        }
+    }
+    
+    private func stopCountdown() {
+        print(#function)
+        countdownTimer?.invalidate() // 타이머 해지
+        countdownTimer = nil
     }
 }
