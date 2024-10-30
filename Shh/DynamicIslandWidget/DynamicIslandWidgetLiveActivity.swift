@@ -27,7 +27,7 @@ struct DynamicIslandWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: DynamicIslandWidgetAttributes.self) { context in
             // Lock screen / banner
-            LockScreenAndBannerView (
+            LockScreenAndBannerView(
                 isMetering: context.state.isMetering,
                 location: context.attributes.location
             )
