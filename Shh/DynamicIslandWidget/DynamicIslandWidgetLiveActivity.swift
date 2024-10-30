@@ -27,9 +27,10 @@ struct DynamicIslandWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: DynamicIslandWidgetAttributes.self) { context in
             // Lock screen / banner
-            LockScreenAndBannerView(
+            LockScreenAndBannerView (
                 isMetering: context.state.isMetering,
-                location: context.attributes.location)
+                location: context.attributes.location
+            )
         } dynamicIsland: { context in
             DynamicIsland {
                 // Expanded UI; leading/trailing/center/bottom 로 구성
