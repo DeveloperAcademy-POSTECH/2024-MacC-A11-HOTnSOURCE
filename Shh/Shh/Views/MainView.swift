@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - 메인 뷰; 사용자의 소음 정도를 나타냅니다.
 struct MainView: View {
     // MARK: Properties
-    @EnvironmentObject var routerManger: RouterManager
+    @EnvironmentObject var routerManager: RouterManager
     
     @StateObject private var audioManager: AudioManager = {
         do {
@@ -37,7 +37,7 @@ struct MainView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    routerManger.push(view: .meteringInfoView)
+                    routerManager.push(view: .meteringInfoView)
                 } label: {
                     Label("정보", systemImage: "info.circle")
                         .font(.title2)
@@ -92,8 +92,8 @@ struct MainView: View {
                         .navigationTitle(selectedLocation.name)
                         .onChange(of: audioManager.userNoiseStatus) { newValue in
                             Task {
-                                if let type = newValue.notificationType {
-                                    await notificationManager.sendNotification(type: type)
+                                if newValue == .caution {
+                                    await notificationManager.sendNotification()
                                 }
                             }
                         }
@@ -109,7 +109,7 @@ struct MainView: View {
     
     private var userNoiseStatusInfo: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(audioManager.userNoiseStatus.korean)
+            Text(audioManager.userNoiseStatus.message)
                 .font(.system(size: 56, weight: .bold, design: .default))
                 .foregroundStyle(.customWhite)
             
@@ -151,7 +151,7 @@ struct MainView: View {
                         isStarted = true
                     } catch {
                         // TODO: 재생버튼 다시 눌러달라는 알러트 일단은 팝
-                        routerManger.pop()
+                        routerManager.pop()
                     }
                 } else {
                     audioManager.resumeMetering(location: selectedLocation)
@@ -176,7 +176,7 @@ struct MainView: View {
         Button {
             audioManager.stopMetering()
             isStarted = false // 시작 상태 초기화
-            routerManger.pop() // 정지 시 선택창으로 이동
+            routerManager.pop() // 정지 시 선택창으로 이동
         } label: {
             Image(systemName: "xmark")
                 .font(.title3)
