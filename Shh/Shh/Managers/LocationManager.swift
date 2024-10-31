@@ -24,8 +24,6 @@ final class LocationManager: ObservableObject {
         }
     }
     
-    static let shared = IOSConnectivityManager()
-    
     // 초기화: 저장된 Location 로드
     init() {
         loadLocations()

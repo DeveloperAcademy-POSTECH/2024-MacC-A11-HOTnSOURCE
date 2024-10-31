@@ -15,8 +15,6 @@ class IOSConnectivityManager: NSObject, WCSessionDelegate {
     // watchOS와의 연결 세션
     var session: WCSession
     
-    private var locations: [Location] = []
-    
     // 초기화: WCSession 설정 및 활성화
     init(session: WCSession = .default) {
         self.session = session
