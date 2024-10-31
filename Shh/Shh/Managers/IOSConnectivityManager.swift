@@ -9,7 +9,7 @@ import Foundation
 import WatchConnectivity
 
 // MARK: - watchOS와의 연결을 관리하는 클래스
-class IOSConnectivityManager: NSObject, WCSessionDelegate, ObservableObject {
+class IOSConnectivityManager: NSObject, WCSessionDelegate {
     static let shared = IOSConnectivityManager()
     
     // watchOS와의 연결 세션

@@ -11,7 +11,7 @@ import SwiftUI
 struct SelectLocationView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
-    @ObservedObject var connectivityManager = WatchConnectivityManager()
+    @StateObject var connectivityManager = WatchConnectivityManager()
     
     @State private var selectedLocation: Location?
     

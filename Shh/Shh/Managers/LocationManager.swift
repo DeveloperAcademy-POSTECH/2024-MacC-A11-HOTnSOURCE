@@ -14,7 +14,7 @@ final class LocationManager: ObservableObject {
     @Published var locations: [Location] = [] {
         didSet {
             saveLocations() // locations 배열이 변경될 때 자동 저장
-            iosConnectivityManager.sendLocationData(location: locations) // 변경된 데이터 Watch로 전송
+            IOSConnectivityManager.shared.sendLocationData(location: locations) // 변경된 데이터 Watch로 전송
         }
     }
     
@@ -24,7 +24,7 @@ final class LocationManager: ObservableObject {
         }
     }
     
-    @ObservedObject private var iosConnectivityManager = IOSConnectivityManager.shared
+    static let shared = IOSConnectivityManager()
     
     // 초기화: 저장된 Location 로드
     init() {
