@@ -11,26 +11,26 @@ import SwiftUI
 struct MainView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
+    @EnvironmentObject var audioManager: AudioManager
     
     @State private var tabSelection: MainTabs = .home
     @State private var isAnimating = false
     
     // TODO: 기능 구현하고 나서 실제 데이터로 변경 예정
     @State private var isMetering = true
-    @State private var noiseStatus = "safe"
     
     private let meteringCircleAnimation = Animation
         .easeInOut(duration: 1.5)
         .repeatForever(autoreverses: true)
     
     private var outerCircleColor: Color {
-        noiseStatus == "safe"
+        audioManager.userNoiseStatus == .safe
             ? .green
             : .purple
     }
     
     private var innerCircleColors: [Color] {
-        if noiseStatus == "safe" {
+        if audioManager.userNoiseStatus == .safe {
             return [.green, .yellow, .white]
         } else {
             return [.purple, .blue, .white]
@@ -50,6 +50,9 @@ struct MainView: View {
                 .tag(MainTabs.info)
         }
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            print("userNoiseStatus: ", audioManager.userNoiseStatus)
+        }
     }
     
     // MARK: SubViews
@@ -126,7 +129,7 @@ struct MainView: View {
             meteringPausedCircle
                 .hidden(isMetering) // 측정을 멈추었을 때
             
-            Text(noiseStatus == "safe" ? "양호" : "주의")
+            Text(audioManager.userNoiseStatus == .safe ? "양호" : "주의")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundStyle(.black)
