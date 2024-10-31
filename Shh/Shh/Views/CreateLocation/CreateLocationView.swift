@@ -13,10 +13,13 @@ struct CreateLocationView: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var routerManager: RouterManager
     
+    @FocusState private var isFocused: Bool
+    
     @State private var currentStep: CreateLocationStep = .nameInput
     @State private var name: String = ""
     @State private var backgroundNoise: Float = 0
     @State private var distance: Float = 0
+    @State private var isMetering: Bool = false
     @State private var createComplete: Bool = false
     
     var isFirstUser: Bool = false
@@ -30,12 +33,14 @@ struct CreateLocationView: View {
             case .nameInput:
                 NameInputView(
                     step: $currentStep,
-                    name: $name
+                    name: $name,
+                    isFocused: $isFocused.projectedValue
                 )
             case .backgroundNoiseInput:
                 BackgroundNoiseInputView(
                     step: $currentStep,
-                    backgroundNoise: $backgroundNoise
+                    backgroundNoise: $backgroundNoise,
+                    isMetering: $isMetering
                 )
             case .distanceInput:
                 DistanceInputView(
@@ -46,12 +51,14 @@ struct CreateLocationView: View {
                 )
             }
         }
+        .onTapGesture {
+            isFocused = false
+        }
         .padding(20)
         .navigationTitle("장소 생성")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden()
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
+            ToolbarItem(placement: .topBarTrailing) {
                 navigationBarBackButton
             }
         }
@@ -79,22 +86,17 @@ struct CreateLocationView: View {
     // MARK: SubViews
     private var navigationBarBackButton: some View {
         Button {
-            if currentStep == .nameInput {
-                routerManager.pop()
-            } else {
-                if let previousStep = CreateLocationStep(rawValue: currentStep.rawValue - 1) {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        currentStep = previousStep
-                    }
+            if let previousStep = CreateLocationStep(rawValue: currentStep.rawValue - 1) {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    currentStep = previousStep
                 }
             }
         } label: {
-            Label("뒤로 가기", systemImage: "chevron.left")
-                .labelStyle(.iconOnly)
-                .foregroundStyle(.white)
+            Text("뒤로")
         }
-        .buttonStyle(.plain)
         .contentShape(Rectangle())
+        .foregroundStyle(.secondary)
+        .opacity(currentStep == .nameInput || isMetering ? 0 : 1)
     }
 }
 

@@ -12,8 +12,11 @@ struct NameInputView: View {
     // MARK: Properties
     @EnvironmentObject var locationManager: LocationManager
     
+    
     @Binding var step: CreateLocationStep
     @Binding var name: String
+    
+    var isFocused: FocusState<Bool>.Binding
     
     private var nameMaxLength: Int {
         let currentLocale = Locale.current.language.languageCode?.identifier
@@ -43,6 +46,10 @@ struct NameInputView: View {
             NextStepButton(step: $step)
                 .disabled(name.isEmpty || !locationManager.isValidName(name))
         }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            isFocused.wrappedValue = false
+        }
     }
     
     // MARK: SubViews
@@ -57,6 +64,7 @@ struct NameInputView: View {
                             name = String(newValue.prefix(nameMaxLength))
                         }
                     }
+                    .focused(isFocused)
                 
                 Text("\(name.count)/\(nameMaxLength)")
                     .font(.callout)
@@ -77,6 +85,6 @@ struct NameInputView: View {
 }
 
 // MARK: - Preview
-#Preview {
-    NameInputView(step: .constant(.nameInput), name: .constant(""))
-}
+//#Preview {
+//    NameInputView(step: .constant(.nameInput), name: .constant(""))
+//}

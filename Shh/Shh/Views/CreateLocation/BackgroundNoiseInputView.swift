@@ -14,8 +14,7 @@ struct BackgroundNoiseInputView: View {
     
     @Binding var step: CreateLocationStep
     @Binding var backgroundNoise: Float
-    
-    @State private var isMetering: Bool = false
+    @Binding var isMetering: Bool
     
     var isFirstMeteringFinished: Bool {
         return !backgroundNoise.isZero
@@ -134,5 +133,5 @@ struct BackgroundNoiseInputView: View {
 
 // MARK: - Preview
 #Preview {
-    BackgroundNoiseInputView(step: .constant(.backgroundNoiseInput), backgroundNoise: .constant(0))
+    BackgroundNoiseInputView(step: .constant(.backgroundNoiseInput), backgroundNoise: .constant(0), isMetering: .constant(false))
 }

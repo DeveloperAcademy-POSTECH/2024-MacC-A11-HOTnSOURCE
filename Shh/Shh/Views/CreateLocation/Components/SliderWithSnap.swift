@@ -12,6 +12,8 @@ struct SliderWithSnap: View {
     // MARK: Properties
     @Binding var distance: Float
     
+    @State private var previousSnapPoint: Float?
+    
     let snapPoints: [Float]
     
     private var step: Float {
@@ -63,7 +65,15 @@ struct SliderWithSnap: View {
     
     // MARK: Action Handlers
     private func nearestSnapPoint(for value: Float) -> Float {
-        snapPoints.min(by: { abs($0 - value) < abs($1 - value) }) ?? value
+        let closestPoint = snapPoints.min(by: { abs($0 - value) < abs($1 - value) }) ?? value
+
+        if closestPoint != previousSnapPoint {
+            previousSnapPoint = closestPoint
+            let generator = UIImpactFeedbackGenerator(style: .soft)
+            generator.impactOccurred()
+        }
+        
+        return closestPoint
     }
 }
 
