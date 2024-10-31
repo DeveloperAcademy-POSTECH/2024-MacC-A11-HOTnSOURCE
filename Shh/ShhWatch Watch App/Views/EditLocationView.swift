@@ -1,5 +1,5 @@
 //
-//  EditPlaceView.swift
+//  EditLocationView.swift
 //  ShhWatch Watch App
 //
 //  Created by Jia Jang on 11/1/24.

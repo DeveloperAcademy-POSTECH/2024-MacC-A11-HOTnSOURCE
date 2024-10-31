@@ -123,7 +123,7 @@ struct MainView: View {
     private var editingButton: some View {
         VStack {
             Button {
-                routerManager.push(view: .editPlaceView)
+                routerManager.push(view: .editLocationView)
             } label: {
                 Image(systemName: "square.and.pencil")
                     .foregroundStyle(.white)
