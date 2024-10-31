@@ -102,7 +102,7 @@ struct MainView: View {
     }
     
     private var homeView: some View {
-        Text("home view")
+        Text("소리 상태 표시")
     }
 }
 
