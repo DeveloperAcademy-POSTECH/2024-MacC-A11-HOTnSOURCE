@@ -15,6 +15,7 @@ struct InfoRow: View {
             Text(item.title)
                 .fontWeight(.bold)
                 .foregroundStyle(.green)
+            
             Divider()
                 .background(.white)
                 .padding(.bottom)
