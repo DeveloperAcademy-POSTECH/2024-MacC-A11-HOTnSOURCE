@@ -51,10 +51,10 @@ struct MainView: View {
                 
                 ZStack {
                     meteringCircles
-                        .opacity(audioManager.isMetering ? 1 : 0) // 측정 중일 떄
+                        .hidden(!audioManager.isMetering) // 측정 중일 때
                     
                     meteringPausedCircle
-                        .opacity(audioManager.isMetering ? 0 : 1) // 측정을 멈추었을 떄
+                        .hidden(audioManager.isMetering) // 측정을 멈추었을 때
                 }
                 
                 Spacer()
@@ -69,8 +69,8 @@ struct MainView: View {
                 
                 Spacer().frame(height: 20) // 아래 여백
             }
-            .padding(.horizontal, 16)
-            .opacity(showCountdown ? 0 : 1) // 카운트다운 중에는 보이지 않음
+            .padding(.horizontal)
+            .hidden(showCountdown)// 카운트다운 중에는 보이지 않음
             
             if showCountdown {
                 countdownView
