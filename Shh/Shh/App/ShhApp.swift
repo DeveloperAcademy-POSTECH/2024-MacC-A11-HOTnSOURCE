@@ -21,26 +21,40 @@ struct ShhApp: App {
         }
     }()
     
+    @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
+    
     private let notificationManager: NotificationManager = NotificationManager()
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack(path: $routerManager.path) {
-                SelectLocationView()
-                    .navigationDestination(for: ShhView.self) { shhView in
-                        shhView.view
-                    }
-            }
-            .environmentObject(routerManager)
-            .environmentObject(locationManager)
-            .environmentObject(audioManager)
-            .onAppear {
-                if let selectedLocation = locationManager.selectedLocation {
-                    routerManager.push(view: .mainView(selectedLocation: selectedLocation))
+            if isFirstLaunch {
+                NavigationStack(path: $routerManager.onboardingPath) {
+                    WelcomeView()
+                        .navigationDestination(for: ShhView.self) { shhView in
+                            shhView.view
+                        }
                 }
-                
-                Task {
-                    await notificationManager.requestPermission()
+                .environmentObject(routerManager)
+                .environmentObject(locationManager)
+                .environmentObject(audioManager)
+            } else {
+                NavigationStack(path: $routerManager.path) {
+                    SelectLocationView()
+                        .navigationDestination(for: ShhView.self) { shhView in
+                            shhView.view
+                        }
+                }
+                .environmentObject(routerManager)
+                .environmentObject(locationManager)
+                .environmentObject(audioManager)
+                .onAppear {
+                    if let selectedLocation = locationManager.selectedLocation {
+                        routerManager.push(view: .mainView(selectedLocation: selectedLocation))
+                    }
+                    
+                    Task {
+                        await notificationManager.requestPermission()
+                    }
                 }
             }
         }

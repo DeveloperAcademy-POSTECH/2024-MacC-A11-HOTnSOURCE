@@ -22,7 +22,7 @@ struct CreateLocationView: View {
     @State private var isMetering: Bool = false
     @State private var createComplete: Bool = false
     
-    var isFirstUser: Bool = false
+    @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
     
     // MARK: Body
     var body: some View {
@@ -47,32 +47,36 @@ struct CreateLocationView: View {
                     step: $currentStep,
                     distance: $distance,
                     createComplete: $createComplete,
-                    isFirstUser: isFirstUser
+                    isFirstUser: isFirstLaunch
                 )
             }
-        }
-        .onTapGesture {
-            isFocused = false
         }
         .padding(20)
         .navigationTitle("장소 생성")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(isFirstLaunch)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 navigationBarBackButton
             }
         }
         .ignoresSafeArea(.keyboard)
+        .onTapGesture {
+            isFocused = false
+        }
+        .onAppear {
+            createComplete = false
+        }
         .onChange(of: createComplete) { newValue in
             if newValue {
-                let newLocation = Location(id: UUID(), name: name, backgroundDecibel: backgroundNoise, distance: distance)
-                
-                locationManager.selectedLocation = newLocation
-                locationManager.createLocation(newLocation)
-                
-                if isFirstUser {
-                    // TODO: 온보딩 마지막 페이지로 네비게이트
+                if isFirstLaunch {
+                    routerManager.push(view: .startView(name: name, backgroundNoise: backgroundNoise, distance: distance), isOnboarding: true)
                 } else {
+                    let newLocation = Location(id: UUID(), name: name, backgroundDecibel: backgroundNoise, distance: distance)
+                    
+                    locationManager.selectedLocation = newLocation
+                    locationManager.createLocation(newLocation)
+                    
                     routerManager.pop()
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {

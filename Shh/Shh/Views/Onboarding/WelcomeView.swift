@@ -7,7 +7,12 @@
 
 import SwiftUI
 
+// MARK: - 온보딩 > 웰컴 페이지
 struct WelcomeView: View {
+    // MARK: Properties
+    @EnvironmentObject var routerManager: RouterManager
+    
+    // MARK: Body
     var body: some View {
         VStack {
             Spacer()
@@ -26,14 +31,21 @@ struct WelcomeView: View {
             Spacer()
             Spacer()
             
-            CustomButton(text: "시작하기") {
-                // TODO: 장소 생성 뷰로 네비게이트
-            }
+            startButton
         }
-        .padding(30)
+        .padding(20)
+    }
+    
+    // MARK: SubViews
+    private var startButton: some View {
+        CustomButton(text: "시작하기") {
+            routerManager.push(view: .createLocationView, isOnboarding: true)
+        }
     }
 }
 
+// MARK: - Preview
 #Preview {
     WelcomeView()
+        .environmentObject(RouterManager())
 }
