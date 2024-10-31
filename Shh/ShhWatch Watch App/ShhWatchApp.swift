@@ -10,6 +10,13 @@ import SwiftUI
 @main
 struct ShhWatch_Watch_AppApp: App {
     @StateObject private var routerManager = RouterManager()
+    @StateObject private var audioManager: AudioManager = {
+        do {
+            return try AudioManager()
+        } catch {
+            fatalError("AudioManager 초기화 실패: \(error.localizedDescription)")
+        }
+    }()
     
     var body: some Scene {
         WindowGroup {
@@ -20,6 +27,7 @@ struct ShhWatch_Watch_AppApp: App {
                     }
             }
             .environmentObject(routerManager)
+            .environmentObject(audioManager)
         }
     }
 }
