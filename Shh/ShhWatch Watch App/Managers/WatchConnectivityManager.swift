@@ -5,7 +5,7 @@
 //  Created by Jia Jang on 10/31/24.
 //
 
-import Foundation
+import SwiftUI
 import WatchConnectivity
 
 struct Location: Identifiable, Hashable, Codable {
@@ -17,7 +17,13 @@ struct Location: Identifiable, Hashable, Codable {
 
 // MARK: - iOS와의 연결을 관리하는 클래스
 class WatchConnectivityManager: NSObject, WCSessionDelegate, ObservableObject {
-    @Published var locations: [Location] = []
+    @AppStorage("locations") private var storedLocations: String = "[]"
+    
+    @Published var locations: [Location] = [] {
+        didSet {
+            saveLocationsToAppStorage() // locations가 변경될 때 AppStorage에 저장
+        }
+    }
     
     // watchOS 연결 세션
     var session: WCSession
@@ -28,6 +34,7 @@ class WatchConnectivityManager: NSObject, WCSessionDelegate, ObservableObject {
         super.init()
         session.delegate = self
         session.activate() // Watch와 iOS 간의 연결 활성화
+        loadLocationsFromAppStorage() // 저장된 locations 데이터를 불러와서 초기화
     }
     
     // WCSession이 활성화된 상태인지 확인
@@ -52,6 +59,26 @@ class WatchConnectivityManager: NSObject, WCSessionDelegate, ObservableObject {
             } catch {
                 print("Failed to decode Location data: \(error.localizedDescription)")
             }
+        }
+    }
+    
+    // AppStorage에 location 정보 저장
+    private func saveLocationsToAppStorage() {
+        do {
+            let encodedData = try JSONEncoder().encode(locations)
+            storedLocations = String(data: encodedData, encoding: .utf8) ?? "[]"
+        } catch {
+            print("Failed to encode locations for AppStorage: \(error.localizedDescription)")
+        }
+    }
+    
+    // AppStorage에서 location 정보 로드
+    private func loadLocationsFromAppStorage() {
+        guard let data = storedLocations.data(using: .utf8) else { return }
+        do {
+            locations = try JSONDecoder().decode([Location].self, from: data)
+        } catch {
+            print("Failed to decode locations from AppStorage: \(error.localizedDescription)")
         }
     }
 }
