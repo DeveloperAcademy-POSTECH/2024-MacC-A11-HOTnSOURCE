@@ -27,8 +27,8 @@ struct MainView: View {
     
     private var outerCircleColor: Color {
         audioManager.userNoiseStatus == .safe
-            ? .green
-            : .purple
+        ? .green
+        : .purple
     }
     
     private var innerCircleColors: [Color] {
@@ -52,7 +52,7 @@ struct MainView: View {
                 MeteringInfoView()
                     .tag(MainTabs.info)
             }
-            .hidden(showCountdown)// 카운트다운 중에는 보이지 않음
+            .hidden(showCountdown)
             
             if showCountdown {
                 countdownView
@@ -64,9 +64,16 @@ struct MainView: View {
             do {
                 try audioManager.setAudioSession()
             } catch {
-                // TODO: 문제 발생 알러트 띄우기
                 print("오디오 세션 설정 중에 문제가 발생했습니다.")
                 routerManager.pop()
+            }
+        }
+        // watchOS 10.0 이후부터 deprecated 경고 -> _, newValue로 표기
+        .onChange(of: audioManager.userNoiseStatus) { _, newValue in
+            if newValue == .caution {
+                Task {
+                    WKInterfaceDevice.current().play(.start) // 햅틱 재생
+                }
             }
         }
         .onDisappear {
@@ -98,7 +105,7 @@ struct MainView: View {
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
             }
-            // TODO: button color가 어둡게 나오는 이슈 발생. 해결방안을 찾기 전까지 opacity로 임시 대처.
+            // TODO: button color가 어둡게 나오는 이슈 발생 -> opacity로 임시 대처
             .buttonStyle(BorderedButtonStyle(tint: Color.red.opacity(10)))
             
             Text("종료")
@@ -116,13 +123,11 @@ struct MainView: View {
                 
                 isAnimating.toggle()
             } label: {
-                // TODO: 추후에 audioManger.isMetering으로 변경 예정
                 Image(systemName: audioManager.isMetering ? "pause.fill" : "play.fill")
                     .font(.title3)
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
             }
-            // TODO: button color가 어둡게 나오는 이슈 발생. 해결방안을 찾기 전까지 opacity로 임시 대처.
             .buttonStyle(BorderedButtonStyle(tint: Color.green.opacity(audioManager.isMetering ? 2 : 10)))
             
             Text(audioManager.isMetering ? "일시정지" : "재개")
@@ -165,13 +170,13 @@ struct MainView: View {
                 .fill(outerCircleColor)
                 .opacity(0.2)
                 .scaleEffect(isAnimating ? 1.2 : 0.7)
-                
+            
             // 중간 원
             Circle()
                 .fill(outerCircleColor)
                 .opacity(0.2)
                 .scaleEffect(isAnimating ? 1.0 : 0.7)
-
+            
             // 가장 진한 안쪽 원
             Circle()
                 .fill(
