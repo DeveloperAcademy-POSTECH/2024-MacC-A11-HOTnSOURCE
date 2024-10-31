@@ -13,11 +13,11 @@ struct MainView: View {
     @EnvironmentObject var routerManager: RouterManager
     @EnvironmentObject var audioManager: AudioManager
     
+    @State private var countdown = 3
+    @State private var showCountdown = true
+    @State private var countdownTimer: Timer?
     @State private var tabSelection: MainTabs = .home
     @State private var isAnimating = false
-    
-    // TODO: 기능 구현하고 나서 실제 데이터로 변경 예정
-    @State private var isMetering = true
     
     let selectedLocation: Location
     
@@ -41,15 +41,22 @@ struct MainView: View {
     
     // MARK: Body
     var body: some View {
-        TabView(selection: $tabSelection) {
-            controlsView
-                .tag(MainTabs.controls)
+        ZStack {
+            TabView(selection: $tabSelection) {
+                controlsView
+                    .tag(MainTabs.controls)
+                
+                homeView
+                    .tag(MainTabs.home)
+                
+                MeteringInfoView()
+                    .tag(MainTabs.info)
+            }
+            .hidden(showCountdown)// 카운트다운 중에는 보이지 않음
             
-            homeView
-                .tag(MainTabs.home)
-            
-            MeteringInfoView()
-                .tag(MainTabs.info)
+            if showCountdown {
+                countdownView
+            }
         }
         .navigationTitle(selectedLocation.name)
         .navigationBarBackButtonHidden(true)
@@ -64,6 +71,7 @@ struct MainView: View {
         }
         .onDisappear {
             audioManager.stopMetering()
+            stopCountdown()
         }
     }
     
@@ -84,8 +92,6 @@ struct MainView: View {
         VStack {
             Button {
                 routerManager.pop()
-                
-                // more actions
             } label: {
                 Image(systemName: "xmark")
                     .font(.title3)
@@ -102,21 +108,24 @@ struct MainView: View {
     private var meteringToggleButton: some View {
         VStack {
             Button {
-                // action
+                if audioManager.isMetering {
+                    audioManager.pauseMetering()
+                } else {
+                    audioManager.startMetering(location: selectedLocation)
+                }
                 
-                // TODO: 테스트용 코드 (기능 적용시 삭제 예정)
-                isMetering.toggle()
+                isAnimating.toggle()
             } label: {
                 // TODO: 추후에 audioManger.isMetering으로 변경 예정
-                Image(systemName: isMetering ? "pause.fill" : "play.fill")
+                Image(systemName: audioManager.isMetering ? "pause.fill" : "play.fill")
                     .font(.title3)
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
             }
             // TODO: button color가 어둡게 나오는 이슈 발생. 해결방안을 찾기 전까지 opacity로 임시 대처.
-            .buttonStyle(BorderedButtonStyle(tint: Color.green.opacity(isMetering ? 2 : 10)))
+            .buttonStyle(BorderedButtonStyle(tint: Color.green.opacity(audioManager.isMetering ? 2 : 10)))
             
-            Text(isMetering ? "일시정지" : "재개")
+            Text(audioManager.isMetering ? "일시정지" : "재개")
         }
     }
     
@@ -136,10 +145,10 @@ struct MainView: View {
     private var homeView: some View {
         ZStack {
             meteringCircles
-                .hidden(!isMetering) // 측정 중일 때
+                .hidden(!audioManager.isMetering) // 측정 중일 때
             
             meteringPausedCircle
-                .hidden(isMetering) // 측정을 멈추었을 때
+                .hidden(audioManager.isMetering) // 측정을 멈추었을 때
             
             Text(audioManager.userNoiseStatus == .safe ? "양호" : "주의")
                 .font(.title)
@@ -193,5 +202,40 @@ struct MainView: View {
                 )
             )
             .frame(width: 120)
+    }
+    
+    private var countdownView: some View {
+        Text("\(countdown)")
+            .font(.system(size: 100, weight: .bold, design: .default))
+            .foregroundColor(.customWhite)
+            .transition(.opacity)
+            .onAppear {
+                startCountdown()
+            }
+    }
+}
+
+extension MainView {
+    private func startCountdown() {
+        print(#function)
+        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            if countdown > 1 {
+                countdown -= 1
+            } else {
+                stopCountdown()
+                
+                withAnimation {
+                    showCountdown = false
+                }
+                
+                audioManager.startMetering(location: selectedLocation)
+            }
+        }
+    }
+    
+    private func stopCountdown() {
+        print(#function)
+        countdownTimer?.invalidate() // 타이머 해지
+        countdownTimer = nil
     }
 }
