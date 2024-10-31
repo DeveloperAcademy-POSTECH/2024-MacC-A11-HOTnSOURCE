@@ -13,7 +13,7 @@ struct SelectLocationView: View {
     @EnvironmentObject var routerManager: RouterManager
     @ObservedObject var model = WatchConnectivityManager()
     
-    @State private var selectedPlace: Location?
+    @State private var selectedLocation: Location?
     
     // MARK: Body
     var body: some View {
@@ -40,22 +40,6 @@ struct SelectLocationView: View {
         }
     }
     
-    // MARK: Subviews
-    private var placeList: some View {
-        List {
-            ForEach(model.locations) { location in
-                locationButton(location)
-            }
-            .swipeActions(edge: .trailing) {
-                Button(role: .destructive) {
-                    // action
-                } label: {
-                    Label("Trash", systemImage: "trash.fill")
-                }
-            }
-        }
-    }
-    
     private func locationButton(_ location: Location) -> some View {
         Button {
             routerManager.push(view: .mainView)
@@ -63,7 +47,7 @@ struct SelectLocationView: View {
             Text(location.name)
         }
         .foregroundStyle(.white)
-        .tint(selectedPlace?.id == location.id ? .green : .gray)
+        .tint(selectedLocation?.id == location.id ? .green : .gray)
     }
 }
 

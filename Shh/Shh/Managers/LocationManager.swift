@@ -13,7 +13,7 @@ final class LocationManager: ObservableObject {
     
     @Published var locations: [Location] = [] {
         didSet {
-            saveLocations()
+            saveLocations() // locations 배열이 변경될 때 자동 저장
         }
     }
     
@@ -23,8 +23,10 @@ final class LocationManager: ObservableObject {
         }
     }
     
+    // iOS와 Watch 간 데이터 동기화를 위한 연결 관리자 인스턴스
     private let iosConnectivityManager: IOSConnectivityManager
     
+    // 초기화: IOSConnectivityManager 인스턴스를 주입하고 저장된 Location을 로드
     init(connectivityManager: IOSConnectivityManager) {
         self.iosConnectivityManager = connectivityManager
         loadLocations()
@@ -41,7 +43,10 @@ final class LocationManager: ObservableObject {
         }
         
         locations.append(location)
-        iosConnectivityManager.sendLocationData(location: locations) // 데이터 추가 시 Watch로 전송
+        
+        // Location 추가 후 Watch로 전송
+        iosConnectivityManager.sendLocationData(location: locations)
+        
         return .success
     }
     
@@ -49,7 +54,9 @@ final class LocationManager: ObservableObject {
         guard let index = locations.firstIndex(where: { $0.id == location.id }) else { return }
         
         locations[index] = location
-        iosConnectivityManager.sendLocationData(location: locations) // 데이터 수정 시 Watch로 전송
+        
+        // Location 수정 후 변경된 데이터 Watch로 전송
+        iosConnectivityManager.sendLocationData(location: locations)
     }
     
     func deleteLocation(_ location: Location) {
@@ -59,7 +66,8 @@ final class LocationManager: ObservableObject {
             selectedLocation = nil
         }
         
-        iosConnectivityManager.sendLocationData(location: locations) // 데이터 삭제 시 Watch로 전송
+        // Location 삭제 후 변경된 데이터 Watch로 전송
+        iosConnectivityManager.sendLocationData(location: locations)
     }
     
     func canDeleteLocation() -> Bool {
