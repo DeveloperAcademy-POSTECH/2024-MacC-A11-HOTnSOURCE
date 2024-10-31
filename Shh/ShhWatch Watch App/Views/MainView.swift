@@ -155,7 +155,8 @@ struct MainView: View {
             meteringPausedCircle
                 .hidden(audioManager.isMetering) // 측정을 멈추었을 때
             
-            Text(audioManager.userNoiseStatus == .safe ? "양호" : "주의")
+            // TODO: 워치에서의 가독성을 위해 '일시정지됨' -> '멈춤'으로 임시 변경 (논의 필요)
+            Text(audioManager.isMetering ? audioManager.userNoiseStatus.message : "멈춤")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundStyle(.black)
