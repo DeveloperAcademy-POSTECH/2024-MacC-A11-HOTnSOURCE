@@ -108,7 +108,7 @@ struct MainView: View {
     private var editingButton: some View {
         VStack {
             Button {
-                // TODO: editLocationView로 이동
+                routerManager.push(view: .editPlaceView)
             } label: {
                 Image(systemName: "square.and.pencil")
                     .foregroundStyle(.white)

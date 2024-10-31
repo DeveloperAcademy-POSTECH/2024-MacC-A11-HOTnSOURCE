@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 측정 정보 뷰: 측정 기준에 대한 FAQ
 struct MeteringInfoView: View {
     var body: some View {
         ScrollView {
