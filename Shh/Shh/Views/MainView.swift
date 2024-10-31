@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TipKit
 
 // MARK: - 메인 뷰; 사용자의 소음 정도를 나타냅니다.
 struct MainView: View {
@@ -67,6 +68,8 @@ struct MainView: View {
                     meteringToggleButton
                 }
                 
+                TipView(BackgroundInlineTip())
+                
                 Spacer().frame(height: 20) // 아래 여백
             }
             .padding(.horizontal)
@@ -93,9 +96,9 @@ struct MainView: View {
                 routerManager.pop()
             }
         }
-        .onChange(of: audioManager.userNoiseStatus) { newValue in
+        .onChange(of: audioManager.userNoiseStatus) {
             Task {
-                if newValue == .caution {
+                if audioManager.userNoiseStatus == .caution {
                     await notificationManager.sendNotification()
                 }
             }
@@ -231,7 +234,10 @@ struct MainView: View {
                 Label("정보", systemImage: "info.circle")
                     .font(.body)
                     .fontWeight(.regular)
+                    .contentShape(Rectangle())
+                    .buttonStyle(.plain)
             }
+            .popoverTip(InfoPopoverTip(), arrowEdge: .top)
         }
     }
 }
