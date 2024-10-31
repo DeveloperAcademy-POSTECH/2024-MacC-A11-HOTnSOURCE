@@ -31,19 +31,6 @@ class IOSConnectivityManager: NSObject, WCSessionDelegate, ObservableObject {
     
     func sessionDidDeactivate(_ session: WCSession) {}
     
-    // Watch의 요청을 받으면 즉시 응답 전송
-    func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
-        if message["request"] as? String == "locationData" {
-            do {
-                let jsonData = try JSONEncoder().encode(locations) // Location 배열을 JSON으로 인코딩
-                replyHandler(["locationData": jsonData])  // 인코딩된 데이터를 Watch에 응답으로 전송
-                print("Sent location data to Watch")
-            } catch {
-                print("Failed to encode Location data: \(error.localizedDescription)")
-            }
-        }
-    }
-    
     // 데이터가 변경될 때 Watch에 location 정보를 자동으로 전송
     func sendLocationData(location: [Location]) {
         do {
