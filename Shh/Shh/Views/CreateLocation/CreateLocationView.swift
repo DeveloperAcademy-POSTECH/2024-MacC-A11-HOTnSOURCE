@@ -28,11 +28,22 @@ struct CreateLocationView: View {
             
             switch currentStep {
             case .nameInput:
-                NameInputView(step: $currentStep, name: $name)
+                NameInputView(
+                    step: $currentStep,
+                    name: $name
+                )
             case .backgroundNoiseInput:
-                BackgroundNoiseInputView(step: $currentStep, backgroundNoise: $backgroundNoise)
+                BackgroundNoiseInputView(
+                    step: $currentStep,
+                    backgroundNoise: $backgroundNoise
+                )
             case .distanceInput:
-                DistanceInputView(step: $currentStep, distance: $distance, createComplete: $createComplete, isFirstUser: isFirstUser)
+                DistanceInputView(
+                    step: $currentStep,
+                    distance: $distance,
+                    createComplete: $createComplete,
+                    isFirstUser: isFirstUser
+                )
             }
         }
         .padding(20)
@@ -47,11 +58,19 @@ struct CreateLocationView: View {
         .ignoresSafeArea(.keyboard)
         .onChange(of: createComplete) { newValue in
             if newValue {
-                // TODO: 장소 생성 함수
+                let newLocation = Location(id: UUID(), name: name, backgroundDecibel: backgroundNoise, distance: distance)
+                
+                locationManager.selectedLocation = newLocation
+                locationManager.createLocation(newLocation)
+                
                 if isFirstUser {
                     // TODO: 온보딩 마지막 페이지로 네비게이트
                 } else {
-                    // TODO: 바로 메인 화면으로 네비게이트(0.7초 딜레이)
+                    routerManager.pop()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                        routerManager.push(view: .mainView(selectedLocation: newLocation))
+                    }
                 }
             }
         }
@@ -60,9 +79,13 @@ struct CreateLocationView: View {
     // MARK: SubViews
     private var navigationBarBackButton: some View {
         Button {
-            if let previousStep = CreateLocationStep(rawValue: currentStep.rawValue - 1) {
-                withAnimation(.easeInOut(duration: 0.2)) {
-                    currentStep = previousStep
+            if currentStep == .nameInput {
+                routerManager.pop()
+            } else {
+                if let previousStep = CreateLocationStep(rawValue: currentStep.rawValue - 1) {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        currentStep = previousStep
+                    }
                 }
             }
         } label: {
@@ -71,6 +94,7 @@ struct CreateLocationView: View {
                 .foregroundStyle(.white)
         }
         .buttonStyle(.plain)
+        .contentShape(Rectangle())
     }
 }
 
@@ -81,8 +105,11 @@ enum CreateLocationStep: Int {
 }
 
 // MARK: - Preview
-#Preview {
-    NavigationView {
-        CreateLocationView()
-    }
-}
+//#Preview {
+//    NavigationView {
+//        CreateLocationView()
+//            .environmentObject(LocationManager())
+//            .environmentObject(RouterManager())
+//            .environmentObject(AudioManager())
+//    }
+//}

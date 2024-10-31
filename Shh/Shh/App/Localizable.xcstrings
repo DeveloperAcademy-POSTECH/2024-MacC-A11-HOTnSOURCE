@@ -323,9 +323,6 @@
         }
       }
     },
-    "사용할 곳의 이름을 작성해주세요" : {
-
-    },
     "삭제" : {
       "localizations" : {
         "en" : {
@@ -337,6 +334,7 @@
       }
     },
     "생성하기" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -397,6 +395,7 @@
       }
     },
     "알 수 없는 오류가 발생했습니다" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -415,15 +414,6 @@
           }
         }
       }
-    },
-    "어떤 장소인가요?" : {
-
-    },
-    "얼마나 가깝나요?" : {
-
-    },
-    "얼마나 시끄러운가요?" : {
-
     },
     "완료" : {
       "localizations" : {
@@ -502,6 +492,7 @@
 
     },
     "장소 생성 성공" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -512,6 +503,7 @@
       }
     },
     "장소 생성 실패" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -532,6 +524,7 @@
       }
     },
     "장소는 최대 5개까지 생성 가능합니다" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -567,9 +560,6 @@
         }
       }
     },
-    "조심해야 할 대상이 있다면,\n나로부터 얼마나 멀리 있는지 입력해주세요.\n그 쪽에서 어떻게 들리는지를 기준으로 알려드릴게요." : {
-
-    },
     "조심해야할 대상과의 거리를 측정하거나 입력해주세요\n그 곳에서 느낄 당신의 소리 크기를 알려드릴게요" : {
       "localizations" : {
         "en" : {
@@ -599,9 +589,6 @@
           }
         }
       }
-    },
-    "조용한 카페의 배경 소음" : {
-
     },
     "주변 소음 측정" : {
       "localizations" : {
@@ -634,6 +621,7 @@
       }
     },
     "중복되는 이름이 존재합니다" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -642,6 +630,9 @@
           }
         }
       }
+    },
+    "중복되는 이름이 존재합니다!" : {
+
     },
     "지금 아주 잘하고 있어요!" : {
       "localizations" : {
@@ -662,9 +653,6 @@
           }
         }
       }
-    },
-    "측정 기준이 될 현재 장소의 소음을 측정해주세요.\n그보다 더 큰 소리를 내시면 알려드릴게요." : {
-
     },
     "측정 반경" : {
       "localizations" : {
@@ -707,6 +695,7 @@
       }
     },
     "확인" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

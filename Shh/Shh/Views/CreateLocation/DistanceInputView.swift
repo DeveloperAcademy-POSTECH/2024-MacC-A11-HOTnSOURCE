@@ -37,6 +37,7 @@ struct DistanceInputView: View {
             CustomButton(text: isFirstUser ? "다음으로" : "완료하기") {
                 createComplete = true
             }
+            .disabled(distance.isZero)
         }
     }
     

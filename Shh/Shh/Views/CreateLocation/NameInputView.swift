@@ -10,6 +10,8 @@ import SwiftUI
 // MARK: - 장소 생성 > 이름 입력 화면
 struct NameInputView: View {
     // MARK: Properties
+    @EnvironmentObject var locationManager: LocationManager
+    
     @Binding var step: CreateLocationStep
     @Binding var name: String
     
@@ -39,7 +41,7 @@ struct NameInputView: View {
             Spacer()
             
             NextStepButton(step: $step)
-                .disabled(name.isEmpty)
+                .disabled(name.isEmpty || !locationManager.isValidName(name))
         }
     }
     
@@ -64,6 +66,12 @@ struct NameInputView: View {
             Rectangle()
                 .frame(height: 3)
                 .foregroundStyle(.accent)
+            
+            Text("중복되는 이름이 존재합니다!")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.footnote)
+                .foregroundStyle(.red)
+                .opacity(locationManager.isValidName(name) ? 0 : 1)
         }
     }
 }

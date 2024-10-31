@@ -10,6 +10,8 @@ import SwiftUI
 // MARK: - 장소 생성 > 배경 소음 측정 화면
 struct BackgroundNoiseInputView: View {
     // MARK: Properties
+    @EnvironmentObject var audioManager: AudioManager
+    
     @Binding var step: CreateLocationStep
     @Binding var backgroundNoise: Float
     
@@ -50,9 +52,9 @@ struct BackgroundNoiseInputView: View {
             
             VStack(spacing: 12) {
                 reMeteringButton
-                    .opacity(isFirstMeteringFinished ? 1 : 0)
+                    .opacity(isFirstMeteringFinished && !isMetering ? 1 : 0)
                 
-                if isFirstMeteringFinished {
+                if isFirstMeteringFinished && !isMetering {
                     NextStepButton(step: $step)
                 } else {
                     meteringButton
@@ -73,7 +75,7 @@ struct BackgroundNoiseInputView: View {
             .foregroundStyle(.secondary)
             .frame(maxWidth: .infinity, alignment: .trailing)
             
-            Text("조용한 카페의 배경 소음")
+            Text(Location.decibelWriting(decibel: backgroundNoise))
                 .font(.title)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
@@ -91,7 +93,7 @@ struct BackgroundNoiseInputView: View {
     
     private var reMeteringButton: some View {
         Button {
-            // TODO: 측정 함수
+            meteringBackgroundNoise()
         } label: {
             Label("다시 측정하기", systemImage: "arrow.clockwise")
                 .font(.footnote)
@@ -99,11 +101,34 @@ struct BackgroundNoiseInputView: View {
         }
     }
     
+    @ViewBuilder
     private var meteringButton: some View {
         CustomButton(text: isMetering ? "측정 중이에요..." : "측정하기") {
-            // TODO: 측정 함수, 애니메이션 가능하면 ㄱㄱ
+            meteringBackgroundNoise()
         }
         .disabled(isMetering)
+    }
+    
+    // MARK: Action Handlers
+    private func meteringBackgroundNoise() {
+        isMetering = true
+        
+        do {
+            try audioManager.meteringBackgroundNoise { averageDecibel in
+                let unRoundedAverageDecibel = averageDecibel
+                
+                let roundedDecibel = round(unRoundedAverageDecibel / 5.0) * 5.0
+                
+                let clampedDecibel = min(max(roundedDecibel, 30.0), 70.0)
+                
+                backgroundNoise = clampedDecibel
+                isMetering = false
+            }
+        } catch {
+            backgroundNoise = 0
+            isMetering = false
+            print("소음 측정 중 오류 발생: \(error)")
+        }
     }
 }
 
