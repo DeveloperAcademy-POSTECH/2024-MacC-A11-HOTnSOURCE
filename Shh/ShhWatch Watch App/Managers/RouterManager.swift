@@ -23,6 +23,7 @@ class RouterManager: ObservableObject {
 enum ShhWatchView: Hashable {
     case selectLocationView
     case mainView
+    case editPlaceView
     
     @ViewBuilder
     var view: some View {
@@ -31,6 +32,12 @@ enum ShhWatchView: Hashable {
             SelectLocationView()
         case .mainView:
             MainView()
+        case .editPlaceView:
+            EditPlaceView()
         }
     }
+}
+
+enum MainTabs {
+    case controls, home, info
 }
