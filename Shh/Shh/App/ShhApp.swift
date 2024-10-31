@@ -13,6 +13,13 @@ struct ShhApp: App {
     
     @StateObject private var routerManager = RouterManager()
     @StateObject private var locationManager = LocationManager()
+    @StateObject private var audioManager: AudioManager = {
+        do {
+            return try AudioManager()
+        } catch {
+            fatalError("AudioManager 초기화 실패: \(error.localizedDescription)")
+        }
+    }()
     
     private let notificationManager: NotificationManager = NotificationManager()
     
@@ -26,6 +33,7 @@ struct ShhApp: App {
             }
             .environmentObject(routerManager)
             .environmentObject(locationManager)
+            .environmentObject(audioManager)
             .onAppear {
                 if let selectedLocation = locationManager.selectedLocation {
                     routerManager.push(view: .mainView(selectedLocation: selectedLocation))

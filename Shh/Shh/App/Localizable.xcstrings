@@ -120,12 +120,6 @@
     "%lld" : {
 
     },
-    "%lld dB" : {
-
-    },
-    "%lld m" : {
-
-    },
     "%lld/%lld" : {
       "localizations" : {
         "ko" : {
@@ -209,12 +203,6 @@
 
     },
     "Starts or pauses noise metering" : {
-
-    },
-    "Stop metering" : {
-
-    },
-    "Stop noise metering" : {
 
     },
     "거리" : {
@@ -318,6 +306,9 @@
         }
       }
     },
+    "배경 소음 | %lld dB" : {
+
+    },
     "삭제" : {
       "localizations" : {
         "en" : {
@@ -358,6 +349,9 @@
         }
       }
     },
+    "수정" : {
+
+    },
     "수정하기" : {
       "localizations" : {
         "en" : {
@@ -379,6 +373,7 @@
       }
     },
     "아래 버튼을 눌러" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -688,7 +683,14 @@
         }
       }
     },
+    "측정 반경 | %@ m" : {
+
+    },
+    "측정을 다시 시작해주세요" : {
+
+    },
     "측정을 시작해주세요" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
