@@ -36,6 +36,7 @@ class WatchConnectivityManager: NSObject, WCSessionDelegate, ObservableObject {
             print("WCSession is activated on watchOS")
         } else {
             print("WCSession failed to activate on watchOS")
+            // TODO: activated가 아닐 경우 예외처리 (ex. 얼럿 등..)
         }
     }
     
