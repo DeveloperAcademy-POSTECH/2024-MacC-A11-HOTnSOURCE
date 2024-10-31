@@ -12,7 +12,6 @@ struct NameInputView: View {
     // MARK: Properties
     @EnvironmentObject var locationManager: LocationManager
     
-    
     @Binding var step: CreateLocationStep
     @Binding var name: String
     
@@ -85,6 +84,6 @@ struct NameInputView: View {
 }
 
 // MARK: - Preview
-//#Preview {
-//    NameInputView(step: .constant(.nameInput), name: .constant(""))
-//}
+// #Preview {
+//     NameInputView(step: .constant(.nameInput), name: .constant(""))
+// }

@@ -107,11 +107,11 @@ enum CreateLocationStep: Int {
 }
 
 // MARK: - Preview
-//#Preview {
-//    NavigationView {
-//        CreateLocationView()
-//            .environmentObject(LocationManager())
-//            .environmentObject(RouterManager())
-//            .environmentObject(AudioManager())
-//    }
-//}
+// #Preview {
+//     NavigationView {
+//         CreateLocationView()
+//             .environmentObject(LocationManager())
+//             .environmentObject(RouterManager())
+//             .environmentObject(AudioManager())
+//     }
+// }
