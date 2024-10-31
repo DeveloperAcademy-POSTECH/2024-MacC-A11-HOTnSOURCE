@@ -12,7 +12,7 @@ struct ShhApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     @StateObject private var routerManager = RouterManager()
-    @StateObject private var locationManager = LocationManager(connectivityManager: IOSConnectivityManager())
+    @StateObject private var locationManager = LocationManager()
     
     private let notificationManager: NotificationManager = NotificationManager()
     

@@ -11,6 +11,8 @@ final class LocationManager: ObservableObject {
     @AppStorage("locations") private var storedLocations: String = "[]"
     @AppStorage("selectedLocation") private var storedSelectedLocation: String = ""
     
+    @ObservedObject private var iosConnectivityManager = IOSConnectivityManager.shared
+    
     @Published var locations: [Location] = [] {
         didSet {
             saveLocations() // locations 배열이 변경될 때 자동 저장
@@ -23,12 +25,7 @@ final class LocationManager: ObservableObject {
         }
     }
     
-    // iOS와 Watch 간 데이터 동기화를 위한 연결 관리자 인스턴스
-    private let iosConnectivityManager: IOSConnectivityManager
-    
-    // 초기화: IOSConnectivityManager 인스턴스를 주입하고 저장된 Location을 로드
-    init(connectivityManager: IOSConnectivityManager) {
-        self.iosConnectivityManager = connectivityManager
+    init() {
         loadLocations()
     }
     
