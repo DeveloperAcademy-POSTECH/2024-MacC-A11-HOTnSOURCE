@@ -11,7 +11,7 @@ import SwiftUI
 struct SelectLocationView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
-    @ObservedObject var model = WatchConnectivityManager()
+    @ObservedObject var connectivityManager = WatchConnectivityManager()
     
     @State private var selectedLocation: Location?
     
@@ -27,7 +27,7 @@ struct SelectLocationView: View {
     // MARK: Subviews
     private var locationList: some View {
         List {
-            ForEach(model.locations) { location in
+            ForEach(connectivityManager.locations) { location in
                 locationButton(location)
             }
             .swipeActions(edge: .trailing) {
