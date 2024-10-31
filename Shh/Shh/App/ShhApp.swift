@@ -35,10 +35,6 @@ struct ShhApp: App {
             .environmentObject(locationManager)
             .environmentObject(audioManager)
             .onAppear {
-                if let selectedLocation = locationManager.selectedLocation {
-                    routerManager.push(view: .mainView(selectedLocation: selectedLocation))
-                }
-                
                 Task {
                     await notificationManager.requestPermission()
                 }
