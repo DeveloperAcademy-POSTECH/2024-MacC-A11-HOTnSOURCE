@@ -8,7 +8,7 @@
 import SwiftUI
 
 // MARK: - 장소 수정 뷰
-struct EditPlaceView: View {
+struct EditLocationView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
     @EnvironmentObject var connectivityManager: WatchConnectivityManager
@@ -120,5 +120,5 @@ struct EditPlaceView: View {
 }
 
 #Preview {
-    EditPlaceView()
+    EditLocationView()
 }
