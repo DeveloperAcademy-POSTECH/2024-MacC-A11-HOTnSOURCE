@@ -14,16 +14,22 @@ struct BackgroundNoiseInputView: View {
     @Binding var backgroundNoise: Float
     
     @State private var isMetering: Bool = false
-    @State private var isFirstMeteringFinished: Bool = false
+    
+    var isFirstMeteringFinished: Bool {
+        return !backgroundNoise.isZero
+    }
     
     // MARK: Body
     var body: some View {
         VStack {
-            descriptionRow
+            StepDescriptionRow(
+                text: "얼마나 시끄러운가요?",
+                subText: "측정 기준이 될 현재 장소의 소음을 측정해주세요.\n그보다 더 큰 소리를 내시면 알려드릴게요."
+            )
             
             Spacer()
             
-            ssambbongAsset
+            SsambbongAsset(image: .backgroundNoiseInputAsset)
             
             Spacer()
             
@@ -53,33 +59,9 @@ struct BackgroundNoiseInputView: View {
                 }
             }
         }
-        .onChange(of: isMetering) { newValue in
-            if newValue {
-                isFirstMeteringFinished = true
-            }
-        }
     }
     
     // MARK: SubViews
-    private var descriptionRow: some View {
-        VStack(spacing: 10) {
-            Text("얼마나 시끄러운가요?")
-                .font(.title)
-            Text("측정 기준이 될 현재 장소의 소음을 측정해주세요.\n그보다 더 큰 소리를 내시면 알려드릴게요.")
-                .font(.callout)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-        }
-        .fontWeight(.bold)
-    }
-    
-    private var ssambbongAsset: some View {
-        Image(.backgroundNoiseInputAsset)
-            .resizable()
-            .scaledToFit()
-            .frame(width: 200, height: 200)
-    }
-    
     private var backgroundNoiseInfoRow: some View {
         VStack {
             Button {
@@ -95,6 +77,7 @@ struct BackgroundNoiseInputView: View {
                 .font(.title)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
             
             Spacer().frame(height: 8)
             
@@ -117,13 +100,10 @@ struct BackgroundNoiseInputView: View {
     }
     
     private var meteringButton: some View {
-        CustomButton(text: "측정하기") {
-            // TODO: 측정 함수
-            
-            withAnimation(.easeInOut(duration: 0.2)) {
-                isFirstMeteringFinished = true
-            }
+        CustomButton(text: isMetering ? "측정 중이에요..." : "측정하기") {
+            // TODO: 측정 함수, 애니메이션 가능하면 ㄱㄱ
         }
+        .disabled(isMetering)
     }
 }
 

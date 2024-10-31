@@ -13,12 +13,13 @@ struct CreateLocationView: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var routerManager: RouterManager
     
-    // TODO: name input step으로 변경
-//    @State private var currentStep: CreateLocationStep = .nameInput
-    @State private var currentStep: CreateLocationStep = .backgroundNoiseInput
+    @State private var currentStep: CreateLocationStep = .nameInput
     @State private var name: String = ""
     @State private var backgroundNoise: Float = 0
     @State private var distance: Float = 0
+    @State private var createComplete: Bool = false
+    
+    var isFirstUser: Bool = false
     
     // MARK: Body
     var body: some View {
@@ -31,7 +32,7 @@ struct CreateLocationView: View {
             case .backgroundNoiseInput:
                 BackgroundNoiseInputView(step: $currentStep, backgroundNoise: $backgroundNoise)
             case .distanceInput:
-                DistanceInputView(step: $currentStep, distance: $distance)
+                DistanceInputView(step: $currentStep, distance: $distance, createComplete: $createComplete, isFirstUser: isFirstUser)
             }
         }
         .padding(20)
@@ -44,6 +45,16 @@ struct CreateLocationView: View {
             }
         }
         .ignoresSafeArea(.keyboard)
+        .onChange(of: createComplete) { newValue in
+            if newValue {
+                // TODO: 장소 생성 함수
+                if isFirstUser {
+                    // TODO: 온보딩 마지막 페이지로 네비게이트
+                } else {
+                    // TODO: 바로 메인 화면으로 네비게이트(0.7초 딜레이)
+                }
+            }
+        }
     }
     
     // MARK: SubViews

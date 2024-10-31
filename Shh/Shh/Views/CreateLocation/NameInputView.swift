@@ -25,12 +25,16 @@ struct NameInputView: View {
     // MARK: Body
     var body: some View {
         VStack {
-            descriptionRow
+            StepDescriptionRow(
+                text: "어떤 장소인가요?",
+                subText: "사용할 곳의 이름을 작성해주세요"
+            )
             
             Spacer()
             
             nameInputRow
             
+            Spacer()
             Spacer()
             Spacer()
             
@@ -40,17 +44,6 @@ struct NameInputView: View {
     }
     
     // MARK: SubViews
-    private var descriptionRow: some View {
-        VStack(spacing: 10) {
-            Text("어떤 장소인가요?")
-                .font(.title)
-            Text("사용할 곳의 이름을 작성해주세요")
-                .font(.callout)
-                .foregroundStyle(.secondary)
-        }
-        .fontWeight(.bold)
-    }
-    
     private var nameInputRow: some View {
         VStack(spacing: 8) {
             ZStack(alignment: .trailing) {
