@@ -93,9 +93,9 @@ struct MainView: View {
                 routerManager.pop()
             }
         }
-        .onChange(of: audioManager.userNoiseStatus) { newValue in
+        .onChange(of: audioManager.userNoiseStatus) {
             Task {
-                if newValue == .caution {
+                if audioManager.userNoiseStatus == .caution {
                     await notificationManager.sendNotification()
                 }
             }

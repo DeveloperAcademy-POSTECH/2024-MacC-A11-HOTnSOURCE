@@ -181,9 +181,9 @@ struct EditLocationView: View {
                         .fill(.tertiary)
                 )
                 .focused($isFocused)
-                .onChange(of: location.name) { newValue in
-                    if newValue.count > nameMaxLength {
-                        location.name = String(newValue.prefix(nameMaxLength))
+                .onChange(of: location.name) {
+                    if location.name.count > nameMaxLength {
+                        location.name = String(location.name.prefix(nameMaxLength))
                     }
                 }
             
