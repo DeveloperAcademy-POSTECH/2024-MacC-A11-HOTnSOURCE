@@ -34,3 +34,7 @@ enum ShhWatchView: Hashable {
         }
     }
 }
+
+enum MainTabs {
+    case controls, home, info
+}
