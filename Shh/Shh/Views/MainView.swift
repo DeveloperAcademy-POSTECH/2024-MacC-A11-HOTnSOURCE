@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TipKit
 
 // MARK: - 메인 뷰; 사용자의 소음 정도를 나타냅니다.
 struct MainView: View {
@@ -66,6 +67,8 @@ struct MainView: View {
                     
                     meteringToggleButton
                 }
+                
+                TipView(BackgroundInlineTip())
                 
                 Spacer().frame(height: 20) // 아래 여백
             }
