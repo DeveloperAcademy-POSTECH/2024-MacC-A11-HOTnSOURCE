@@ -12,34 +12,60 @@ struct MainView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
     @EnvironmentObject var audioManager: AudioManager
-
+    
     @State private var countdown = 3
     @State private var showCountdown = true
     @State private var countdownTimer: Timer?
+    @State private var isMetering = false // 애니메이션 상태 제어를 위해 값 복사
     
     let selectedLocation: Location
     
     private let notificationManager: NotificationManager = .init()
+    
+    private var outerCircleColor: Color {
+        !isMetering
+            ? .gray
+            : audioManager.userNoiseStatus == .safe
+                ? .green
+                : .purple
+    }
+    
+    private var innerCircleColors: [Color] {
+        if !isMetering {
+            return [.gray, .white]
+        } else {
+            if audioManager.userNoiseStatus == .safe {
+                return [.green, .yellow, .white]
+            } else {
+                return [.purple, .blue, .white]
+            }
+        }
+    }
     
     // MARK: Body
     var body: some View {
         ZStack {
             VStack {
                 locationInfo
+                
                 Spacer()
                 
-                // TODO: 대충 멋진 에셋
+                meteringCircles
+                
+                Spacer()
                 
                 HStack(alignment: .center) {
                     userNoiseStatusInfo
+                    
                     Spacer()
                     
                     meteringToggleButton
                 }
-                Spacer().frame(height: 20)
+                
+                Spacer().frame(height: 20) // 아래 여백
             }
             .padding(.horizontal, 16)
-            .opacity(showCountdown ? 0 : 1)
+            .opacity(showCountdown ? 0 : 1) // 카운트다운 중에는 보이지 않음
             
             if showCountdown {
                 countdownView
@@ -47,7 +73,7 @@ struct MainView: View {
         }
         .navigationTitle(selectedLocation.name)
         .navigationBarTitleDisplayMode(.large)
-        .navigationBarHidden(showCountdown)
+        .navigationBarHidden(showCountdown) // 카운트다운 중에는 보이지 않음
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 toolbarButtons
@@ -61,12 +87,18 @@ struct MainView: View {
                 print("오디오 세션 설정 중에 문제가 발생했습니다.")
                 routerManager.pop()
             }
+            DispatchQueue.main.async {
+                isMetering = audioManager.isMetering // 상태에 따라 애니메이션 제어
+            }
         }
         .onChange(of: audioManager.userNoiseStatus) { newValue in
             Task {
                 if newValue == .caution {
                     await notificationManager.sendNotification()
                 }
+            }
+            DispatchQueue.main.async {
+                isMetering = audioManager.isMetering // 상태에 따라 애니메이션 제어
             }
         }
         .onDisappear {
@@ -76,20 +108,41 @@ struct MainView: View {
     }
     
     // MARK: SubViews
-    private var countdownView: some View {
-        Text("\(countdown)")
-            .font(.system(size: 100, weight: .bold, design: .default))
-            .foregroundColor(.customWhite)
-            .transition(.opacity)
-            .onAppear {
-                startCountdown()
-            }
+    private var meteringCircles: some View {
+        ZStack {
+            Circle()
+                .fill(outerCircleColor)
+                .opacity(0.1)
+                .scaleEffect(audioManager.isMetering ? 1.8 : 0.9)
+                .animation(animateScale(), value: audioManager.isMetering)
+                .frame(width: 160)
+            
+            Circle()
+                .fill(outerCircleColor)
+                .opacity(0.4)
+                .scaleEffect(audioManager.isMetering ? 1.4 : 0.9)
+                .animation(animateScale(), value: audioManager.isMetering)
+                .frame(width: 160)
+            
+            Circle()
+                .fill(
+                    LinearGradient(
+                        gradient: Gradient(colors: innerCircleColors),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .scaleEffect(audioManager.isMetering ? 1.0 : 0.9)
+                .animation(animateScale(), value: audioManager.isMetering)
+                .frame(width: 160)
+        }
     }
+    
     private var locationInfo: some View {
         HStack {
             VStack(alignment: .leading) {
                 Text("배경 소음 | \(Int(selectedLocation.backgroundDecibel)) dB")
-                    
+                
                 Text("측정 반경 | \(String(format: "%.1f", selectedLocation.distance)) m")
             }
             .font(.body)
@@ -133,7 +186,17 @@ struct MainView: View {
         .accessibilityHint("Starts or pauses noise metering")
     }
     
-    private var toolbarButtons: some View  {
+    private var countdownView: some View {
+        Text("\(countdown)")
+            .font(.system(size: 100, weight: .bold, design: .default))
+            .foregroundColor(.customWhite)
+            .transition(.opacity)
+            .onAppear {
+                startCountdown()
+            }
+    }
+    
+    private var toolbarButtons: some View {
         HStack(alignment: .center) {
             Button {
                 routerManager.push(view: .editLocationView(location: selectedLocation))
@@ -175,5 +238,11 @@ extension MainView {
         print(#function)
         countdownTimer?.invalidate() // 타이머 해지
         countdownTimer = nil
+    }
+    
+    private func animateScale() -> Animation? {
+        audioManager.isMetering
+            ? Animation.easeInOut(duration: 1.5).repeatForever(autoreverses: true)
+            : nil // 측정이 멈추면 애니메이션 없음
     }
 }
