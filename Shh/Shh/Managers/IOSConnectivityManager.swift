@@ -12,17 +12,17 @@ import WatchConnectivity
 class IOSConnectivityManager: NSObject, WCSessionDelegate, ObservableObject {
     static let shared = IOSConnectivityManager()
     
-    @Published var locations: [Location] = []
-    
     // watchOS와의 연결 세션
     var session: WCSession
+    
+    private var locations: [Location] = []
     
     // 초기화: WCSession 설정 및 활성화
     init(session: WCSession = .default) {
         self.session = session
         super.init()
         session.delegate = self
-        session.activate() // iOS와 Watch 간의 연결을 활성화
+        session.activate() // iOS와 Watch 간의 연결 활성화
     }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {}
