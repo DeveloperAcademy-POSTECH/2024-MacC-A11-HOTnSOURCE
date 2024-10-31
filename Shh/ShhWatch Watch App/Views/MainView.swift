@@ -13,12 +13,29 @@ struct MainView: View {
     @EnvironmentObject var routerManager: RouterManager
     
     @State private var tabSelection: MainTabs = .home
+    @State private var isAnimating = false
     
-    // TODO: 추후에 audioManger.isMetering으로 변경 예정
+    // TODO: 기능 구현하고 나서 실제 데이터로 변경 예정
     @State private var isMetering = true
+    @State private var noiseStatus = "safe"
     
-    // ✅ TODO: 뭘 쓰는게 맞는지 다시 확인 필요 (StateObject/var/private)
-    private var connectivityManager = WatchConnectivityManager()
+    private let meteringCircleAnimation = Animation
+        .easeInOut(duration: 1.5)
+        .repeatForever(autoreverses: true)
+    
+    private var outerCircleColor: Color {
+        noiseStatus == "safe"
+            ? .green
+            : .purple
+    }
+    
+    private var innerCircleColors: [Color] {
+        if noiseStatus == "safe" {
+            return [.green, .yellow, .white]
+        } else {
+            return [.purple, .blue, .white]
+        }
+    }
     
     // MARK: Body
     var body: some View {
@@ -102,7 +119,65 @@ struct MainView: View {
     }
     
     private var homeView: some View {
-        Text("소리 상태 표시")
+        ZStack {
+            meteringCircles
+                .hidden(!isMetering) // 측정 중일 때
+            
+            meteringPausedCircle
+                .hidden(isMetering) // 측정을 멈추었을 때
+            
+            Text(noiseStatus == "safe" ? "양호" : "주의")
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundStyle(.black)
+        }
+    }
+    
+    // animation
+    private var meteringCircles: some View {
+        ZStack(alignment: .center) {
+            // 가장 옅은 바깥쪽 원
+            Circle()
+                .fill(outerCircleColor)
+                .opacity(0.2)
+                .scaleEffect(isAnimating ? 1.2 : 0.7)
+                
+            // 중간 원
+            Circle()
+                .fill(outerCircleColor)
+                .opacity(0.2)
+                .scaleEffect(isAnimating ? 1.0 : 0.7)
+
+            // 가장 진한 안쪽 원
+            Circle()
+                .fill(
+                    LinearGradient(
+                        gradient: Gradient(colors: innerCircleColors),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .scaleEffect(isAnimating ? 0.8 : 0.7)
+        }
+        .onAppear {
+            DispatchQueue.main.async {
+                withAnimation(meteringCircleAnimation) {
+                    isAnimating = true
+                }
+            }
+        }
+    }
+    
+    private var meteringPausedCircle: some View {
+        Circle()
+            .fill(
+                LinearGradient(
+                    gradient: Gradient(colors: [.gray, .white]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
+            .frame(width: 120)
     }
 }
 
