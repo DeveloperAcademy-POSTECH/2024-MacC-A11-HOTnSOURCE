@@ -231,7 +231,10 @@ struct MainView: View {
                 Label("정보", systemImage: "info.circle")
                     .font(.body)
                     .fontWeight(.regular)
+                    .contentShape(Rectangle())
+                    .buttonStyle(.plain)
             }
+            .popoverTip(InfoPopoverTip(), arrowEdge: .top)
         }
     }
 }

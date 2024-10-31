@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import TipKit
 @main
 struct ShhApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -42,6 +42,21 @@ struct ShhApp: App {
                 Task {
                     await notificationManager.requestPermission()
                 }
+            }
+            .task {
+            #if DEBUG
+                try? Tips.resetDatastore() // 디버그를 위해 팁 상태 초기화, 실제 버전에서는 동작하진 않음
+            #endif
+                try? Tips.configure(
+                    [
+                        // Reset which tips have been shown and what parameters have been tracked, useful during testing and for this sample project
+                        .datastoreLocation(.applicationDefault)
+                        
+                        // When should the tips be presented? If you use .immeiate, they'll all be presented whenever a screen with a tip appears.
+                        // You can adjust this on per tip level as well
+//                        .displayFrequency(.immediate)
+                    ]
+                )
             }
         }
     }
