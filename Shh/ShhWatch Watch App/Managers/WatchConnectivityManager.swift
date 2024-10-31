@@ -8,13 +8,6 @@
 import SwiftUI
 import WatchConnectivity
 
-struct Location: Identifiable, Hashable, Codable {
-    let id: UUID
-    var name: String
-    var backgroundDecibel: Float
-    var distance: Float
-}
-
 // MARK: - iOS와의 연결을 관리하는 클래스
 class WatchConnectivityManager: NSObject, WCSessionDelegate, ObservableObject {
     @AppStorage("locations") private var storedLocations: String = "[]"

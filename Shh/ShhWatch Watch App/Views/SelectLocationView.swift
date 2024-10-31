@@ -21,7 +21,6 @@ struct SelectLocationView: View {
             locationList
         }
         .navigationTitle("장소 선택")
-        .scrollIndicators(.hidden)
     }
     
     // MARK: Subviews
