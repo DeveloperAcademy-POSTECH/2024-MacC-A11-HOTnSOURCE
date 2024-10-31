@@ -19,6 +19,8 @@ struct MainView: View {
     // TODO: 기능 구현하고 나서 실제 데이터로 변경 예정
     @State private var isMetering = true
     
+    let selectedLocation: Location
+    
     private let meteringCircleAnimation = Animation
         .easeInOut(duration: 1.5)
         .repeatForever(autoreverses: true)
@@ -49,9 +51,19 @@ struct MainView: View {
             MeteringInfoView()
                 .tag(MainTabs.info)
         }
+        .navigationTitle(selectedLocation.name)
         .navigationBarBackButtonHidden(true)
         .onAppear {
-            print("userNoiseStatus: ", audioManager.userNoiseStatus)
+            do {
+                try audioManager.setAudioSession()
+            } catch {
+                // TODO: 문제 발생 알러트 띄우기
+                print("오디오 세션 설정 중에 문제가 발생했습니다.")
+                routerManager.pop()
+            }
+        }
+        .onDisappear {
+            audioManager.stopMetering()
         }
     }
     
@@ -182,8 +194,4 @@ struct MainView: View {
             )
             .frame(width: 120)
     }
-}
-
-#Preview {
-    MainView()
 }

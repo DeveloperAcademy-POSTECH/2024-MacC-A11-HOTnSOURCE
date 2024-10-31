@@ -41,7 +41,7 @@ struct SelectLocationView: View {
     
     private func locationButton(_ location: Location) -> some View {
         Button {
-            routerManager.push(view: .mainView)
+            routerManager.push(view: .mainView(selectedLocation: location))
         } label: {
             Text(location.name)
         }
