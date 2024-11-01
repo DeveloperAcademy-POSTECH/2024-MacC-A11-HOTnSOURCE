@@ -58,9 +58,9 @@ struct NameInputView: View {
                 TextField("이름을 입력해주세요", text: $name)
                     .font(.title2)
                     .fontWeight(.bold)
-                    .onChange(of: name) { newValue in
-                        if newValue.count > nameMaxLength {
-                            name = String(newValue.prefix(nameMaxLength))
+                    .onChange(of: name) {
+                        if name.count > nameMaxLength {
+                            self.name = String(name.prefix(nameMaxLength))
                         }
                     }
                     .focused(isFocused)

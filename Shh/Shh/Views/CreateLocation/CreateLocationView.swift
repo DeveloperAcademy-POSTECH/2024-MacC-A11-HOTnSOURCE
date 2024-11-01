@@ -67,8 +67,8 @@ struct CreateLocationView: View {
         .onAppear {
             createComplete = false
         }
-        .onChange(of: createComplete) { newValue in
-            if newValue {
+        .onChange(of: createComplete) {
+            if createComplete {
                 if isFirstLaunch {
                     routerManager.push(view: .startView(name: name, backgroundNoise: backgroundNoise, distance: distance), isOnboarding: true)
                 } else {
