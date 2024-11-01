@@ -11,10 +11,8 @@ import SwiftUI
 struct SelectLocationView: View {
     // MARK: Properties
     @AppStorage("selectedLocation") private var storedSelectedLocation: String = ""
-    
     @EnvironmentObject var routerManager: RouterManager
     @StateObject var connectivityManager = WatchConnectivityManager()
-    
     @State private var selectedLocation: Location?
     
     // MARK: Body

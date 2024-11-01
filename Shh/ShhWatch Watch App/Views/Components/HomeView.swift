@@ -12,6 +12,10 @@ struct HomeView: View {
     // MARK: Properties
     @EnvironmentObject var audioManager: AudioManager
     @Binding var isAnimating: Bool
+    @Binding var showCountdown: Bool
+    
+    // TODO: 추후 재검토 필요
+    let selectedLocation: Location
     
     // Animations
     private let meteringCircleAnimation = Animation
@@ -50,20 +54,39 @@ struct HomeView: View {
     // MARK: Body
     var body: some View {
         ZStack {
-            meteringCircles
-                .hidden(!audioManager.isMetering) // 측정 중일 때
+            homeNavigationTitle
             
-            meteringPausedCircle
-                .hidden(audioManager.isMetering) // 측정을 멈추었을 때
-            
-            Text(audioManager.isMetering ? audioManager.userNoiseStatus.message : "멈춤")
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundStyle(.black)
+            ZStack {
+                meteringCircles
+                    .hidden(!audioManager.isMetering) // 측정 중일 때
+                
+                meteringPausedCircle
+                    .hidden(audioManager.isMetering) // 측정을 멈추었을 때
+                
+                Text(audioManager.isMetering ? audioManager.userNoiseStatus.message : "멈춤")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.black)
+            }
         }
     }
     
     // MARK: SubViews
+    private var homeNavigationTitle: some View {
+        VStack {
+            HStack {
+                Spacer()
+                
+                Text(selectedLocation.name)
+                    .foregroundStyle(.white)
+                    .hidden(showCountdown)
+                    .padding(.trailing)
+            }
+            
+            Spacer()
+        }
+    }
+    
     private var meteringCircles: some View {
         ZStack(alignment: .center) {
             // 가장 옅은 바깥쪽 원

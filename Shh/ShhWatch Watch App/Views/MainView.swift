@@ -27,10 +27,10 @@ struct MainView: View {
     var body: some View {
         ZStack {
             TabView(selection: $tabSelection) {
-                controlsView
+                ControlsView(isAnimating: $isAnimating, selectedLocation: selectedLocation)
                     .tag(MainTabs.controls)
                 
-                HomeView(isAnimating: $isAnimating)
+                HomeView(isAnimating: $isAnimating, showCountdown: $showCountdown, selectedLocation: selectedLocation)
                     .tag(MainTabs.home)
                 
                 MeteringInfoView()
@@ -38,13 +38,7 @@ struct MainView: View {
             }
             .hidden(showCountdown)
             
-            if showCountdown {
-                countdownView
-            }
-        }
-        .navigationTitle {
-            Text(showCountdown ? "" : selectedLocation.name)
-                .foregroundStyle(.white)
+            if showCountdown { countdownView }
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
@@ -69,70 +63,6 @@ struct MainView: View {
     }
     
     // MARK: SubViews
-    private var controlsView: some View {
-        VStack {
-            HStack {
-                meteringStopButton
-                editingButton
-            }
-            
-            meteringToggleButton
-        }
-        .frame(maxWidth: 150)
-    }
-    
-    private var meteringStopButton: some View {
-        VStack {
-            Button {
-                routerManager.pop()
-            } label: {
-                Image(systemName: "xmark")
-                    .font(.title3)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.white)
-            }
-            // TODO: button color가 어둡게 나오는 이슈 발생 -> opacity로 임시 대처
-            .buttonStyle(BorderedButtonStyle(tint: Color.red.opacity(10)))
-            
-            Text("종료")
-        }
-    }
-    
-    private var meteringToggleButton: some View {
-        VStack {
-            Button {
-                if audioManager.isMetering {
-                    audioManager.pauseMetering()
-                } else {
-                    audioManager.startMetering(location: selectedLocation)
-                }
-                
-                isAnimating.toggle()
-            } label: {
-                Image(systemName: audioManager.isMetering ? "pause.fill" : "play.fill")
-                    .font(.title3)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.white)
-            }
-            .buttonStyle(BorderedButtonStyle(tint: Color.green.opacity(audioManager.isMetering ? 2 : 10)))
-            
-            Text(audioManager.isMetering ? "일시정지" : "재개")
-        }
-    }
-    
-    private var editingButton: some View {
-        VStack {
-            Button {
-                routerManager.push(view: .editLocationView)
-            } label: {
-                Image(systemName: "square.and.pencil")
-                    .foregroundStyle(.white)
-            }
-            
-            Text("수정")
-        }
-    }
-    
     private var countdownView: some View {
         Text("\(countdown)")
             .font(.system(size: 100, weight: .bold, design: .default))
@@ -142,9 +72,8 @@ struct MainView: View {
                 startCountdown()
             }
     }
-}
-
-extension MainView {
+    
+    // MARK: Functions
     private func startCountdown() {
         print(#function)
         countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
