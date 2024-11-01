@@ -16,6 +16,8 @@ struct BackgroundNoiseInputView: View {
     @Binding var backgroundNoise: Float
     @Binding var isMetering: Bool
     
+    @State private var showBackgroundNoiseInfo: Bool = false
+    
     var isFirstMeteringFinished: Bool {
         return !backgroundNoise.isZero
     }
@@ -60,13 +62,18 @@ struct BackgroundNoiseInputView: View {
                 }
             }
         }
+        .sheet(isPresented: $showBackgroundNoiseInfo) {
+            backgroundNoiseInfoSheet
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.medium])
+        }
     }
     
     // MARK: SubViews
     private var backgroundNoiseInfoRow: some View {
         VStack {
             Button {
-                // TODO: 인포 화면
+                showBackgroundNoiseInfo = true
             } label: {
                 Label("자세한 정보", systemImage: "info.circle")
                     .labelStyle(.iconOnly)
@@ -106,6 +113,30 @@ struct BackgroundNoiseInputView: View {
             meteringBackgroundNoise()
         }
         .disabled(isMetering)
+    }
+    
+    private var backgroundNoiseInfoSheet: some View {
+        VStack {
+            Text("배경 소음 예시")
+            
+            List {
+                ForEach(Location.backgroundDecibelOptions, id: \.self) { decibel in
+                    HStack(spacing: 20) {
+                        Text("\(Int(decibel)) dB")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                        
+                        Text(Location.decibelWriting(decibel: decibel))
+                        //                            .foregroundStyle(decibel == backgroundNoise ? .accent : .customWhite)
+                        
+                        Spacer()
+                    }
+                    .padding(.vertical, 10)
+                }
+            }
+        }
+        .padding()
+        .fontWeight(.bold)
     }
     
     // MARK: Action Handlers
