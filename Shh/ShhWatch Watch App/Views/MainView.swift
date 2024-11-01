@@ -58,7 +58,10 @@ struct MainView: View {
                 countdownView
             }
         }
-        .navigationTitle(selectedLocation.name)
+        .navigationTitle {
+            Text(showCountdown ? "" : selectedLocation.name)
+                .foregroundStyle(.white)
+        }
         .navigationBarBackButtonHidden(true)
         .onAppear {
             do {
@@ -68,11 +71,10 @@ struct MainView: View {
                 routerManager.pop()
             }
         }
-        // watchOS 10.0 이후부터 deprecated 경고 -> _, newValue로 표기
-        .onChange(of: audioManager.userNoiseStatus) { _, newValue in
-            if newValue == .caution {
+        .onChange(of: audioManager.userNoiseStatus) { oldValue, newValue in
+            if oldValue == .safe && newValue == .caution {
                 Task {
-                    WKInterfaceDevice.current().play(.start) // 햅틱 재생
+                    WKInterfaceDevice.current().play(.notification) // 햅틱 재생
                 }
             }
         }

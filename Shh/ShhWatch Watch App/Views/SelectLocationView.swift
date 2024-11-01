@@ -10,6 +10,8 @@ import SwiftUI
 // MARK: - 장소 선택 뷰: iOS에서 가져온 장소 리스트를 보여줌
 struct SelectLocationView: View {
     // MARK: Properties
+    @AppStorage("selectedLocation") private var storedSelectedLocation: String = ""
+    
     @EnvironmentObject var routerManager: RouterManager
     @StateObject var connectivityManager = WatchConnectivityManager()
     
@@ -35,6 +37,9 @@ struct SelectLocationView: View {
                 } label: {
                     Label("Trash", systemImage: "trash.fill")
                 }
+            }
+            .onAppear {
+               // 가장 최근에 선택한 탭을 앱스토리지에 저장
             }
         }
     }
