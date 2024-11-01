@@ -19,6 +19,8 @@ struct BackgroundDecibelMeteringButton: View {
             // 주변 소음 측정을 시작
             do {
                 try audioManager.meteringBackgroundNoise { averageDecibel in
+                    guard let averageDecibel else { return }
+                    
                     // 측정된 평균 데시벨 값을 반올림하여 30, 35, 40, ..., 70 중 가장 가까운 값으로 저장
                     let unRoundedAverageDecibel = averageDecibel
                     
