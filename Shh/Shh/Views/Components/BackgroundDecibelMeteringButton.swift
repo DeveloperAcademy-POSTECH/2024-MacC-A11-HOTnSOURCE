@@ -8,13 +8,7 @@
 import SwiftUI
 
 struct BackgroundDecibelMeteringButton: View {
-    @StateObject private var audioManager: AudioManager = {
-        do {
-            return try AudioManager()
-        } catch {
-            fatalError("AudioManager 초기화 실패: \(error.localizedDescription)")
-        }
-    }()
+    @EnvironmentObject var audioManager: AudioManager
     
     @Binding var backgroundDecibel: Float
     @Binding var isShowingProgressView: Bool

@@ -123,12 +123,6 @@
     "%lld" : {
 
     },
-    "%lld dB" : {
-
-    },
-    "%lld m" : {
-
-    },
     "%lld/%lld" : {
       "localizations" : {
         "ko" : {
@@ -179,13 +173,7 @@
         }
       }
     },
-    "1m" : {
-
-    },
-    "2m" : {
-
-    },
-    "3m" : {
+    "🤫" : {
 
     },
     "dB" : {
@@ -214,13 +202,16 @@
     "Resume metering" : {
 
     },
+    "Shh-!" : {
+
+    },
+    "Shh-!는 앱을 나가거나 휴대전화를 잠궈도 들을 수 있어요. 마음 놓고 집중하세요!" : {
+
+    },
+    "Shh-!의 소음 측정 방법이 궁금하거나, 현재 소음 정도가 궁금할 때 눌러주세요." : {
+
+    },
     "Starts or pauses noise metering" : {
-
-    },
-    "Stop metering" : {
-
-    },
-    "Stop noise metering" : {
 
     },
     "거리" : {
@@ -290,8 +281,15 @@
         }
       }
     },
-    "뒤로" : {
-
+    "듣는 중!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hearing!"
+          }
+        }
+      }
     },
     "메인 화면에서 보이는 물결의 높낮이는 내 소리가 얼마나 시끄러운지를 나타냅니다." : {
       "localizations" : {
@@ -323,7 +321,7 @@
         }
       }
     },
-    "배경 소음 예시" : {
+    "배경 소음 | %lld dB" : {
 
     },
     "삭제" : {
@@ -357,6 +355,19 @@
         }
       }
     },
+    "소음을 대신 듣고 있어요!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We’re hearing the noise instead!"
+          }
+        }
+      }
+    },
+    "수정" : {
+
+    },
     "수정하기" : {
       "localizations" : {
         "en" : {
@@ -378,6 +389,7 @@
       }
     },
     "아래 버튼을 눌러" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -468,8 +480,25 @@
         }
       }
     },
-    "자세한 정보" : {
-
+    "일시정지됨" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paused"
+          }
+        }
+      }
+    },
+    "일지정지" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause"
+          }
+        }
+      }
     },
     "자주 묻는 질문" : {
       "localizations" : {
@@ -537,11 +566,15 @@
         }
       }
     },
-    "정도 떨어져 있어요" : {
-
-    },
-    "정도의 느낌이군요!" : {
-
+    "재시작" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play"
+          }
+        }
+      }
     },
     "정말 삭제하시겠습니까?" : {
       "localizations" : {
@@ -634,8 +667,15 @@
         }
       }
     },
-    "중복되는 이름이 존재합니다!" : {
-
+    "지금 소리를 듣는 중이에요!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We’re hearing the noise now!"
+          }
+        }
+      }
     },
     "지금 아주 잘하고 있어요!" : {
       "localizations" : {
@@ -670,12 +710,29 @@
         }
       }
     },
+    "측정 반경 | %@ m" : {
+
+    },
+    "측정을 다시 시작해주세요" : {
+
+    },
     "측정을 시작해주세요" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Please start the measurement"
+          }
+        }
+      }
+    },
+    "측정이 일시정지되었습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The measurement is paused.\n"
           }
         }
       }
@@ -699,6 +756,9 @@
           }
         }
       }
+    },
+    "화면을 덮고 사용해보세요!" : {
+
     },
     "확인" : {
       "extractionState" : "stale",

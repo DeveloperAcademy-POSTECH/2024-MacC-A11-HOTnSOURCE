@@ -23,6 +23,9 @@ final class AudioManager: ObservableObject {
     // 현재 사용자의 소음 상태
     @Published var userNoiseStatus: NoiseStatus = .safe
     
+    // 소음 측정을 시작한 적이 있는지
+    @Published var haveStartedMetering: Bool = false
+    
     private let audioRecorder: AVAudioRecorder
     
     private let backgroundNoiseMeteringTime: Int = 3 // 3초 간의 소리를 받아와 배경 소음을 갱신
@@ -64,11 +67,26 @@ final class AudioManager: ObservableObject {
     }
     
     // MARK: Methods
-    /// 배경의 평균 소음을 측정합니다.
-    func meteringBackgroundNoise(completion: @escaping (Float) -> Void) throws {
+    /// 오디오 세션을 설정합니다.
+    /// 소음 측정 전 단계에 항상 실행해줘야 하는 메서드입니다.
+    func setAudioSession() throws {
+        print(#function)
         do {
             try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .measurement, options: [.mixWithOthers, .allowBluetoothA2DP])
             try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("오디오 세션을 설정하는 중 오류 발생")
+            throw error
+        }
+        
+        // 측정 시작
+        audioRecorder.isMeteringEnabled = true
+    }
+    
+    /// 배경의 평균 소음을 측정합니다.
+    func meteringBackgroundNoise(completion: @escaping (Float) -> Void) throws {
+        do {
+            try setAudioSession()
         } catch {
             print("오디오 세션을 설정하는 중 오류 발생")
             throw error
@@ -112,19 +130,27 @@ final class AudioManager: ObservableObject {
     }
     
     /// 해당 장소의 소음 측정을 시작합니다.
-    func startMetering(location: Location) throws {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .measurement, options: [.mixWithOthers, .allowBluetoothA2DP])
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print("오디오 세션을 설정하는 중 오류 발생")
-            throw error
-        }
+    func startMetering(location: Location) {
+        print(#function)
+        // 해당 함수 호출 전에, setAudioSession() 호출 완료
         
         // 측정 시작
-        audioRecorder.isMeteringEnabled = true
         audioRecorder.record()
         isMetering = true
+        
+        // 라이브 액티비티
+        if !haveStartedMetering { // 최초 시작
+            LiveActivityManager.shared.startLiveActivity(
+                isMetering: self.isMetering,
+                selectedLocation: location
+            )
+            
+            haveStartedMetering = true // 이제 최초 실행이 아님
+        } else {
+            Task { // 재개; 해당 동작은 업데이트
+                await LiveActivityManager.shared.updateLiveActivity(isMetering: self.isMetering)
+            }
+        }
         
         // 타이머 설정
         var loudnessCounter: Int = 0 // decibel과 loudness 갱신 타이밍을 다르게 하기 위한 카운터
@@ -142,49 +168,33 @@ final class AudioManager: ObservableObject {
     
     /// 소음 측정을 일시정지합니다.
     func pauseMetering() {
-        if isMetering {
-            audioRecorder.pause()
-            isMetering = false
-    
-            initializeProperties() // 프로퍼티 초기화
-            
-            timer?.invalidate()
+        print(#function)
+        audioRecorder.pause()
+        
+        isMetering = false
+        initializeProperties() // 데시벨 관련 프로퍼티 초기화
+        
+        // 라이브 액티비티 갱신
+        Task {
+            await LiveActivityManager.shared.updateLiveActivity(isMetering: self.isMetering)
         }
-    }
-    
-    /// 소음 측정을 재개합니다.
-    func resumeMetering(location: Location) {
-        if !isMetering {
-            audioRecorder.record()
-            isMetering = true
-            
-            // 타이머 설정
-            var loudnessCounter: Int = 0 // decibel과 loudness 갱신 타이밍을 다르게 하기 위한 카운터
-            
-            timer = Timer.scheduledTimer(withTimeInterval: decibelMeteringTimeInterval, repeats: true) { _ in
-                self.updateDecibelLevel()
-                
-                if loudnessCounter % Int(self.loudnessMeteringTimeInterval / self.decibelMeteringTimeInterval) == 0 {
-                    self.calculateLoudnessForDistance(backgroundDecibel: location.backgroundDecibel, distance: location.distance)
-                }
-                
-                loudnessCounter += 1
-            }
-
-        }
+        
+        timer?.invalidate()
     }
     
     /// 소음 측정을 정지합니다.
     func stopMetering() {
-        if isMetering {
-            audioRecorder.isMeteringEnabled = false
-            audioRecorder.stop()
-            isMetering = false
-            
-            initializeProperties() // 프로퍼티 초기화
-            
-            timer?.invalidate()
-        }
+        print(#function)
+        audioRecorder.isMeteringEnabled = false
+        audioRecorder.stop()
+        
+        isMetering = false
+        haveStartedMetering = false
+        initializeProperties() // 프로퍼티 초기화
+        
+        LiveActivityManager.shared.endLiveActivity() // 라이브 액티비티 종료
+        
+        timer?.invalidate()
     }
     
     // MARK: Internal methods
