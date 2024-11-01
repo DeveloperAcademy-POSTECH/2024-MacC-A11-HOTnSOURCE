@@ -7,25 +7,49 @@
 
 import SwiftUI
 
+// MARK: - Controls 뷰: 메인 뷰의 왼쪽 탭에서 버튼 모음을 제공함
 struct ControlsView: View {
+    // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
     @EnvironmentObject var audioManager: AudioManager
     
+    @Binding var showCountdown: Bool
     @Binding var isAnimating: Bool
     
     // TODO: 추후 재검토 필요
     let selectedLocation: Location
     
+    // MARK: Body
     var body: some View {
         VStack {
-            HStack {
-                meteringStopButton
-                editingButton
-            }
+            controlsNavigationTitle
             
-            meteringToggleButton
+            VStack {
+                HStack {
+                    meteringStopButton
+                    editingButton
+                }
+                
+                meteringToggleButton
+            }
         }
         .frame(maxWidth: 150)
+    }
+    
+    // MARK: SubViews    
+    private var controlsNavigationTitle: some View {
+        VStack {
+            HStack {
+                Spacer()
+                
+                Text(selectedLocation.name)
+                    .foregroundStyle(.white)
+                    .hidden(showCountdown)
+                    .padding(.trailing)
+            }
+            
+            Spacer()
+        }
     }
     
     private var meteringStopButton: some View {

@@ -52,7 +52,3 @@ struct SelectLocationView: View {
         .tint(selectedLocation?.id == location.id ? .green : .gray)
     }
 }
-
-#Preview {
-    SelectLocationView()
-}

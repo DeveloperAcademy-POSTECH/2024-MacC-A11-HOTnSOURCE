@@ -12,7 +12,6 @@ struct HomeView: View {
     // MARK: Properties
     @EnvironmentObject var audioManager: AudioManager
     @Binding var isAnimating: Bool
-    @Binding var showCountdown: Bool
     
     // TODO: 추후 재검토 필요
     let selectedLocation: Location
@@ -53,9 +52,7 @@ struct HomeView: View {
     
     // MARK: Body
     var body: some View {
-        ZStack {
-            homeNavigationTitle
-            
+        ZStack {            
             ZStack {
                 meteringCircles
                     .hidden(!audioManager.isMetering) // 측정 중일 때
@@ -71,22 +68,7 @@ struct HomeView: View {
         }
     }
     
-    // MARK: SubViews
-    private var homeNavigationTitle: some View {
-        VStack {
-            HStack {
-                Spacer()
-                
-                Text(selectedLocation.name)
-                    .foregroundStyle(.white)
-                    .hidden(showCountdown)
-                    .padding(.trailing)
-            }
-            
-            Spacer()
-        }
-    }
-    
+    // MARK: SubViews    
     private var meteringCircles: some View {
         ZStack(alignment: .center) {
             // 가장 옅은 바깥쪽 원

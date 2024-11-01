@@ -14,11 +14,9 @@ struct MainView: View {
     @EnvironmentObject var audioManager: AudioManager
     
     @State private var tabSelection: MainTabs = .home
-    
     @State private var countdownTimer: Timer?
     @State private var showCountdown = true
     @State private var countdown = 3
-    
     @State private var isAnimating = false
     
     let selectedLocation: Location
@@ -27,10 +25,10 @@ struct MainView: View {
     var body: some View {
         ZStack {
             TabView(selection: $tabSelection) {
-                ControlsView(isAnimating: $isAnimating, selectedLocation: selectedLocation)
+                ControlsView(showCountdown: $showCountdown, isAnimating: $isAnimating, selectedLocation: selectedLocation)
                     .tag(MainTabs.controls)
                 
-                HomeView(isAnimating: $isAnimating, showCountdown: $showCountdown, selectedLocation: selectedLocation)
+                HomeView(isAnimating: $isAnimating, selectedLocation: selectedLocation)
                     .tag(MainTabs.home)
                 
                 MeteringInfoView()

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct BackgroundDecibelMeteringButton: View {
     @EnvironmentObject var audioManager: AudioManager
-    
     @Binding var backgroundDecibel: Float
     @Binding var isShowingProgressView: Bool
     

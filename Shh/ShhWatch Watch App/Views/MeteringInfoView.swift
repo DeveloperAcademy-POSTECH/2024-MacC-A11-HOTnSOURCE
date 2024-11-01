@@ -21,7 +21,3 @@ struct MeteringInfoView: View {
         }
     }
 }
-
-#Preview {
-    MeteringInfoView()
-}
