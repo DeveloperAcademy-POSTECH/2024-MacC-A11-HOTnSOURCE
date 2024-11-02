@@ -18,15 +18,14 @@ struct StartView: View {
     let backgroundNoise: Float
     let distance: Float
     
+    private let notificationManager: NotificationManager = NotificationManager()
+    
     // MARK: Body
     var body: some View {
         VStack {
             Spacer()
             
-            StepDescriptionRow(
-                text: "모든 준비가 완료되었어요!",
-                subText: "지금 바로 Shh-!와 함께\n조용한 작업을 시작해볼까요?"
-            )
+            startComment
             
             Spacer()
             
@@ -36,13 +35,37 @@ struct StartView: View {
             Spacer()
             Spacer()
             Spacer()
+            Spacer()
             
             startButton
         }
         .padding(20)
+        .onAppear {
+            Task {
+                await notificationManager.requestPermission()
+            }
+        }
     }
     
     // MARK: SubViews
+    private var startComment: some View {
+        VStack(spacing: 6) {
+            Text("모든 준비가 완료되었어요!")
+                .font(.title)
+            
+            Spacer().frame(height: 6)
+            
+            Text("시끄러운 소리를 내면 알려드릴게요!")
+                .font(.callout)
+                .foregroundStyle(.secondary)
+            
+            Text("* 알림 권한을 허용해주세요")
+                .font(.caption2)
+                .foregroundStyle(.accent)
+        }
+        .fontWeight(.bold)
+    }
+    
     private var startButton: some View {
         CustomButton(text: "시작하기") {
             let newLocation = Location(id: UUID(), name: name, backgroundDecibel: backgroundNoise, distance: distance)

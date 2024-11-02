@@ -23,8 +23,6 @@ struct ShhApp: App {
     
     @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
     
-    private let notificationManager: NotificationManager = NotificationManager()
-    
     var body: some Scene {
         WindowGroup {
             if isFirstLaunch {
@@ -40,11 +38,6 @@ struct ShhApp: App {
                         .navigationDestination(for: ShhView.self) { shhView in
                             shhView.view
                         }
-                }
-                .onAppear {
-                    Task {
-                        await notificationManager.requestPermission()
-                    }
                 }
                 .task {
                 #if DEBUG

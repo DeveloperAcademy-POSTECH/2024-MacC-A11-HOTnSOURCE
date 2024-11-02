@@ -20,8 +20,8 @@ struct DistanceInputView: View {
     var body: some View {
         VStack {
             StepDescriptionRow(
-                text: "얼마나 가깝나요?",
-                subText: "조심해야 할 대상이 있다면,\n나로부터 얼마나 멀리 있는지 입력해주세요.\n그 쪽에서 어떻게 들리는지를 기준으로 알려드릴게요."
+                text: "상대방과 얼마나 가깝나요?",
+                subText: "해당 거리에서 어떻게 들리는지\n계산해서 알려드릴게요"
             )
             
             Spacer()

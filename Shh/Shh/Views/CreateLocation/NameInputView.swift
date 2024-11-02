@@ -30,8 +30,8 @@ struct NameInputView: View {
     var body: some View {
         VStack {
             StepDescriptionRow(
-                text: "어떤 장소인가요?",
-                subText: "사용할 곳의 이름을 작성해주세요"
+                text: "어디에서 사용하시나요?",
+                subText: "소음 측정이 필요한 곳의 이름을 알려주세요"
             )
             
             Spacer()

@@ -17,10 +17,7 @@ struct WelcomeView: View {
         VStack {
             Spacer()
             
-            Text("처음 오셨네요!\n장소부터 만들어볼까요?")
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.title)
-                .fontWeight(.bold)
+            welcomeComment
             
             Spacer()
             
@@ -37,6 +34,18 @@ struct WelcomeView: View {
     }
     
     // MARK: SubViews
+    private var welcomeComment: some View {
+        VStack(alignment: .leading) {
+            Text("반가워요!\n소음이 걱정이신가요?")
+                .font(.title)
+            Text("소음이 걱정될 땐? Shh-!")
+                .font(.title3)
+                .foregroundStyle(.secondary)
+        }
+        .fontWeight(.bold)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
     private var startButton: some View {
         CustomButton(text: "시작하기") {
             routerManager.push(view: .createLocationView, isOnboarding: true)

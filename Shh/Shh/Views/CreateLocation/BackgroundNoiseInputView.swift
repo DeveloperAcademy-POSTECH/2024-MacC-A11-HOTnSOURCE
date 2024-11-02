@@ -26,8 +26,8 @@ struct BackgroundNoiseInputView: View {
     var body: some View {
         VStack {
             StepDescriptionRow(
-                text: "얼마나 시끄러운가요?",
-                subText: "측정 기준이 될 현재 장소의 소음을 측정해주세요.\n그보다 더 큰 소리를 내시면 알려드릴게요."
+                text: "주위의 소리를 들려주세요!",
+                subText: "주변보다 더 큰 소리를 내면 알려드릴게요\n아래의 버튼을 눌러주세요"
             )
             
             Spacer()
@@ -127,7 +127,7 @@ struct BackgroundNoiseInputView: View {
                             .foregroundStyle(.secondary)
                         
                         Text(Location.decibelWriting(decibel: decibel))
-                        //                            .foregroundStyle(decibel == backgroundNoise ? .accent : .customWhite)
+                            .foregroundStyle(decibel == backgroundNoise ? .accent : .customWhite)
                         
                         Spacer()
                     }
