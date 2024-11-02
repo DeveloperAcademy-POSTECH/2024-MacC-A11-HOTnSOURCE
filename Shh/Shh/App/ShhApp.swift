@@ -21,12 +21,14 @@ struct ShhApp: App {
         }
     }()
     
+    @State var location: Location = .init(id: UUID(), name: "도서관", backgroundDecibel: 50, distance: 2)
+    
     private let notificationManager: NotificationManager = NotificationManager()
     
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $routerManager.path) {
-                SelectLocationView()
+                SelectLocationView(location: location)
                     .navigationDestination(for: ShhView.self) { shhView in
                         shhView.view
                     }

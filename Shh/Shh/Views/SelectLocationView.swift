@@ -13,6 +13,10 @@ struct SelectLocationView: View {
     @EnvironmentObject var routerManager: RouterManager
     @EnvironmentObject var locationManager: LocationManager
     
+    @State var location: Location
+    @State private var selectedLocationIndex: Int?
+    @State private var showDeleteAlert: Bool = false
+    
     // MARK: Body
     var body: some View {
         locationList
@@ -29,6 +33,36 @@ struct SelectLocationView: View {
                 
                 locationButton(location)
                     .listRowSeparator(.hidden)
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            showDeleteAlert = true
+                            selectedLocationIndex = index
+                        } label: {
+                            Label("Trash", systemImage: "trash.fill")
+                        }
+                        
+                        Button(role: .cancel) {
+                            routerManager.push(view: .editLocationView(location: location))
+                        } label: {
+                            Label("Edit", systemImage: "square.and.pencil")
+                        }
+                    }
+            }
+            .alert(isPresented: $showDeleteAlert) {
+                guard let index = selectedLocationIndex else {
+                    return Alert(title: Text("오류"))
+                }
+                
+                let location = locationManager.locations[index]
+                
+                return Alert(
+                    title: Text("\(location.name) 삭제"),
+                    message: Text("정말 삭제하시겠습니까?"),
+                    primaryButton: .destructive(Text("삭제")) {
+                        locationManager.deleteLocation(location)
+                    },
+                    secondaryButton: .cancel(Text("취소"))
+                )
             }
         }
         .padding(.top, 20)
@@ -84,5 +118,5 @@ struct SelectLocationView: View {
 
 // MARK: - Preview
 #Preview {
-    SelectLocationView()
+    SelectLocationView(location: .init(id: UUID(), name: "도서관", backgroundDecibel: 50, distance: 2))
 }
