@@ -35,8 +35,8 @@ struct SelectLocationView: View {
                     .listRowSeparator(.hidden)
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
-                            showDeleteAlert = true
                             selectedLocationIndex = index
+                            showDeleteAlert = true
                         } label: {
                             Label("Trash", systemImage: "trash.fill")
                         }
@@ -60,6 +60,7 @@ struct SelectLocationView: View {
                     message: Text("정말 삭제하시겠습니까?"),
                     primaryButton: .destructive(Text("삭제")) {
                         locationManager.deleteLocation(location)
+                        selectedLocationIndex = nil
                     },
                     secondaryButton: .cancel(Text("취소"))
                 )
@@ -77,7 +78,7 @@ struct SelectLocationView: View {
                 locationButtonStyle(
                     title: location.name,
                     textColor: .white,
-                    bgColor: locationManager.selectedLocation?.id == location.id ? .green : .clear
+                    capsuleColor: locationManager.selectedLocation?.id == location.id ? .green : .clear
                 )
                 
                 Spacer()
@@ -89,10 +90,10 @@ struct SelectLocationView: View {
         }
     }
     
-    private func locationButtonStyle(title: String, textColor: Color, bgColor: Color) -> some View {
+    private func locationButtonStyle(title: String, textColor: Color, capsuleColor: Color) -> some View {
         HStack {
             Capsule()
-                .fill(bgColor)
+                .fill(capsuleColor)
                 .frame(width: 8)
                 .padding(.vertical, 25)
                 .padding(.trailing, 10)
