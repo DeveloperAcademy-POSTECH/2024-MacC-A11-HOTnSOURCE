@@ -78,18 +78,24 @@ final class AudioManager: ObservableObject {
             print("오디오 세션을 설정하는 중 오류 발생")
             throw error
         }
-        
-        // 측정 시작
-        audioRecorder.isMeteringEnabled = true
     }
     
     /// 배경의 평균 소음을 측정합니다.
-    func meteringBackgroundNoise(completion: @escaping (Float) -> Void) throws {
+    func meteringBackgroundNoise(completion: @escaping (Float?) -> Void) throws {
         do {
             try setAudioSession()
         } catch {
             print("오디오 세션을 설정하는 중 오류 발생")
             throw error
+        }
+        
+        // 권한 검사
+        guard checkMicrophonePermissionStatus() else {
+            Task {
+                await requestMicrophonePermission()
+                completion(nil)
+            }
+            return
         }
 
         // 측정 시작
@@ -134,7 +140,16 @@ final class AudioManager: ObservableObject {
         print(#function)
         // 해당 함수 호출 전에, setAudioSession() 호출 완료
         
+        // 권한 검사
+        guard checkMicrophonePermissionStatus() else {
+            Task {
+                await requestMicrophonePermission()
+            }
+            return
+        }
+        
         // 측정 시작
+        audioRecorder.isMeteringEnabled = true
         audioRecorder.record()
         isMetering = true
         
@@ -198,6 +213,36 @@ final class AudioManager: ObservableObject {
     }
     
     // MARK: Internal methods
+    /// 마이크 권한 상태를 확인합니다.
+    private func checkMicrophonePermissionStatus() -> Bool {
+        let permissionStatus = AVAudioApplication.shared.recordPermission
+        switch permissionStatus {
+        case .granted:
+            print("마이크 권한이 이미 허용되었습니다.")
+            return true
+        case .denied:
+            print("마이크 권한이 거부되었습니다.")
+            return false
+        case .undetermined:
+            print("마이크 권한이 아직 결정되지 않았습니다.")
+            return false
+        @unknown default:
+            print("알 수 없는 권한 상태입니다.")
+            return false
+        }
+    }
+    
+    /// 마이크 권한을 요청합니다.
+    private func requestMicrophonePermission() async {
+        let granted = await AVAudioApplication.requestRecordPermission()
+        
+        if granted {
+            print("마이크 권한을 요청한 결과 허용되었습니다.")
+        } else {
+            print("마이크 권한을 요청한 결과 거부되었습니다.")
+        }
+    }
+    
     /// 데시벨 레벨을 갱신합니다.
     private func updateDecibelLevel() {
         audioRecorder.updateMeters()
