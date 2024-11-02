@@ -14,7 +14,8 @@ struct SsambbongAsset: View {
         Image(uiImage: image)
             .resizable()
             .scaledToFit()
-            .frame(width: 200, height: 200)
+            .frame(minHeight: 150, maxHeight: 200)
+            .frame(maxHeight: 250, alignment: .top)
     }
 }
 

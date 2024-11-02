@@ -15,18 +15,14 @@ struct WelcomeView: View {
     // MARK: Body
     var body: some View {
         VStack {
-            Spacer()
+            Spacer(minLength: 80)
             
             welcomeComment
             
-            Spacer()
+            Spacer(minLength: 50)
             
             SsambbongAsset(image: .welcomeAsset)
-            
-            Spacer()
-            Spacer()
-            Spacer()
-            Spacer()
+                .frame(maxHeight: .infinity, alignment: .top)
             
             startButton
         }

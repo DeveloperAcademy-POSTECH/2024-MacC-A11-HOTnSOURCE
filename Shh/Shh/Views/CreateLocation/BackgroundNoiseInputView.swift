@@ -30,7 +30,7 @@ struct BackgroundNoiseInputView: View {
                 subText: "주변보다 더 큰 소리를 내면 알려드릴게요\n아래의 버튼을 눌러주세요"
             )
             
-            Spacer()
+            Spacer(minLength: 30)
             
             SsambbongAsset(image: .backgroundNoiseInputAsset)
             
@@ -48,8 +48,7 @@ struct BackgroundNoiseInputView: View {
             }
             .frame(height: 100)
             
-            Spacer()
-            Spacer()
+            Spacer(minLength: 16)
             
             VStack(spacing: 12) {
                 reMeteringButton

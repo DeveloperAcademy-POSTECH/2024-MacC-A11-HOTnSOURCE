@@ -23,19 +23,24 @@ struct StartView: View {
     // MARK: Body
     var body: some View {
         VStack {
-            Spacer()
+            Spacer(minLength: 40)
             
-            startComment
+            VStack(spacing: 6) {
+                StepDescriptionRow(
+                    text: "모든 준비가 완료되었어요!",
+                    subText: "시끄러운 소리를 내면 알려드릴게요!"
+                )
+                
+                Text("* 알림 권한을 허용해주세요")
+                    .font(.caption2)
+                    .foregroundStyle(.accent)
+                    .fontWeight(.bold)
+            }
             
-            Spacer()
+            Spacer(minLength: 50)
             
             SsambbongAsset(image: .completeAsset)
-            
-            Spacer()
-            Spacer()
-            Spacer()
-            Spacer()
-            Spacer()
+                .frame(maxHeight: .infinity, alignment: .top)
             
             startButton
         }
@@ -48,24 +53,6 @@ struct StartView: View {
     }
     
     // MARK: SubViews
-    private var startComment: some View {
-        VStack(spacing: 6) {
-            Text("모든 준비가 완료되었어요!")
-                .font(.title)
-            
-            Spacer().frame(height: 6)
-            
-            Text("시끄러운 소리를 내면 알려드릴게요!")
-                .font(.callout)
-                .foregroundStyle(.secondary)
-            
-            Text("* 알림 권한을 허용해주세요")
-                .font(.caption2)
-                .foregroundStyle(.accent)
-        }
-        .fontWeight(.bold)
-    }
-    
     private var startButton: some View {
         CustomButton(text: "시작하기") {
             let newLocation = Location(id: UUID(), name: name, backgroundDecibel: backgroundNoise, distance: distance)

@@ -18,7 +18,6 @@ struct StepDescriptionRow: View {
             Text(subText)
                 .font(.callout)
                 .foregroundStyle(.secondary)
-                .lineLimit(3, reservesSpace: true)
                 .multilineTextAlignment(.center)
         }
         .fontWeight(.bold)

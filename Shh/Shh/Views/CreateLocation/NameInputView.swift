@@ -34,13 +34,10 @@ struct NameInputView: View {
                 subText: "소음 측정이 필요한 곳의 이름을 알려주세요"
             )
             
-            Spacer()
+            Spacer(minLength: 80)
             
             nameInputRow
-            
-            Spacer()
-            Spacer()
-            Spacer()
+                .frame(maxHeight: .infinity, alignment: .top)
             
             NextStepButton(step: $step)
                 .disabled(name.isEmpty || !locationManager.isValidName(name))

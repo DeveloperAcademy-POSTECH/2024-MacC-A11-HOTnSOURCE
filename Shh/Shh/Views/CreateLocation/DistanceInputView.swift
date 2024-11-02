@@ -24,7 +24,7 @@ struct DistanceInputView: View {
                 subText: "해당 거리에서 어떻게 들리는지\n계산해서 알려드릴게요"
             )
             
-            Spacer()
+            Spacer(minLength: 30)
             
             SsambbongAsset(image: .distanceInputAsset)
             
@@ -32,7 +32,7 @@ struct DistanceInputView: View {
 
             distanceInputRow
             
-            Spacer()
+            Spacer(minLength: 16)
             
             CustomButton(text: isFirstUser ? "다음으로" : "완료하기") {
                 createComplete = true
