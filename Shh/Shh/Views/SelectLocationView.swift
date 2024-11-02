@@ -57,6 +57,7 @@ struct SelectLocationView: View {
     
     private func locationButtonStyle(title: String, textColor: Color, bgColor: Color) -> some View {
         HStack {
+            // TODO: 기기별 반응형 적합성 확인 필요
             Capsule()
                 .fill(bgColor)
                 .frame(width: 8)
@@ -72,12 +73,13 @@ struct SelectLocationView: View {
     
     private var createLocationButton: some View {
         Button {
-            routerManager.push(view: .createLocationView)
+            if locationManager.locations.count < 10 {
+                routerManager.push(view: .createLocationView)
+            }
         } label: {
             Text("생성하기")
-                // TODO: 최대 생성 개수 10개로 변경 예정
-                .opacity(locationManager.locations.count >= 5 ? 0 : 1)
         }
+        .disabled(locationManager.locations.count >= 10)
     }
 }
 
