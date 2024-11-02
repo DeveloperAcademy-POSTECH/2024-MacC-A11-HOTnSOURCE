@@ -28,17 +28,20 @@ struct MainView: View {
         .easeInOut(duration: 1.5)
         .repeatForever(autoreverses: true)
     
+    private let customGreenColor = Color(red: 17 / 255, green: 151 / 255, blue: 50 / 255)
+    private let customYellowColor = Color(red: 222 / 255, green: 255 / 255, blue: 121 / 255)
+    
     private var outerCircleColor: Color {
         audioManager.userNoiseStatus == .safe
             ? .green
-            : .purple
+            : .indigo
     }
     
     private var innerCircleColors: [Color] {
         if audioManager.userNoiseStatus == .safe {
-            return [.green, .yellow, .white]
+            return [customGreenColor, customYellowColor]
         } else {
-            return [.purple, .blue, .white]
+            return [.indigo, .purple]
         }
     }
     
@@ -114,12 +117,12 @@ struct MainView: View {
         ZStack(alignment: .center) {
             Circle()
                 .fill(outerCircleColor)
-                .opacity(0.1)
+                .opacity(0.2)
                 .scaleEffect(isAnimating ? 1.8 : 0.9)
                 
             Circle()
                 .fill(outerCircleColor)
-                .opacity(0.4)
+                .opacity(0.2)
                 .scaleEffect(isAnimating ? 1.4 : 0.9)
 
             Circle()
