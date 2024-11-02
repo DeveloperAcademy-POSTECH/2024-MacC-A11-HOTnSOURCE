@@ -57,7 +57,6 @@ struct SelectLocationView: View {
     
     private func locationButtonStyle(title: String, textColor: Color, bgColor: Color) -> some View {
         HStack {
-            // TODO: 기기별 반응형 적합성 확인 필요
             Capsule()
                 .fill(bgColor)
                 .frame(width: 8)
