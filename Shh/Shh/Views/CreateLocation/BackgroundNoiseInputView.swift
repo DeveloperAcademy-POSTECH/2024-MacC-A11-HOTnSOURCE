@@ -144,6 +144,11 @@ struct BackgroundNoiseInputView: View {
         
         do {
             try audioManager.meteringBackgroundNoise { averageDecibel in
+                guard let averageDecibel = averageDecibel else {
+                    isMetering = false
+                    return
+                }
+                
                 let unRoundedAverageDecibel = averageDecibel
                 
                 let roundedDecibel = round(unRoundedAverageDecibel / 5.0) * 5.0
