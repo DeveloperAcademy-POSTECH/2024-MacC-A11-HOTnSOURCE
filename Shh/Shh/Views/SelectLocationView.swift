@@ -19,6 +19,7 @@ struct SelectLocationView: View {
     // MARK: Body
     var body: some View {
         locationList
+            .background(.customBlack)
             .navigationTitle("장소 선택")
             .toolbar { createLocationButton }
             .scrollIndicators(.hidden)
@@ -65,6 +66,7 @@ struct SelectLocationView: View {
                 )
             }
         }
+        .scrollContentBackground(.hidden)
         .padding(.top, 20)
     }
     

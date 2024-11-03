@@ -74,9 +74,13 @@ struct MainView: View {
             .hidden(showCountdown)// 카운트다운 중에는 보이지 않음
             
             if showCountdown {
+                Color(.customBlack)
+                    .ignoresSafeArea(.all)
+                
                 countdownView
             }
         }
+        .background(.customBlack)
         .navigationTitle(selectedLocation.name)
         .navigationBarTitleDisplayMode(.large)
         .navigationBarHidden(showCountdown) // 카운트다운 중에는 보이지 않음

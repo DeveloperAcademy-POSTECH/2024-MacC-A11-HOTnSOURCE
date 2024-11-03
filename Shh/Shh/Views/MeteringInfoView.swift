@@ -18,6 +18,7 @@ struct MeteringInfoView: View {
             }
             .padding()
         }
+        .background(.customBlack)
         .navigationTitle("자주 묻는 질문")
     }
 }
