@@ -21,7 +21,7 @@ struct ShhApp: App {
         }
     }()
     
-    private let notificationManager: NotificationManager = NotificationManager()
+    private let notificationManager: NotificationManager = .shared
     
     var body: some Scene {
         WindowGroup {
