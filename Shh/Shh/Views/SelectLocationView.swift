@@ -34,11 +34,13 @@ struct SelectLocationView: View {
                 locationButton(location)
                     .listRowSeparator(.hidden)
                     .swipeActions(edge: .trailing) {
-                        Button(role: .destructive) {
-                            selectedToDeleteLocationIndex = index
-                            showDeleteAlert = true
-                        } label: {
-                            Label("Trash", systemImage: "trash.fill")
+                        if locationManager.canDeleteLocation() {
+                            Button(role: .destructive) {
+                                selectedToDeleteLocationIndex = index
+                                showDeleteAlert = true
+                            } label: {
+                                Label("Trash", systemImage: "trash.fill")
+                            }
                         }
                         
                         Button(role: .cancel) {
@@ -108,13 +110,13 @@ struct SelectLocationView: View {
     
     private var createLocationButton: some View {
         Button {
-            if locationManager.locations.count < 10 {
+            if locationManager.canCreateLocation() {
                 routerManager.push(view: .createLocationView)
             }
         } label: {
             Text("생성하기")
         }
-        .disabled(locationManager.locations.count >= 10)
+        .disabled(!locationManager.canCreateLocation())
     }
 }
 
