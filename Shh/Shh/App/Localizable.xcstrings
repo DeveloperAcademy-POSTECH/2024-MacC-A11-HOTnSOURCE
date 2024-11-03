@@ -192,6 +192,7 @@
 
     },
     "dB" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -205,6 +206,7 @@
 
     },
     "m" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -236,6 +238,7 @@
 
     },
     "거리" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -246,6 +249,7 @@
       }
     },
     "기준이 될 현장의 배경 소음을 측정하거나 입력해주세요\n기준보다 큰 소리를 내시면 알려드릴게요" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -352,6 +356,9 @@
 
     },
     "배경 소음 예시" : {
+
+    },
+    "배경 소음 측정" : {
 
     },
     "삭제" : {
@@ -558,6 +565,7 @@
       }
     },
     "장소 삭제하기" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -650,6 +658,7 @@
       }
     },
     "조심해야할 대상과의 거리를 측정하거나 입력해주세요\n그 곳에서 느낄 당신의 소리 크기를 알려드릴게요" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -769,6 +778,9 @@
     "측정 반경 | %@ m" : {
 
     },
+    "측정 중이에요..." : {
+
+    },
     "측정을 다시 시작해주세요" : {
 
     },
@@ -793,7 +805,11 @@
         }
       }
     },
+    "측정하기" : {
+
+    },
     "크기" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

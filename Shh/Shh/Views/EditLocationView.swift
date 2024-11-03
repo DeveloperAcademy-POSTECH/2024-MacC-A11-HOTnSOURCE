@@ -12,6 +12,7 @@ struct EditLocationView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
     @EnvironmentObject var locationManager: LocationManager
+    @EnvironmentObject var audioManager: AudioManager
     
     @FocusState private var isFocused: Bool
     
@@ -30,10 +31,14 @@ struct EditLocationView: View {
     
     // MARK: Body
     var body: some View {
-        VStack(spacing: 40) {
+        VStack {
             nameRow
             
-            backgroundNoiseRow
+            Spacer().frame(minHeight: 5, maxHeight: 40)
+            
+            backgroundNoiseField
+            
+            Spacer().frame(minHeight: 5, maxHeight: 40)
             
             distanceRow
             
@@ -50,6 +55,7 @@ struct EditLocationView: View {
         .sheet(isPresented: $showBackgroundNoiseInfo) {
             BackgroundNoiseInfoSheet(backgroundNoise: location.backgroundDecibel)
         }
+        .ignoresSafeArea(.keyboard)
     }
     
     // MARK: SubViews
@@ -63,18 +69,42 @@ struct EditLocationView: View {
         }
     }
     
-    private var backgroundNoiseRow: some View {
+    private var backgroundNoiseField: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("배경 소음")
                 .font(.body)
                 .fontWeight(.bold)
             
+            backgroundNoiseRow
+        }
+    }
+    
+    private var distanceRow: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("측정 반경")
+                .font(.body)
+                .fontWeight(.bold)
+            
+            DistanceInputField(distance: $location.distance)
+        }
+    }
+    
+    private var backgroundNoiseRow: some View {
+        VStack(spacing: 20) {
             backgroundNoiseInfoRow
+            
+            meteringButton
+        }
+        .fontWeight(.bold)
+        .padding(20)
+        .background {
+            RoundedRectangle(cornerRadius: 20)
+                .foregroundStyle(.tertiary)
         }
     }
     
     private var backgroundNoiseInfoRow: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 2) {
             HStack {
                 Text(Location.decibelWriting(decibel: location.backgroundDecibel))
                     .font(.headline)
@@ -82,6 +112,7 @@ struct EditLocationView: View {
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
                     .fixedSize(horizontal: false, vertical: true)
+                    .padding(.trailing)
                 
                 Spacer()
                 
@@ -94,20 +125,11 @@ struct EditLocationView: View {
                 .foregroundStyle(.secondary)
             }
 
-            Spacer().frame(height: 8)
-
             Text("정도의 느낌이군요!")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center) 
+                .multilineTextAlignment(.center)
         }
-        .fontWeight(.bold)
-    }
-    
-    private var distanceRow: some View {
-        Text("측정 반경")
-            .font(.body)
-            .fontWeight(.bold)
     }
     
     private var nameTextField: some View {
@@ -132,6 +154,22 @@ struct EditLocationView: View {
         }
     }
     
+    private var meteringButton: some View {
+        MeteringBackgroundNoiseButton(backgroundNoise: $location.backgroundDecibel, isMetering: $isMetering, meteringAction: audioManager.meteringBackgroundNoise) {
+            Text(isMetering ? "측정 중이에요..." : "측정하기")
+                .font(.body)
+                .fontWeight(.bold)
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+                .frame(height: 45)
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .foregroundStyle(.accent)
+                )
+                .accessibilityLabel("배경 소음 측정")
+        }
+    }
+    
     private var completeButton: some View {
         Button {
             locationManager.editLocation(location)
@@ -146,9 +184,20 @@ struct EditLocationView: View {
 
 // MARK: - Preview
 #Preview {
+    @Previewable @StateObject var routerManager = RouterManager()
+    @Previewable @StateObject var locationManager = LocationManager()
+    @Previewable @StateObject var audioManager: AudioManager = {
+        do {
+            return try AudioManager()
+        } catch {
+            fatalError("AudioManager 초기화 실패: \(error.localizedDescription)")
+        }
+    }()
+    
     NavigationView {
-        EditLocationView(location: .init(id: UUID(), name: "도서관", backgroundDecibel: 65, distance: 2))
-            .environmentObject(RouterManager())
-            .environmentObject(LocationManager())
+        EditLocationView(location: .init(id: UUID(), name: "도서관", backgroundDecibel: 50, distance: 2))
+            .environmentObject(routerManager)
+            .environmentObject(locationManager)
+            .environmentObject(audioManager)
     }
 }
