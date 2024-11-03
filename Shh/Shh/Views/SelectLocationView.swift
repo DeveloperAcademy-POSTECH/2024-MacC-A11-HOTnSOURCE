@@ -12,72 +12,107 @@ struct SelectLocationView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
     @EnvironmentObject var locationManager: LocationManager
+
+    @State private var selectedToDeleteLocationIndex: Int?
+    @State private var showDeleteAlert: Bool = false
     
     // MARK: Body
     var body: some View {
-        VStack(spacing: 16) {
-            locationList
-            
-            createLocationButton
-        }
-        .navigationTitle("장소 선택")
-        .scrollIndicators(.hidden)
+        locationList
+            .navigationTitle("장소 선택")
+            .toolbar { createLocationButton }
+            .scrollIndicators(.hidden)
     }
     
     // MARK: Subviews
     private var locationList: some View {
-        ForEach(locationManager.locations.indices, id: \.self) { index in
-            let location = locationManager.locations[index]
+        List {
+            ForEach(locationManager.locations.indices, id: \.self) { index in
+                let location = locationManager.locations[index]
+                
+                locationButton(location)
+                    .listRowSeparator(.hidden)
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            selectedToDeleteLocationIndex = index
+                            showDeleteAlert = true
+                        } label: {
+                            Label("Trash", systemImage: "trash.fill")
+                        }
+                        
+                        Button(role: .cancel) {
+                            routerManager.push(view: .editLocationView(location: location))
+                        } label: {
+                            Label("Edit", systemImage: "square.and.pencil")
+                        }
+                    }
+            }
+            .alert(isPresented: $showDeleteAlert) {
+                guard let index = selectedToDeleteLocationIndex else {
+                    return Alert(title: Text("오류"))
+                }
+                
+                let location = locationManager.locations[index]
+                
+                return Alert(
+                    title: Text("\(location.name) 삭제"),
+                    message: Text("정말 삭제하시겠습니까?"),
+                    primaryButton: .destructive(Text("삭제")) {
+                        locationManager.deleteLocation(location)
+                        selectedToDeleteLocationIndex = nil
+                    },
+                    secondaryButton: .cancel(Text("취소"))
+                )
+            }
+        }
+        .padding(.top, 20)
+    }
+    
+    private func locationButton(_ location: Location) -> some View {
+        Button {
+            routerManager.push(view: .mainView(selectedLocation: location))
+            locationManager.selectedLocation = location
+        } label: {
+            HStack {
+                locationButtonStyle(
+                    title: location.name,
+                    textColor: .white,
+                    capsuleColor: locationManager.selectedLocation?.id == location.id ? .green : .clear
+                )
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(.white)
+                    .padding(.trailing, 10)
+            }
+        }
+    }
+    
+    private func locationButtonStyle(title: String, textColor: Color, capsuleColor: Color) -> some View {
+        HStack {
+            Capsule()
+                .fill(capsuleColor)
+                .frame(width: 8)
+                .padding(.vertical, 25)
+                .padding(.trailing, 10)
             
-            locationButton(location)
+            Text(title)
+                .font(.title3)
+                .fontWeight(.bold)
+                .foregroundStyle(textColor)
         }
     }
     
     private var createLocationButton: some View {
         Button {
-            routerManager.push(view: .createLocationView)
+            if locationManager.locations.count < 10 {
+                routerManager.push(view: .createLocationView)
+            }
         } label: {
-            locationButtonStyle(title: "+", textColor: .white, bgColor: .gray)
-                .opacity(0.5)
+            Text("생성하기")
         }
-        .opacity(locationManager.locations.count >= 5 ? 0 : 1)
-    }
-    
-    private func locationButton(_ location: Location) -> some View {
-        ZStack(alignment: .trailing) {
-            Button {
-                routerManager.push(view: .mainView(selectedLocation: location))
-                locationManager.selectedLocation = location
-            } label: {
-                locationButtonStyle(
-                    title: location.name,
-                    textColor: .white,
-                    bgColor: locationManager.selectedLocation?.id == location.id ? .green : .gray
-                )
-            }
-            
-            Button {
-                routerManager.push(view: .editLocationView(location: location))
-            } label: {
-                Image(systemName: "ellipsis")
-                    .foregroundStyle(.white)
-                    .padding()
-                    .contentShape(Rectangle())
-            }
-        }
-    }
-    
-    private func locationButtonStyle(title: String, textColor: Color, bgColor: Color) -> some View {
-        Text(title)
-            .font(.title3)
-            .fontWeight(.bold)
-            .foregroundStyle(textColor)
-            .padding(.vertical, 20)
-            .frame(width: 300)
-            .background(
-                RoundedRectangle(cornerRadius: 100)
-                    .fill(bgColor)
-            )
+        .disabled(locationManager.locations.count >= 10)
     }
 }
 
