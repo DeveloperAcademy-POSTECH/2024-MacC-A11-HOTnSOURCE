@@ -105,7 +105,14 @@
       }
     },
     "%@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
     },
     "%@ 삭제" : {
       "localizations" : {
@@ -118,10 +125,23 @@
       }
     },
     "%lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
     },
     "%lld/%lld" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/%lld"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "new",
@@ -184,7 +204,14 @@
       }
     },
     "Edit" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        }
+      }
     },
     "m" : {
       "localizations" : {
@@ -197,25 +224,74 @@
       }
     },
     "Pause metering" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn off the screen and try it!"
+          }
+        }
+      }
     },
     "Resume metering" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resume metering"
+          }
+        }
+      }
     },
     "Shh-!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shh-!"
+          }
+        }
+      }
     },
     "Shh-!는 앱을 나가거나 휴대전화를 잠궈도 들을 수 있어요. 마음 놓고 집중하세요!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "‘Shh-!’ can hear you even when you lock your phone. Feel free to focus!"
+          }
+        }
+      }
     },
     "Shh-!의 소음 측정 방법이 궁금하거나, 현재 소음 정도가 궁금할 때 눌러주세요." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you are curious about the current noise level or its measurement method, press this button."
+          }
+        }
+      }
     },
     "Starts or pauses noise metering" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starts or pauses noise metering"
+          }
+        }
+      }
     },
     "Trash" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trash"
+          }
+        }
+      }
     },
     "거리" : {
       "localizations" : {
@@ -319,7 +395,14 @@
       }
     },
     "배경 소음 | %lld dB" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Background Noise | %lld dB"
+          }
+        }
+      }
     },
     "삭제" : {
       "localizations" : {
@@ -356,13 +439,20 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We’re hearing the noise instead!"
+            "value" : "We’re listening…"
           }
         }
       }
     },
     "수정" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        }
+      }
     },
     "수정하기" : {
       "localizations" : {
@@ -384,17 +474,6 @@
         }
       }
     },
-    "아래 버튼을 눌러" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "By pressing the button below"
-          }
-        }
-      }
-    },
     "아주 조용한 방에서의 환경음" : {
       "localizations" : {
         "en" : {
@@ -410,7 +489,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unknown error occurred."
+            "value" : "Unknown error occurred"
           }
         }
       }
@@ -426,7 +505,14 @@
       }
     },
     "오류" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        }
+      }
     },
     "완료" : {
       "localizations" : {
@@ -463,7 +549,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You need to be a little cautious now"
+            "value" : "You have to be careful now!"
           }
         }
       }
@@ -473,7 +559,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The sound of everyday conversations and traffic noise from the road"
+            "value" : "The sound of everyday conversation or the traffic noise from the road"
           }
         }
       }
@@ -523,7 +609,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Create new location complete"
+            "value" : "Successfully created new location"
           }
         }
       }
@@ -573,7 +659,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Are you sure you want to delete?"
+            "value" : "Are you sure you want to delete it?"
           }
         }
       }
@@ -603,7 +689,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Typical indoor noise heard in a quiet office"
+            "value" : "Typical indoor noise in a quiet office"
           }
         }
       }
@@ -643,7 +729,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Moderate indoor noise heard in a residential area"
+            "value" : "Moderate indoor noise in a residential area"
           }
         }
       }
@@ -653,7 +739,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A duplicate name exists"
+            "value" : "The same name exists"
           }
         }
       }
@@ -663,7 +749,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We’re hearing the noise now!"
+            "value" : "We’re listening now!"
           }
         }
       }
@@ -673,7 +759,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You’re doing great right now!"
+            "value" : "You’re doing great!"
           }
         }
       }
@@ -699,18 +785,21 @@
       }
     },
     "측정 반경 | %@ m" : {
-
-    },
-    "측정을 다시 시작해주세요" : {
-
-    },
-    "측정을 시작해주세요" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Please start the measurement"
+            "value" : "Measurement radius | %@ m"
+          }
+        }
+      }
+    },
+    "측정을 다시 시작해주세요" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press play button to resume metering"
           }
         }
       }
@@ -746,7 +835,14 @@
       }
     },
     "화면을 덮고 사용해보세요!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn off the screen and try it!"
+          }
+        }
+      }
     },
     "확인" : {
       "localizations" : {
