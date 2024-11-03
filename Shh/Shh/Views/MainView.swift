@@ -20,7 +20,7 @@ struct MainView: View {
     
     @State private var isAnimating = false
     
-    @State private var showBottomInfoSheet = false
+    @State private var showMeteringInfoSheet = false
     
     let selectedLocation: Location
     
@@ -111,8 +111,8 @@ struct MainView: View {
             audioManager.stopMetering()
             stopCountdown()
         }
-        .sheet(isPresented: $showBottomInfoSheet) {
-            MeteringInfoView()
+        .sheet(isPresented: $showMeteringInfoSheet) {
+            MeteringInfoSheet()
                 .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
                 
@@ -239,7 +239,7 @@ struct MainView: View {
             }
             
             Button {
-                showBottomInfoSheet = true
+                showMeteringInfoSheet = true
             } label: {
                 Label("정보", systemImage: "info.circle")
                     .font(.body)

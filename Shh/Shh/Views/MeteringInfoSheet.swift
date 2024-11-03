@@ -1,5 +1,5 @@
 //
-//  MeteringInfoView.swift
+//  MeteringInfoSheet.swift
 //  Shh
 //
 //  Created by sseungwonnn on 10/20/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MeteringInfoView: View {
+struct MeteringInfoSheet: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 30) {
@@ -32,5 +32,5 @@ struct MeteringInfoView: View {
 }
 
 #Preview {
-    MeteringInfoView()
+    MeteringInfoSheet()
 }
