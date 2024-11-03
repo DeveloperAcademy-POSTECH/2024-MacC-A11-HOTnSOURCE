@@ -340,6 +340,7 @@
     },
     "소음 수준: " : {
       "comment" : "푸시 알림 앞머리 > 소음 수준: ",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -348,6 +349,9 @@
           }
         }
       }
+    },
+    "소음 수준: 주의" : {
+      "comment" : "주의 알림 제목"
     },
     "소음을 대신 듣고 있어요!" : {
       "localizations" : {
@@ -457,6 +461,7 @@
       }
     },
     "이제 조금 조심해야 해요" : {
+      "comment" : "주의 푸시 알림 내용",
       "localizations" : {
         "en" : {
           "stringUnit" : {

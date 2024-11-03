@@ -14,21 +14,11 @@ final class NotificationManager {
     static let shared = NotificationManager()
     
     /// 푸시 알림 전송
-    ///
-    /// 타입에 맞는 알림을 전송합니다.
     func sendNotification(_ type: NotificationType) async {
         let status = await canSendNotification()
         
         if status {
-            switch type {
-            case .caution:
-                sendCautionNotification()
-            case .persistent:
-                sendPersistentNotification()
-            case .recurringAlert:
-                sendRecurringAlertNotification()
-                
-            }
+            sendTypeNotification(type)
         } else {
             await requestPermission()
         }
@@ -80,38 +70,14 @@ final class NotificationManager {
         }
     }
     
-    /// 주의 알림 전송
-    private func sendCautionNotification() {
+    /// 실제 푸시 알림 전송 함수
+    private func sendTypeNotification(_ type: NotificationType) {
         let content = createNotificationContent(
-            subtitle: NSLocalizedString("소음 수준: ", comment: "푸시 알림 앞머리 > 소음 수준: ") + NoiseStatus.caution.message.toString(),
-            body: NoiseStatus.caution.writing.toString()
+            subtitle: type.subtitle,
+            body: type.body
         )
         
-        scheduleNotification(content: content, type: .caution)
-    }
-    
-    /// 주의 지속 알림
-    ///
-    /// 소음 수준이 주의 상태에서 20초 동안 머무를 경우 사용자에게 알려줍니다.
-    private func sendPersistentNotification() {
-        let content = createNotificationContent(
-            subtitle: NSLocalizedString("지속적인 소음 발생", comment: "주의 지속 푸시 알림 제목"),
-            body: NSLocalizedString("소음 상태가 20초 동안 주의에 머물렀어요!", comment: "주의 지속 푸시 알림 내용")
-        )
-        
-        scheduleNotification(content: content, type: .persistent)
-    }
-    
-    /// 주의 지속 반복 알림
-    ///
-    /// 주의 지속 알림을 받은 이후에도 계속해서 주의 수준에 머물 경우 60초 간격으로 사용자에게 알려줍니다.
-    private func sendRecurringAlertNotification() {
-        let content = createNotificationContent(
-            subtitle: NSLocalizedString("지속적인 소음 발생", comment: "주의 지속 반복 푸시 알림 제목"),
-            body: NSLocalizedString("아직까지 조심해야할 수준의 소음이 발생하고 있어요!", comment: "주의 지속 반복 푸시 알림 내용")
-        )
-        
-        scheduleNotification(content: content, type: .recurringAlert)
+        scheduleNotification(content: content, type: type)
     }
     
     /// 푸시 알림 내용 생성
@@ -124,7 +90,7 @@ final class NotificationManager {
         return content
     }
     
-    /// 푸시 알림 전송(예약)
+    /// 푸시 알림 예약
     private func scheduleNotification(content: UNMutableNotificationContent, type: NotificationType) {
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: type.delay, repeats: type == .recurringAlert)
         
@@ -141,8 +107,11 @@ final class NotificationManager {
 }
 
 enum NotificationType: String {
+    /// 주의 알림
     case caution = "주의"
+    /// 주의 지속 알림. 소음 수준이 주의 상태에서 20초 동안 머무를 경우 사용자에게 알려줍니다.
     case persistent = "주의 지속"
+    /// 주의 지속 반복 알림.  주의 지속 알림을 받은 이후에도 계속해서 주의 수준에 머물 경우 60초 간격으로 사용자에게 알려줍니다.
     case recurringAlert = "주의 지속 반복"
     
     var delay: TimeInterval {
@@ -150,6 +119,28 @@ enum NotificationType: String {
         case .caution: return 0.1
         case .persistent: return 20
         case .recurringAlert: return 60
+        }
+    }
+    
+    var subtitle: String {
+        switch self {
+        case .caution:
+            NSLocalizedString("소음 수준: 주의", comment: "주의 알림 제목")
+        case .persistent:
+            NSLocalizedString("지속적인 소음 발생", comment: "주의 지속 푸시 알림 제목")
+        case .recurringAlert:
+            NSLocalizedString("지속적인 소음 발생", comment: "주의 지속 반복 푸시 알림 제목")
+        }
+    }
+    
+    var body: String {
+        switch self {
+        case .caution:
+            NSLocalizedString("이제 조금 조심해야 해요", comment: "주의 푸시 알림 내용")
+        case .persistent:
+            NSLocalizedString("소음 상태가 20초 동안 주의에 머물렀어요!", comment: "주의 지속 푸시 알림 내용")
+        case .recurringAlert:
+            NSLocalizedString("아직까지 조심해야할 수준의 소음이 발생하고 있어요!", comment: "주의 지속 반복 푸시 알림 내용")
         }
     }
 }
