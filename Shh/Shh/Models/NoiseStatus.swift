@@ -21,9 +21,9 @@ extension NoiseStatus {
     var statusColor: Color {
         switch self {
         case .safe:
-            return Color.safe
+            return .accent
         case .caution:
-            return Color.caution
+            return .indigo
         }
     }
     
