@@ -39,6 +39,7 @@ struct SelectLocationView: View {
                         } label: {
                             Label("Trash", systemImage: "trash.fill")
                         }
+                        .disabled(!locationManager.canDeleteLocation())
                         
                         Button(role: .cancel) {
                             routerManager.push(view: .editLocationView(location: location))
@@ -106,50 +107,13 @@ struct SelectLocationView: View {
     
     private var createLocationButton: some View {
         Button {
-            if locationManager.locations.count < 10 {
+            if locationManager.canCreateLocation() {
                 routerManager.push(view: .createLocationView)
             }
         } label: {
             Text("생성하기")
         }
-        .hidden(locationManager.locations.count >= 5)
-    }
-    
-    private func locationButton(_ location: Location) -> some View {
-        ZStack(alignment: .trailing) {
-            Button {
-                routerManager.push(view: .mainView(selectedLocation: location))
-                locationManager.selectedLocation = location
-            } label: {
-                locationButtonStyle(
-                    title: location.name,
-                    textColor: .white,
-                    bgColor: locationManager.selectedLocation?.id == location.id ? .green : .gray
-                )
-            }
-            
-            Button {
-                routerManager.push(view: .editLocationView(location: location))
-            } label: {
-                Image(systemName: "ellipsis")
-                    .foregroundStyle(.white)
-                    .padding()
-                    .contentShape(Rectangle())
-            }
-        }
-    }
-    
-    private func locationButtonStyle(title: String, textColor: Color, bgColor: Color) -> some View {
-        Text(title)
-            .font(.title3)
-            .fontWeight(.bold)
-            .foregroundStyle(textColor)
-            .padding(.vertical, 20)
-            .frame(width: 300)
-            .background(
-                RoundedRectangle(cornerRadius: 100)
-                    .fill(bgColor)
-            )
+        .disabled(!locationManager.canCreateLocation())
     }
 }
 
