@@ -18,7 +18,7 @@ final class NotificationManager {
         let status = await canSendNotification()
         
         if status {
-            sendTypeNotification(type)
+            scheduleNotificationFor(type)
         } else {
             await requestPermission()
         }
@@ -71,7 +71,7 @@ final class NotificationManager {
     }
     
     /// 실제 푸시 알림 전송 함수
-    private func sendTypeNotification(_ type: NotificationType) {
+    private func scheduleNotificationFor(_ type: NotificationType) {
         let content = createNotificationContent(
             subtitle: type.subtitle,
             body: type.body
@@ -113,7 +113,9 @@ enum NotificationType: String {
     case persistent = "주의 지속"
     /// 주의 지속 반복 알림.  주의 지속 알림을 받은 이후에도 계속해서 주의 수준에 머물 경우 60초 간격으로 사용자에게 알려줍니다.
     case recurringAlert = "주의 지속 반복"
-    
+}
+
+extension NotificationType {
     var delay: TimeInterval {
         switch self {
         case .caution: return 0.1

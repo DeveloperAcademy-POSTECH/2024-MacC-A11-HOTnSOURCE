@@ -19,8 +19,6 @@ struct StartView: View {
     let backgroundNoise: Float
     let distance: Float
     
-    private let notificationManager: NotificationManager = NotificationManager()
-    
     // MARK: Body
     var body: some View {
         VStack {
@@ -48,7 +46,7 @@ struct StartView: View {
         .padding(20)
         .onAppear {
             Task {
-                await notificationManager.requestPermission()
+                await NotificationManager.shared.requestPermission()
             }
         }
     }
