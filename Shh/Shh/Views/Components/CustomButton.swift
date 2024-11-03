@@ -29,6 +29,7 @@ struct CustomButton: View {
                 RoundedRectangle(cornerRadius: 18)
                     .foregroundStyle(.accent)
             )
+            .accessibilityLabel(text)
     }
 }
 

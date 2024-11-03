@@ -19,7 +19,7 @@ struct WelcomeView: View {
             
             welcomeComment
             
-            Spacer(minLength: 50)
+            Spacer(minLength: 55)
             
             SsambbongAsset(image: .welcomeAsset)
                 .frame(maxHeight: .infinity, alignment: .top)
@@ -31,7 +31,7 @@ struct WelcomeView: View {
     
     // MARK: SubViews
     private var welcomeComment: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 10) {
             Text("반가워요!\n소음이 걱정이신가요?")
                 .font(.title)
             Text("소음이 걱정될 땐? Shh-!")

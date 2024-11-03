@@ -40,7 +40,7 @@ struct PageIndicator: View {
     
     private var line: some View {
         Rectangle()
-            .frame(width: 50, height: 1)
+            .frame(width: 50, height: 2)
             .foregroundStyle(.accent)
     }
 }

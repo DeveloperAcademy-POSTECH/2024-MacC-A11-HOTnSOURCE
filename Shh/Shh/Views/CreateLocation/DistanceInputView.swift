@@ -20,8 +20,8 @@ struct DistanceInputView: View {
     var body: some View {
         VStack {
             StepDescriptionRow(
-                text: "상대방과 얼마나 가깝나요?",
-                subText: "해당 거리에서 어떻게 들리는지\n계산해서 알려드릴게요"
+                text: step.text,
+                subText: step.subText
             )
             
             Spacer(minLength: 30)
@@ -51,9 +51,11 @@ struct DistanceInputView: View {
                 .font(.caption2)
                 .foregroundStyle(.secondary)
             
-            Spacer().frame(height: 10)
+            Spacer().frame(height: 22)
             
             SliderWithSnap(distance: $distance, snapPoints: [1.0, 1.5, 2.0, 2.5, 3.0])
+            
+            Spacer().frame(height: 5)
             
             HStack {
                 Text("1m")

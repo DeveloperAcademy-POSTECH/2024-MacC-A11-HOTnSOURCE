@@ -100,7 +100,7 @@ struct CreateLocationView: View {
         }
         .contentShape(Rectangle())
         .foregroundStyle(.secondary)
-        .opacity(currentStep == .nameInput || isMetering ? 0 : 1)
+        .hidden(currentStep == .nameInput || isMetering)
     }
 }
 
@@ -108,14 +108,20 @@ enum CreateLocationStep: Int {
     case nameInput = 1
     case backgroundNoiseInput = 2
     case distanceInput = 3
+    
+    var text: String {
+        switch self {
+        case .nameInput: return NSLocalizedString("어디에서 사용하시나요?", comment: "장소 이름 입력 단계 설명")
+        case .backgroundNoiseInput: return NSLocalizedString("주위의 소리를 들려주세요!", comment: "배경 소음 입력 단계 설명")
+        case .distanceInput: return NSLocalizedString("상대방과 얼마나 가깝나요?", comment: "측정 반경 입력 단계 설명")
+        }
+    }
+    
+    var subText: String {
+        switch self {
+        case .nameInput: return NSLocalizedString("소음 측정이 필요한 곳의 이름을 알려주세요", comment: "장소 이름 입력 단계 보조 설명")
+        case .backgroundNoiseInput: return NSLocalizedString("주위의 소리를 들려주세요!", comment: "배경 소음 입력 단계 보조 설명")
+        case .distanceInput: return NSLocalizedString("해당 거리에서 어떻게 들리는지\n계산해서 알려드릴게요", comment: "측정 반경 입력 단계 보조 설명")
+        }
+    }
 }
-
-// MARK: - Preview
-// #Preview {
-//     NavigationView {
-//         CreateLocationView()
-//             .environmentObject(LocationManager())
-//             .environmentObject(RouterManager())
-//             .environmentObject(AudioManager())
-//     }
-// }

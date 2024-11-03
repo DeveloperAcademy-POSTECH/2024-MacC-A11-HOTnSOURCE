@@ -14,6 +14,7 @@ struct LoadingDots: View {
         HStack(spacing: 8) {
             ForEach(0..<3) { index in
                 Circle()
+                    .fill(.white)
                     .frame(width: 10, height: 10)
                     .offset(y: isAnimating ? -8 : 8)
                     .animation(
@@ -27,7 +28,6 @@ struct LoadingDots: View {
         .onAppear {
             isAnimating = true
         }
-        .foregroundColor(.white)
     }
 }
 

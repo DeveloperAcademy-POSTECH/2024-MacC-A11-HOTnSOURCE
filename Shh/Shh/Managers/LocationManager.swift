@@ -53,7 +53,7 @@ final class LocationManager: ObservableObject {
     }
     
     func canCreateLocation() -> Bool {
-        return locations.count < 5
+        return locations.count < 10
     }
     
     func canDeleteLocation() -> Bool {

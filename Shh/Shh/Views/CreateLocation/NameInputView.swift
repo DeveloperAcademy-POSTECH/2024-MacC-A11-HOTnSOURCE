@@ -30,8 +30,8 @@ struct NameInputView: View {
     var body: some View {
         VStack {
             StepDescriptionRow(
-                text: "어디에서 사용하시나요?",
-                subText: "소음 측정이 필요한 곳의 이름을 알려주세요"
+                text: step.text,
+                subText: step.subText
             )
             
             Spacer(minLength: 80)
@@ -75,7 +75,7 @@ struct NameInputView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .font(.footnote)
                 .foregroundStyle(.red)
-                .opacity(locationManager.isValidName(name) ? 0 : 1)
+                .hidden(locationManager.isValidName(name))
         }
     }
 }

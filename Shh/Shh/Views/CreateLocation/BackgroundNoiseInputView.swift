@@ -26,8 +26,8 @@ struct BackgroundNoiseInputView: View {
     var body: some View {
         VStack {
             StepDescriptionRow(
-                text: "주위의 소리를 들려주세요!",
-                subText: "주변보다 더 큰 소리를 내면 알려드릴게요\n아래의 버튼을 눌러주세요"
+                text: step.text,
+                subText: step.subText
             )
             
             Spacer(minLength: 30)
@@ -52,7 +52,7 @@ struct BackgroundNoiseInputView: View {
             
             VStack(spacing: 12) {
                 reMeteringButton
-                    .opacity(isFirstMeteringFinished && !isMetering ? 1 : 0)
+                    .hidden(!isFirstMeteringFinished || isMetering)
                 
                 if isFirstMeteringFinished && !isMetering {
                     NextStepButton(step: $step)
@@ -106,7 +106,6 @@ struct BackgroundNoiseInputView: View {
         }
     }
     
-    @ViewBuilder
     private var meteringButton: some View {
         CustomButton(text: isMetering ? "측정 중이에요..." : "측정하기") {
             meteringBackgroundNoise()

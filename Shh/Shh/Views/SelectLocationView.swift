@@ -40,7 +40,7 @@ struct SelectLocationView: View {
             locationButtonStyle(title: "+", textColor: .white, bgColor: .gray)
                 .opacity(0.5)
         }
-        .opacity(locationManager.locations.count >= 5 ? 0 : 1)
+        .hidden(locationManager.locations.count >= 5)
     }
     
     private func locationButton(_ location: Location) -> some View {
