@@ -37,7 +37,7 @@ struct LockScreenAndBannerView: View {
                     Label(isMetering ? "일지정지" : "재시작", systemImage: "play.circle.fill")
                         .font(.title3)
                         .fontWeight(.medium)
-                        .foregroundStyle(.green)
+                        .foregroundStyle(.accent)
                 }
             }
             Spacer()

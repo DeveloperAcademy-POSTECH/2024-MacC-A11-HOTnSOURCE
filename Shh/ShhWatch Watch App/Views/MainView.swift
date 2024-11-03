@@ -24,16 +24,14 @@ struct MainView: View {
         .repeatForever(autoreverses: true)
     
     private var outerCircleColor: Color {
-        noiseStatus == "safe"
-            ? .green
-            : .purple
+        noiseStatus == "safe" ? .accent : .indigo
     }
     
     private var innerCircleColors: [Color] {
         if noiseStatus == "safe" {
-            return [.green, .yellow, .white]
+            return [.accent, .customLime]
         } else {
-            return [.purple, .blue, .white]
+            return [.indigo, .purple]
         }
     }
     
@@ -99,7 +97,7 @@ struct MainView: View {
                     .foregroundStyle(.white)
             }
             // TODO: button color가 어둡게 나오는 이슈 발생. 해결방안을 찾기 전까지 opacity로 임시 대처.
-            .buttonStyle(BorderedButtonStyle(tint: Color.green.opacity(isMetering ? 2 : 10)))
+            .buttonStyle(BorderedButtonStyle(tint: .accent.opacity(isMetering ? 2 : 10)))
             
             Text(isMetering ? "일시정지" : "재개")
         }

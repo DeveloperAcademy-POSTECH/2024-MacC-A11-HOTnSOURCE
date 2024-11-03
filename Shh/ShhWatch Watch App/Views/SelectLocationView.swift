@@ -46,7 +46,7 @@ struct SelectLocationView: View {
             Text(location.name)
         }
         .foregroundStyle(.white)
-        .tint(selectedLocation?.id == location.id ? .green : .gray)
+        .tint(selectedLocation?.id == location.id ? .accent : .gray)
     }
 }
 

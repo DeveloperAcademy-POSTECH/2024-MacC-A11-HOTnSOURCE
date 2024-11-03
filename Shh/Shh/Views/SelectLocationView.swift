@@ -77,7 +77,7 @@ struct SelectLocationView: View {
                 locationButtonStyle(
                     title: location.name,
                     textColor: .white,
-                    capsuleColor: locationManager.selectedLocation?.id == location.id ? .green : .clear
+                    capsuleColor: locationManager.selectedLocation?.id == location.id ? .accent : .clear
                 )
                 
                 Spacer()
