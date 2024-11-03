@@ -12,9 +12,8 @@ struct SelectLocationView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
     @EnvironmentObject var locationManager: LocationManager
-    
-    @State var location: Location
-    @State private var selectedLocationIndex: Int?
+
+    @State private var selectedToDeleteLocationIndex: Int?
     @State private var showDeleteAlert: Bool = false
     
     // MARK: Body
@@ -35,7 +34,7 @@ struct SelectLocationView: View {
                     .listRowSeparator(.hidden)
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
-                            selectedLocationIndex = index
+                            selectedToDeleteLocationIndex = index
                             showDeleteAlert = true
                         } label: {
                             Label("Trash", systemImage: "trash.fill")
@@ -49,7 +48,7 @@ struct SelectLocationView: View {
                     }
             }
             .alert(isPresented: $showDeleteAlert) {
-                guard let index = selectedLocationIndex else {
+                guard let index = selectedToDeleteLocationIndex else {
                     return Alert(title: Text("오류"))
                 }
                 
@@ -60,7 +59,7 @@ struct SelectLocationView: View {
                     message: Text("정말 삭제하시겠습니까?"),
                     primaryButton: .destructive(Text("삭제")) {
                         locationManager.deleteLocation(location)
-                        selectedLocationIndex = nil
+                        selectedToDeleteLocationIndex = nil
                     },
                     secondaryButton: .cancel(Text("취소"))
                 )
@@ -119,5 +118,5 @@ struct SelectLocationView: View {
 
 // MARK: - Preview
 #Preview {
-    SelectLocationView(location: .init(id: UUID(), name: "도서관", backgroundDecibel: 50, distance: 2))
+    SelectLocationView()
 }
