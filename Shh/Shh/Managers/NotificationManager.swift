@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import UserNotifications
 
-// MARK: - 로컬 푸시 알림 담당 매니저 (actor 적용)
+// MARK: - 로컬 푸시 알림 담당 매니저
 final class NotificationManager {
     static let shared = NotificationManager()
     
