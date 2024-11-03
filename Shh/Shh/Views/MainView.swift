@@ -115,6 +115,7 @@ struct MainView: View {
             MeteringInfoView()
                 .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
+                
         }
     }
     
