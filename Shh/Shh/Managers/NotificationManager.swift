@@ -11,12 +11,26 @@ import UserNotifications
 
 // MARK: - 로컬 푸시 알림 담당 매니저 (actor 적용)
 actor NotificationManager {
+    /// 푸시 알림 전송
+    ///
+    /// 타입에 맞는 알림을 전송합니다.
+    func sendNotification() async {
+        let status = await authorizationStatusCheck()
+        
+        if status {
+            sendCautionNotification()
+        } else {
+            await requestPermission()
+        }
+    }
+    
     /// 푸시 알림 권한 설정
     ///
-    /// `.alert`, `.badge`, `.sound`, `.criticalAlert`에 대한 권한을 받습니다.
+    /// `.alert`, `.badge`, `.sound`에 대한 권한을 받습니다.
     func requestPermission() async {
         do {
-            let granted = try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound, .criticalAlert])
+            let granted = try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound])
+            
             if granted {
                 print("푸시 알림 권한 설정 성공!")
             } else {
@@ -27,44 +41,25 @@ actor NotificationManager {
         }
     }
     
-    /// 푸시 알림 전송
-    ///
-    /// 타입에 맞는 알림을 전송합니다.
-    func sendNotification() async {
-        let settings = await UNUserNotificationCenter.current().notificationSettings()
-        
-        switch settings.authorizationStatus {
-        case .notDetermined:
-            await requestPermission()
-        case .authorized, .provisional:
-            sendCautionNotification()
-        case .denied:
-            print("푸시 알림 권한이 거부되었습니다.")
-        default:
-            print("알 수 없는 상태입니다.")
-        }
-    }
-    
     /// 푸시 알림 설정 확인
-    func check(completion: @escaping (Bool) -> Void) {
-        UNUserNotificationCenter.current().getNotificationSettings { settings in
-            switch settings.authorizationStatus {
-            case .authorized:
-                print("알림 권한이 부여되었습니다.")
-                completion(true)
-            case .denied:
-                print("알림 권한이 거부되었습니다.")
-                completion(false)
-            case .notDetermined:
-                print("알림 권한이 아직 설정되지 않았습니다.")
-                completion(false)
-            case .provisional, .ephemeral:
-                print("임시 알림 권한이 부여되었습니다.")
-                completion(true)
-            @unknown default:
-                print("알 수 없는 권한 상태입니다.")
-                completion(false)
-            }
+    func authorizationStatusCheck() async -> Bool {
+        let status = await UNUserNotificationCenter.current().notificationSettings()
+        switch status.authorizationStatus {
+        case .authorized:
+            print("알림 권한이 부여되었습니다.")
+            return true
+        case .provisional, .ephemeral:
+            print("임시 알림 권한이 부여되었습니다.")
+            return true
+        case .denied:
+            print("알림 권한이 거부되었습니다.")
+            return false
+        case .notDetermined:
+            print("알림 권한이 아직 설정되지 않았습니다.")
+            return false
+        @unknown default:
+            print("알 수 없는 권한 상태입니다.")
+            return false
         }
     }
     
