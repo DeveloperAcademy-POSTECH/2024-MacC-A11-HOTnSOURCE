@@ -15,7 +15,7 @@ actor NotificationManager {
     ///
     /// 타입에 맞는 알림을 전송합니다.
     func sendNotification() async {
-        let status = await authorizationStatusCheck()
+        let status = await canSendNotification()
         
         if status {
             sendCautionNotification()
@@ -42,7 +42,7 @@ actor NotificationManager {
     }
     
     /// 푸시 알림 설정 확인
-    func authorizationStatusCheck() async -> Bool {
+    private func canSendNotification() async -> Bool {
         let status = await UNUserNotificationCenter.current().notificationSettings()
         switch status.authorizationStatus {
         case .authorized:
