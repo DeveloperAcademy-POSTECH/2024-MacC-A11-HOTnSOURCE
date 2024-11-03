@@ -74,6 +74,7 @@ final class AudioManager: ObservableObject {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .measurement, options: [.mixWithOthers, .allowBluetoothA2DP])
             try AVAudioSession.sharedInstance().setActive(true)
+            try AVAudioSession.sharedInstance().setAllowHapticsAndSystemSoundsDuringRecording(true)
         } catch {
             print("오디오 세션을 설정하는 중 오류 발생")
             throw error
