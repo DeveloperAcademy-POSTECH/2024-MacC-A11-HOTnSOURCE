@@ -33,13 +33,14 @@ struct SelectLocationView: View {
                 locationButton(location)
                     .listRowSeparator(.hidden)
                     .swipeActions(edge: .trailing) {
-                        Button(role: .destructive) {
-                            selectedToDeleteLocationIndex = index
-                            showDeleteAlert = true
-                        } label: {
-                            Label("Trash", systemImage: "trash.fill")
+                        if locationManager.canDeleteLocation() {
+                            Button(role: .destructive) {
+                                selectedToDeleteLocationIndex = index
+                                showDeleteAlert = true
+                            } label: {
+                                Label("Trash", systemImage: "trash.fill")
+                            }
                         }
-                        .disabled(!locationManager.canDeleteLocation())
                         
                         Button(role: .cancel) {
                             routerManager.push(view: .editLocationView(location: location))
