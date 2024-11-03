@@ -48,7 +48,7 @@ struct EditLocationView: View {
             }
         }
         .sheet(isPresented: $showBackgroundNoiseInfo) {
-            BackgroundNoistInfoSheet(backgroundNoise: location.backgroundDecibel)
+            BackgroundNoiseInfoSheet(backgroundNoise: location.backgroundDecibel)
         }
     }
     

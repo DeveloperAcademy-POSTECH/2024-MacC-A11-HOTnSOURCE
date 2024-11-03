@@ -7,11 +7,13 @@
 
 import SwiftUI
 
-struct BackgroundNoistInfoSheet: View {
+struct BackgroundNoiseInfoSheet: View {
     let backgroundNoise: Float
     
     var body: some View {
         VStack {
+            Spacer(minLength: 10)
+            
             Text("배경 소음 예시")
             
             List {
@@ -36,5 +38,5 @@ struct BackgroundNoistInfoSheet: View {
 }
 
 #Preview {
-    BackgroundNoistInfoSheet(backgroundNoise: 30.0)
+    BackgroundNoiseInfoSheet(backgroundNoise: 30.0)
 }
