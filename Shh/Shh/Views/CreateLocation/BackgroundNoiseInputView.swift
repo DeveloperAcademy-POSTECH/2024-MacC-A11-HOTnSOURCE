@@ -24,40 +24,45 @@ struct BackgroundNoiseInputView: View {
     
     // MARK: Body
     var body: some View {
-        VStack {
-            StepDescriptionRow(
-                text: step.text,
-                subText: step.subText
-            )
+        ZStack {
+            Color.customBlack
+                .edgesIgnoringSafeArea(.all)
             
-            Spacer(minLength: 30)
-            
-            SsambbongAsset(image: .backgroundNoiseInputAsset)
-            
-            Spacer()
-            
-            Group {
-                if isMetering {
-                    LoadingDots()
-                } else if isFirstMeteringFinished {
-                    backgroundNoiseInfoRow
-                } else {
-                    Rectangle()
-                        .fill(.clear)
-                }
-            }
-            .frame(height: 100)
-            
-            Spacer(minLength: 16)
-            
-            VStack(spacing: 12) {
-                reMeteringButton
-                    .hidden(!isFirstMeteringFinished || isMetering)
+            VStack {
+                StepDescriptionRow(
+                    text: step.text,
+                    subText: step.subText
+                )
                 
-                if isFirstMeteringFinished && !isMetering {
-                    NextStepButton(step: $step)
-                } else {
-                    meteringButton
+                Spacer(minLength: 30)
+                
+                SsambbongAsset(image: .backgroundNoiseInputAsset)
+                
+                Spacer()
+                
+                Group {
+                    if isMetering {
+                        LoadingDots()
+                    } else if isFirstMeteringFinished {
+                        backgroundNoiseInfoRow
+                    } else {
+                        Rectangle()
+                            .fill(.clear)
+                    }
+                }
+                .frame(height: 100)
+                
+                Spacer(minLength: 16)
+                
+                VStack(spacing: 12) {
+                    reMeteringButton
+                        .hidden(!isFirstMeteringFinished || isMetering)
+                    
+                    if isFirstMeteringFinished && !isMetering {
+                        NextStepButton(step: $step)
+                    } else {
+                        meteringButton
+                    }
                 }
             }
         }

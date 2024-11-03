@@ -32,6 +32,7 @@ struct ShhApp: App {
                             shhView.view
                         }
                 }
+                .background(.customBlack)
             } else {
                 NavigationStack(path: $routerManager.path) {
                     SelectLocationView()

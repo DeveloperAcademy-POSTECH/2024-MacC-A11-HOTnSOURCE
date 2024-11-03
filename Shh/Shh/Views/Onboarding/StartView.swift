@@ -24,28 +24,32 @@ struct StartView: View {
     // MARK: Body
     var body: some View {
         VStack {
-            Spacer(minLength: 40)
-            
-            VStack(spacing: 6) {
-                StepDescriptionRow(
-                    text: "모든 준비가 완료되었어요!",
-                    subText: "시끄러운 소리를 내면 알려드릴게요!"
-                )
+            VStack {
+                Spacer(minLength: 40)
                 
-                Text("* 알림 권한을 허용해주세요")
-                    .font(.caption2)
-                    .foregroundStyle(.accent)
-                    .fontWeight(.bold)
+                VStack(spacing: 6) {
+                    StepDescriptionRow(
+                        text: "모든 준비가 완료되었어요!",
+                        subText: "시끄러운 소리를 내면 알려드릴게요!"
+                    )
+                    
+                    Text("* 알림 권한을 허용해주세요")
+                        .font(.caption2)
+                        .foregroundStyle(.accent)
+                        .fontWeight(.bold)
+                }
+                
+                Spacer(minLength: 80)
+                
+                SsambbongAsset(image: .completeAsset)
+                    .frame(maxHeight: .infinity, alignment: .top)
             }
-            
-            Spacer(minLength: 50)
-            
-            SsambbongAsset(image: .completeAsset)
-                .frame(maxHeight: .infinity, alignment: .top)
+            .padding(.horizontal, 40)
             
             startButton
         }
         .padding(20)
+        .background(.customBlack)
         .onAppear {
             Task {
                 await notificationManager.requestPermission()

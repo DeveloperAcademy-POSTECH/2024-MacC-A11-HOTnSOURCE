@@ -72,7 +72,7 @@ struct DistanceInputView: View {
         .padding(20)
         .background {
             RoundedRectangle(cornerRadius: 20)
-                .foregroundStyle(.tertiary)
+                .foregroundStyle(.quaternary)
         }
     }
 }

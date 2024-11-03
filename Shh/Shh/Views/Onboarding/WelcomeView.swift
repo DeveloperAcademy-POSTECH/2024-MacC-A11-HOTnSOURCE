@@ -27,6 +27,7 @@ struct WelcomeView: View {
             startButton
         }
         .padding(20)
+        .background(.customBlack)
     }
     
     // MARK: SubViews

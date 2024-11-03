@@ -52,15 +52,9 @@ struct SliderWithSnap: View {
     // MARK: SubViews
     @ViewBuilder
     private func circle(isActive: Bool) -> some View {
-        if isActive {
-            Circle()
-                .fill(.accent)
-                .frame(width: 10, height: 10)
-        } else {
-            Circle()
-                .fill(.tertiary)
-                .frame(width: 10, height: 10)
-        }
+        Circle()
+            .fill(isActive ? .accent : Color(.quaternaryLabel))
+            .frame(width: 12, height: 12)
     }
     
     // MARK: Action Handlers
