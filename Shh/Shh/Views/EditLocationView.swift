@@ -36,7 +36,7 @@ struct EditLocationView: View {
             
             Spacer().frame(minHeight: 5, maxHeight: 40)
             
-            backgroundNoiseField
+            backgroundNoiseRow
             
             Spacer().frame(minHeight: 5, maxHeight: 40)
             
@@ -47,6 +47,11 @@ struct EditLocationView: View {
         .navigationTitle("수정하기")
         .navigationBarTitleDisplayMode(.large)
         .padding(20)
+        .contentShape(Rectangle())
+        .ignoresSafeArea(.keyboard)
+        .onTapGesture {
+            isFocused = false
+        }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 completeButton
@@ -55,7 +60,6 @@ struct EditLocationView: View {
         .sheet(isPresented: $showBackgroundNoiseInfo) {
             BackgroundNoiseInfoSheet(backgroundNoise: location.backgroundDecibel)
         }
-        .ignoresSafeArea(.keyboard)
     }
     
     // MARK: SubViews
@@ -69,13 +73,24 @@ struct EditLocationView: View {
         }
     }
     
-    private var backgroundNoiseField: some View {
+    private var backgroundNoiseRow: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("배경 소음")
-                .font(.body)
-                .fontWeight(.bold)
+            HStack {
+                Text("배경 소음")
+                    .font(.body)
+                    .fontWeight(.bold)
+                
+                Button {
+                    showBackgroundNoiseInfo = true
+                } label: {
+                    Label("자세한 정보", systemImage: "info.circle")
+                        .labelStyle(.iconOnly)
+                        .font(.footnote)
+                }
+                .foregroundStyle(.secondary)
+            }
             
-            backgroundNoiseRow
+            backgroundNoiseField
         }
     }
     
@@ -89,9 +104,15 @@ struct EditLocationView: View {
         }
     }
     
-    private var backgroundNoiseRow: some View {
-        VStack(spacing: 20) {
-            backgroundNoiseInfoRow
+    private var backgroundNoiseField: some View {
+        HStack {
+            if isMetering {
+                Text("측정 중이에요...")
+            } else {
+                backgroundNoiseInfoRow
+            }
+            
+            Spacer()
             
             meteringButton
         }
@@ -105,25 +126,13 @@ struct EditLocationView: View {
     
     private var backgroundNoiseInfoRow: some View {
         VStack(alignment: .leading, spacing: 2) {
-            HStack {
-                Text(Location.decibelWriting(decibel: location.backgroundDecibel))
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.leading)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.trailing)
-                
-                Spacer()
-                
-                Button {
-                    showBackgroundNoiseInfo = true
-                } label: {
-                    Label("자세한 정보", systemImage: "info.circle")
-                        .labelStyle(.iconOnly)
-                }
-                .foregroundStyle(.secondary)
-            }
+            Text(Location.decibelWriting(decibel: location.backgroundDecibel))
+                .font(.headline)
+                .fontWeight(.bold)
+                .lineLimit(2)
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.trailing)
 
             Text("정도의 느낌이군요!")
                 .font(.footnote)
@@ -156,16 +165,13 @@ struct EditLocationView: View {
     
     private var meteringButton: some View {
         MeteringBackgroundNoiseButton(backgroundNoise: $location.backgroundDecibel, isMetering: $isMetering, meteringAction: audioManager.meteringBackgroundNoise) {
-            Text(isMetering ? "측정 중이에요..." : "측정하기")
-                .font(.body)
-                .fontWeight(.bold)
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity)
-                .frame(height: 45)
-                .background(
-                    RoundedRectangle(cornerRadius: 10)
-                        .foregroundStyle(.accent)
-                )
+            Label("측정하기", systemImage: "mic.fill")
+                .labelStyle(.iconOnly)
+                .padding()
+                .background {
+                    Circle()
+                        .fill(.accent)
+                }
                 .accessibilityLabel("배경 소음 측정")
         }
     }
@@ -174,7 +180,6 @@ struct EditLocationView: View {
         Button {
             locationManager.editLocation(location)
             routerManager.pop()
-            // TODO: 액션 약간 변경
         } label: {
             Text("완료")
         }

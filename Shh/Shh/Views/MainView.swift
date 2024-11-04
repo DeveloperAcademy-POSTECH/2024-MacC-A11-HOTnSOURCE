@@ -223,13 +223,14 @@ struct MainView: View {
     
     private var toolbarButtons: some View {
         HStack(alignment: .center) {
-            Button {
-                routerManager.push(view: .editLocationView(location: selectedLocation))
-            } label: {
-                Text("수정")
-                    .font(.body)
-                    .fontWeight(.regular)
-            }
+            // TODO: 수정 살리기
+//            Button {
+//                routerManager.push(view: .editLocationView(location: selectedLocation))
+//            } label: {
+//                Text("수정")
+//                    .font(.body)
+//                    .fontWeight(.regular)
+//            }
             
             Button {
                 routerManager.push(view: .meteringInfoView)
