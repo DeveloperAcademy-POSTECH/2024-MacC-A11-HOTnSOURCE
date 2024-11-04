@@ -27,21 +27,15 @@ struct MainView: View {
     private let meteringCircleAnimation = Animation
         .easeInOut(duration: 1.5)
         .repeatForever(autoreverses: true)
-    
-    private let customGreenColor = Color(red: 17 / 255, green: 151 / 255, blue: 50 / 255)
-    private let customYellowColor = Color(red: 222 / 255, green: 255 / 255, blue: 121 / 255)
 
     private var outerCircleColor: Color {
-        audioManager.userNoiseStatus == .safe
-            ? .green
-            : .indigo
+        audioManager.userNoiseStatus == .safe ? .accent : .indigo
     }
+    
     private var innerCircleColors: [Color] {
-        if audioManager.userNoiseStatus == .safe {
-            return [customGreenColor, customYellowColor]
-        } else {
-            return [.indigo, .purple]
-        }
+        audioManager.userNoiseStatus == .safe
+        ? [.accent, .customLime]
+        : [.indigo, .purple]
     }
     
     // MARK: Body
@@ -89,6 +83,7 @@ struct MainView: View {
                 toolbarButtons
             }
         }
+        .background(.customBlack)
         .onAppear {
             do {
                 try audioManager.setAudioSession()

@@ -23,7 +23,7 @@ struct CustomButton: View {
             .font(.body)
             .fontWeight(.bold)
             .foregroundStyle(.white)
-            .frame(maxWidth: 350)
+            .frame(maxWidth: 400)
             .frame(height: 60)
             .background(
                 RoundedRectangle(cornerRadius: 18)

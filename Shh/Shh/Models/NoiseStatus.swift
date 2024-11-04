@@ -17,16 +17,6 @@ extension NoiseStatus {
     /// 주의는 상대방이 소리를 인지하기 시작한 때입니다. 바로 소리를 줄여야 합니다.
     static let loudnessCautionLevel: Float = 1.3
     
-    /// 위험도에 해당하는 색상입니다.
-    var statusColor: Color {
-        switch self {
-        case .safe:
-            return Color.safe
-        case .caution:
-            return Color.caution
-        }
-    }
-    
     /// 위험도에 해당하는 메시지입니다.
     var message: LocalizedStringKey {
         switch self {

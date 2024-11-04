@@ -14,7 +14,7 @@ struct InfoRow: View {
         VStack(alignment: .leading) {
             Text(item.title)
                 .fontWeight(.bold)
-                .foregroundStyle(.green)
+                .foregroundStyle(.accent)
             
             Divider()
                 .background(.white)

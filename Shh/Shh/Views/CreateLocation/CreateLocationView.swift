@@ -52,6 +52,7 @@ struct CreateLocationView: View {
             }
         }
         .padding(20)
+        .background(.customBlack)
         .navigationTitle("장소 생성")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(isFirstLaunch)

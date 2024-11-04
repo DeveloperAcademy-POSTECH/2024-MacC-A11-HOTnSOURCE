@@ -14,7 +14,7 @@ struct BackgroundDecibelMeteringButton: View {
     var body: some View {
         Image(systemName: "mic.circle.fill")
             .font(.title2)
-            .foregroundStyle(.green)
+            .foregroundStyle(.accent)
             .onTapGesture {
                 isShowingProgressView = true
                 // TODO: 소음 관련 로직이 들어갈 예정

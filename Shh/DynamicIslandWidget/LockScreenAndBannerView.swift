@@ -45,6 +45,6 @@ struct LockScreenAndBannerView: View {
         }
         .padding()
         .background(.black)
-        .activityBackgroundTint(Color.black)
+        .activityBackgroundTint(.black)
     }
 }

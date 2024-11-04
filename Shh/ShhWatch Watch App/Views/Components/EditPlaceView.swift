@@ -115,7 +115,7 @@ struct EditPlaceView: View {
                 .fontWeight(.bold)
         }
         // TODO: button color가 어둡게 나오는 이슈 발생 -> opacity로 임시 대처.
-        .buttonStyle(BorderedButtonStyle(tint: Color.green.opacity(10)))
+        .buttonStyle(BorderedButtonStyle(tint: .accent.opacity(10)))
     }
 }
 

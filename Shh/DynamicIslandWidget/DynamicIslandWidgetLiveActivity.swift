@@ -85,7 +85,7 @@ struct DynamicIslandWidgetLiveActivity: Widget {
                     .fontWeight(.regular)
             }
             .widgetURL(URL(string: "http://www.apple.com")) // 수정하지 않아도 호출한 지점으로 이동
-            .keylineTint(.green)
+            .keylineTint(.accent)
         }
     }
 }

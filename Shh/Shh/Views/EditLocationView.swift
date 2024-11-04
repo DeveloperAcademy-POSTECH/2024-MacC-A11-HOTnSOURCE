@@ -47,6 +47,7 @@ struct EditLocationView: View {
         .navigationTitle("수정하기")
         .navigationBarTitleDisplayMode(.large)
         .padding(20)
+        .background(.customBlack)
         .contentShape(Rectangle())
         .ignoresSafeArea(.keyboard)
         .onTapGesture {
