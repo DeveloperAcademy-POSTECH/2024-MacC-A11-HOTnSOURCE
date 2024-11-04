@@ -28,5 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationWillTerminate(_ application: UIApplication) {
         print(#function)
         LiveActivityManager.shared.endLiveActivity()
+        NotificationManager.shared.removeAllNotifications()
     }
 }
