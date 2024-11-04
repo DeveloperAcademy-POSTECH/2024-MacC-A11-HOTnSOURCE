@@ -212,32 +212,12 @@
         }
       }
     },
-    "dB" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dB"
-          }
-        }
-      }
-    },
     "Edit" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edit"
-          }
-        }
-      }
-    },
-    "m" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "m"
           }
         }
       }
@@ -318,26 +298,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trash"
-          }
-        }
-      }
-    },
-    "거리" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Distance"
-          }
-        }
-      }
-    },
-    "기준이 될 현장의 배경 소음을 측정하거나 입력해주세요\n기준보다 큰 소리를 내시면 알려드릴게요" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Please measure or input the background noise level of the location as a reference. We will notify you if the noise you make exceeds the reference level."
           }
         }
       }
@@ -484,6 +444,16 @@
         }
       }
     },
+    "배경 소음 측정" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Background Noise Metering"
+          }
+        }
+      }
+    },
     "삭제" : {
       "localizations" : {
         "en" : {
@@ -564,16 +534,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Worried about your noise?\nJust use Shh-!"
-          }
-        }
-      }
-    },
-    "수정" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit"
           }
         }
       }
@@ -772,16 +732,6 @@
         }
       }
     },
-    "장소 삭제하기" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete Location"
-          }
-        }
-      }
-    },
     "장소 생성" : {
       "localizations" : {
         "en" : {
@@ -848,16 +798,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Information"
-          }
-        }
-      }
-    },
-    "조심해야할 대상과의 거리를 측정하거나 입력해주세요\n그 곳에서 느낄 당신의 소리 크기를 알려드릴게요" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Please measure or input the distance from the person you need to be cautious of. We will let you know how loud your sound will be perceived from that location."
           }
         }
       }
@@ -1051,16 +991,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Start metering"
-          }
-        }
-      }
-    },
-    "크기" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Noise Level"
           }
         }
       }
