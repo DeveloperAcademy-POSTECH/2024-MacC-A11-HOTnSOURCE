@@ -59,7 +59,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "- Even if you leave the app or lock the screen, the measurement continues in the background. (While using the microphone, the yellow dot is on at the top of the device)"
+            "value" : "- Even if you leave the app or lock the screen, the metering continues in the background. (While using the microphone, the yellow dot is on at the top of the device)"
           }
         }
       }
@@ -89,7 +89,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "- We does not store the measured noise information."
+            "value" : "- We does not store the metered noise information."
           }
         }
       }
@@ -179,7 +179,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "✅ How is the noise measurement done for this app?"
+            "value" : "✅ How is the noise metering done for this app?"
           }
         }
       }
@@ -375,12 +375,22 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Measure again"
+            "value" : "Metering again"
           }
         }
       }
     },
     "다음 단계로 이동" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move to next step"
+          }
+        }
+      }
+    },
+    "다음으로" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -548,7 +558,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Please write the name of the place where the noise measurement is needed"
+            "value" : "Please write the name of the place where the noise metering is needed"
           }
         }
       }
@@ -604,23 +614,11 @@
       }
     },
     "시작하기" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Start"
-          }
-        }
-      }
-    },
-    "아래 버튼을 눌러" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "By pressing the button below"
           }
         }
       }
@@ -631,17 +629,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The ambient noise in a very quiet room"
-          }
-        }
-      }
-    },
-    "알 수 없는 오류가 발생했습니다" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unknown error occurred."
           }
         }
       }
@@ -683,6 +670,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Complete"
+          }
+        }
+      }
+    },
+    "완료하기" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
           }
         }
       }
@@ -787,45 +784,12 @@
         }
       }
     },
-    "장소 생성 성공" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create new location complete"
-          }
-        }
-      }
-    },
-    "장소 생성 실패" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Failed to create new location"
-          }
-        }
-      }
-    },
     "장소 선택" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select Location"
-          }
-        }
-      }
-    },
-    "장소는 최대 5개까지 생성 가능합니다" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You can create up to 5 locations"
           }
         }
       }
@@ -915,7 +879,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Measure ambient noise"
+            "value" : "Meter the ambient noise"
           }
         }
       }
@@ -996,7 +960,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Measurement Radius"
+            "value" : "Metering Radius"
           }
         }
       }
@@ -1006,7 +970,17 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Measurement Radius | %@ m"
+            "value" : "Metering Radius | %@ m"
+          }
+        }
+      }
+    },
+    "측정 중이에요..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In progress"
           }
         }
       }
@@ -1021,23 +995,22 @@
         }
       }
     },
-    "측정을 시작해주세요" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Please start the measurement"
-          }
-        }
-      }
-    },
     "측정이 일시정지되었습니다." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The measurement is paused.\n"
+            "value" : "The metering is paused.\n"
+          }
+        }
+      }
+    },
+    "측정하기" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start metering"
           }
         }
       }
@@ -1079,28 +1052,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Turn off the screen and use the app!"
-          }
-        }
-      }
-    },
-    "확인" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Confirm"
-          }
-        }
-      }
-    },
-    "모든 준비가 완료되었어요!" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Everything's ready!"
           }
         }
       }
