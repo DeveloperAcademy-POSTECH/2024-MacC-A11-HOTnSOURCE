@@ -436,7 +436,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Back"
+            "value" : "Previous"
           }
         }
       }
@@ -467,6 +467,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The color on the main screen represents the \"risk level.\" There’s three risk levels, depending on the degree to which the other person perceives your sound."
+          }
+        }
+      }
+    },
+    "모든 준비가 완료되었어요!" : {
+      "comment" : "온보딩 완료 제목",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Everything’s ready!"
           }
         }
       }
@@ -609,6 +620,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The noise of a loud office or lively discussions between people"
+          }
+        }
+      }
+    },
+    "시끄러운 소리를 내면 알려드릴게요!" : {
+      "comment" : "온보딩 완료 부제목",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We’ll let you know if there's a loud noise!"
           }
         }
       }
