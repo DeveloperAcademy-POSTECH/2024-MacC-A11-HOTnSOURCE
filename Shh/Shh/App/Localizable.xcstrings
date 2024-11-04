@@ -315,10 +315,24 @@
       }
     },
     "Shh-!는 앱을 나가거나 휴대전화를 잠궈도 들을 수 있어요. 마음 놓고 집중하세요!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "‘Shh-!’ can listen to your noise even when you turn the screen off. Feel free to focus!"
+          }
+        }
+      }
     },
-    "Shh-!의 소음 측정 방법이 궁금하거나, 현재 소음 정도가 궁금할 때 눌러주세요." : {
-
+    "Shh-!의 소음 측정 방법이 궁금하면 이곳을 눌러주세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you are curious about the noise measurement method, check this out."
+          }
+        }
+      }
     },
     "Starts or pauses noise metering" : {
       "localizations" : {
@@ -1073,7 +1087,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Turn off the screen and use the app!"
+            "value" : "You can turn off the screen!"
           }
         }
       }
