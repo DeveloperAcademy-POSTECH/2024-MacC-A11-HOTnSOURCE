@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="DynamicIslandWidget/InfoPlist.xcstrings" source-language="ko" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleDisplayName" xml:space="preserve">
+        <source>DynamicIslandWidget</source>
+        <note>Bundle display name</note>
+      </trans-unit>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>DynamicIslandWidgetExtension</source>
+        <note>Bundle name</note>
+      </trans-unit>
+      <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
+        <source/>
+        <note>Copyright (human-readable)</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="DynamicIslandWidget/Localizable.xcstrings" source-language="ko" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+    </header>
+    <body>
+      <trans-unit id="" xml:space="preserve">
+        <source/>
+        <note/>
+      </trans-unit>
+      <trans-unit id="%@" xml:space="preserve">
+        <source>%@</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="%@m" xml:space="preserve">
+        <source>%@m</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="%llddB" xml:space="preserve">
+        <source>%llddB</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="'내가 낸 소리가 상대방에게 얼마나 크게 들릴지' 파악하기 위해 기기의 마이크를 사용합니다." xml:space="preserve">
+        <source>'내가 낸 소리가 상대방에게 얼마나 크게 들릴지' 파악하기 위해 기기의 마이크를 사용합니다.</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- '주의'에 해당하는 소음이 일정시간 지속되면 알림을 보냅니다." xml:space="preserve">
+        <source>- '주의'에 해당하는 소음이 일정시간 지속되면 알림을 보냅니다.</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- 앱이 켜져 있지 않아도 백그라운드에서 계속 측정 가능해요." xml:space="preserve">
+        <source>- 앱이 켜져 있지 않아도 백그라운드에서 계속 측정 가능해요.</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- 양호(초록색): 내가 낸 소리가 상대방에게 영향을 크게 미치지 않아요." xml:space="preserve">
+        <source>- 양호(초록색): 내가 낸 소리가 상대방에게 영향을 크게 미치지 않아요.</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- 작업을 방해하지 않기 위해, 반복되는 소음이 발생했을 경우에만 알려드려요." xml:space="preserve">
+        <source>- 작업을 방해하지 않기 위해, 반복되는 소음이 발생했을 경우에만 알려드려요.</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- 조심해야 할 경우 진동으로 알려드려요." xml:space="preserve">
+        <source>- 조심해야 할 경우 진동으로 알려드려요.</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- 주의(분홍색): 상대방이 내 소리를 명백한 소음으로 인식해요." xml:space="preserve">
+        <source>- 주의(분홍색): 상대방이 내 소리를 명백한 소음으로 인식해요.</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- 파악한 소음 정보는 저장하지 않아요." xml:space="preserve">
+        <source>- 파악한 소음 정보는 저장하지 않아요.</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- 화면이 켜져있지 않아도 돼요. 편안하게 작업에 집중하세요." xml:space="preserve">
+        <source>- 화면이 켜져있지 않아도 돼요. 편안하게 작업에 집중하세요.</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Shh-!" xml:space="preserve">
+        <source>Shh-!</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Trash" xml:space="preserve">
+        <source>Trash</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="거리" xml:space="preserve">
+        <source>거리</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="냉장고, 바람 소리가 들리는 정도의 실내 소음" xml:space="preserve">
+        <source>냉장고, 바람 소리가 들리는 정도의 실내 소음</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="데시벨 설명 없음" xml:space="preserve">
+        <source>데시벨 설명 없음</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="도로변에서 들리는 자동차와 사람들 소리" xml:space="preserve">
+        <source>도로변에서 들리는 자동차와 사람들 소리</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="듣는 중!" xml:space="preserve">
+        <source>듣는 중!</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="메인 화면에서 내 소리가 얼마나 시끄러운지 확인할 수 있어요." xml:space="preserve">
+        <source>메인 화면에서 내 소리가 얼마나 시끄러운지 확인할 수 있어요.</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="메인 화면의 색상은 '위험 수준'을 나타냅니다." xml:space="preserve">
+        <source>메인 화면의 색상은 '위험 수준'을 나타냅니다.</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="배경 소음" xml:space="preserve">
+        <source>배경 소음</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="소음을 대신 듣고 있어요!" xml:space="preserve">
+        <source>소음을 대신 듣고 있어요!</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="수정" xml:space="preserve">
+        <source>수정</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="시끄러운 사무실이나 사람들 간의 활발한 토론 소리" xml:space="preserve">
+        <source>시끄러운 사무실이나 사람들 간의 활발한 토론 소리</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="아주 조용한 방에서의 환경음" xml:space="preserve">
+        <source>아주 조용한 방에서의 환경음</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="양호" xml:space="preserve">
+        <source>양호</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="완료" xml:space="preserve">
+        <source>완료</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="위험 수준은 상대방이 내 소리를 인지하는 정도에 따라 구분됩니다." xml:space="preserve">
+        <source>위험 수준은 상대방이 내 소리를 인지하는 정도에 따라 구분됩니다.</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="일상적인 대화 소리, 도로에서의 자동차 소음" xml:space="preserve">
+        <source>일상적인 대화 소리, 도로에서의 자동차 소음</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="일시정지" xml:space="preserve">
+        <source>일시정지</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="일시정지됨" xml:space="preserve">
+        <source>일시정지됨</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="일지정지" xml:space="preserve">
+        <source>일지정지</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="장소 선택" xml:space="preserve">
+        <source>장소 선택</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="재개" xml:space="preserve">
+        <source>재개</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="재시작" xml:space="preserve">
+        <source>재시작</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="조용한 사무실에서 들리는 일반적인 실내 소음" xml:space="preserve">
+        <source>조용한 사무실에서 들리는 일반적인 실내 소음</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="조용한 카페에서 나오는 배경 소음" xml:space="preserve">
+        <source>조용한 카페에서 나오는 배경 소음</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="종료" xml:space="preserve">
+        <source>종료</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="주의" xml:space="preserve">
+        <source>주의</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="주택가에서 들리는 적당한 실내 소음" xml:space="preserve">
+        <source>주택가에서 들리는 적당한 실내 소음</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="지금 소리를 듣는 중이에요!" xml:space="preserve">
+        <source>지금 소리를 듣는 중이에요!</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="측정이 일시정지되었습니다." xml:space="preserve">
+        <source>측정이 일시정지되었습니다.</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="평소 대화 소리나 가정에서의 일상 소음" xml:space="preserve">
+        <source>평소 대화 소리나 가정에서의 일상 소음</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="✸ Shh-!의 소음 측정은 어떻게 이루어지나요?" xml:space="preserve">
+        <source>✸ Shh-!의 소음 측정은 어떻게 이루어지나요?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="✸ 내가 시끄러운지 어떻게 알 수 있나요?" xml:space="preserve">
+        <source>✸ 내가 시끄러운지 어떻게 알 수 있나요?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="✸ 메인 화면의 색상은 무엇을 나타내나요?" xml:space="preserve">
+        <source>✸ 메인 화면의 색상은 무엇을 나타내나요?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="✸ 알림은 언제 오나요?" xml:space="preserve">
+        <source>✸ 알림은 언제 오나요?</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="🤫" xml:space="preserve">
+        <source>🤫</source>
+        <note/>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Shh/App/InfoPlist.xcstrings" source-language="ko" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleDisplayName" xml:space="preserve">
+        <source>Shh-!</source>
+        <note>Bundle display name</note>
+      </trans-unit>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>Shh</source>
+        <note>Bundle name</note>
+      </trans-unit>
+      <trans-unit id="NSMicrophoneUsageDescription" xml:space="preserve">
+        <source>Shh-!는 주변 소음 측정을 위해 마이크 접근 권한이 필요합니다.</source>
+        <target state="translated">Shh-! requires microphone access permission to measure ambient noise.</target>
+        <note>Privacy - Microphone Usage Description</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Shh/App/Localizable.xcstrings" source-language="ko" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+    </header>
+    <body>
+      <trans-unit id="" xml:space="preserve">
+        <source/>
+        <note/>
+      </trans-unit>
+      <trans-unit id="%.1f m" xml:space="preserve">
+        <source>%.1f m</source>
+        <target state="translated">%.1f m</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="%@" xml:space="preserve">
+        <source>%@</source>
+        <target state="translated">%@</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="%@ 삭제" xml:space="preserve">
+        <source>%@ 삭제</source>
+        <target state="translated">%@ delete</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="%lld" xml:space="preserve">
+        <source>%lld</source>
+        <target state="translated">%lld</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="%lld dB" xml:space="preserve">
+        <source>%lld dB</source>
+        <target state="translated">%lld dB</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="%lld/%lld" xml:space="preserve">
+        <source>%1$lld/%2$lld</source>
+        <target state="translated">%lld/%lld</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="'내가 낸 소리가 상대방에게 얼마나 크게 들릴지'를 측정하기 위해 기기의 마이크를 사용합니다." xml:space="preserve">
+        <source>'내가 낸 소리가 상대방에게 얼마나 크게 들릴지'를 측정하기 위해 기기의 마이크를 사용합니다.</source>
+        <target state="translated">Shh-! app uses the microphone of device to check 'how loud my sound will be to the other person'.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="* 알림 권한을 허용해주세요" xml:space="preserve">
+        <source>* 알림 권한을 허용해주세요</source>
+        <target state="translated">* Please allow notification permission</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- '위험' 에 해당하는 소음이 발생하면 즉시 알림을 보냅니다." xml:space="preserve">
+        <source>- '위험' 에 해당하는 소음이 발생하면 즉시 알림을 보냅니다.</source>
+        <target state="translated">- If a noise corresponding to 'Danger' occurs, a notification is sent immediately.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- '주의'에 해당하는 소음이 일정시간 지속되면 알림을 보냅니다. 과도한 알림 방지를 위해, 다음 알림은 최소한 30초 뒤에 옵니다." xml:space="preserve">
+        <source>- '주의'에 해당하는 소음이 일정시간 지속되면 알림을 보냅니다. 과도한 알림 방지를 위해, 다음 알림은 최소한 30초 뒤에 옵니다.</source>
+        <target state="translated">- If the noise corresponding to 'caution' persists for a certain period of time, a notification will be sent. To prevent excessive notifications, the next notification will come at least 30 seconds later.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- 경고(파란색): 상대방이 내 소리를 인지하지만 아직 큰 영향은 끼치지 않아요." xml:space="preserve">
+        <source>- 경고(파란색): 상대방이 내 소리를 인지하지만 아직 큰 영향은 끼치지 않아요.</source>
+        <target state="translated">- Warning (Blue): The other person recognizes your sound, but it doesn't have much impact yet.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- 높이가 높을수록 상대방은 시끄럽다고 느껴요." xml:space="preserve">
+        <source>- 높이가 높을수록 상대방은 시끄럽다고 느껴요.</source>
+        <target state="translated">- The higher the height, the louder the other person feels.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- 안전(초록색): 내가 낸 소리가 상대방에게 영향을 크게 미치지 않아요." xml:space="preserve">
+        <source>- 안전(초록색): 내가 낸 소리가 상대방에게 영향을 크게 미치지 않아요.</source>
+        <target state="translated">- Safety (green): The sound you make doesn't really affect the other person.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- 앱에서 나가거나 화면을 잠궈도 백그라운드에서 측정이 계속 이루어져요. (기기 상단에 노란 점이 켜져 있을 경우 마이크 사용중)" xml:space="preserve">
+        <source>- 앱에서 나가거나 화면을 잠궈도 백그라운드에서 측정이 계속 이루어져요. (기기 상단에 노란 점이 켜져 있을 경우 마이크 사용중)</source>
+        <target state="translated">- Even if you leave the app or lock the screen, the measurement continues in the background. (While using the microphone, the yellow dot is on at the top of the device)</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- 위험(분홍색): 상대방이 내 소리를 명백한 소음으로 인식해요." xml:space="preserve">
+        <source>- 위험(분홍색): 상대방이 내 소리를 명백한 소음으로 인식해요.</source>
+        <target state="translated">- Dangers (pink): The other person recognizes your sound as obvious noise.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- 조심해야 할 경우 푸시 알림으로 알려드려요. 화면을 매번 볼 필요 없이 핸드폰을 내려놓고 편안하게 작업하세요." xml:space="preserve">
+        <source>- 조심해야 할 경우 푸시 알림으로 알려드려요. 화면을 매번 볼 필요 없이 핸드폰을 내려놓고 편안하게 작업하세요.</source>
+        <target state="translated">- If you need to be careful, we'll notify you with a push notification. Put your phone down and work comfortably without having to look at the screen every time.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="- 측정된 소음 정보는 저장하지 않아요." xml:space="preserve">
+        <source>- 측정된 소음 정보는 저장하지 않아요.</source>
+        <target state="translated">- We does not store the measured noise information.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="1m" xml:space="preserve">
+        <source>1m</source>
+        <target state="translated">1m</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="2m" xml:space="preserve">
+        <source>2m</source>
+        <target state="translated">2m</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="3m" xml:space="preserve">
+        <source>3m</source>
+        <target state="translated">3m</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Edit" xml:space="preserve">
+        <source>Edit</source>
+        <target state="translated">Edit</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Pause metering" xml:space="preserve">
+        <source>Pause metering</source>
+        <target state="translated">Pause metering</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Resume metering" xml:space="preserve">
+        <source>Resume metering</source>
+        <target state="translated">Resume metering</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Shh-!" xml:space="preserve">
+        <source>Shh-!</source>
+        <target state="translated">Shh-!</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Shh-!는 앱을 나가거나 휴대전화를 잠궈도 들을 수 있어요. 마음 놓고 집중하세요!" xml:space="preserve">
+        <source>Shh-!는 앱을 나가거나 휴대전화를 잠궈도 들을 수 있어요. 마음 놓고 집중하세요!</source>
+        <target state="translated">‘Shh-!’ can hear you even when you lock your phone. Feel free to focus!</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Shh-!의 소음 측정 방법이 궁금하거나, 현재 소음 정도가 궁금할 때 눌러주세요." xml:space="preserve">
+        <source>Shh-!의 소음 측정 방법이 궁금하거나, 현재 소음 정도가 궁금할 때 눌러주세요.</source>
+        <target state="translated">If you are curious about the current noise level or the measurement method, check here.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Starts or pauses noise metering" xml:space="preserve">
+        <source>Starts or pauses noise metering</source>
+        <target state="translated">Starts or pauses noise metering</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Trash" xml:space="preserve">
+        <source>Trash</source>
+        <target state="translated">Trash</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="dB" xml:space="preserve">
+        <source>dB</source>
+        <target state="translated">dB</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="m" xml:space="preserve">
+        <source>m</source>
+        <target state="translated">m</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="거리" xml:space="preserve">
+        <source>거리</source>
+        <target state="translated">Distance</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="기준이 될 현장의 배경 소음을 측정하거나 입력해주세요&#10;기준보다 큰 소리를 내시면 알려드릴게요" xml:space="preserve">
+        <source>기준이 될 현장의 배경 소음을 측정하거나 입력해주세요
+기준보다 큰 소리를 내시면 알려드릴게요</source>
+        <target state="translated">Please measure or input the background noise level of the location as a reference. We will notify you if the noise you make exceeds the reference level.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="냉장고, 바람 소리가 들리는 정도의 실내 소음" xml:space="preserve">
+        <source>냉장고, 바람 소리가 들리는 정도의 실내 소음</source>
+        <target state="translated">Indoor noise level similar to the sound of a refrigerator or wind</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="다시 측정하기" xml:space="preserve">
+        <source>다시 측정하기</source>
+        <target state="translated">Measure again</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="다음 단계로 이동" xml:space="preserve">
+        <source>다음 단계로 이동</source>
+        <target state="translated">Next</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="데시벨 설명 없음" xml:space="preserve">
+        <source>데시벨 설명 없음</source>
+        <target state="translated">No decibel explanation</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="도로변에서 들리는 자동차와 사람들 소리" xml:space="preserve">
+        <source>도로변에서 들리는 자동차와 사람들 소리</source>
+        <target state="translated">The noise level of cars and people typically heard near a roadside</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="도서관" xml:space="preserve">
+        <source>도서관</source>
+        <target state="translated">Library</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="뒤로" xml:space="preserve">
+        <source>뒤로</source>
+        <target state="translated">Back</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="듣는 중!" xml:space="preserve">
+        <source>듣는 중!</source>
+        <target state="translated">Hearing!</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="메인 화면에서 보이는 물결의 높낮이는 내 소리가 얼마나 시끄러운지를 나타냅니다." xml:space="preserve">
+        <source>메인 화면에서 보이는 물결의 높낮이는 내 소리가 얼마나 시끄러운지를 나타냅니다.</source>
+        <target state="translated">The highness of the wave you see on the main screen indicates how loud your sound is.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="메인 화면의 색상은 '위험 수준'을 나타내요. 이 앱에서는 상대방이 내 소리를 인지하는 정도에 따라, 위험 수준을 세 단계로 구분합니다." xml:space="preserve">
+        <source>메인 화면의 색상은 '위험 수준'을 나타내요. 이 앱에서는 상대방이 내 소리를 인지하는 정도에 따라, 위험 수준을 세 단계로 구분합니다.</source>
+        <target state="translated">The color on the main screen represents the "risk level." There’s three risk levels, depending on the degree to which the other person perceives your sound.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="모든 준비가 완료되었어요!" xml:space="preserve">
+        <source>모든 준비가 완료되었어요!</source>
+        <target state="translated">Everything's ready!</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="반가워요!&#10;소음이 걱정이신가요?" xml:space="preserve">
+        <source>반가워요!
+소음이 걱정이신가요?</source>
+        <target state="translated">Nice to meet you!</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="배경 소음" xml:space="preserve">
+        <source>배경 소음</source>
+        <target state="translated">Background Noise</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="배경 소음 | %lld dB" xml:space="preserve">
+        <source>배경 소음 | %lld dB</source>
+        <target state="translated">Background Noise | %lld dB</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="배경 소음 예시" xml:space="preserve">
+        <source>배경 소음 예시</source>
+        <target state="translated">Examples</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="삭제" xml:space="preserve">
+        <source>삭제</source>
+        <target state="translated">Delete</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="상대방과 얼마나 가깝나요?" xml:space="preserve">
+        <source>상대방과 얼마나 가깝나요?</source>
+        <target state="translated">How close are you to the other person?</target>
+        <note>측정 반경 입력 단계 설명</note>
+      </trans-unit>
+      <trans-unit id="생성하기" xml:space="preserve">
+        <source>생성하기</source>
+        <target state="translated">Create</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="소음 수준: " xml:space="preserve">
+        <source>소음 수준: </source>
+        <target state="translated">Noise Level: </target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="소음 측정이 필요한 곳의 이름을 알려주세요" xml:space="preserve">
+        <source>소음 측정이 필요한 곳의 이름을 알려주세요</source>
+        <target state="translated">Please write the name of the place where the noise measurement is needed</target>
+        <note>장소 이름 입력 단계 보조 설명</note>
+      </trans-unit>
+      <trans-unit id="소음을 대신 듣고 있어요!" xml:space="preserve">
+        <source>소음을 대신 듣고 있어요!</source>
+        <target state="translated">We’re hearing the noise instead!</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="소음이 걱정될 땐? Shh-!" xml:space="preserve">
+        <source>소음이 걱정될 땐? Shh-!</source>
+        <target state="translated">Worried about your noise?
+Just use Shh-!</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="수정" xml:space="preserve">
+        <source>수정</source>
+        <target state="translated">Edit</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="수정하기" xml:space="preserve">
+        <source>수정하기</source>
+        <target state="translated">Edit</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="시끄러운 사무실이나 사람들 간의 활발한 토론 소리" xml:space="preserve">
+        <source>시끄러운 사무실이나 사람들 간의 활발한 토론 소리</source>
+        <target state="translated">The noise of a loud office or lively discussions between people</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="시작하기" xml:space="preserve">
+        <source>시작하기</source>
+        <target state="translated">Start</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="아래 버튼을 눌러" xml:space="preserve">
+        <source>아래 버튼을 눌러</source>
+        <target state="translated">By pressing the button below</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="아주 조용한 방에서의 환경음" xml:space="preserve">
+        <source>아주 조용한 방에서의 환경음</source>
+        <target state="translated">The ambient noise in a very quiet room</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="알 수 없는 오류가 발생했습니다" xml:space="preserve">
+        <source>알 수 없는 오류가 발생했습니다</source>
+        <target state="translated">Unknown error occurred.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="양호" xml:space="preserve">
+        <source>양호</source>
+        <target state="translated">Safe</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="어디에서 사용하시나요?" xml:space="preserve">
+        <source>어디에서 사용하시나요?</source>
+        <target state="translated">Where are you going to use it?</target>
+        <note>장소 이름 입력 단계 설명</note>
+      </trans-unit>
+      <trans-unit id="오류" xml:space="preserve">
+        <source>오류</source>
+        <target state="translated">Error</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="완료" xml:space="preserve">
+        <source>완료</source>
+        <target state="translated">Complete</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="일상적인 대화 소리, 도로에서의 자동차 소음" xml:space="preserve">
+        <source>일상적인 대화 소리, 도로에서의 자동차 소음</source>
+        <target state="translated">The sound of everyday conversations and traffic noise from the road</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="이름을 입력해주세요" xml:space="preserve">
+        <source>이름을 입력해주세요</source>
+        <target state="translated">Please enter name</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="일시정지됨" xml:space="preserve">
+        <source>일시정지됨</source>
+        <target state="translated">Paused</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="이제 조금 조심해야 해요" xml:space="preserve">
+        <source>이제 조금 조심해야 해요</source>
+        <target state="translated">You need to be a little cautious now</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="일지정지" xml:space="preserve">
+        <source>일지정지</source>
+        <target state="translated">Pause</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="이름" xml:space="preserve">
+        <source>이름</source>
+        <target state="translated">Name</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="장소 삭제하기" xml:space="preserve">
+        <source>장소 삭제하기</source>
+        <target state="translated">Delete Location</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="장소 생성" xml:space="preserve">
+        <source>장소 생성</source>
+        <target state="translated">Create new location</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="장소 생성 실패" xml:space="preserve">
+        <source>장소 생성 실패</source>
+        <target state="translated">Failed to create new location</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="장소는 최대 5개까지 생성 가능합니다" xml:space="preserve">
+        <source>장소는 최대 5개까지 생성 가능합니다</source>
+        <target state="translated">You can create up to 5 locations</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="자세한 정보" xml:space="preserve">
+        <source>자세한 정보</source>
+        <target state="translated">Detail</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="자주 묻는 질문" xml:space="preserve">
+        <source>자주 묻는 질문</source>
+        <target state="translated">FAQ</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="장소 생성 성공" xml:space="preserve">
+        <source>장소 생성 성공</source>
+        <target state="translated">Create new location complete</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="장소 선택" xml:space="preserve">
+        <source>장소 선택</source>
+        <target state="translated">Select Location</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="재시작" xml:space="preserve">
+        <source>재시작</source>
+        <target state="translated">Play</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="정도 떨어져 있어요" xml:space="preserve">
+        <source>정도 떨어져 있어요</source>
+        <target state="translated">It's about that away!</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="정도의 느낌이군요!" xml:space="preserve">
+        <source>정도의 느낌이군요!</source>
+        <target state="translated">That's how it feels!</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="정말 삭제하시겠습니까?" xml:space="preserve">
+        <source>정말 삭제하시겠습니까?</source>
+        <target state="translated">Are you sure you want to delete?</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="정보" xml:space="preserve">
+        <source>정보</source>
+        <target state="translated">Information</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="조심해야할 대상과의 거리를 측정하거나 입력해주세요&#10;그 곳에서 느낄 당신의 소리 크기를 알려드릴게요" xml:space="preserve">
+        <source>조심해야할 대상과의 거리를 측정하거나 입력해주세요
+그 곳에서 느낄 당신의 소리 크기를 알려드릴게요</source>
+        <target state="translated">Please measure or input the distance from the person you need to be cautious of. We will let you know how loud your sound will be perceived from that location.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="조용한 사무실에서 들리는 일반적인 실내 소음" xml:space="preserve">
+        <source>조용한 사무실에서 들리는 일반적인 실내 소음</source>
+        <target state="translated">Typical indoor noise heard in a quiet office</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="조용한 카페에서 나오는 배경 소음" xml:space="preserve">
+        <source>조용한 카페에서 나오는 배경 소음</source>
+        <target state="translated">Background noise in a quiet café</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="주변 소음 측정" xml:space="preserve">
+        <source>주변 소음 측정</source>
+        <target state="translated">Measure ambient noise</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="주위의 소리를 들려주세요!" xml:space="preserve">
+        <source>주위의 소리를 들려주세요!</source>
+        <target state="translated">Let us hear the surrounding sound</target>
+        <note>배경 소음 입력 단계 보조 설명
+배경 소음 입력 단계 설명</note>
+      </trans-unit>
+      <trans-unit id="주의" xml:space="preserve">
+        <source>주의</source>
+        <target state="translated">Caution</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="주택가에서 들리는 적당한 실내 소음" xml:space="preserve">
+        <source>주택가에서 들리는 적당한 실내 소음</source>
+        <target state="translated">Moderate indoor noise heard in a residential area</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="중복되는 이름이 존재합니다!" xml:space="preserve">
+        <source>중복되는 이름이 존재합니다!</source>
+        <target state="translated">A duplicate name exists</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="지금 소리를 듣는 중이에요!" xml:space="preserve">
+        <source>지금 소리를 듣는 중이에요!</source>
+        <target state="translated">We’re hearing the noise now!</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="지금 아주 잘하고 있어요!" xml:space="preserve">
+        <source>지금 아주 잘하고 있어요!</source>
+        <target state="translated">You’re doing great right now!</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="취소" xml:space="preserve">
+        <source>취소</source>
+        <target state="translated">Cancel</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="측정 반경" xml:space="preserve">
+        <source>측정 반경</source>
+        <target state="translated">Measurement Radius</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="측정 반경 | %@ m" xml:space="preserve">
+        <source>측정 반경 | %@ m</source>
+        <target state="translated">Measurement Radius | %@ m</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="측정을 다시 시작해주세요" xml:space="preserve">
+        <source>측정을 다시 시작해주세요</source>
+        <target state="translated">Press the button to resume metering</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="측정을 시작해주세요" xml:space="preserve">
+        <source>측정을 시작해주세요</source>
+        <target state="translated">Please start the measurement</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="측정이 일시정지되었습니다." xml:space="preserve">
+        <source>측정이 일시정지되었습니다.</source>
+        <target state="translated">The measurement is paused.
+</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="크기" xml:space="preserve">
+        <source>크기</source>
+        <target state="translated">Noise Level</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="평소 대화 소리나 가정에서의 일상 소음" xml:space="preserve">
+        <source>평소 대화 소리나 가정에서의 일상 소음</source>
+        <target state="translated">Everyday conversation sounds or typical household noise</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="해당 거리에서 어떻게 들리는지&#10;계산해서 알려드릴게요" xml:space="preserve">
+        <source>해당 거리에서 어떻게 들리는지
+계산해서 알려드릴게요</source>
+        <target state="translated">We calculate and let you know how it sounds from that distance</target>
+        <note>측정 반경 입력 단계 보조 설명</note>
+      </trans-unit>
+      <trans-unit id="화면을 덮고 사용해보세요!" xml:space="preserve">
+        <source>화면을 덮고 사용해보세요!</source>
+        <target state="translated">Turn off the screen and use the app!</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="확인" xml:space="preserve">
+        <source>확인</source>
+        <target state="translated">Confirm</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="✅ Shh-!의 소음 측정은 어떻게 이루어지나요?" xml:space="preserve">
+        <source>✅ Shh-!의 소음 측정은 어떻게 이루어지나요?</source>
+        <target state="translated">✅ How is the noise measurement done for this app?</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="✅ 내가 시끄러운지 어떻게 알 수 있나요?" xml:space="preserve">
+        <source>✅ 내가 시끄러운지 어떻게 알 수 있나요?</source>
+        <target state="translated">✅ How do I know if I'm loud?</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="✅ 메인 화면의 색상은 무엇을 나타내나요?" xml:space="preserve">
+        <source>✅ 메인 화면의 색상은 무엇을 나타내나요?</source>
+        <target state="translated">✅ What does the color of the main screen represent?</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="✅ 알림은 언제 오나요?" xml:space="preserve">
+        <source>✅ 알림은 언제 오나요?</source>
+        <target state="translated">✅ When do I get the notification?</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="🤫" xml:space="preserve">
+        <source>🤫</source>
+        <target state="translated">🤫</target>
+        <note/>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="ShhWatch Watch App/ShhWatch-Watch-App-InfoPlist.xcstrings" source-language="ko" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleDisplayName" xml:space="preserve">
+        <source>ShhWatch</source>
+        <note>Bundle display name</note>
+      </trans-unit>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>ShhWatch Watch App</source>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

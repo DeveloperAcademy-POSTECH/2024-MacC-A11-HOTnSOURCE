@@ -82,7 +82,7 @@ struct BackgroundNoiseInputView: View {
             
             Text(Location.decibelWriting(decibel: backgroundNoise))
                 .font(.title)
-                .lineLimit(2)
+                .lineLimit(3)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
             
