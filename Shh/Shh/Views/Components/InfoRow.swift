@@ -13,10 +13,10 @@ struct InfoRow: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(item.title)
-                .font(.headline
-                )
+                .font(.headline)
                 .fontWeight(.bold)
                 .foregroundStyle(.accent)
+            
             Divider()
                 .background(.white)
                 .padding(.bottom)
