@@ -105,13 +105,34 @@
       }
     },
     "* 알림 권한을 허용해주세요" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Please allow notification permission"
+          }
+        }
+      }
     },
     "%.1f m" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f m"
+          }
+        }
+      }
     },
     "%@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
     },
     "%@ 삭제" : {
       "localizations" : {
@@ -124,16 +145,30 @@
       }
     },
     "%lld" : {
-
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
     },
     "%lld dB" : {
-
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld dB"
+          }
+        }
+      }
     },
     "%lld/%lld" : {
       "localizations" : {
         "ko" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%1$lld/%2$lld"
           }
         }
@@ -180,16 +215,44 @@
       }
     },
     "🤫" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🤫"
+          }
+        }
+      }
     },
     "1m" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1m"
+          }
+        }
+      }
     },
     "2m" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2m"
+          }
+        }
+      }
     },
     "3m" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3m"
+          }
+        }
+      }
     },
     "dB" : {
       "localizations" : {
@@ -202,7 +265,14 @@
       }
     },
     "Edit" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        }
+      }
     },
     "m" : {
       "localizations" : {
@@ -215,13 +285,34 @@
       }
     },
     "Pause metering" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause metering"
+          }
+        }
+      }
     },
     "Resume metering" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resume metering"
+          }
+        }
+      }
     },
     "Shh-!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shh-!"
+          }
+        }
+      }
     },
     "Shh-!는 앱을 나가거나 휴대전화를 잠궈도 들을 수 있어요. 마음 놓고 집중하세요!" : {
 
@@ -230,10 +321,24 @@
 
     },
     "Starts or pauses noise metering" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starts or pauses noise metering"
+          }
+        }
+      }
     },
     "Trash" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trash"
+          }
+        }
+      }
     },
     "거리" : {
       "localizations" : {
@@ -266,10 +371,24 @@
       }
     },
     "다시 측정하기" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Measure again"
+          }
+        }
+      }
     },
     "다음 단계로 이동" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next"
+          }
+        }
+      }
     },
     "데시벨 설명 없음" : {
       "localizations" : {
@@ -303,7 +422,14 @@
       }
     },
     "뒤로" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back"
+          }
+        }
+      }
     },
     "듣는 중!" : {
       "localizations" : {
@@ -336,7 +462,14 @@
       }
     },
     "반가워요!\n소음이 걱정이신가요?" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nice to meet you!"
+          }
+        }
+      }
     },
     "배경 소음" : {
       "localizations" : {
@@ -349,10 +482,24 @@
       }
     },
     "배경 소음 | %lld dB" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Background Noise | %lld dB"
+          }
+        }
+      }
     },
     "배경 소음 예시" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Examples"
+          }
+        }
+      }
     },
     "삭제" : {
       "localizations" : {
@@ -365,7 +512,15 @@
       }
     },
     "상대방과 얼마나 가깝나요?" : {
-      "comment" : "측정 반경 입력 단계 설명"
+      "comment" : "측정 반경 입력 단계 설명",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How close are you to the other person?"
+          }
+        }
+      }
     },
     "생성하기" : {
       "localizations" : {
@@ -388,7 +543,15 @@
       }
     },
     "소음 측정이 필요한 곳의 이름을 알려주세요" : {
-      "comment" : "장소 이름 입력 단계 보조 설명"
+      "comment" : "장소 이름 입력 단계 보조 설명",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please write the name of the place where the noise measurement is needed"
+          }
+        }
+      }
     },
     "소음을 대신 듣고 있어요!" : {
       "localizations" : {
@@ -401,10 +564,24 @@
       }
     },
     "소음이 걱정될 땐? Shh-!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Worried about your noise?\nJust use Shh-!"
+          }
+        }
+      }
     },
     "수정" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        }
+      }
     },
     "수정하기" : {
       "localizations" : {
@@ -422,6 +599,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The noise of a loud office or lively discussions between people"
+          }
+        }
+      }
+    },
+    "시작하기" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
           }
         }
       }
@@ -469,10 +657,25 @@
       }
     },
     "어디에서 사용하시나요?" : {
-      "comment" : "장소 이름 입력 단계 설명"
+      "comment" : "장소 이름 입력 단계 설명",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Where are you going to use it?"
+          }
+        }
+      }
     },
     "오류" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        }
+      }
     },
     "완료" : {
       "localizations" : {
@@ -545,7 +748,14 @@
       }
     },
     "자세한 정보" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detail"
+          }
+        }
+      }
     },
     "자주 묻는 질문" : {
       "localizations" : {
@@ -568,7 +778,14 @@
       }
     },
     "장소 생성" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create new location"
+          }
+        }
+      }
     },
     "장소 생성 성공" : {
       "extractionState" : "stale",
@@ -624,10 +841,24 @@
       }
     },
     "정도 떨어져 있어요" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It's about that away!"
+          }
+        }
+      }
     },
     "정도의 느낌이군요!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "That's how it feels!"
+          }
+        }
+      }
     },
     "정말 삭제하시겠습니까?" : {
       "localizations" : {
@@ -690,7 +921,15 @@
       }
     },
     "주위의 소리를 들려주세요!" : {
-      "comment" : "배경 소음 입력 단계 보조 설명\n배경 소음 입력 단계 설명"
+      "comment" : "배경 소음 입력 단계 보조 설명\n배경 소음 입력 단계 설명",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Let us hear the surrounding sound"
+          }
+        }
+      }
     },
     "주의" : {
       "localizations" : {
@@ -712,8 +951,7 @@
         }
       }
     },
-    "중복되는 이름이 존재합니다" : {
-      "extractionState" : "stale",
+    "중복되는 이름이 존재합니다!" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -722,9 +960,6 @@
           }
         }
       }
-    },
-    "중복되는 이름이 존재합니다!" : {
-
     },
     "지금 소리를 듣는 중이에요!" : {
       "localizations" : {
@@ -767,10 +1002,24 @@
       }
     },
     "측정 반경 | %@ m" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Measurement Radius | %@ m"
+          }
+        }
+      }
     },
     "측정을 다시 시작해주세요" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press the button to resume metering"
+          }
+        }
+      }
     },
     "측정을 시작해주세요" : {
       "extractionState" : "stale",
@@ -814,10 +1063,25 @@
       }
     },
     "해당 거리에서 어떻게 들리는지\n계산해서 알려드릴게요" : {
-      "comment" : "측정 반경 입력 단계 보조 설명"
+      "comment" : "측정 반경 입력 단계 보조 설명",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We calculate and let you know how it sounds from that distance"
+          }
+        }
+      }
     },
     "화면을 덮고 사용해보세요!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn off the screen and use the app!"
+          }
+        }
+      }
     },
     "확인" : {
       "extractionState" : "stale",
@@ -826,6 +1090,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Confirm"
+          }
+        }
+      }
+    },
+    "모든 준비가 완료되었어요!" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Everything's ready!"
           }
         }
       }
