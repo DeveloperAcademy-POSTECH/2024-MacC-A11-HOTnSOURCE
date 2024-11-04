@@ -19,40 +19,34 @@ struct StartView: View {
     let backgroundNoise: Float
     let distance: Float
     
-    private let notificationManager: NotificationManager = NotificationManager()
-    
     // MARK: Body
     var body: some View {
         VStack {
-            VStack {
-                Spacer(minLength: 40)
+            Spacer(minLength: 40)
+            
+            VStack(spacing: 6) {
+                StepDescriptionRow(
+                    text: NSLocalizedString("모든 준비가 완료되었어요!", comment: "온보딩 완료 제목"),
+                    subText: NSLocalizedString("시끄러운 소리를 내면 알려드릴게요!", comment: "온보딩 완료 부제목")
+                )
                 
-                VStack(spacing: 6) {
-                    StepDescriptionRow(
-                        text: "모든 준비가 완료되었어요!",
-                        subText: "시끄러운 소리를 내면 알려드릴게요!"
-                    )
-                    
-                    Text("* 알림 권한을 허용해주세요")
-                        .font(.caption2)
-                        .foregroundStyle(.accent)
-                        .fontWeight(.bold)
-                }
-                
-                Spacer(minLength: 80)
-                
-                SsambbongAsset(image: .completeAsset)
-                    .frame(maxHeight: .infinity, alignment: .top)
+                Text("* 알림 권한을 허용해주세요")
+                    .font(.caption2)
+                    .foregroundStyle(.accent)
+                    .fontWeight(.bold)
             }
-            .padding(.horizontal, 40)
+            
+            Spacer(minLength: 50)
+            
+            SsambbongAsset(image: .completeAsset)
+                .frame(maxHeight: .infinity, alignment: .top)
             
             startButton
         }
         .padding(20)
-        .background(.customBlack)
         .onAppear {
             Task {
-                await notificationManager.requestPermission()
+                await NotificationManager.shared.requestPermission()
             }
         }
     }

@@ -67,9 +67,7 @@ struct BackgroundNoiseInputView: View {
             }
         }
         .sheet(isPresented: $showBackgroundNoiseInfo) {
-            backgroundNoiseInfoSheet
-                .presentationDragIndicator(.visible)
-                .presentationDetents([.medium])
+            BackgroundNoiseInfoSheet(backgroundNoise: backgroundNoise)
         }
     }
     
@@ -87,7 +85,7 @@ struct BackgroundNoiseInputView: View {
             
             Text(Location.decibelWriting(decibel: backgroundNoise))
                 .font(.title)
-                .lineLimit(2)
+                .lineLimit(3)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
             
@@ -102,9 +100,7 @@ struct BackgroundNoiseInputView: View {
     }
     
     private var reMeteringButton: some View {
-        Button {
-            meteringBackgroundNoise()
-        } label: {
+        MeteringBackgroundNoiseButton(backgroundNoise: $backgroundNoise, isMetering: $isMetering, meteringAction: audioManager.meteringBackgroundNoise) {
             Label("다시 측정하기", systemImage: "arrow.clockwise")
                 .font(.footnote)
                 .foregroundStyle(.white)
@@ -112,60 +108,18 @@ struct BackgroundNoiseInputView: View {
     }
     
     private var meteringButton: some View {
-        CustomButton(text: isMetering ? "측정 중이에요..." : "측정하기") {
-            meteringBackgroundNoise()
-        }
-        .disabled(isMetering)
-    }
-    
-    private var backgroundNoiseInfoSheet: some View {
-        VStack {
-            Text("배경 소음 예시")
-            
-            List {
-                ForEach(Location.backgroundDecibelOptions, id: \.self) { decibel in
-                    HStack(spacing: 20) {
-                        Text("\(Int(decibel)) dB")
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-                        
-                        Text(Location.decibelWriting(decibel: decibel))
-                            .foregroundStyle(decibel == backgroundNoise ? .accent : .customWhite)
-                        
-                        Spacer()
-                    }
-                    .padding(.vertical, 10)
-                }
-            }
-        }
-        .padding()
-        .fontWeight(.bold)
-    }
-    
-    // MARK: Action Handlers
-    private func meteringBackgroundNoise() {
-        isMetering = true
-        
-        do {
-            try audioManager.meteringBackgroundNoise { averageDecibel in
-                guard let averageDecibel = averageDecibel else {
-                    isMetering = false
-                    return
-                }
-                
-                let unRoundedAverageDecibel = averageDecibel
-                
-                let roundedDecibel = round(unRoundedAverageDecibel / 5.0) * 5.0
-                
-                let clampedDecibel = min(max(roundedDecibel, 30.0), 70.0)
-                
-                backgroundNoise = clampedDecibel
-                isMetering = false
-            }
-        } catch {
-            backgroundNoise = 0
-            isMetering = false
-            print("소음 측정 중 오류 발생: \(error)")
+        MeteringBackgroundNoiseButton(backgroundNoise: $backgroundNoise, isMetering: $isMetering, meteringAction: audioManager.meteringBackgroundNoise) {
+            Text(isMetering ? "측정 중이에요..." : "측정하기")
+                .font(.body)
+                .fontWeight(.bold)
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+                .frame(height: 60)
+                .background(
+                    RoundedRectangle(cornerRadius: 18)
+                        .foregroundStyle(.accent)
+                )
+                .accessibilityLabel("배경 소음 측정")
         }
     }
 }

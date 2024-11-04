@@ -20,21 +20,25 @@ struct MainView: View {
     
     @State private var isAnimating = false
     
-    let selectedLocation: Location
+    @State private var showMeteringInfoSheet = false
     
-    private let notificationManager: NotificationManager = .init()
+    let selectedLocation: Location
     
     private let meteringCircleAnimation = Animation
         .easeInOut(duration: 1.5)
         .repeatForever(autoreverses: true)
     
+    private let customGreenColor = Color(red: 17 / 255, green: 151 / 255, blue: 50 / 255)
+    private let customYellowColor = Color(red: 222 / 255, green: 255 / 255, blue: 121 / 255)
+
     private var outerCircleColor: Color {
-        audioManager.userNoiseStatus == .safe ? .accent : .indigo
+        audioManager.userNoiseStatus == .safe
+            ? .green
+            : .indigo
     }
-    
     private var innerCircleColors: [Color] {
         if audioManager.userNoiseStatus == .safe {
-            return [.accent, .customLime]
+            return [customGreenColor, customYellowColor]
         } else {
             return [.indigo, .purple]
         }
@@ -74,13 +78,9 @@ struct MainView: View {
             .hidden(showCountdown)// 카운트다운 중에는 보이지 않음
             
             if showCountdown {
-                Color(.customBlack)
-                    .ignoresSafeArea(.all)
-                
                 countdownView
             }
         }
-        .background(.customBlack)
         .navigationTitle(selectedLocation.name)
         .navigationBarTitleDisplayMode(.large)
         .navigationBarHidden(showCountdown) // 카운트다운 중에는 보이지 않음
@@ -101,13 +101,23 @@ struct MainView: View {
         .onChange(of: audioManager.userNoiseStatus) {
             Task {
                 if audioManager.userNoiseStatus == .caution {
-                    await notificationManager.sendNotification()
+                    await NotificationManager.shared.sendNotification(.caution)
+                    await NotificationManager.shared.sendNotification(.persistent)
+                    await NotificationManager.shared.sendNotification(.recurringAlert)
+                } else {
+                    NotificationManager.shared.removeAllNotifications()
                 }
             }
         }
         .onDisappear {
             audioManager.stopMetering()
             stopCountdown()
+            NotificationManager.shared.removeAllNotifications()
+        }
+        .sheet(isPresented: $showMeteringInfoSheet) {
+            MeteringInfoSheet()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
         }
     }
     
@@ -222,16 +232,17 @@ struct MainView: View {
     
     private var toolbarButtons: some View {
         HStack(alignment: .center) {
-            Button {
-                routerManager.push(view: .editLocationView(location: selectedLocation))
-            } label: {
-                Text("수정")
-                    .font(.body)
-                    .fontWeight(.regular)
-            }
+            // TODO: 수정 살리기
+//            Button {
+//                routerManager.push(view: .editLocationView(location: selectedLocation))
+//            } label: {
+//                Text("수정")
+//                    .font(.body)
+//                    .fontWeight(.regular)
+//            }
             
             Button {
-                routerManager.push(view: .meteringInfoView)
+                showMeteringInfoSheet = true
             } label: {
                 Label("정보", systemImage: "info.circle")
                     .font(.body)

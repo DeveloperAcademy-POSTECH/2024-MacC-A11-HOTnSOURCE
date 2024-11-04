@@ -109,7 +109,9 @@ enum CreateLocationStep: Int {
     case nameInput = 1
     case backgroundNoiseInput = 2
     case distanceInput = 3
-    
+}
+
+extension CreateLocationStep {
     var text: String {
         switch self {
         case .nameInput: return NSLocalizedString("어디에서 사용하시나요?", comment: "장소 이름 입력 단계 설명")
@@ -121,7 +123,7 @@ enum CreateLocationStep: Int {
     var subText: String {
         switch self {
         case .nameInput: return NSLocalizedString("소음 측정이 필요한 곳의 이름을 알려주세요", comment: "장소 이름 입력 단계 보조 설명")
-        case .backgroundNoiseInput: return NSLocalizedString("주위의 소리를 들려주세요!", comment: "배경 소음 입력 단계 보조 설명")
+        case .backgroundNoiseInput: return NSLocalizedString("주변보다 더 큰 소리를 내면 알려드릴게요\n아래의 버튼을 눌러주세요", comment: "배경 소음 입력 단계 보조 설명")
         case .distanceInput: return NSLocalizedString("해당 거리에서 어떻게 들리는지\n계산해서 알려드릴게요", comment: "측정 반경 입력 단계 보조 설명")
         }
     }

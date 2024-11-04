@@ -12,16 +12,13 @@ struct EditLocationView: View {
     // MARK: Properties
     @EnvironmentObject var routerManager: RouterManager
     @EnvironmentObject var locationManager: LocationManager
+    @EnvironmentObject var audioManager: AudioManager
     
     @FocusState private var isFocused: Bool
     
     @State var location: Location
-    
-    @State private var showSelectBackgroundDecibelSheet: Bool = false
-    
-    @State private var showDeleteAlert: Bool = false
-    
-    @State private var isShowingProgressView: Bool = false
+    @State private var isMetering: Bool = false
+    @State private var showBackgroundNoiseInfo: Bool = false
     
     private var nameMaxLength: Int {
         let currentLocale = Locale.current.language.languageCode?.identifier
@@ -34,52 +31,34 @@ struct EditLocationView: View {
     
     // MARK: Body
     var body: some View {
-        ZStack {
-            ScrollView {
-                Spacer().frame(height: 20)
-                
-                VStack(alignment: .leading, spacing: 40) {
-                    nameRow
-                    
-                    backgroundDecibelRow
-                    
-                    distanceRow
-                    
-                    Spacer().frame(height: 0)
-                    
-                    actionButtonStack
-                }
-            }
+        VStack {
+            nameRow
             
-            if isShowingProgressView {
-                Color(.black)
-                    .opacity(0.4)
-                    .ignoresSafeArea(.all)
-                
-                ProgressView()
-            }
+            Spacer().frame(minHeight: 5, maxHeight: 40)
+            
+            backgroundNoiseRow
+            
+            Spacer().frame(minHeight: 5, maxHeight: 40)
+            
+            distanceRow
+            
+            Spacer()
         }
         .navigationTitle("수정하기")
-        .padding(.horizontal, 30)
-        .background(.customBlack)
-        .scrollIndicators(.hidden)
-        .scrollDisabled(true)
-        .sheet(isPresented: $showSelectBackgroundDecibelSheet) {
-            selectBackgroundDecibelSheet
-                .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
-        }
-        .alert("\(location.name) 삭제", isPresented: $showDeleteAlert) {
-            Button("삭제", role: .destructive) {
-                locationManager.deleteLocation(location)
-                routerManager.pop()
-            }
-            Button("취소", role: .cancel) { }
-        } message: {
-            Text("정말 삭제하시겠습니까?")
-        }
+        .navigationBarTitleDisplayMode(.large)
+        .padding(20)
+        .contentShape(Rectangle())
+        .ignoresSafeArea(.keyboard)
         .onTapGesture {
             isFocused = false
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                completeButton
+            }
+        }
+        .sheet(isPresented: $showBackgroundNoiseInfo) {
+            BackgroundNoiseInfoSheet(backgroundNoise: location.backgroundDecibel)
         }
     }
     
@@ -94,83 +73,72 @@ struct EditLocationView: View {
         }
     }
     
-    private var backgroundDecibelRow: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack(alignment: .bottom) {
+    private var backgroundNoiseRow: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
                 Text("배경 소음")
                     .font(.body)
                     .fontWeight(.bold)
                 
-                Spacer()
-                
-                BackgroundDecibelMeteringButton(backgroundDecibel: $location.backgroundDecibel, isShowingProgressView: $isShowingProgressView)
+                Button {
+                    showBackgroundNoiseInfo = true
+                } label: {
+                    Label("자세한 정보", systemImage: "info.circle")
+                        .labelStyle(.iconOnly)
+                        .font(.footnote)
+                }
+                .foregroundStyle(.secondary)
             }
-            Text("기준이 될 현장의 배경 소음을 측정하거나 입력해주세요\n기준보다 큰 소리를 내시면 알려드릴게요")
-                .font(.caption2)
-                .foregroundStyle(.gray)
             
-            Spacer().frame(height: 5)
-            
-            backgroundDecibelSelectRow
+            backgroundNoiseField
         }
     }
     
     private var distanceRow: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 10) {
             Text("측정 반경")
-                .font(.callout)
+                .font(.body)
                 .fontWeight(.bold)
             
-            Text("조심해야할 대상과의 거리를 측정하거나 입력해주세요\n그 곳에서 느낄 당신의 소리 크기를 알려드릴게요")
-                .font(.caption2)
-                .foregroundStyle(.gray)
-            
-            Spacer().frame(height: 5)
-            
-            disatanceSelectRow
+            DistanceInputField(distance: $location.distance)
         }
     }
     
-    private var actionButtonStack: some View {
-        VStack {
-            completeButton
+    private var backgroundNoiseField: some View {
+        HStack {
+            if isMetering {
+                Text("측정 중이에요...")
+            } else {
+                backgroundNoiseInfoRow
+            }
             
-            Spacer().frame(height: 20)
+            Spacer()
             
-            deleteButton
+            meteringButton
+        }
+        .fontWeight(.bold)
+        .padding(20)
+        .background {
+            RoundedRectangle(cornerRadius: 20)
+                .foregroundStyle(.tertiary)
         }
     }
     
-    private var selectBackgroundDecibelSheet: some View {
-        VStack(spacing: 30) {
-            VStack {
-                // TODO: 위아래 패딩 수정 예정
-                Text(Location.decibelWriting(decibel: location.backgroundDecibel))
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.white)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(10)
-                
-                // TODO: 예시 추가 예정
-//                Text(Location.decibelExample(decibel: backgroundDecibel))
-//                    .font(.callout)
-//                    .fontWeight(.medium)
-//                    .foregroundStyle(.gray)
-//                    .lineLimit(8)
-            }
-            
-            Divider()
-            
-            Picker("", selection: $location.backgroundDecibel) {
-                ForEach(Array(stride(from: 30.0, to: 75.0, by: 5.0)), id: \.self) { value in
-                    Text("\(Int(value))")
-                        .tag(Float(value))
-                }
-            }
-            .pickerStyle(.wheel)
+    private var backgroundNoiseInfoRow: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(Location.decibelWriting(decibel: location.backgroundDecibel))
+                .font(.headline)
+                .fontWeight(.bold)
+                .lineLimit(2)
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.trailing)
+
+            Text("정도의 느낌이군요!")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
         }
-        .padding()
     }
     
     private var nameTextField: some View {
@@ -195,107 +163,17 @@ struct EditLocationView: View {
         }
     }
     
-    private var backgroundDecibelSelectRow: some View {
-        HStack {
-            Text("크기")
-                .font(.callout)
-                .fontWeight(.bold)
-            
-            Spacer()
-            
-            backgroundDecibelSelectButton
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 10)
-        .background(
-            RoundedRectangle(cornerRadius: 15)
-                .fill(.quaternary)
-        )
-    }
-    
-    private var backgroundDecibelSelectButton: some View {
-        Button {
-            showSelectBackgroundDecibelSheet = true
-        } label: {
-            HStack(alignment: .bottom, spacing: 3) {
-                Text("\(Int(location.backgroundDecibel))")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                
-                Text("dB")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-            }
-            .frame(width: 95, height: 45)
-            .background(
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(.quaternary)
-            )
-        }
-        .buttonStyle(.plain)
-    }
-    
-    private var disatanceSelectRow: some View {
-        HStack {
-            Text("거리")
-                .font(.callout)
-                .fontWeight(.bold)
-            
-            Spacer()
-            
-            distanceSelectButton
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 20)
-        .background(
-            RoundedRectangle(cornerRadius: 15)
-                .fill(.quaternary)
-        )
-    }
-    
-    private var distanceSelectButton: some View {
-        HStack(spacing: 12) {
-            distanceAdjustButton(isPlus: false)
-            
-            distanceInfo
-            
-            distanceAdjustButton(isPlus: true)
-        }
-    }
-    
-    private var distanceInfo: some View {
-        HStack(alignment: .bottom, spacing: 3) {
-            Text("\(String(location.distance))")
-                .font(.title2)
-                .fontWeight(.bold)
-            
-            Text("m")
-                .font(.subheadline)
-                .fontWeight(.semibold)
-        }
-        .frame(width: 55)
-    }
-    
-    @ViewBuilder
-    private func distanceAdjustButton(isPlus: Bool) -> some View {
-        Button {
-            if isPlus && location.distance < 3 {
-                location.distance += 0.5
-            } else if !isPlus && location.distance > 1 {
-                location.distance -= 0.5
-            }
-            
-        } label: {
-            Image(systemName: isPlus ? "plus" : "minus")
-                .font(.caption2)
-                .frame(width: 18, height: 18)
-                .padding(4)
-                .background(
+    private var meteringButton: some View {
+        MeteringBackgroundNoiseButton(backgroundNoise: $location.backgroundDecibel, isMetering: $isMetering, meteringAction: audioManager.meteringBackgroundNoise) {
+            Label("측정하기", systemImage: "mic.fill")
+                .labelStyle(.iconOnly)
+                .padding()
+                .background {
                     Circle()
-                        .foregroundStyle(.quaternary)
-                )
+                        .fill(.accent)
+                }
+                .accessibilityLabel("배경 소음 측정")
         }
-        .buttonStyle(.plain)
     }
     
     private var completeButton: some View {
@@ -304,33 +182,27 @@ struct EditLocationView: View {
             routerManager.pop()
         } label: {
             Text("완료")
-                .font(.title3)
-                .fontWeight(.bold)
-                .foregroundStyle(.white)
-                .frame(maxWidth: 350)
-                .frame(height: 56)
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                )
         }
         .disabled(location.name.isEmpty || location.backgroundDecibel.isZero)
-    }
-    
-    private var deleteButton: some View {
-        Button {
-            showDeleteAlert = true
-        } label: {
-            Label("장소 삭제하기", systemImage: "trash")
-        }
-        .font(.callout)
-        .disabled(!locationManager.canDeleteLocation())
-        .foregroundStyle(locationManager.canDeleteLocation() ? .red : .gray)
     }
 }
 
 // MARK: - Preview
 #Preview {
+    @Previewable @StateObject var routerManager = RouterManager()
+    @Previewable @StateObject var locationManager = LocationManager()
+    @Previewable @StateObject var audioManager: AudioManager = {
+        do {
+            return try AudioManager()
+        } catch {
+            fatalError("AudioManager 초기화 실패: \(error.localizedDescription)")
+        }
+    }()
+    
     NavigationView {
         EditLocationView(location: .init(id: UUID(), name: "도서관", backgroundDecibel: 50, distance: 2))
+            .environmentObject(routerManager)
+            .environmentObject(locationManager)
+            .environmentObject(audioManager)
     }
 }

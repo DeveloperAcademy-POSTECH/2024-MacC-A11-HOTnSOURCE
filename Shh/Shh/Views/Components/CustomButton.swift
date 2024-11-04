@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CustomButton: View {
-    let text: String
+    let text: LocalizedStringKey
     let action: () -> Void
     
     var body: some View {
