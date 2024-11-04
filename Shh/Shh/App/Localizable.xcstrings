@@ -570,6 +570,7 @@
       }
     },
     "일지정지" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -649,6 +650,7 @@
       }
     },
     "재시작" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

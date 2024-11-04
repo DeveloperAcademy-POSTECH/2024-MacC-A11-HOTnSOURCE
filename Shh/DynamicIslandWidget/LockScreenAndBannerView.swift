@@ -31,14 +31,15 @@ struct LockScreenAndBannerView: View {
                     .fontWeight(.semibold)
                     .foregroundStyle(.white)
                 Spacer()
-                Button {
-                    // TODO: APP INTENTS 추가 예정
-                } label: {
-                    Label(isMetering ? "일지정지" : "재시작", systemImage: "play.circle.fill")
-                        .font(.title3)
-                        .fontWeight(.medium)
-                        .foregroundStyle(.green)
-                }
+
+//                Button {
+//                    // TODO: APP INTENTS 추가 예정
+//                } label: {
+//                    Label(isMetering ? "일지정지" : "재시작", systemImage: "play.circle.fill")
+//                        .font(.title3)
+//                        .fontWeight(.medium)
+//                        .foregroundStyle(.green)
+//                }
             }
             Spacer()
         }
