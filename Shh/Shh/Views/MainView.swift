@@ -24,8 +24,6 @@ struct MainView: View {
     
     let selectedLocation: Location
     
-    private let notificationManager: NotificationManager = .init()
-    
     private let meteringCircleAnimation = Animation
         .easeInOut(duration: 1.5)
         .repeatForever(autoreverses: true)
@@ -103,13 +101,18 @@ struct MainView: View {
         .onChange(of: audioManager.userNoiseStatus) {
             Task {
                 if audioManager.userNoiseStatus == .caution {
-                    await notificationManager.sendNotification()
+                    await NotificationManager.shared.sendNotification(.caution)
+                    await NotificationManager.shared.sendNotification(.persistent)
+                    await NotificationManager.shared.sendNotification(.recurringAlert)
+                } else {
+                    NotificationManager.shared.removeAllNotifications()
                 }
             }
         }
         .onDisappear {
             audioManager.stopMetering()
             stopCountdown()
+            NotificationManager.shared.removeAllNotifications()
         }
         .sheet(isPresented: $showMeteringInfoSheet) {
             MeteringInfoSheet()

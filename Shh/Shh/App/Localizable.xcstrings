@@ -515,12 +515,24 @@
         }
       }
     },
-    "소음 수준: " : {
+    "소음 상태가 20초 동안 주의에 머물렀어요!" : {
+      "comment" : "주의 지속 푸시 알림 내용",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Noise Level: "
+            "value" : "The noise level has remained in the caution zone for 20 seconds!"
+          }
+        }
+      }
+    },
+    "소음 수준: 주의" : {
+      "comment" : "주의 알림 제목",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noise Level: Caution"
           }
         }
       }
@@ -617,6 +629,17 @@
         }
       }
     },
+    "아직까지 조심해야할 수준의 소음이 발생하고 있어요!" : {
+      "comment" : "주의 지속 반복 푸시 알림 내용",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noise is still at a level that requires caution!"
+          }
+        }
+      }
+    },
     "양호" : {
       "localizations" : {
         "en" : {
@@ -689,6 +712,7 @@
       }
     },
     "이제 조금 조심해야 해요" : {
+      "comment" : "주의 푸시 알림 내용",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -946,6 +970,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You’re doing great right now!"
+          }
+        }
+      }
+    },
+    "지속적인 소음 발생" : {
+      "comment" : "주의 지속 반복 푸시 알림 제목\n주의 지속 푸시 알림 제목",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuous noise detected"
           }
         }
       }

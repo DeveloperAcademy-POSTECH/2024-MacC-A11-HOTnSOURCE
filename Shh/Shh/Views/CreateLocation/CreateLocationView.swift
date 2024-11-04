@@ -108,7 +108,9 @@ enum CreateLocationStep: Int {
     case nameInput = 1
     case backgroundNoiseInput = 2
     case distanceInput = 3
-    
+}
+
+extension CreateLocationStep {
     var text: String {
         switch self {
         case .nameInput: return NSLocalizedString("어디에서 사용하시나요?", comment: "장소 이름 입력 단계 설명")
