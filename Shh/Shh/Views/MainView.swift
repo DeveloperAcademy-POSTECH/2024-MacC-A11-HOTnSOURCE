@@ -20,6 +20,8 @@ struct MainView: View {
     
     @State private var isAnimating = false
     
+    @State private var showMeteringInfoSheet = false
+    
     let selectedLocation: Location
     
     private let notificationManager: NotificationManager = .init()
@@ -30,13 +32,12 @@ struct MainView: View {
     
     private let customGreenColor = Color(red: 17 / 255, green: 151 / 255, blue: 50 / 255)
     private let customYellowColor = Color(red: 222 / 255, green: 255 / 255, blue: 121 / 255)
-    
+
     private var outerCircleColor: Color {
         audioManager.userNoiseStatus == .safe
             ? .green
             : .indigo
     }
-    
     private var innerCircleColors: [Color] {
         if audioManager.userNoiseStatus == .safe {
             return [customGreenColor, customYellowColor]
@@ -109,6 +110,11 @@ struct MainView: View {
         .onDisappear {
             audioManager.stopMetering()
             stopCountdown()
+        }
+        .sheet(isPresented: $showMeteringInfoSheet) {
+            MeteringInfoSheet()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
         }
     }
     
@@ -232,7 +238,7 @@ struct MainView: View {
             }
             
             Button {
-                routerManager.push(view: .meteringInfoView)
+                showMeteringInfoSheet = true
             } label: {
                 Label("정보", systemImage: "info.circle")
                     .font(.body)
