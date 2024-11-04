@@ -13,8 +13,10 @@ struct InfoRow: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(item.title)
-                .font(.title3)
+                .font(.headline)
                 .fontWeight(.bold)
+                .foregroundStyle(.accent)
+            
             Divider()
                 .background(.white)
                 .padding(.bottom)
@@ -22,7 +24,7 @@ struct InfoRow: View {
             VStack(alignment: .leading, spacing: 10) {
                 ForEach(Array(item.description.enumerated()), id: \.offset) { _, description in
                     Text(description)
-                        .font(.body)
+                        .font(.subheadline)
                         .fontWeight(.medium)
                 }
             }

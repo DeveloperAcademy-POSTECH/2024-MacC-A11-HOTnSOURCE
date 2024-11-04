@@ -26,8 +26,8 @@ struct StartView: View {
             
             VStack(spacing: 6) {
                 StepDescriptionRow(
-                    text: "모든 준비가 완료되었어요!",
-                    subText: "시끄러운 소리를 내면 알려드릴게요!"
+                    text: NSLocalizedString("모든 준비가 완료되었어요!", comment: "온보딩 완료 제목"),
+                    subText: NSLocalizedString("시끄러운 소리를 내면 알려드릴게요!", comment: "온보딩 완료 부제목")
                 )
                 
                 Text("* 알림 권한을 허용해주세요")
