@@ -44,6 +44,7 @@ struct StartView: View {
             startButton
         }
         .padding(20)
+        .background(.customBlack)
         .onAppear {
             Task {
                 await NotificationManager.shared.requestPermission()
