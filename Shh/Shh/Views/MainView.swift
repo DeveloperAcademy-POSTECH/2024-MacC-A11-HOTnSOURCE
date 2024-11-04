@@ -79,8 +79,19 @@ struct MainView: View {
         .navigationBarTitleDisplayMode(.large)
         .navigationBarHidden(showCountdown) // 카운트다운 중에는 보이지 않음
         .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                toolbarButtons
+            // TODO: 수정 버튼 살리기
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showMeteringInfoSheet = true
+                } label: {
+                    Label("정보", systemImage: "info.circle")
+                        .font(.body)
+                        .fontWeight(.regular)
+                        .foregroundStyle(.accent)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .popoverTip(InfoPopoverTip(), arrowEdge: .top)
             }
         }
         .background(.customBlack)
@@ -223,30 +234,6 @@ struct MainView: View {
             .onAppear {
                 startCountdown()
             }
-    }
-    
-    private var toolbarButtons: some View {
-        HStack(alignment: .center) {
-            // TODO: 수정 살리기
-//            Button {
-//                routerManager.push(view: .editLocationView(location: selectedLocation))
-//            } label: {
-//                Text("수정")
-//                    .font(.body)
-//                    .fontWeight(.regular)
-//            }
-            
-            Button {
-                showMeteringInfoSheet = true
-            } label: {
-                Label("정보", systemImage: "info.circle")
-                    .font(.body)
-                    .fontWeight(.regular)
-                    .contentShape(Rectangle())
-                    .buttonStyle(.plain)
-            }
-            .popoverTip(InfoPopoverTip(), arrowEdge: .top)
-        }
     }
 }
 
