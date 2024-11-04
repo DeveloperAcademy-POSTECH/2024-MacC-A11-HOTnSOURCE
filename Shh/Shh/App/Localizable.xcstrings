@@ -2,7 +2,7 @@
   "sourceLanguage" : "ko",
   "strings" : {
     "" : {
-
+      "shouldTranslate" : false
     },
     "'주의' 단계는 상대방이 내 소리를 인지하기 시작하는 시점이에요!" : {
       "localizations" : {
