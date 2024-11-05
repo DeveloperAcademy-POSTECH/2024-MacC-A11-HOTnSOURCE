@@ -35,7 +35,7 @@ struct BackgroundNoiseInfoSheet: View {
         .padding()
         .fontWeight(.bold)
         .presentationDragIndicator(.visible)
-        .presentationDetents([.medium])
+        .presentationDetents([.medium, .large])
     }
 }
 
