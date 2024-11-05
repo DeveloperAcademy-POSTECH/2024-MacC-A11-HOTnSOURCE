@@ -46,6 +46,9 @@ struct NameInputView: View {
         .onTapGesture {
             isFocused.wrappedValue = false
         }
+        .onAppear {
+            isFocused.wrappedValue = true
+        }
     }
     
     // MARK: SubViews
