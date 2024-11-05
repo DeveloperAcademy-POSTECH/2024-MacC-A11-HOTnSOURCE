@@ -116,6 +116,7 @@ struct EditLocationView: View {
             Spacer()
             
             meteringButton
+                .padding(.vertical, 5)
         }
         .fontWeight(.bold)
         .padding(20)
