@@ -8,20 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		67A9E82B2CB426A8003E2A11 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 67A9E82A2CB426A8003E2A11 /* .swiftlint.yml */; };
-		8DE180C32CD27B700031D8D6 /* ShhWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 8DE180B62CD27B6F0031D8D6 /* ShhWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FB8E69D22CCD349C00882A0F /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8E69D12CCD349C00882A0F /* WidgetKit.framework */; };
 		FB8E69D42CCD349C00882A0F /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB8E69D32CCD349C00882A0F /* SwiftUI.framework */; };
 		FB8E69E52CCD349D00882A0F /* DynamicIslandWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FB8E69CF2CCD349C00882A0F /* DynamicIslandWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		8DE180C12CD27B700031D8D6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 67A9E80C2CB4230E003E2A11 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DE180B52CD27B6F0031D8D6;
-			remoteInfo = "ShhWatch Watch App";
-		};
 		FB8E69E32CCD349D00882A0F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 67A9E80C2CB4230E003E2A11 /* Project object */;
@@ -38,7 +30,6 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				8DE180C32CD27B700031D8D6 /* ShhWatch Watch App.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -59,7 +50,6 @@
 /* Begin PBXFileReference section */
 		67A9E8142CB4230E003E2A11 /* Shh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67A9E82A2CB426A8003E2A11 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		8DE180B62CD27B6F0031D8D6 /* ShhWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ShhWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8E69CF2CCD349C00882A0F /* DynamicIslandWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DynamicIslandWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8E69D12CCD349C00882A0F /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FB8E69D32CCD349C00882A0F /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -72,13 +62,6 @@
 				App/Info.plist,
 			);
 			target = 67A9E8132CB4230E003E2A11 /* Shh */;
-		};
-		8DE180EA2CD3A1450031D8D6 /* Exceptions for "Shh" folder in "ShhWatch Watch App" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Models/Location.swift,
-			);
-			target = 8DE180B52CD27B6F0031D8D6 /* ShhWatch Watch App */;
 		};
 		FB8E69E92CCD349D00882A0F /* Exceptions for "DynamicIslandWidget" folder in "DynamicIslandWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -111,14 +94,8 @@
 			exceptions = (
 				67A9E9C02CBC40FB003E2A11 /* Exceptions for "Shh" folder in "Shh" target */,
 				FB8E69EC2CCF589400882A0F /* Exceptions for "Shh" folder in "DynamicIslandWidgetExtension" target */,
-				8DE180EA2CD3A1450031D8D6 /* Exceptions for "Shh" folder in "ShhWatch Watch App" target */,
 			);
 			path = Shh;
-			sourceTree = "<group>";
-		};
-		8DE180B72CD27B6F0031D8D6 /* ShhWatch Watch App */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "ShhWatch Watch App";
 			sourceTree = "<group>";
 		};
 		FB8E69D52CCD349C00882A0F /* DynamicIslandWidget */ = {
@@ -134,13 +111,6 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		67A9E8112CB4230E003E2A11 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8DE180B32CD27B6F0031D8D6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -165,7 +135,6 @@
 				67A9E82A2CB426A8003E2A11 /* .swiftlint.yml */,
 				67A9E8162CB4230E003E2A11 /* Shh */,
 				FB8E69D52CCD349C00882A0F /* DynamicIslandWidget */,
-				8DE180B72CD27B6F0031D8D6 /* ShhWatch Watch App */,
 				FB8E69D02CCD349C00882A0F /* Frameworks */,
 				67A9E8152CB4230E003E2A11 /* Products */,
 			);
@@ -176,7 +145,6 @@
 			children = (
 				67A9E8142CB4230E003E2A11 /* Shh.app */,
 				FB8E69CF2CCD349C00882A0F /* DynamicIslandWidgetExtension.appex */,
-				8DE180B62CD27B6F0031D8D6 /* ShhWatch Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -208,7 +176,6 @@
 			);
 			dependencies = (
 				FB8E69E42CCD349D00882A0F /* PBXTargetDependency */,
-				8DE180C22CD27B700031D8D6 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				67A9E8162CB4230E003E2A11 /* Shh */,
@@ -218,28 +185,6 @@
 			);
 			productName = Shh;
 			productReference = 67A9E8142CB4230E003E2A11 /* Shh.app */;
-			productType = "com.apple.product-type.application";
-		};
-		8DE180B52CD27B6F0031D8D6 /* ShhWatch Watch App */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8DE180C72CD27B700031D8D6 /* Build configuration list for PBXNativeTarget "ShhWatch Watch App" */;
-			buildPhases = (
-				8DE180B22CD27B6F0031D8D6 /* Sources */,
-				8DE180B32CD27B6F0031D8D6 /* Frameworks */,
-				8DE180B42CD27B6F0031D8D6 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				8DE180B72CD27B6F0031D8D6 /* ShhWatch Watch App */,
-			);
-			name = "ShhWatch Watch App";
-			packageProductDependencies = (
-			);
-			productName = "ShhWatch Watch App";
-			productReference = 8DE180B62CD27B6F0031D8D6 /* ShhWatch Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 		FB8E69CE2CCD349C00882A0F /* DynamicIslandWidgetExtension */ = {
@@ -277,9 +222,6 @@
 					67A9E8132CB4230E003E2A11 = {
 						CreatedOnToolsVersion = 16.0;
 					};
-					8DE180B52CD27B6F0031D8D6 = {
-						CreatedOnToolsVersion = 16.0;
-					};
 					FB8E69CE2CCD349C00882A0F = {
 						CreatedOnToolsVersion = 16.0;
 					};
@@ -302,7 +244,6 @@
 			targets = (
 				67A9E8132CB4230E003E2A11 /* Shh */,
 				FB8E69CE2CCD349C00882A0F /* DynamicIslandWidgetExtension */,
-				8DE180B52CD27B6F0031D8D6 /* ShhWatch Watch App */,
 			);
 		};
 /* End PBXProject section */
@@ -313,13 +254,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				67A9E82B2CB426A8003E2A11 /* .swiftlint.yml in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8DE180B42CD27B6F0031D8D6 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,13 +296,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8DE180B22CD27B6F0031D8D6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FB8E69CB2CCD349C00882A0F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -379,11 +306,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		8DE180C22CD27B700031D8D6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8DE180B52CD27B6F0031D8D6 /* ShhWatch Watch App */;
-			targetProxy = 8DE180C12CD27B700031D8D6 /* PBXContainerItemProxy */;
-		};
 		FB8E69E42CCD349D00882A0F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FB8E69CE2CCD349C00882A0F /* DynamicIslandWidgetExtension */;
@@ -521,7 +443,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Shh/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 888VRTGCXU;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -542,7 +464,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hotnsource.Shh;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hotnsource.shh-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -562,7 +484,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Shh/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 888VRTGCXU;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -583,7 +505,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hotnsource.Shh;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hotnsource.shh-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -595,68 +517,6 @@
 			};
 			name = Release;
 		};
-		8DE180C52CD27B700031D8D6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ShhWatch Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "ShhWatch-Watch-App-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = ShhWatch;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.hotnsource.Shh;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hotnsource.Shh.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 11.0;
-			};
-			name = Debug;
-		};
-		8DE180C62CD27B700031D8D6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ShhWatch Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "ShhWatch-Watch-App-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = ShhWatch;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.hotnsource.Shh;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hotnsource.Shh.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 11.0;
-			};
-			name = Release;
-		};
 		FB8E69E72CCD349D00882A0F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -664,7 +524,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 888VRTGCXU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DynamicIslandWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DynamicIslandWidget;
@@ -675,7 +535,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hotnsource.Shh.DynamicIslandWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hotnsource.shh-.DynamicIslandWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -691,7 +551,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 888VRTGCXU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DynamicIslandWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DynamicIslandWidget;
@@ -702,7 +562,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hotnsource.Shh.DynamicIslandWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hotnsource.shh-.DynamicIslandWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -728,15 +588,6 @@
 			buildConfigurations = (
 				67A9E8232CB42310003E2A11 /* Debug */,
 				67A9E8242CB42310003E2A11 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8DE180C72CD27B700031D8D6 /* Build configuration list for PBXNativeTarget "ShhWatch Watch App" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8DE180C52CD27B700031D8D6 /* Debug */,
-				8DE180C62CD27B700031D8D6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
