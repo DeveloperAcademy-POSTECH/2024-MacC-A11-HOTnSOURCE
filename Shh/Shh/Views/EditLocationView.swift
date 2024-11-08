@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - 장소 수정 뷰
 struct EditLocationView: View {
     // MARK: Properties
-    @EnvironmentObject var routerManager: RouterManager
+    @EnvironmentObject var router: Router
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var audioManager: AudioManager
     
@@ -181,7 +181,7 @@ struct EditLocationView: View {
     private var completeButton: some View {
         Button {
             locationManager.editLocation(location)
-            routerManager.pop()
+            router.pop()
         } label: {
             Text("완료")
         }
@@ -191,7 +191,7 @@ struct EditLocationView: View {
 
 // MARK: - Preview
 #Preview {
-    @Previewable @StateObject var routerManager = RouterManager()
+    @Previewable @StateObject var router = Router()
     @Previewable @StateObject var locationManager = LocationManager()
     @Previewable @StateObject var audioManager: AudioManager = {
         do {
@@ -203,7 +203,7 @@ struct EditLocationView: View {
     
     NavigationView {
         EditLocationView(location: .init(id: UUID(), name: "도서관", backgroundDecibel: 50, distance: 2))
-            .environmentObject(routerManager)
+            .environmentObject(router)
             .environmentObject(locationManager)
             .environmentObject(audioManager)
     }

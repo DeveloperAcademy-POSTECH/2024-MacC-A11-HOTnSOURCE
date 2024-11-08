@@ -11,7 +11,7 @@ import TipKit
 // MARK: - 메인 뷰; 사용자의 소음 정도를 나타냅니다.
 struct MainView: View {
     // MARK: Properties
-    @EnvironmentObject var routerManager: RouterManager
+    @EnvironmentObject var router: Router
     @EnvironmentObject var audioManager: AudioManager
     
     @State private var countdown = 3
@@ -101,7 +101,7 @@ struct MainView: View {
             } catch {
                 // TODO: 문제 발생 알러트 띄우기
                 print("오디오 세션 설정 중에 문제가 발생했습니다.")
-                routerManager.pop()
+                router.pop()
             }
         }
         .onChange(of: audioManager.userNoiseStatus) {

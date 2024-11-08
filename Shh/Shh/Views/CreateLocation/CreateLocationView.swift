@@ -11,7 +11,7 @@ import SwiftUI
 struct CreateLocationView: View {
     // MARK: Properties
     @EnvironmentObject var locationManager: LocationManager
-    @EnvironmentObject var routerManager: RouterManager
+    @EnvironmentObject var router: Router
     
     @FocusState private var isFocused: Bool
     
@@ -71,17 +71,17 @@ struct CreateLocationView: View {
         .onChange(of: createComplete) {
             if createComplete {
                 if isFirstLaunch {
-                    routerManager.push(view: .startView(name: name, backgroundNoise: backgroundNoise, distance: distance), isOnboarding: true)
+                    router.push(view: .startView(name: name, backgroundNoise: backgroundNoise, distance: distance), isOnboarding: true)
                 } else {
                     let newLocation = Location(id: UUID(), name: name, backgroundDecibel: backgroundNoise, distance: distance)
                     
                     locationManager.selectedLocation = newLocation
                     locationManager.createLocation(newLocation)
                     
-                    routerManager.pop()
+                    router.pop()
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                        routerManager.push(view: .mainView(selectedLocation: newLocation))
+                        router.push(view: .mainView(selectedLocation: newLocation))
                     }
                 }
             }
