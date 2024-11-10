@@ -232,6 +232,9 @@
         }
       }
     },
+    "Pause Metering" : {
+
+    },
     "Resume metering" : {
       "localizations" : {
         "en" : {
@@ -691,6 +694,9 @@
           }
         }
       }
+    },
+    "일시정지" : {
+
     },
     "일시정지됨" : {
       "localizations" : {

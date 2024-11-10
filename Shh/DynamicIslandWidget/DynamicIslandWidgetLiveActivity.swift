@@ -46,9 +46,9 @@ struct DynamicIslandWidgetLiveActivity: Widget {
                 DynamicIslandExpandedRegion(.trailing) {
                     VStack {
                         Spacer()
-                        Text("🤫")
-                            .font(.largeTitle)
-                            .fontWeight(.black)
+                        Button(intent: StopMeteringIntent()) {
+                            Text("일시정지")
+                        }
                     }
                 }
                 DynamicIslandExpandedRegion(.center) {

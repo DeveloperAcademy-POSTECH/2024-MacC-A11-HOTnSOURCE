@@ -90,14 +90,17 @@
 		FB8E69EC2CCF589400882A0F /* Exceptions for "Shh" folder in "DynamicIslandWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Managers/AudioManager.swift,
 				Managers/LiveActivityManager.swift,
 				Models/Location.swift,
+				Models/NoiseStatus.swift,
 			);
 			target = FB8E69CE2CCD349C00882A0F /* DynamicIslandWidgetExtension */;
 		};
 		FB8E69EE2CCF58BC00882A0F /* Exceptions for "DynamicIslandWidget" folder in "Shh" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				AppIntent.swift,
 				DynamicIslandWidgetLiveActivity.swift,
 				LockScreenAndBannerView.swift,
 			);
