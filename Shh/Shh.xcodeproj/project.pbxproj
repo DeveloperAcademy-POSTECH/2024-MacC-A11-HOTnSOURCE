@@ -103,6 +103,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				AppIntent.swift,
+				Components/MeteringButton.swift,
 				DynamicIslandWidgetLiveActivity.swift,
 				LockScreenAndBannerView.swift,
 			);

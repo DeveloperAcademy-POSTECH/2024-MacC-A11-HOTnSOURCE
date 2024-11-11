@@ -44,18 +44,7 @@ struct DynamicIslandWidgetLiveActivity: Widget {
                         .padding(.leading)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    VStack {
-                        Spacer()
-                        if context.state.isMetering {
-                            Button(intent: PauseMeteringIntent()) {
-                                Text("일시정지")
-                            }
-                        } else {
-                            Button(intent: StartMeteringIntent()) {
-                                Text("측정하기")
-                            }
-                        }
-                    }
+                    
                 }
                 DynamicIslandExpandedRegion(.center) {
                     
@@ -73,7 +62,10 @@ struct DynamicIslandWidgetLiveActivity: Widget {
                                 .fontWeight(.medium)
                                 .foregroundStyle(.gray)
                         }
+                        
                         Spacer()
+                        
+                        MeteringButton(isMetering: context.state.isMetering)
                     }
                     .padding(.leading)
                 }

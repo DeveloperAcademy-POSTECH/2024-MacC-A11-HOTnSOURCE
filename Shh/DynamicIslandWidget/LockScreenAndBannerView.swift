@@ -13,7 +13,7 @@ struct LockScreenAndBannerView: View {
     
     var body: some View {
         VStack {
-            HStack(alignment: .top) {
+            HStack {
                 Text("Shh-!")
                     .font(.caption)
                     .fontWeight(.semibold)
@@ -24,25 +24,18 @@ struct LockScreenAndBannerView: View {
                     .fontWeight(.medium)
                     .foregroundStyle(.gray)
             }
+            
             Spacer()
-            HStack(alignment: .bottom) {
+            
+            HStack {
                 Text(isMetering ? "소음을 대신 듣고 있어요!" : "측정이 일시정지되었습니다.")
                     .font(.headline)
                     .fontWeight(.semibold)
                     .foregroundStyle(.white)
                 Spacer()
-
-                if isMetering {
-                    Button(intent: PauseMeteringIntent()) {
-                        Text("일시정지")
-                    }
-                } else {
-                    Button(intent: StartMeteringIntent()) {
-                        Text("측정하기")
-                    }
-                }
+                
+                MeteringButton(isMetering: isMetering)
             }
-            Spacer()
         }
         .padding()
         .background(.black)
