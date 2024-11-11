@@ -195,6 +195,8 @@ final class AudioManager: ObservableObject {
             await LiveActivityManager.shared.updateLiveActivity(isMetering: self.isMetering)
         }
         
+        NotificationManager.shared.removeAllNotifications()
+        
         timer?.invalidate()
     }
     
@@ -209,6 +211,8 @@ final class AudioManager: ObservableObject {
         initializeProperties() // 프로퍼티 초기화
         
         LiveActivityManager.shared.endLiveActivity() // 라이브 액티비티 종료
+        
+        NotificationManager.shared.removeAllNotifications()
         
         timer?.invalidate()
     }
