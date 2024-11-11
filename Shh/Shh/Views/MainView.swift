@@ -98,12 +98,13 @@ struct MainView: View {
                     Label("정보", systemImage: "info.circle")
                         .font(.body)
                         .fontWeight(.regular)
+                        .foregroundStyle(.accent)
                 }
                 .buttonStyle(.plain)
                 .popoverTip(infoPopoverTip, arrowEdge: .top)
                 .onChange(of: infoPopoverTipStatus) {
                     if infoPopoverTipStatus == .invalidated(.tipClosed) {
-                        BackgroundInlineTip.isInfoPopoverTipClosed = true
+                        BackgroundInlineTip.isCurrentTip = true
                     }
                 }
             }
