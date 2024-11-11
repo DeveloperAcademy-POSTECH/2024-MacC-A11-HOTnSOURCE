@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - 장소 선택 뷰: iOS에서 가져온 장소 리스트를 보여줌
 struct SelectLocationView: View {
     // MARK: Properties
-    @EnvironmentObject var routerManager: RouterManager
+    @EnvironmentObject var router: Router
     @StateObject var connectivityManager = WatchConnectivityManager()
     
     @State private var selectedLocation: Location?
@@ -41,7 +41,7 @@ struct SelectLocationView: View {
     
     private func locationButton(_ location: Location) -> some View {
         Button {
-            routerManager.push(view: .mainView)
+            router.push(view: .mainView)
         } label: {
             Text(location.name)
         }

@@ -11,7 +11,7 @@ import SwiftUI
 struct StartView: View {
     // MARK: Properties
     @EnvironmentObject var locationManager: LocationManager
-    @EnvironmentObject var routerManager: RouterManager
+    @EnvironmentObject var router: Router
     
     @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
     
@@ -61,7 +61,7 @@ struct StartView: View {
             locationManager.createLocation(newLocation)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                routerManager.push(view: .mainView(selectedLocation: newLocation))
+                router.push(view: .mainView(selectedLocation: newLocation))
             }
             
             isFirstLaunch = false

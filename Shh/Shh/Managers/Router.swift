@@ -1,5 +1,5 @@
 //
-//  RouterManager.swift
+//  Router.swift
 //  Shh
 //
 //  Created by Jia Jang on 10/9/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 // MARK: - 라우터 매니저
-class RouterManager: ObservableObject {
+class Router: ObservableObject {
     @Published var path: NavigationPath = NavigationPath()
     @Published var onboardingPath: NavigationPath = NavigationPath()
     

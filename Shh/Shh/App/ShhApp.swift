@@ -11,7 +11,7 @@ import TipKit
 struct ShhApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    @StateObject private var routerManager = RouterManager()
+    @StateObject private var router = Router()
     @StateObject private var locationManager = LocationManager()
     @StateObject private var audioManager: AudioManager = {
         do {
@@ -26,7 +26,7 @@ struct ShhApp: App {
     var body: some Scene {
         WindowGroup {
             if isFirstLaunch {
-                NavigationStack(path: $routerManager.onboardingPath) {
+                NavigationStack(path: $router.onboardingPath) {
                     WelcomeView()
                         .navigationDestination(for: ShhView.self) { shhView in
                             shhView.view
@@ -34,7 +34,7 @@ struct ShhApp: App {
                 }
                 .background(.customBlack)
             } else {
-                NavigationStack(path: $routerManager.path) {
+                NavigationStack(path: $router.path) {
                     SelectLocationView()
                         .navigationDestination(for: ShhView.self) { shhView in
                             shhView.view
@@ -54,7 +54,7 @@ struct ShhApp: App {
                 }
             }
         }
-        .environmentObject(routerManager)
+        .environmentObject(router)
         .environmentObject(locationManager)
         .environmentObject(audioManager)
     }

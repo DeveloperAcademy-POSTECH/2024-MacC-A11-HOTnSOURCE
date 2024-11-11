@@ -11,8 +11,11 @@ import TipKit
 // MARK: - 메인 뷰; 사용자의 소음 정도를 나타냅니다.
 struct MainView: View {
     // MARK: Properties
-    @EnvironmentObject var routerManager: RouterManager
+    @EnvironmentObject var router: Router
     @EnvironmentObject var audioManager: AudioManager
+    @EnvironmentObject var locationManager: LocationManager
+    
+    @State var selectedLocation: Location
     
     @State private var countdown = 3
     @State private var showCountdown = true
@@ -21,8 +24,6 @@ struct MainView: View {
     @State private var isAnimating = false
     
     @State private var showMeteringInfoSheet = false
-    
-    let selectedLocation: Location
     
     private let meteringCircleAnimation = Animation
         .easeInOut(duration: 1.5)
@@ -81,20 +82,22 @@ struct MainView: View {
                 countdownView
             }
         }
+        .background(.customBlack)
         .navigationTitle(selectedLocation.name)
         .navigationBarTitleDisplayMode(.large)
         .navigationBarHidden(showCountdown) // 카운트다운 중에는 보이지 않음
         .toolbar {
-            // TODO: 수정 버튼 살리기
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                Button("수정") {
+                    router.push(view: .editLocationView(location: selectedLocation))
+                }
+                
                 Button {
                     showMeteringInfoSheet = true
                 } label: {
                     Label("정보", systemImage: "info.circle")
                         .font(.body)
                         .fontWeight(.regular)
-                        .foregroundStyle(.accent)
-                        .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
                 .popoverTip(infoPopoverTip, arrowEdge: .top)
@@ -103,16 +106,6 @@ struct MainView: View {
                         BackgroundInlineTip.isInfoPopoverTipClosed = true
                     }
                 }
-            }
-        }
-        .background(.customBlack)
-        .onAppear {
-            do {
-                try audioManager.setAudioSession()
-            } catch {
-                // TODO: 문제 발생 알러트 띄우기
-                print("오디오 세션 설정 중에 문제가 발생했습니다.")
-                routerManager.pop()
             }
         }
         .onChange(of: audioManager.userNoiseStatus) {
@@ -125,6 +118,17 @@ struct MainView: View {
                     NotificationManager.shared.removeAllNotifications()
                 }
             }
+        }
+        .onAppear {
+            do {
+                try audioManager.setAudioSession()
+            } catch {
+                // TODO: 문제 발생 알러트 띄우기
+                print("오디오 세션 설정 중에 문제가 발생했습니다.")
+                router.pop()
+            }
+            
+            self.selectedLocation = locationManager.locations.first { $0.id == selectedLocation.id } ?? selectedLocation
         }
         .onDisappear {
             audioManager.stopMetering()
