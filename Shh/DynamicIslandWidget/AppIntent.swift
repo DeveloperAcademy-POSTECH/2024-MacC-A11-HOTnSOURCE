@@ -8,14 +8,25 @@
 import AppIntents
 import WidgetKit
 
-struct StopMeteringIntent: LiveActivityIntent {
-    static var title: LocalizedStringResource = "Pause Metering"
+struct PauseMeteringIntent: LiveActivityIntent {
+    static var title: LocalizedStringResource = "측정 일시정지"
     
     func perform() async throws -> some IntentResult {
         DispatchQueue.main.async {
-            print("측정 일시정지 시도")
             AudioManager.shared.pauseMetering()
-            print("측정 일시정지 성공")
+        }
+        return .result()
+    }
+}
+
+struct StartMeteringIntent: LiveActivityIntent, AudioRecordingIntent {
+    static var title: LocalizedStringResource = "측정 시작"
+    
+    func perform() async throws -> some IntentResult {
+        if let location = LocationManager.shared.selectedLocation {
+            DispatchQueue.main.async {
+                AudioManager.shared.startMetering(location: location)
+            }
         }
         return .result()
     }

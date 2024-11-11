@@ -29,7 +29,7 @@ class LiveActivityManager {
                 self.activity = try Activity<DynamicIslandWidgetAttributes>.request(
                     attributes: attributes,
                     content: content,
-                    pushType: nil // TODO: @eomchanu 푸쉬 알림 및 추가
+                    pushType: nil
                 )
             } catch {
                 print("LiveActivityManager: Error in LiveActivityManager: \(error.localizedDescription)")

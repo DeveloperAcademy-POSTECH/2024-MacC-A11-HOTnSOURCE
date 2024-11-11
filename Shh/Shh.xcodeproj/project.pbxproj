@@ -91,7 +91,9 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Managers/AudioManager.swift,
+				Managers/IOSConnectivityManager.swift,
 				Managers/LiveActivityManager.swift,
+				Managers/LocationManager.swift,
 				Models/Location.swift,
 				Models/NoiseStatus.swift,
 			);

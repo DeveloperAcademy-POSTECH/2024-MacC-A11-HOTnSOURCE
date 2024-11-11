@@ -232,9 +232,6 @@
         }
       }
     },
-    "Pause Metering" : {
-
-    },
     "Resume metering" : {
       "localizations" : {
         "en" : {
@@ -962,6 +959,12 @@
           }
         }
       }
+    },
+    "측정 시작" : {
+
+    },
+    "측정 일시정지" : {
+
     },
     "측정 중이에요..." : {
       "localizations" : {

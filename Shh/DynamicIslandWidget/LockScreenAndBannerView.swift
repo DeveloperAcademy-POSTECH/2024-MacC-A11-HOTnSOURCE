@@ -32,14 +32,15 @@ struct LockScreenAndBannerView: View {
                     .foregroundStyle(.white)
                 Spacer()
 
-//                Button {
-//                    // TODO: APP INTENTS 추가 예정
-//                } label: {
-//                    Label(isMetering ? "일지정지" : "재시작", systemImage: "play.circle.fill")
-//                        .font(.title3)
-//                        .fontWeight(.medium)
-//                        .foregroundStyle(.green)
-//                }
+                if isMetering {
+                    Button(intent: PauseMeteringIntent()) {
+                        Text("일시정지")
+                    }
+                } else {
+                    Button(intent: StartMeteringIntent()) {
+                        Text("측정하기")
+                    }
+                }
             }
             Spacer()
         }

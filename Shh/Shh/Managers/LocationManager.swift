@@ -8,6 +8,8 @@
 import SwiftUI
 
 final class LocationManager: ObservableObject {
+    static let shared = LocationManager()
+    
     @AppStorage("locations") private var storedLocations: String = "[]"
     @AppStorage("selectedLocation") private var storedSelectedLocation: String = ""
     
