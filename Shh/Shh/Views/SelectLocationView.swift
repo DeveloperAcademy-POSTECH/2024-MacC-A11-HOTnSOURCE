@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - 장소 선택 뷰
 struct SelectLocationView: View {
     // MARK: Properties
-    @EnvironmentObject var routerManager: RouterManager
+    @EnvironmentObject var router: Router
     @EnvironmentObject var locationManager: LocationManager
 
     @State private var selectedToDeleteLocationIndex: Int?
@@ -44,7 +44,7 @@ struct SelectLocationView: View {
                         }
                         
                         Button(role: .cancel) {
-                            routerManager.push(view: .editLocationView(location: location))
+                            router.push(view: .editLocationView(location: location))
                         } label: {
                             Label("Edit", systemImage: "square.and.pencil")
                         }
@@ -74,7 +74,7 @@ struct SelectLocationView: View {
     
     private func locationButton(_ location: Location) -> some View {
         Button {
-            routerManager.push(view: .mainView(selectedLocation: location))
+            router.push(view: .mainView(selectedLocation: location))
             locationManager.selectedLocation = location
         } label: {
             HStack {
@@ -111,7 +111,7 @@ struct SelectLocationView: View {
     private var createLocationButton: some View {
         Button {
             if locationManager.canCreateLocation() {
-                routerManager.push(view: .createLocationView)
+                router.push(view: .createLocationView)
             }
         } label: {
             Text("생성하기")

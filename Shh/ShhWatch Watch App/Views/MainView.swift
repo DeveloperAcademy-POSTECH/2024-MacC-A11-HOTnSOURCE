@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - 메인 뷰: Controls, Home, MeteringInfo View로 구성
 struct MainView: View {
     // MARK: Properties
-    @EnvironmentObject var routerManager: RouterManager
+    @EnvironmentObject var router: Router
     
     @State private var tabSelection: MainTabs = .home
     @State private var isAnimating = false
@@ -66,7 +66,7 @@ struct MainView: View {
     private var meteringStopButton: some View {
         VStack {
             Button {
-                routerManager.pop()
+                router.pop()
                 
                 // more actions
             } label: {
@@ -106,7 +106,7 @@ struct MainView: View {
     private var editingButton: some View {
         VStack {
             Button {
-                routerManager.push(view: .editPlaceView)
+                router.push(view: .editPlaceView)
             } label: {
                 Image(systemName: "square.and.pencil")
                     .foregroundStyle(.white)

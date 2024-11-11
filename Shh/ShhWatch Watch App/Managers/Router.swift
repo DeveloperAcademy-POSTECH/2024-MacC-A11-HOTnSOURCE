@@ -1,5 +1,5 @@
 //
-//  RouterManager.swift
+//  Router.swift
 //  ShhWatch Watch App
 //
 //  Created by Jia Jang on 10/30/24.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-// MARK: - 라우터 매니저
-class RouterManager: ObservableObject {
+// MARK: - 라우터
+class Router: ObservableObject {
     @Published var path: NavigationPath = NavigationPath()
     
     func push(view: ShhWatchView) {
