@@ -15,6 +15,8 @@ struct MainView: View {
     @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var locationManager: LocationManager
     
+    @State var selectedLocation: Location
+    
     @State private var countdown = 3
     @State private var showCountdown = true
     @State private var countdownTimer: Timer?
@@ -22,8 +24,6 @@ struct MainView: View {
     @State private var isAnimating = false
     
     @State private var showMeteringInfoSheet = false
-    
-    @State var selectedLocation: Location
     
     private let meteringCircleAnimation = Animation
         .easeInOut(duration: 1.5)
