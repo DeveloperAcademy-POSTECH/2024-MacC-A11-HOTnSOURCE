@@ -29,6 +29,12 @@ struct MainView: View {
         .easeInOut(duration: 1.5)
         .repeatForever(autoreverses: true)
 
+    private let infoPopoverTip = InfoPopoverTip() // Tip 상태 접근을 위해 객체 미리 생성
+    
+    private var infoPopoverTipStatus: Tip.Status {
+        infoPopoverTip.status
+    }
+    
     private var outerCircleColor: Color {
         audioManager.userNoiseStatus == .safe ? .accent : .indigo
     }
@@ -92,8 +98,15 @@ struct MainView: View {
                     Label("정보", systemImage: "info.circle")
                         .font(.body)
                         .fontWeight(.regular)
+                        .foregroundStyle(.accent)
                 }
-                .popoverTip(InfoPopoverTip(), arrowEdge: .top)
+                .buttonStyle(.plain)
+                .popoverTip(infoPopoverTip, arrowEdge: .top)
+                .onChange(of: infoPopoverTipStatus) {
+                    if infoPopoverTipStatus == .invalidated(.tipClosed) {
+                        BackgroundInlineTip.isCurrentTip = true
+                    }
+                }
             }
         }
         .onChange(of: audioManager.userNoiseStatus) {
