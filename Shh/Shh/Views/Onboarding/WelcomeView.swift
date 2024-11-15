@@ -44,8 +44,9 @@ struct WelcomeView: View {
     }
     
     private var startButton: some View {
+        // TODO: 임시로 메인뷰로 이동
         CustomButton(text: "시작하기") {
-            router.push(view: .createLocationView, isOnboarding: true)
+            router.push(view: .mainView)
         }
     }
 }

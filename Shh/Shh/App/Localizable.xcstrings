@@ -15,6 +15,7 @@
       }
     },
     "* 알림 권한을 허용해주세요" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -45,6 +46,7 @@
       }
     },
     "%@ 삭제" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -87,6 +89,7 @@
       }
     },
     "%lld/%lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -213,6 +216,7 @@
       }
     },
     "Edit" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -293,6 +297,7 @@
       }
     },
     "Trash" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -313,6 +318,7 @@
       }
     },
     "다시 측정하기" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -323,6 +329,7 @@
       }
     },
     "다음 단계로 이동" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -333,6 +340,7 @@
       }
     },
     "다음으로" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -374,6 +382,7 @@
       }
     },
     "뒤로" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -415,6 +424,7 @@
       }
     },
     "배경 소음" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -425,6 +435,7 @@
       }
     },
     "배경 소음 | %lld dB" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -445,6 +456,7 @@
       }
     },
     "배경 소음 측정" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -455,6 +467,7 @@
       }
     },
     "삭제" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -476,6 +489,7 @@
       }
     },
     "생성하기" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -538,10 +552,8 @@
         }
       }
     },
-    "수정" : {
-
-    },
     "수정하기" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -625,6 +637,7 @@
       }
     },
     "오류" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -635,6 +648,7 @@
       }
     },
     "완료" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -645,6 +659,7 @@
       }
     },
     "완료하기" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -655,6 +670,7 @@
       }
     },
     "이름" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -665,6 +681,7 @@
       }
     },
     "이름을 입력해주세요" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -717,6 +734,7 @@
       }
     },
     "자세한 정보" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -737,6 +755,7 @@
       }
     },
     "장소 생성" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -747,6 +766,7 @@
       }
     },
     "장소 선택" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -778,6 +798,7 @@
       }
     },
     "정도의 느낌이군요!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -788,6 +809,7 @@
       }
     },
     "정말 삭제하시겠습니까?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -880,6 +902,7 @@
       }
     },
     "중복되는 이름이 존재합니다!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -934,6 +957,7 @@
 
     },
     "취소" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -944,6 +968,7 @@
       }
     },
     "측정 반경" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -954,6 +979,7 @@
       }
     },
     "측정 반경 | %@ m" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -963,7 +989,11 @@
         }
       }
     },
+    "측정 뷰로 이동" : {
+
+    },
     "측정 중이에요..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -994,6 +1024,7 @@
       }
     },
     "측정하기" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

@@ -13,9 +13,8 @@ struct MeteringView: View {
     // MARK: Properties
     @EnvironmentObject var router: Router
     @EnvironmentObject var audioManager: AudioManager
-    @EnvironmentObject var locationManager: LocationManager
     
-    @State var selectedLocation: Location
+//    @State var selectedLocation: Location
     
     @State private var countdown = 3
     @State private var showCountdown = true
@@ -49,8 +48,6 @@ struct MeteringView: View {
     var body: some View {
         ZStack {
             VStack {
-                locationInfo
-
                 Spacer()
                 
                 ZStack {
@@ -83,15 +80,10 @@ struct MeteringView: View {
             }
         }
         .background(.customBlack)
-        .navigationTitle(selectedLocation.name)
         .navigationBarTitleDisplayMode(.large)
         .navigationBarHidden(showCountdown) // 카운트다운 중에는 보이지 않음
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
-                Button("수정") {
-                    router.push(view: .editLocationView(location: selectedLocation))
-                }
-                
                 Button {
                     showMeteringInfoSheet = true
                 } label: {
@@ -128,8 +120,6 @@ struct MeteringView: View {
                 print("오디오 세션 설정 중에 문제가 발생했습니다.")
                 router.pop()
             }
-            
-            self.selectedLocation = locationManager.locations.first { $0.id == selectedLocation.id } ?? selectedLocation
         }
         .onDisappear {
             audioManager.stopMetering()
@@ -188,20 +178,6 @@ struct MeteringView: View {
             .frame(width: 120)
     }
     
-    private var locationInfo: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text("배경 소음 | \(Int(selectedLocation.backgroundDecibel)) dB")
-                
-                Text("측정 반경 | \(String(format: "%.1f", selectedLocation.distance)) m")
-            }
-            .font(.body)
-            .fontWeight(.regular)
-            .foregroundStyle(.gray)
-            
-            Spacer()
-        }
-    }
     
     private var userNoiseStatusInfo: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -222,7 +198,7 @@ struct MeteringView: View {
             if audioManager.isMetering {
                 audioManager.pauseMetering()
             } else {
-                audioManager.startMetering(location: selectedLocation)
+                audioManager.startMetering(backgroundDecibel: 40.0)
             }
             
             isAnimating.toggle()
@@ -266,7 +242,7 @@ extension MeteringView {
                     showCountdown = false
                 }
                 
-                audioManager.startMetering(location: selectedLocation)
+                audioManager.startMetering(backgroundDecibel: 40.0)
             }
         }
     }
