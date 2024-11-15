@@ -1,5 +1,5 @@
 //
-//  MainView.swift
+//  MeteringView.swift
 //  Shh
 //
 //  Created by sseungwonnn on 10/14/24.
@@ -8,8 +8,8 @@
 import SwiftUI
 import TipKit
 
-// MARK: - 메인 뷰; 사용자의 소음 정도를 나타냅니다.
-struct MainView: View {
+// MARK: - 측정 뷰; 사용자의 소음 정도를 나타냅니다.
+struct MeteringView: View {
     // MARK: Properties
     @EnvironmentObject var router: Router
     @EnvironmentObject var audioManager: AudioManager
@@ -253,7 +253,7 @@ struct MainView: View {
     }
 }
 
-extension MainView {
+extension MeteringView {
     private func startCountdown() {
         print(#function)
         countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in

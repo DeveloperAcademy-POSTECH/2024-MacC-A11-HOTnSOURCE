@@ -46,7 +46,7 @@ enum ShhView: Hashable {
         case .editLocationView(let location):
             EditLocationView(location: location)
         case .mainView(let selectedLocation):
-            MainView(selectedLocation: selectedLocation)
+            MeteringView(selectedLocation: selectedLocation)
         case .startView(let name, let backgroundNoise, let distance):
             StartView(name: name, backgroundNoise: backgroundNoise, distance: distance)
         }
