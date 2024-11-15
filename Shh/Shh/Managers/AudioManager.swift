@@ -140,6 +140,7 @@ final class AudioManager: ObservableObject {
     }
     
     /// 내 소리가 시끄러운지 소음 측정을 시작합니다.
+    // TODO: 배경소음을 @Published로 변경
     func startMetering(backgroundDecibel: Float) {
         print(#function)
         // 해당 함수 호출 전에, setAudioSession() 호출 완료
@@ -160,10 +161,7 @@ final class AudioManager: ObservableObject {
         // 라이브 액티비티
         if !haveStartedMetering { // 최초 시작
             // TODO: 임시로 비활성화
-//            LiveActivityManager.shared.startLiveActivity(
-//                isMetering: self.isMetering,
-//                selectedLocation: location
-//            )
+            LiveActivityManager.shared.startLiveActivity(isMetering: self.isMetering)
             
             haveStartedMetering = true // 이제 최초 실행이 아님
         } else {
