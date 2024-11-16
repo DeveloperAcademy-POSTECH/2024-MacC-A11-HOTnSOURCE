@@ -12,7 +12,6 @@ struct ShhApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     @StateObject private var routerManager = RouterManager()
-    @StateObject private var locationManager: LocationManager = .shared
     @StateObject private var audioManager: AudioManager = .shared
     
     @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
@@ -20,7 +19,7 @@ struct ShhApp: App {
     var body: some Scene {
         WindowGroup {
             if isFirstLaunch {
-                NavigationStack(path: $routerManager.onboardingPath) {
+                NavigationStack(path: $router.onboardingPath) {
                     WelcomeView()
                         .navigationDestination(for: ShhView.self) { shhView in
                             shhView.view
@@ -28,8 +27,8 @@ struct ShhApp: App {
                 }
                 .background(.customBlack)
             } else {
-                NavigationStack(path: $routerManager.path) {
-                    SelectLocationView()
+                NavigationStack(path: $router.path) {
+                    MainView()
                         .navigationDestination(for: ShhView.self) { shhView in
                             shhView.view
                         }
@@ -48,8 +47,7 @@ struct ShhApp: App {
                 }
             }
         }
-        .environmentObject(routerManager)
-        .environmentObject(locationManager)
+        .environmentObject(router)
         .environmentObject(audioManager)
     }
 }

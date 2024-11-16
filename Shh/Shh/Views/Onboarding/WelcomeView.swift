@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - 온보딩 > 웰컴 페이지
 struct WelcomeView: View {
     // MARK: Properties
-    @EnvironmentObject var routerManager: RouterManager
+    @EnvironmentObject var router: Router
     
     // MARK: Body
     var body: some View {
@@ -44,8 +44,9 @@ struct WelcomeView: View {
     }
     
     private var startButton: some View {
+        // TODO: 임시로 메인뷰로 이동
         CustomButton(text: "시작하기") {
-            routerManager.push(view: .createLocationView, isOnboarding: true)
+            router.push(view: .mainView)
         }
     }
 }
@@ -53,5 +54,5 @@ struct WelcomeView: View {
 // MARK: - Preview
 #Preview {
     WelcomeView()
-        .environmentObject(RouterManager())
+        .environmentObject(Router())
 }

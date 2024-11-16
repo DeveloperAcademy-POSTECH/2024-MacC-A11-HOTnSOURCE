@@ -9,6 +9,9 @@ import Foundation
 import TipKit
 
 struct BackgroundInlineTip: Tip {
+    @Parameter
+    static var isCurrentTip: Bool = false
+    
     var title: Text {
         Text("화면을 덮고 사용해보세요!")
     }
@@ -19,5 +22,11 @@ struct BackgroundInlineTip: Tip {
 
     var image: Image? {
         Image(systemName: "heart")
+    }
+    
+    var rules: [Rule] {
+        #Rule(Self.$isCurrentTip) {
+            $0 == true
+        }
     }
 }

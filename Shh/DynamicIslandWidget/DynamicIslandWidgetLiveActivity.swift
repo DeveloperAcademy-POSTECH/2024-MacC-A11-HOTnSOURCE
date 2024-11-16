@@ -18,7 +18,7 @@ struct DynamicIslandWidgetAttributes: ActivityAttributes {
     }
     
     // 불변 Properties
-    var location: Location
+//    var location: Location
 }
 
 // MARK: - Live Activity 뷰
@@ -27,10 +27,7 @@ struct DynamicIslandWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: DynamicIslandWidgetAttributes.self) { context in
             // Lock screen / banner
-            LockScreenAndBannerView(
-                isMetering: context.state.isMetering,
-                location: context.attributes.location
-            )
+            LockScreenAndBannerView(isMetering: context.state.isMetering)
         } dynamicIsland: { context in
             DynamicIsland {
                 // TODO: 디자인 리팩토링 필요

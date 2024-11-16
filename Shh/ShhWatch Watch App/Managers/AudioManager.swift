@@ -1,8 +1,8 @@
 //
 //  AudioManager.swift
-//  Shh
+//  ShhWatch Watch App
 //
-//  Created by sseungwonnn on 10/10/24.
+//  Created by Jia Jang on 11/16/24.
 //
 
 import AVFoundation
@@ -11,14 +11,6 @@ import SwiftUI
 // MARK: - 소음을 측정하고 불러오는 역할을 합니다.
 final class AudioManager: ObservableObject {
     // MARK: Properties
-    static let shared: AudioManager = {
-        do {
-            return try AudioManager()
-        } catch {
-            fatalError("AudioManager 초기화 실패: \(error.localizedDescription)")
-        }
-    }()
-    
     // 현재 사용자의 dB
     @Published var decibelLevel: Float = 0.0
     
@@ -166,18 +158,6 @@ final class AudioManager: ObservableObject {
         audioRecorder.record()
         isMetering = true
         
-        // 라이브 액티비티
-        if !haveStartedMetering { // 최초 시작
-            // TODO: 임시로 비활성화
-            LiveActivityManager.shared.startLiveActivity(isMetering: self.isMetering)
-            
-            haveStartedMetering = true // 이제 최초 실행이 아님
-        } else {
-            Task { // 재개; 해당 동작은 업데이트
-                await LiveActivityManager.shared.updateLiveActivity(isMetering: self.isMetering)
-            }
-        }
-        
         // 타이머 설정
         var loudnessCounter: Int = 0 // decibel과 loudness 갱신 타이밍을 다르게 하기 위한 카운터
         
@@ -200,11 +180,6 @@ final class AudioManager: ObservableObject {
         isMetering = false
         initializeProperties() // 데시벨 관련 프로퍼티 초기화
         
-        // 라이브 액티비티 갱신
-        Task {
-            await LiveActivityManager.shared.updateLiveActivity(isMetering: self.isMetering)
-        }
-        
         NotificationManager.shared.removeAllNotifications()
         
         timer?.invalidate()
@@ -219,8 +194,6 @@ final class AudioManager: ObservableObject {
         isMetering = false
         haveStartedMetering = false
         initializeProperties() // 프로퍼티 초기화
-        
-        LiveActivityManager.shared.endLiveActivity() // 라이브 액티비티 종료
         
         NotificationManager.shared.removeAllNotifications()
         
@@ -373,3 +346,4 @@ final class AudioManager: ObservableObject {
         timer?.invalidate()
     }
 }
+
