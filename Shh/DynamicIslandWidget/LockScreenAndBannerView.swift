@@ -28,7 +28,7 @@ struct LockScreenAndBannerView: View {
             Spacer()
             
             HStack {
-                Text(isMetering ? "소음을 대신 듣고 있어요!" : "측정이 일시정지되었습니다.")
+                Text(isMetering ? "소음을 대신 듣고 있어요!" : "버튼을 눌러 다시 시작해주세요")
                     .font(.headline)
                     .fontWeight(.semibold)
                     .foregroundStyle(.white)

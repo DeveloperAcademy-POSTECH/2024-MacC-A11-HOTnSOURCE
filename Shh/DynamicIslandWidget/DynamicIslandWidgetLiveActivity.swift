@@ -56,7 +56,7 @@ struct DynamicIslandWidgetLiveActivity: Widget {
                 }
                 DynamicIslandExpandedRegion(.bottom) {
                     HStack {
-                        Text(context.state.isMetering ? "소음을 대신 듣고 있어요!" : "측정이 일시정지되었습니다.")
+                        Text(context.state.isMetering ? "소음을 대신 듣고 있어요!" : "버튼을 눌러 다시 시작해주세요")
                             .font(.callout)
                             .fontWeight(.medium)
                             .foregroundStyle(.white)
@@ -65,7 +65,7 @@ struct DynamicIslandWidgetLiveActivity: Widget {
                         
                         MeteringButton(isMetering: context.state.isMetering)
                     }
-                    .padding(.leading)
+                    .padding(.horizontal)
                 }
             } compactLeading: {
                 Image(.shhIcon)

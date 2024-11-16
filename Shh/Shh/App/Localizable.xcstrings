@@ -455,6 +455,9 @@
         }
       }
     },
+    "버튼을 눌러 다시 시작해주세요" : {
+
+    },
     "삭제" : {
       "localizations" : {
         "en" : {
@@ -758,7 +761,6 @@
       }
     },
     "재시작" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -989,6 +991,7 @@
       }
     },
     "측정이 일시정지되었습니다." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

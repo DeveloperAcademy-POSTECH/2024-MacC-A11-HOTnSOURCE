@@ -18,7 +18,7 @@ struct MeteringButton: View {
             .tint(.accent)
         } else {
             Button(intent: StartMeteringIntent()) {
-                Label("측정하기", systemImage: "play.fill")
+                Label("재시작", systemImage: "play.fill")
             }
             .tint(.accent)
         }
