@@ -25,7 +25,7 @@ struct ControlsView: View {
     private var meteringStopButton: some View {
         VStack {
             Button {
-                audioManager.isMetering = false
+                audioManager.stopMetering()
                 self.presentationMode.wrappedValue.dismiss()
             } label: {
                 Image(systemName: "xmark")
