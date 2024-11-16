@@ -10,8 +10,6 @@ import SwiftUI
 // MARK: - 장소 수정 뷰
 struct EditPlaceView: View {
     // MARK: Properties
-    @EnvironmentObject var router: Router
-    
     @FocusState private var isFocused: Bool
     
     @State private var showSelectBackgroundDecibelSheet: Bool = false
@@ -107,7 +105,7 @@ struct EditPlaceView: View {
     
     private var completeButton: some View {
         Button {
-            router.pop()
+//            router.pop()
         } label: {
             Text("완료")
                 .foregroundStyle(.black)

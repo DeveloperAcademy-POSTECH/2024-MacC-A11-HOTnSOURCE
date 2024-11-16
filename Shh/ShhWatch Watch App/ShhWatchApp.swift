@@ -9,17 +9,11 @@ import SwiftUI
 
 @main
 struct ShhWatch_Watch_AppApp: App {
-    @StateObject private var router = Router()
-    
     var body: some Scene {
         WindowGroup {
-            NavigationStack(path: $router.path) {
-                SelectLocationView()
-                    .navigationDestination(for: ShhWatchView.self) { shhWatchView in
-                        shhWatchView.view
-                    }
+            NavigationStack {
+                MainView()
             }
-            .environmentObject(router)
         }
     }
 }
