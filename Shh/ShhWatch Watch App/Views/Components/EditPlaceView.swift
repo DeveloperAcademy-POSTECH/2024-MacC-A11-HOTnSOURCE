@@ -11,7 +11,6 @@ import SwiftUI
 struct EditPlaceView: View {
     // MARK: Properties
     @EnvironmentObject var router: Router
-    @EnvironmentObject var connectivityManager: WatchConnectivityManager
     
     @FocusState private var isFocused: Bool
     

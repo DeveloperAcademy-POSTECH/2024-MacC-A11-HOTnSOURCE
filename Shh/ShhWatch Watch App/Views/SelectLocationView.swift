@@ -11,9 +11,6 @@ import SwiftUI
 struct SelectLocationView: View {
     // MARK: Properties
     @EnvironmentObject var router: Router
-    @StateObject var connectivityManager = WatchConnectivityManager()
-    
-    @State private var selectedLocation: Location?
     
     // MARK: Body
     var body: some View {
@@ -25,28 +22,7 @@ struct SelectLocationView: View {
     
     // MARK: Subviews
     private var locationList: some View {
-        List {
-            ForEach(connectivityManager.locations) { location in
-                locationButton(location)
-            }
-            .swipeActions(edge: .trailing) {
-                Button(role: .destructive) {
-                    // action
-                } label: {
-                    Label("Trash", systemImage: "trash.fill")
-                }
-            }
-        }
-    }
-    
-    private func locationButton(_ location: Location) -> some View {
-        Button {
-            router.push(view: .mainView)
-        } label: {
-            Text(location.name)
-        }
-        .foregroundStyle(.white)
-        .tint(selectedLocation?.id == location.id ? .accent : .gray)
+        Text("Location list")
     }
 }
 
