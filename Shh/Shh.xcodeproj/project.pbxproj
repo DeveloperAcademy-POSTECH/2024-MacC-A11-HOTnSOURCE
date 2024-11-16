@@ -96,6 +96,7 @@
 				Managers/LocationManager.swift,
 				Models/Location.swift,
 				Models/NoiseStatus.swift,
+				Resources/Assets.xcassets,
 			);
 			target = FB8E69CE2CCD349C00882A0F /* DynamicIslandWidgetExtension */;
 		};

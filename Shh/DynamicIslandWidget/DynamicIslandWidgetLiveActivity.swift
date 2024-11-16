@@ -68,17 +68,19 @@ struct DynamicIslandWidgetLiveActivity: Widget {
                     .padding(.leading)
                 }
             } compactLeading: {
-                Text("🤫")
-                    .font(.caption2)
-                    .fontWeight(.regular)
+                Image(.shhIcon)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 35, height: 35)
             } compactTrailing: {
                 Text(context.state.isMetering ? "듣는 중!" : "일시정지됨")
                     .font(.caption2)
                     .fontWeight(.regular)
             } minimal: {
-                Text("🤫")
-                    .font(.caption2)
-                    .fontWeight(.regular)
+                Image(.shhIcon)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 35, height: 35)
             }
             .widgetURL(URL(string: "http://www.apple.com")) // 수정하지 않아도 호출한 지점으로 이동
             .keylineTint(.accent)
