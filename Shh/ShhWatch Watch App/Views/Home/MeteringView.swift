@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct MeteringView: View {
+    // MARK: Properties
+    @EnvironmentObject var audioManager: AudioManager
+    
     @State private var noiseStatus = "safe"
     @State private var isAnimating = false
-    
-    @Binding var isMetering: Bool
     
     private let meteringCircleAnimation = Animation
         .easeInOut(duration: 1.5)
@@ -32,10 +33,10 @@ struct MeteringView: View {
     var body: some View {
         ZStack {
             meteringCircles
-                .hidden(!isMetering) // 측정 중일 때
+                .hidden(!audioManager.isMetering) // 측정 중일 때
             
             meteringPausedCircle
-                .hidden(isMetering) // 측정을 멈추었을 때
+                .hidden(audioManager.isMetering) // 측정을 멈추었을 때
             
             Text(noiseStatus == "safe" ? "양호" : "주의")
                 .font(.title)

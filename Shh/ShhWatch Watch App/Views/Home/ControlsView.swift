@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ControlsView: View {
     // MARK: Properties
-    @Binding var isMetering: Bool
+    @EnvironmentObject var audioManager: AudioManager
     
     // MARK: Body
     var body: some View {
@@ -41,18 +41,17 @@ struct ControlsView: View {
     private var meteringToggleButton: some View {
         VStack {
             Button {
-                // TODO: 재확인 필요 (audioManger.isMetering으로 변경 예정)
-                isMetering.toggle()
+                audioManager.isMetering.toggle()
             } label: {
-                Image(systemName: isMetering ? "pause.fill" : "play.fill")
+                Image(systemName: audioManager.isMetering ? "pause.fill" : "play.fill")
                     .font(.title3)
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
             }
             // TODO: button color가 어둡게 나오는 이슈 발생. (opacity로 임시 대처)
-            .buttonStyle(BorderedButtonStyle(tint: .accent.opacity(isMetering ? 2 : 10)))
+            .buttonStyle(BorderedButtonStyle(tint: .accent.opacity(audioManager.isMetering ? 2 : 10)))
             
-            Text(isMetering ? "일시정지" : "재개")
+            Text(audioManager.isMetering ? "일시정지" : "재개")
         }
     }
 }
