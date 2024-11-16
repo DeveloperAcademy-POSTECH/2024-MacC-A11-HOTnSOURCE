@@ -43,25 +43,23 @@ struct DynamicIslandWidgetLiveActivity: Widget {
                         .foregroundStyle(.white)
                         .padding(.leading)
                 }
+                
                 DynamicIslandExpandedRegion(.trailing) {
-                    
+                    Text("\(context.attributes.location.name)")
+                        .font(.caption2)
+                        .fontWeight(.medium)
+                        .foregroundStyle(.gray)
+                        .padding(.trailing)
                 }
                 DynamicIslandExpandedRegion(.center) {
                     
                 }
                 DynamicIslandExpandedRegion(.bottom) {
                     HStack {
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text(context.state.isMetering ? "지금 소리를 듣는 중이에요!" : "측정이 일시정지되었습니다.")
-                                .font(.callout)
-                                .fontWeight(.medium)
-                                .foregroundStyle(.white)
-                            
-                            Text("\(context.attributes.location.name)")
-                                .font(.caption2)
-                                .fontWeight(.medium)
-                                .foregroundStyle(.gray)
-                        }
+                        Text(context.state.isMetering ? "소음을 대신 듣고 있어요!" : "측정이 일시정지되었습니다.")
+                            .font(.callout)
+                            .fontWeight(.medium)
+                            .foregroundStyle(.white)
                         
                         Spacer()
                         

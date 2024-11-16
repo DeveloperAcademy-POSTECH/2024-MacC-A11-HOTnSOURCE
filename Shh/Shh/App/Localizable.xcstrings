@@ -900,6 +900,7 @@
       }
     },
     "지금 소리를 듣는 중이에요!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

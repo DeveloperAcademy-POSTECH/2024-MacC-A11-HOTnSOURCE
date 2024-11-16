@@ -14,25 +14,13 @@ struct MeteringButton: View {
         if isMetering {
             Button(intent: PauseMeteringIntent()) {
                 Label("일시정지", systemImage: "pause.fill")
-                    .labelStyle(.iconOnly)
             }
-            .buttonStyle(.plain)
-            .padding()
-            .background {
-                Circle()
-                    .fill(.accent)
-            }
+            .tint(.accent)
         } else {
             Button(intent: StartMeteringIntent()) {
                 Label("측정하기", systemImage: "play.fill")
-                    .labelStyle(.iconOnly)
             }
-            .buttonStyle(.plain)
-            .padding()
-            .background {
-                Circle()
-                    .fill(.accent)
-            }
+            .tint(.accent)
         }
     }
 }
