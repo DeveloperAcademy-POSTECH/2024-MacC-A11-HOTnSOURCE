@@ -1,25 +1,17 @@
 //
-//  ContentView.swift
+//  MeteringView.swift
 //  ShhWatch Watch App
 //
-//  Created by Jia Jang on 10/30/24.
+//  Created by Jia Jang on 11/16/24.
 //
 
 import SwiftUI
 
-enum MainTabs {
-    case controls, home, info
-}
-
-// MARK: - 홈 뷰: Controls, Metering, Info View로 구성
-struct HomeView: View {
-    // MARK: Properties
-    @State private var tabSelection: MainTabs = .home
+struct MeteringView: View {
+    @State private var noiseStatus = "safe"
     @State private var isAnimating = false
     
-    // TODO: 기능 구현하고 나서 실제 데이터로 변경 예정
-    @State private var isMetering = true
-    @State private var noiseStatus = "safe"
+    @Binding var isMetering: Bool
     
     private let meteringCircleAnimation = Animation
         .easeInOut(duration: 1.5)
@@ -37,66 +29,7 @@ struct HomeView: View {
         }
     }
     
-    // MARK: Body
     var body: some View {
-        TabView(selection: $tabSelection) {
-            controlsView
-                .tag(MainTabs.controls)
-            
-            meteringView
-                .tag(MainTabs.home)
-            
-            MeteringInfoView()
-                .tag(MainTabs.info)
-        }
-        .navigationBarBackButtonHidden(true)
-    }
-    
-    // MARK: SubViews
-    private var controlsView: some View {
-        HStack {
-            meteringStopButton
-            meteringToggleButton
-        }
-        .frame(maxWidth: 150)
-    }
-    
-    private var meteringStopButton: some View {
-        VStack {
-            Button {
-                // router.pop()
-            } label: {
-                Image(systemName: "xmark")
-                    .font(.title3)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.white)
-            }
-            // TODO: button color가 어둡게 나오는 이슈 발생. 해결방안을 찾기 전까지 opacity로 임시 대처.
-            .buttonStyle(BorderedButtonStyle(tint: Color.red.opacity(10)))
-            
-            Text("종료")
-        }
-    }
-    
-    private var meteringToggleButton: some View {
-        VStack {
-            Button {
-                // TODO: 재확인 필요 (audioManger.isMetering으로 변경 예정)
-                isMetering.toggle()
-            } label: {
-                Image(systemName: isMetering ? "pause.fill" : "play.fill")
-                    .font(.title3)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.white)
-            }
-            // TODO: button color가 어둡게 나오는 이슈 발생. (opacity로 임시 대처)
-            .buttonStyle(BorderedButtonStyle(tint: .accent.opacity(isMetering ? 2 : 10)))
-            
-            Text(isMetering ? "일시정지" : "재개")
-        }
-    }
-    
-    private var meteringView: some View {
         ZStack {
             meteringCircles
                 .hidden(!isMetering) // 측정 중일 때
@@ -157,8 +90,4 @@ struct HomeView: View {
             )
             .frame(width: 120)
     }
-}
-
-#Preview {
-    HomeView()
 }

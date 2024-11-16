@@ -21,7 +21,7 @@ struct MainView: View {
             }
             
             NavigationLink("Start") {
-                HomeView()
+                MeteringTabView()
             }
         }
     }
