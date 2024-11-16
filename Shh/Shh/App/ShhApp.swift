@@ -12,7 +12,6 @@ struct ShhApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     @StateObject private var router = Router()
-    @StateObject private var locationManager = LocationManager()
     @StateObject private var audioManager: AudioManager = {
         do {
             return try AudioManager()
@@ -35,7 +34,7 @@ struct ShhApp: App {
                 .background(.customBlack)
             } else {
                 NavigationStack(path: $router.path) {
-                    SelectLocationView()
+                    MainView()
                         .navigationDestination(for: ShhView.self) { shhView in
                             shhView.view
                         }
@@ -55,7 +54,6 @@ struct ShhApp: App {
             }
         }
         .environmentObject(router)
-        .environmentObject(locationManager)
         .environmentObject(audioManager)
     }
 }

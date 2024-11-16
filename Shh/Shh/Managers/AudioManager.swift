@@ -36,6 +36,9 @@ final class AudioManager: ObservableObject {
     private let loudnessMeteringTimeInterval: TimeInterval = 0.5
     private let loudnessBufferSize: Int = 4 // 2초 지속됐을 경우 위험도를 갱신
     
+    private let distanceFromOthers: Float = 1.5 // 휴대전화와 상대방과의 거리는 1.5미터로 가정
+    private let distanceFromUser = 0.5 // 휴대전화와 유저 사이의 거리는 0.5미터로 가정
+    
     // 현 시점의 사용자의 dB; 0.1초 간격으로 측정
     private var currentDecibel: Float = 0.0
     
@@ -136,8 +139,9 @@ final class AudioManager: ObservableObject {
         }
     }
     
-    /// 해당 장소의 소음 측정을 시작합니다.
-    func startMetering(location: Location) {
+    /// 내 소리가 시끄러운지 소음 측정을 시작합니다.
+    // TODO: 배경소음을 @Published로 변경
+    func startMetering(backgroundDecibel: Float) {
         print(#function)
         // 해당 함수 호출 전에, setAudioSession() 호출 완료
         
@@ -156,10 +160,8 @@ final class AudioManager: ObservableObject {
         
         // 라이브 액티비티
         if !haveStartedMetering { // 최초 시작
-            LiveActivityManager.shared.startLiveActivity(
-                isMetering: self.isMetering,
-                selectedLocation: location
-            )
+            // TODO: 임시로 비활성화
+            LiveActivityManager.shared.startLiveActivity(isMetering: self.isMetering)
             
             haveStartedMetering = true // 이제 최초 실행이 아님
         } else {
@@ -175,7 +177,7 @@ final class AudioManager: ObservableObject {
             self.updateDecibelLevel()
             
             if loudnessCounter % Int(self.loudnessMeteringTimeInterval / self.decibelMeteringTimeInterval) == 0 {
-                self.calculateLoudnessForDistance(backgroundDecibel: location.backgroundDecibel, distance: location.distance)
+                self.calculateLoudnessForDistance(backgroundDecibel: backgroundDecibel, distance: self.distanceFromOthers)
             }
             
             loudnessCounter += 1

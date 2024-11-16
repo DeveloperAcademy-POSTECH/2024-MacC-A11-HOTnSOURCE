@@ -30,25 +30,16 @@ class Router: ObservableObject {
 }
 
 enum ShhView: Hashable {
-    case selectLocationView
-    case createLocationView
-    case editLocationView(location: Location)
-    case mainView(selectedLocation: Location)
-    case startView(name: String, backgroundNoise: Float, distance: Float)
+    case mainView
+    case meteringView
     
     @ViewBuilder
     var view: some View {
         switch self {
-        case .selectLocationView:
-            SelectLocationView()
-        case .createLocationView:
-            CreateLocationView()
-        case .editLocationView(let location):
-            EditLocationView(location: location)
-        case .mainView(let selectedLocation):
-            MainView(selectedLocation: selectedLocation)
-        case .startView(let name, let backgroundNoise, let distance):
-            StartView(name: name, backgroundNoise: backgroundNoise, distance: distance)
+        case .mainView:
+            MainView()
+        case .meteringView:
+            MeteringView()
         }
     }
 }

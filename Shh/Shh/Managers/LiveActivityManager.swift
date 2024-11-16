@@ -13,10 +13,10 @@ class LiveActivityManager {
     
     private var activity: Activity<DynamicIslandWidgetAttributes>?
     
-    func startLiveActivity(isMetering: Bool, selectedLocation: Location) {
+    func startLiveActivity(isMetering: Bool) {
         print(#function)
         if self.activity == nil {
-            let attributes = DynamicIslandWidgetAttributes(location: selectedLocation)
+            let attributes = DynamicIslandWidgetAttributes()
             
             let contentState = DynamicIslandWidgetAttributes.ContentState(isMetering: isMetering)
             let content = ActivityContent(
