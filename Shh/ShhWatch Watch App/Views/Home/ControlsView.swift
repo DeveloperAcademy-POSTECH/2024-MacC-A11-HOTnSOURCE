@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ControlsView: View {
     // MARK: Properties
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var audioManager: AudioManager
     
     // MARK: Body
@@ -24,7 +25,8 @@ struct ControlsView: View {
     private var meteringStopButton: some View {
         VStack {
             Button {
-                // router.pop()
+                audioManager.isMetering = false
+                self.presentationMode.wrappedValue.dismiss()
             } label: {
                 Image(systemName: "xmark")
                     .font(.title3)
