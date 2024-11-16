@@ -12,7 +12,7 @@ import SwiftUI
 final class AudioManager: ObservableObject {
     // MARK: Properties
     // 현재 사용자의 dB
-    @Published var decibelLevel: Float = 0.0
+    @Published var userDecibelLevel: Float = 0.0
     
     // 현재 소음 측정 상황
     @Published var isMetering: Bool = false
@@ -140,7 +140,6 @@ final class AudioManager: ObservableObject {
     }
     
     /// 내 소리가 시끄러운지 소음 측정을 시작합니다.
-    // TODO: 배경소음을 @Published로 변경
     func startMetering(backgroundDecibel: Float) {
         print(#function)
         // 해당 함수 호출 전에, setAudioSession() 호출 완료
@@ -268,7 +267,7 @@ final class AudioManager: ObservableObject {
         // 버퍼가 가득차면, 평균치를 계산하여 업데이트
         if decibelBuffer.count == decibelBufferSize {
             let averageDecibel = decibelBuffer.reduce(0, +) / Float(decibelBuffer.count)
-            decibelLevel = averageDecibel
+            userDecibelLevel = averageDecibel
             
             decibelBuffer.removeAll() // 초기 위치에 다시 저장, 새로운 메모리 할당하지 않음
         }
@@ -281,7 +280,7 @@ final class AudioManager: ObservableObject {
         
         // 2. 상대방이 느끼는 소음 (사용자가 내는 소음의 거리 감쇠 적용)
         let distanceRatio = distance / 0.5
-        let perceivedDecibel = calculateDecibelAtDistance(originalDecibel: decibelLevel, distanceRatio: distanceRatio)
+        let perceivedDecibel = calculateDecibelAtDistance(originalDecibel: userDecibelLevel, distanceRatio: distanceRatio)
         
         // 3. 배경음과 상대방이 느끼는 소음의 dB 합 계산
         let combinedDecibel = combineDecibels(backgroundDecibel: backgroundDecibel, noiseDecibel: perceivedDecibel)
@@ -346,7 +345,7 @@ final class AudioManager: ObservableObject {
     
     /// 측정이 멈출 때, 값들을 초기화합니다.
     private func initializeProperties() {
-        decibelLevel = 0.0
+        userDecibelLevel = 0.0
         currentDecibel = 0.0
         loudnessIncreaseRatio = 0.0
         decibelBuffer.removeAll()
@@ -358,7 +357,7 @@ final class AudioManager: ObservableObject {
         audioRecorder.stop()
         isMetering = false
         
-        decibelLevel = 0.0
+        userDecibelLevel = 0.0
         currentDecibel = 0.0
         decibelBuffer.removeAll()
         
