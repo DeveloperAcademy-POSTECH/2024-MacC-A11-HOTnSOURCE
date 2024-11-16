@@ -11,7 +11,7 @@ import TipKit
 struct ShhApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    @StateObject private var routerManager = RouterManager()
+    @StateObject private var router = Router()
     @StateObject private var audioManager: AudioManager = .shared
     
     @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true

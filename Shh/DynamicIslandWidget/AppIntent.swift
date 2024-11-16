@@ -23,10 +23,9 @@ struct StartMeteringIntent: LiveActivityIntent, AudioRecordingIntent {
     static var title: LocalizedStringResource = "측정 시작"
     
     func perform() async throws -> some IntentResult {
-        if let location = LocationManager.shared.selectedLocation {
-            DispatchQueue.main.async {
-                AudioManager.shared.startMetering(location: location)
-            }
+        DispatchQueue.main.async {
+            // TODO: 배경 소음 인자 제거
+//            AudioManager.shared.startMetering(backgroundDecibel: )
         }
         return .result()
     }

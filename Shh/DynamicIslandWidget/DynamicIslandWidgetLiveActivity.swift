@@ -42,11 +42,7 @@ struct DynamicIslandWidgetLiveActivity: Widget {
                 }
                 
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text("\(context.attributes.location.name)")
-                        .font(.caption2)
-                        .fontWeight(.medium)
-                        .foregroundStyle(.gray)
-                        .padding(.trailing)
+                    
                 }
                 DynamicIslandExpandedRegion(.center) {
                     
