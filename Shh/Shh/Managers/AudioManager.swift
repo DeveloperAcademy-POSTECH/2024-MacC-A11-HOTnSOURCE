@@ -101,10 +101,11 @@ final class AudioManager: ObservableObject {
         audioRecorder.isMeteringEnabled = true
         audioRecorder.record()
         
-        // 3초간 배경 소음 수음
+        // 배경 소음 수음
         var tempDecibelBuffer: [Float] = []
-        let tempDecibelBufferMaxSize: Int = Int(Double(backgroundNoiseMeteringTime) / decibelMeteringTimeInterval.magnitude) // 0.1초 간격으로 3초간 측정(총 30회)
+        let tempDecibelBufferMaxSize: Int = Int(Double(backgroundNoiseMeteringTime) / decibelMeteringTimeInterval.magnitude)
         
+        // 0.1초 간격으로 측정; 총 30회
         for _ in 0..<tempDecibelBufferMaxSize {
             // 비동기적으로 일정 시간 대기
             try await Task.sleep(nanoseconds: UInt64(decibelMeteringTimeInterval * 1_000_000_000))
