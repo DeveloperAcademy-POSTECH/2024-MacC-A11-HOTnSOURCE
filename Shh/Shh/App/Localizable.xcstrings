@@ -4,6 +4,9 @@
     "" : {
       "shouldTranslate" : false
     },
+    "‼️" : {
+      "comment" : "주의 지속 푸시 알림 제목"
+    },
     "'주의' 단계는 상대방이 내 소리를 인지하기 시작하는 시점이에요!" : {
       "localizations" : {
         "en" : {
@@ -177,6 +180,7 @@
       }
     },
     "🤫" : {
+      "comment" : "주의 알림 제목",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -185,6 +189,9 @@
           }
         }
       }
+    },
+    "🚨" : {
+      "comment" : "주의 지속 반복 푸시 알림 제목"
     },
     "1m" : {
       "localizations" : {
@@ -215,6 +222,9 @@
           }
         }
       }
+    },
+    "20초 동안 지속적인 소음이 발생했어요" : {
+      "comment" : "주의 지속 푸시 알림 내용"
     },
     "Edit" : {
       "extractionState" : "stale",
@@ -502,6 +512,7 @@
     },
     "소음 상태가 20초 동안 주의에 머물렀어요!" : {
       "comment" : "주의 지속 푸시 알림 내용",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -513,6 +524,7 @@
     },
     "소음 수준: 주의" : {
       "comment" : "주의 알림 제목",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -607,6 +619,7 @@
     },
     "아직까지 조심해야할 수준의 소음이 발생하고 있어요!" : {
       "comment" : "주의 지속 반복 푸시 알림 내용",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -945,6 +958,7 @@
     },
     "지속적인 소음 발생" : {
       "comment" : "주의 지속 반복 푸시 알림 제목\n주의 지속 푸시 알림 제목",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1034,6 +1048,12 @@
           }
         }
       }
+    },
+    "큰 소리가 계속 들려요!" : {
+      "comment" : "주의 지속 반복 푸시 알림 내용"
+    },
+    "큰 소리를 들었어요!" : {
+      "comment" : "주의 푸시 알림 내용"
     },
     "평소 대화 소리나 가정에서의 일상 소음" : {
       "localizations" : {
