@@ -9,43 +9,58 @@ import SwiftUI
 
 // MARK: - 메인 화면
 struct MainView: View {
+    // MARK: Properties
+    @State private var showLoadingView: Bool = false
+    
     // MARK: Body
     var body: some View {
-        VStack(spacing: 0) {
-            Spacer()
-                .frame(height: 80)
+        ZStack {
+            VStack(spacing: 0) {
+                Spacer(minLength: 20)
+                
+                Text("반가워요!\n소음이 걱정이신가요?")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.title)
+                    .fontWeight(.bold)
+                
+                Spacer(minLength: 15)
+                
+                Text("아래 버튼을 눌러 시작해주세요")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.gray)
+                
+                Spacer()
+                    .frame(maxHeight: .infinity)
+                
+                Text("버튼 눌러 시작하기")
+                    .font(.footnote)
+                    .foregroundStyle(.gray)
+                
+                Spacer(minLength: 20)
+                
+                startButton
+                
+                Spacer(minLength: 20)
+            }
+            .padding(25)
+            .background(.customBlack)
             
-            Text("반가워요!\n소음이 걱정이신가요?")
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.title)
-                .fontWeight(.bold)
-            
-            Spacer().frame(height: 15)
-            
-            Text("아래 버튼을 눌러 시작해주세요")
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.title3)
-                .fontWeight(.bold)
-                .foregroundStyle(.gray)
-            
-            Spacer()
-            
-            Text("버튼 눌러 시작하기")
-                .font(.footnote)
-                .foregroundStyle(.gray)
-            
-            Spacer().frame(height: 20)
-            
-            startButton
+            // TODO: 로딩 화면
+//            if showLoadingView {
+//                LoadingView()
+//                    .transition(.move(edge: .trailing))
+//            }
         }
-        .padding(25)
-        .background(.customBlack)
     }
     
     // MARK: SubViews
     private var startButton: some View {
         Button {
-            // TODO: 로딩뷰로 이동
+            withAnimation {
+                showLoadingView = true
+            }
         } label: {
             Image(systemName: "waveform")
                 .font(.system(size: 60))
