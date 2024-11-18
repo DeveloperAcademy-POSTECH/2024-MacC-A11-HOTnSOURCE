@@ -467,7 +467,6 @@
       }
     },
     "배경 소음 측정" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -864,6 +863,7 @@
       }
     },
     "주변 소음 측정" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
