@@ -21,7 +21,36 @@ final class AudioManager: ObservableObject {
     @Published var userNoiseStatus: NoiseStatus = .safe
     
     // 배경 dB
-    var backgroundDecibel: Int = 0
+    var backgroundDecibel: Float = 0.0
+    
+    // 최대 dB; 배경 dB가 변경되면 변경됨
+    var maximumDecibel: Int {
+        // 1. 분모에 해당하는 배경 소음의 Loudness 계산
+        let backgroundLoudness = convertToLoudness(decibel: Float(backgroundDecibel))
+        
+        // 2. 분자에 해당하는 상대방이 느끼는 Loudness 계산
+        let distanceRatio: Float = distanceFromOthers / distanceFromPhone
+        var perceivedDecibel: Float = 0.0
+        var combinedDecibel: Float = 0.0
+        var combinedLoudness: Float = 0.0
+        
+        for tempDecibel in Int(backgroundDecibel)..<120 { // 최대 120dB까지 탐색
+            // 2-1. 상대방이 느끼는 dB 계산
+            perceivedDecibel = calculateDecibelAtDistance(originalDecibel: Float(tempDecibel), distanceRatio: distanceRatio)
+            
+            // 2-2. 합산된 데시벨 계산
+            combinedDecibel = combineDecibels(backgroundDecibel: Float(backgroundDecibel), noiseDecibel: perceivedDecibel)
+            
+            // 2-3. 상대방이 느끼는 Loudness 계산
+            combinedLoudness = convertToLoudness(decibel: combinedDecibel)
+            
+            // 3. 사용자가 낼 수 있는 dB 최댓값 찾기
+            if combinedLoudness >= NoiseStatus.loudnessCautionLevel * backgroundLoudness {
+                return tempDecibel
+            }
+        }
+        return 0
+    }
     
     private let audioRecorder: AVAudioRecorder
     
@@ -35,8 +64,8 @@ final class AudioManager: ObservableObject {
     private let loudnessMeteringTimeInterval: TimeInterval = 0.5
     private let loudnessBufferSize: Int = 4 // 2초 지속됐을 경우 위험도를 갱신; 0.5 * 4 = 2
     
-    private let distanceFromOthers: Float = 1.0 // 휴대전화와 상대방과의 거리는 1.0미터로 가정
-    private let distanceFromUser = 0.5 // 휴대전화와 유저 사이의 거리는 0.5미터로 가정
+    private let distanceFromOthers: Float = 1.0 // 유저와 상대방과의 거리는 1.0 미터로 가정
+    private let distanceFromPhone: Float = 0.5 // 유저와 휴대전화 사이의 거리는 0.5 미터로 가정
     
     // 현 시점의 사용자의 dB; 0.1초 간격으로 측정
     private var currentDecibel: Float = 0.0
@@ -135,7 +164,7 @@ final class AudioManager: ObservableObject {
             throw AudioManagerError.invalidBackgroundNoise
         }
         
-        backgroundDecibel = Int(decibelAverage.rounded())
+        backgroundDecibel = decibelAverage
     }
     
     /// 내 소리가 시끄러운지 소음 측정을 시작합니다.
