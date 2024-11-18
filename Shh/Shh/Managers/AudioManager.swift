@@ -11,6 +11,14 @@ import SwiftUI
 // MARK: - 소음을 측정하고 불러오는 역할을 합니다.
 final class AudioManager: ObservableObject {
     // MARK: Properties
+    static let shared: AudioManager = {
+        do {
+            return try AudioManager()
+        } catch {
+            fatalError("AudioManager 초기화 실패: \(error.localizedDescription)")
+        }
+    }()
+    
     // 현재 소음 측정 상황
     @Published var isMetering: Bool = false
     
