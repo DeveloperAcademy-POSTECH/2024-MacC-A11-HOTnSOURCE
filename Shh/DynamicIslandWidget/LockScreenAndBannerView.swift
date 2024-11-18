@@ -12,7 +12,7 @@ struct LockScreenAndBannerView: View {
     
     var body: some View {
         VStack {
-            HStack(alignment: .top) {
+            HStack {
                 Text("Shh-!")
                     .font(.caption)
                     .fontWeight(.semibold)
@@ -22,23 +22,15 @@ struct LockScreenAndBannerView: View {
             
             Spacer()
             
-            HStack(alignment: .bottom) {
-                Text(isMetering ? "소음을 대신 듣고 있어요!" : "측정이 일시정지되었습니다.")
+            HStack {
+                Text(isMetering ? "소음을 대신 듣고 있어요!" : "버튼을 눌러 다시 시작해주세요")
                     .font(.headline)
                     .fontWeight(.semibold)
                     .foregroundStyle(.white)
                 Spacer()
-
-//                Button {
-//                    // TODO: APP INTENTS 추가 예정
-//                } label: {
-//                    Label(isMetering ? "일지정지" : "재시작", systemImage: "play.circle.fill")
-//                        .font(.title3)
-//                        .fontWeight(.medium)
-//                        .foregroundStyle(.green)
-//                }
+                
+                MeteringButton(isMetering: isMetering)
             }
-            Spacer()
         }
         .padding()
         .background(.black)

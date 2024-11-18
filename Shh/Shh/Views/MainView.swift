@@ -18,7 +18,7 @@ struct MainView: View {
             Button {
                 Task {
                     do {
-                        try await audioManager.meteringBackgroundNoise()
+                        try await audioManager.meteringBackgroundDecibel()
                     } catch {
                         print("웁스")
                     }
@@ -28,6 +28,13 @@ struct MainView: View {
             }
             CustomButton(text: "측정 뷰로 이동") {
                 router.push(view: .meteringView)
+            }
+        }
+        .onAppear {
+            do {
+                try audioManager.setAudioSession()
+            } catch {
+                print("웁스")
             }
         }
     }

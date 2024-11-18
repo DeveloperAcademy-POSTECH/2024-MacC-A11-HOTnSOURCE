@@ -476,6 +476,12 @@
         }
       }
     },
+    "배경소음%f" : {
+
+    },
+    "버튼을 눌러 다시 시작해주세요" : {
+
+    },
     "삭제" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -725,6 +731,9 @@
         }
       }
     },
+    "일시정지" : {
+
+    },
     "일시정지됨" : {
       "localizations" : {
         "en" : {
@@ -790,7 +799,6 @@
       }
     },
     "재시작" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -937,6 +945,7 @@
       }
     },
     "지금 소리를 듣는 중이에요!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -969,6 +978,9 @@
       }
     },
     "진짜 메인뷰" : {
+
+    },
+    "최대소음%lld" : {
 
     },
     "취소" : {
@@ -1007,6 +1019,12 @@
     "측정 뷰로 이동" : {
 
     },
+    "측정 시작" : {
+
+    },
+    "측정 일시정지" : {
+
+    },
     "측정 중이에요..." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1029,6 +1047,7 @@
       }
     },
     "측정이 일시정지되었습니다." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1075,6 +1094,9 @@
           }
         }
       }
+    },
+    "현재 소음%f" : {
+
     },
     "화면을 덮고 사용해보세요!" : {
       "localizations" : {
