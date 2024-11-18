@@ -18,8 +18,7 @@ struct MainView: View {
             Button {
                 Task {
                     do {
-                        try await audioManager.meteringBackgroundNoise()
-                        print(audioManager.backgroundDecibel)
+                        try await audioManager.meteringBackgroundDecibel()
                     } catch {
                         print("웁스")
                     }
@@ -29,6 +28,13 @@ struct MainView: View {
             }
             NavigationLink("로딩 뷰") {
                 LoadingView()
+            }
+        }
+        .onAppear {
+            do {
+                try audioManager.setAudioSession()
+            } catch {
+                print("웁스")
             }
         }
     }

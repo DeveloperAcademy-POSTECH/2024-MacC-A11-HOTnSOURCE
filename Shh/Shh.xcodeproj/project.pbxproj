@@ -91,14 +91,22 @@
 		FB8E69EC2CCF589400882A0F /* Exceptions for "Shh" folder in "DynamicIslandWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Managers/AudioManager.swift,
+				Managers/IOSConnectivityManager.swift,
 				Managers/LiveActivityManager.swift,
+				Managers/LocationManager.swift,
+				Managers/NotificationManager.swift,
 				Models/Location.swift,
+				Models/NoiseStatus.swift,
+				Resources/Assets.xcassets,
 			);
 			target = FB8E69CE2CCD349C00882A0F /* DynamicIslandWidgetExtension */;
 		};
 		FB8E69EE2CCF58BC00882A0F /* Exceptions for "DynamicIslandWidget" folder in "Shh" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				AppIntent.swift,
+				Components/MeteringButton.swift,
 				DynamicIslandWidgetLiveActivity.swift,
 				LockScreenAndBannerView.swift,
 			);
@@ -670,6 +678,7 @@
 				INFOPLIST_FILE = DynamicIslandWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DynamicIslandWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -697,6 +706,7 @@
 				INFOPLIST_FILE = DynamicIslandWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DynamicIslandWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
