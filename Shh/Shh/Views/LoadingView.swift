@@ -111,7 +111,7 @@ struct LoadingView: View {
             isFirstMetering = false
         }
         
-        try await audioManager.meteringBackgroundNoise()
+        try await audioManager.meteringBackgroundDecibel()
         isMeteringFinished = true
     }
 }
