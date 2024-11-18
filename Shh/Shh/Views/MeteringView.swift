@@ -200,7 +200,7 @@ struct MeteringView: View {
             if audioManager.isMetering {
                 audioManager.pauseMetering()
             } else {
-                audioManager.startMetering(backgroundDecibel: 40.0)
+                audioManager.startMetering()
             }
             
             isAnimating.toggle()
@@ -244,7 +244,7 @@ extension MeteringView {
                     showCountdown = false
                 }
                 
-                audioManager.startMetering(backgroundDecibel: 40.0)
+                audioManager.startMetering()
             }
         }
     }

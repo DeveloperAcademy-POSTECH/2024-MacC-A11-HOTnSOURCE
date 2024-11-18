@@ -167,7 +167,7 @@ final class AudioManager: ObservableObject {
     
     /// 내 소리가 시끄러운지 소음 측정을 시작합니다.
     /// 해당 함수 호출 전에 setAudioSession() 메서드를 호출해야 합니다. View의 .onAppear()를 활용하면 됩니다.
-    func startMetering(backgroundDecibel: Float) {
+    func startMetering() {
         print(#function)
         // 권한 검사
         guard checkMicrophonePermissionStatus() else {
