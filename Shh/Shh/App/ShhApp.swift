@@ -10,13 +10,8 @@ import TipKit
 @main
 struct ShhApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @StateObject private var audioManager: AudioManager = {
-        do {
-            return try AudioManager()
-        } catch {
-            fatalError("AudioManager 초기화 실패: \(error.localizedDescription)")
-        }
-    }()
+    
+    @StateObject private var audioManager: AudioManager = .shared
     
     @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
     

@@ -166,7 +166,7 @@
 //    }
 //    
 //    private var meteringButton: some View {
-//        MeteringBackgroundNoiseButton(backgroundNoise: $location.backgroundDecibel, isMetering: $isMetering, meteringAction: audioManager.meteringBackgroundNoise) {
+//        MeteringBackgroundNoiseButton(backgroundNoise: $location.backgroundDecibel, isMetering: $isMetering, meteringAction: audioManager.meteringBackgroundDecibel) {
 //            Label("측정하기", systemImage: "mic.fill")
 //                .labelStyle(.iconOnly)
 //                .padding()
