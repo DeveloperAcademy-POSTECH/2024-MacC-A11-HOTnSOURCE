@@ -12,32 +12,30 @@ import SwiftUI
 final class AudioManager: ObservableObject {
     // MARK: Properties
     // 현재 사용자의 dB
-    @Published var userDecibelLevel: Float = 0.0 // 0.5초마다 갱신
+    @Published var userDecibel: Float = 0.0 // 0.5초마다 갱신
     
     // 현재 소음 측정 상황
     @Published var isMetering: Bool = false
     
-    // 배경 소음에 비해, 증가된 Loudness 비율
-    @Published var loudnessIncreaseRatio: Float = 0.0
-    
     // 현재 사용자의 소음 상태
     @Published var userNoiseStatus: NoiseStatus = .safe
     
-    // 소음 측정을 시작한 적이 있는지
-    @Published var haveStartedMetering: Bool = false
+    // 배경 dB
+    var backgroundDecibel: Int = 0
     
     private let audioRecorder: AVAudioRecorder
     
-    private let backgroundNoiseMeteringTimeInterval: TimeInterval = 0.1
-    private let backgroundNoiseMeteringTime: Int = 3 // 3초 간의 소리를 받아와 배경 소음을 갱신
-    
+    private let backgroundDecibelMeteringTimeInterval: TimeInterval = 0.1
+    private let backgroundDecibelMeteringTime: Int = 3 // 3초 간의 소리를 받아와 배경 소음을 갱신
+    private let validationConstant: Float = 1.5 // 현재 소음이 평균 소음보다 얼만큼 더 커도 되는지; 튀는 값 찾기 위해 사용
+
     private let decibelMeteringTimeInterval: TimeInterval = 0.1
     private let decibelBufferSize: Int = 5 // 0.5초 간의 소리로 데시벨을 갱신; 0.1 * 5 = 0.5
     
     private let loudnessMeteringTimeInterval: TimeInterval = 0.5
     private let loudnessBufferSize: Int = 4 // 2초 지속됐을 경우 위험도를 갱신; 0.5 * 4 = 2
     
-    private let distanceFromOthers: Float = 1.5 // 휴대전화와 상대방과의 거리는 1.5미터로 가정
+    private let distanceFromOthers: Float = 1.0 // 휴대전화와 상대방과의 거리는 1.0미터로 가정
     private let distanceFromUser = 0.5 // 휴대전화와 유저 사이의 거리는 0.5미터로 가정
     
     // 현 시점의 사용자의 dB; 0.1초 간격으로 측정
@@ -51,6 +49,12 @@ final class AudioManager: ObservableObject {
     
     // 위험치를 계산하기 위해 loudness를 저장해두는 버퍼
     private var loudnessBuffer: [Float] = []
+    
+    // 배경 소음에 비해, 증가된 Loudness 비율
+    private var loudnessIncreaseRatio: Float = 0.0
+    
+    // 소음 측정을 시작한 적이 있는지; 라이브 액티비티에 활용
+    private var haveStartedMetering: Bool = false
     
     // MARK: init
     init() throws {
@@ -87,7 +91,7 @@ final class AudioManager: ObservableObject {
     
     /// 배경의 평균 소음을 측정합니다.
     /// 해당 함수 호출 전에 setAudioSession() 메서드를 호출해야 합니다. View의 .onAppear()를 활용하면 됩니다.
-    func meteringBackgroundNoise() async throws -> Float {
+    func meteringBackgroundNoise() async throws {
         print(#function)
         // 권한 검사
         guard checkMicrophonePermissionStatus() else {
@@ -103,7 +107,7 @@ final class AudioManager: ObservableObject {
         
         // 배경 소음 수음
         var tempDecibelBuffer: [Float] = []
-        let tempDecibelBufferMaxSize: Int = Int(Double(backgroundNoiseMeteringTime) / decibelMeteringTimeInterval.magnitude)
+        let tempDecibelBufferMaxSize: Int = Int(Double(backgroundDecibelMeteringTime) / decibelMeteringTimeInterval.magnitude)
         
         // 0.1초 간격으로 측정; 총 30회
         for _ in 0..<tempDecibelBufferMaxSize {
@@ -125,14 +129,14 @@ final class AudioManager: ObservableObject {
         let decibelAverage = tempDecibelBuffer.reduce(0, +) / Float(tempDecibelBuffer.count)
         
         // 평균값이 배경 소음으로 유효한지 검사
-        let validationConstant: Float = 1.5 // 현재 소음이 평균 소음보다 얼만큼 더 커도 되는지
         let isValid = tempDecibelBuffer.allSatisfy { $0 <= validationConstant * decibelAverage }
         
         guard isValid else {
             throw AudioManagerError.invalidBackgroundNoise
         }
         
-        return decibelAverage
+        backgroundDecibel = Int(decibelAverage.rounded())
+        print("backgroundDB: \(backgroundDecibel)")
     }
     
     /// 내 소리가 시끄러운지 소음 측정을 시작합니다.
@@ -262,7 +266,7 @@ final class AudioManager: ObservableObject {
         // 버퍼가 가득차면, 평균치를 계산하여 업데이트
         if decibelBuffer.count == decibelBufferSize {
             let averageDecibel = decibelBuffer.reduce(0, +) / Float(decibelBuffer.count)
-            userDecibelLevel = averageDecibel
+            userDecibel = averageDecibel
             
             decibelBuffer.removeAll() // 초기 위치에 다시 저장, 새로운 메모리 할당하지 않음
         }
@@ -275,7 +279,7 @@ final class AudioManager: ObservableObject {
         
         // 2. 상대방이 느끼는 소음 (사용자가 내는 소음의 거리 감쇠 적용)
         let distanceRatio = distance / 0.5
-        let perceivedDecibel = calculateDecibelAtDistance(originalDecibel: userDecibelLevel, distanceRatio: distanceRatio)
+        let perceivedDecibel = calculateDecibelAtDistance(originalDecibel: userDecibel, distanceRatio: distanceRatio)
         
         // 3. 배경음과 상대방이 느끼는 소음의 dB 합 계산
         let combinedDecibel = combineDecibels(backgroundDecibel: backgroundDecibel, noiseDecibel: perceivedDecibel)
@@ -340,7 +344,7 @@ final class AudioManager: ObservableObject {
     
     /// 측정이 멈출 때, 값들을 초기화합니다.
     private func initializeProperties() {
-        userDecibelLevel = 0.0
+        userDecibel = 0.0
         currentDecibel = 0.0
         loudnessIncreaseRatio = 0.0
         decibelBuffer.removeAll()
@@ -352,7 +356,7 @@ final class AudioManager: ObservableObject {
         audioRecorder.stop()
         isMetering = false
         
-        userDecibelLevel = 0.0
+        userDecibel = 0.0
         currentDecibel = 0.0
         decibelBuffer.removeAll()
         
