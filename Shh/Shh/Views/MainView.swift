@@ -9,9 +9,6 @@ import SwiftUI
 
 // MARK: - 메인 화면
 struct MainView: View {
-    // MARK: Properties
-    @EnvironmentObject var router: Router
-    
     // MARK: Body
     var body: some View {
         VStack(spacing: 0) {

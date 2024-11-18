@@ -477,6 +477,9 @@
         }
       }
     },
+    "버튼 눌러 시작하기" : {
+
+    },
     "삭제" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -606,6 +609,9 @@
           }
         }
       }
+    },
+    "아래 버튼을 눌러 시작해주세요" : {
+
     },
     "아주 조용한 방에서의 환경음" : {
       "localizations" : {
@@ -968,9 +974,6 @@
         }
       }
     },
-    "진짜 메인뷰" : {
-
-    },
     "취소" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1003,9 +1006,6 @@
           }
         }
       }
-    },
-    "측정 뷰로 이동" : {
-
     },
     "측정 중이에요..." : {
       "extractionState" : "stale",
