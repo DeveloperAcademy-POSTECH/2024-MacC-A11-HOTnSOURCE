@@ -28,10 +28,13 @@ struct ShhApp: App {
                 .background(.customBlack)
             } else {
                 NavigationStack(path: $router.path) {
-                    MainView()
-                        .navigationDestination(for: ShhView.self) { shhView in
-                            shhView.view
-                        }
+                    // TODO: 도움말뷰 테스트를 위해 주석처리
+//                    MainView()
+//                        .navigationDestination(for: ShhView.self) { shhView in
+//                            shhView.view
+//                        }
+                    
+                    HelpView()
                 }
                 .task {
                 #if DEBUG
