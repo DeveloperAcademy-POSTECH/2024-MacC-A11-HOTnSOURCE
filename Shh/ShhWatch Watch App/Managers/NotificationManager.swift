@@ -2,7 +2,7 @@
 //  NotificationManager.swift
 //  Shh
 //
-//  Created by Eom Chanwoo on 10/14/24.
+//  Created by Jia Jang on 11/16/24.
 //
 
 import Foundation
@@ -73,19 +73,19 @@ final class NotificationManager {
     /// 실제 푸시 알림 전송 함수
     private func scheduleNotificationFor(_ type: NotificationType) {
         let content = createNotificationContent(
-            title: type.title,
-            subtitle: type.subtitle
+            subtitle: type.subtitle,
+            body: type.body
         )
         
         scheduleNotification(content: content, type: type)
     }
     
     /// 푸시 알림 내용 생성
-    private func createNotificationContent(title: String, subtitle: String, sound: UNNotificationSound = .default) -> UNMutableNotificationContent {
+    private func createNotificationContent(subtitle: String? = nil, body: String, sound: UNNotificationSound = .default) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         content.sound = sound
-        content.title = title
-        content.subtitle = subtitle
+        content.subtitle = subtitle ?? ""
+        content.body = body
         
         return content
     }
@@ -124,25 +124,25 @@ extension NotificationType {
         }
     }
     
-    var title: String {
-        switch self {
-        case .caution:
-            NSLocalizedString("🤫", comment: "주의 알림 제목")
-        case .persistent:
-            NSLocalizedString("‼️", comment: "주의 지속 푸시 알림 제목")
-        case .recurringAlert:
-            NSLocalizedString("🚨", comment: "주의 지속 반복 푸시 알림 제목")
-        }
-    }
-    
     var subtitle: String {
         switch self {
         case .caution:
-            NSLocalizedString("큰 소리를 들었어요!", comment: "주의 푸시 알림 내용")
+            NSLocalizedString("소음 수준: 주의", comment: "주의 알림 제목")
         case .persistent:
-            NSLocalizedString("20초 동안 지속적인 소음이 발생했어요", comment: "주의 지속 푸시 알림 내용")
+            NSLocalizedString("지속적인 소음 발생", comment: "주의 지속 푸시 알림 제목")
         case .recurringAlert:
-            NSLocalizedString("큰 소리가 계속 들려요!", comment: "주의 지속 반복 푸시 알림 내용")
+            NSLocalizedString("지속적인 소음 발생", comment: "주의 지속 반복 푸시 알림 제목")
+        }
+    }
+    
+    var body: String {
+        switch self {
+        case .caution:
+            NSLocalizedString("이제 조금 조심해야 해요", comment: "주의 푸시 알림 내용")
+        case .persistent:
+            NSLocalizedString("소음 상태가 20초 동안 주의에 머물렀어요!", comment: "주의 지속 푸시 알림 내용")
+        case .recurringAlert:
+            NSLocalizedString("아직까지 조심해야할 수준의 소음이 발생하고 있어요!", comment: "주의 지속 반복 푸시 알림 내용")
         }
     }
 }

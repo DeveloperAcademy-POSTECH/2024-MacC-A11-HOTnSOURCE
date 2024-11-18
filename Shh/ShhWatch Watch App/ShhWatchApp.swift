@@ -9,17 +9,20 @@ import SwiftUI
 
 @main
 struct ShhWatch_Watch_AppApp: App {
-    @StateObject private var router = Router()
+    @StateObject private var audioManager: AudioManager = {
+        do {
+            return try AudioManager()
+        } catch {
+            fatalError("AudioManager 초기화 실패: \(error.localizedDescription)")
+        }
+    }()
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack(path: $router.path) {
-                SelectLocationView()
-                    .navigationDestination(for: ShhWatchView.self) { shhWatchView in
-                        shhWatchView.view
-                    }
+            NavigationStack {
+                MainView()
             }
-            .environmentObject(router)
         }
+        .environmentObject(audioManager)
     }
 }
