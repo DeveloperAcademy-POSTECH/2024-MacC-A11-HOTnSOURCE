@@ -12,7 +12,12 @@ import SwiftUI
 final class AudioManager: ObservableObject {
     // MARK: Properties
     // 현재 사용자의 dB
-    @Published var userDecibel: Float = 0.0 // 0.5초마다 갱신
+    @Published var userDecibel: Float = 0.0 // 0.1초마다 갱신
+    
+    // 사용자의 dB를 저장해두는 버퍼; 소음 수준 갱신과 실시간 현황에 사용됨
+    @Published var userDecibelBuffer: [Float] = []
+    private let userNoiseStatusUpdateTimeInterval: TimeInterval = 2 // 2초마다 사용자의 소음 상태를 갱신
+    private let userDecibelBufferSize: Int = 100
     
     // 현재 소음 측정 상황
     @Published var isMetering: Bool = false
@@ -21,7 +26,7 @@ final class AudioManager: ObservableObject {
     @Published var userNoiseStatus: NoiseStatus = .safe
     
     // 배경 dB
-    var backgroundDecibel: Float = 0.0
+    @Published var backgroundDecibel: Float = 0.0
     
     // 최대 dB; 배경 dB가 변경되면 변경됨
     var maximumDecibel: Int {
@@ -49,7 +54,7 @@ final class AudioManager: ObservableObject {
                 return tempDecibel
             }
         }
-        return 0
+        return 0 // 찾지 못한 경우
     }
     
     private let audioRecorder: AVAudioRecorder
@@ -59,7 +64,7 @@ final class AudioManager: ObservableObject {
     private let validationConstant: Float = 1.5 // 현재 소음이 평균 소음보다 얼만큼 더 커도 되는지; 튀는 값 찾기 위해 사용
 
     private let decibelMeteringTimeInterval: TimeInterval = 0.1
-    private let decibelBufferSize: Int = 5 // 0.5초 간의 소리로 데시벨을 갱신; 0.1 * 5 = 0.5
+//    private let decibelBufferSize: Int = 5 // 0.5초 간의 소리로 데시벨을 갱신; 0.1 * 5 = 0.5
     
     private let loudnessMeteringTimeInterval: TimeInterval = 0.5
     private let loudnessBufferSize: Int = 4 // 2초 지속됐을 경우 위험도를 갱신; 0.5 * 4 = 2
@@ -67,14 +72,11 @@ final class AudioManager: ObservableObject {
     private let distanceFromOthers: Float = 1.0 // 유저와 상대방과의 거리는 1.0 미터로 가정
     private let distanceFromPhone: Float = 0.5 // 유저와 휴대전화 사이의 거리는 0.5 미터로 가정
     
-    // 현 시점의 사용자의 dB; 0.1초 간격으로 측정
-    private var currentDecibel: Float = 0.0
-    
     // 소리 갱신을 위한 타이머; 주변 소음 측정 및, 현재 소음 측정에 이용
     private var timer: Timer?
     
     // 현재 사용자의 dB을 계산하기 위해 실시간 dB를 저장해두는 버퍼
-    private var decibelBuffer: [Float] = []
+//    private var decibelBuffer: [Float] = []
     
     // 위험치를 계산하기 위해 loudness를 저장해두는 버퍼
     private var loudnessBuffer: [Float] = []
@@ -197,16 +199,38 @@ final class AudioManager: ObservableObject {
         }
         
         // 타이머 설정
-        var loudnessCounter: Int = 0 // decibel과 loudness 갱신 타이밍을 다르게 하기 위한 카운터
-        
         timer = Timer.scheduledTimer(withTimeInterval: decibelMeteringTimeInterval, repeats: true) { _ in
-            self.updateDecibelLevel()
+            // 실시간 데시벨 갱신
+            self.updateUserDecibel()
             
-            if loudnessCounter % Int(self.loudnessMeteringTimeInterval / self.decibelMeteringTimeInterval) == 0 {
-                self.calculateLoudnessForDistance(backgroundDecibel: backgroundDecibel, distance: self.distanceFromOthers)
+            // 위험 상태 업데이트
+            let bufferWindowSize = Int(self.userNoiseStatusUpdateTimeInterval / self.decibelMeteringTimeInterval)
+            var userDecibelBufferCounter: Int = 0 // 20개가 찼을 때 소음 수준 갱신(2초/0.1초)
+            
+            if userDecibelBufferCounter % bufferWindowSize == 0 {
+                let startIndex = self.userDecibelBuffer.count - bufferWindowSize
+                
+                guard startIndex >= 0 else { return }
+                
+                let lastWindowDecibels = self.userDecibelBuffer[startIndex..<self.userDecibelBuffer.count] // 0~19, 20~39, 40~59 등 20개씩 끊은 것 중에서 마지막 윈도우에 해당하는 값
+                let userDecibelAverage: Float = lastWindowDecibels.reduce(0, +) / Float(lastWindowDecibels.count)
+                
+                if Int(userDecibelAverage) > self.maximumDecibel {
+                    self.userNoiseStatus = .caution
+                } else {
+                    self.userNoiseStatus = .safe
+                }
             }
             
-            loudnessCounter += 1
+            userDecibelBufferCounter += 1
+            
+            // 버퍼 크기 관리
+            if self.userDecibelBuffer.count >= self.userDecibelBufferSize {
+                self.userDecibelBuffer.removeFirst(bufferWindowSize) // 버퍼에서 20개씩 제거
+                userDecibelBufferCounter -= bufferWindowSize // 제거한 데이터만큼 카운터도 20 감소
+            }
+            
+            print("버퍼: \(self.userDecibelBuffer)\n\n")
         }
     }
     
@@ -277,7 +301,7 @@ final class AudioManager: ObservableObject {
     }
     
     /// 데시벨 레벨을 갱신합니다.
-    private func updateDecibelLevel() {
+    private func updateUserDecibel() {
         audioRecorder.updateMeters()
         // 마이크로 수음한 소리 레벨
         let dBFSDecibel = audioRecorder.averagePower(forChannel: 0)
@@ -285,19 +309,8 @@ final class AudioManager: ObservableObject {
         // 음압 레벨(dB SPL)로 변환
         let splDecibel = convertToSPL(dBFS: dBFSDecibel)
         
-        // 버퍼에 값을 저장
-        decibelBuffer.append(splDecibel)
-        
-        // 현재 소리 받아오기
-        currentDecibel = splDecibel
-        
-        // 버퍼가 가득차면, 평균치를 계산하여 업데이트
-        if decibelBuffer.count == decibelBufferSize {
-            let averageDecibel = decibelBuffer.reduce(0, +) / Float(decibelBuffer.count)
-            userDecibel = averageDecibel
-            
-            decibelBuffer.removeAll() // 초기 위치에 다시 저장, 새로운 메모리 할당하지 않음
-        }
+        userDecibel = splDecibel // 데시벨 갱신
+        userDecibelBuffer.append(userDecibel)
     }
     
     /// 사용자가 발생한 소리로부터 일정 거리로 떨어진 상대방이 들리는 최종적인 Loudness 계산
@@ -373,9 +386,10 @@ final class AudioManager: ObservableObject {
     /// 측정이 멈출 때, 값들을 초기화합니다.
     private func initializeProperties() {
         userDecibel = 0.0
-        currentDecibel = 0.0
+        
+        userDecibelBuffer.removeAll()
+        
         loudnessIncreaseRatio = 0.0
-        decibelBuffer.removeAll()
         loudnessBuffer.removeAll()
     }
     
@@ -385,8 +399,7 @@ final class AudioManager: ObservableObject {
         isMetering = false
         
         userDecibel = 0.0
-        currentDecibel = 0.0
-        decibelBuffer.removeAll()
+        userDecibelBuffer.removeAll()
         
         timer?.invalidate()
     }
