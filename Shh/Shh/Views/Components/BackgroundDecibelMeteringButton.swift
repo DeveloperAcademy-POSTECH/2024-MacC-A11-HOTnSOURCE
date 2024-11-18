@@ -17,27 +17,26 @@ struct BackgroundDecibelMeteringButton: View {
         Button {
             isShowingProgressView = true
             // 주변 소음 측정을 시작
-            Task {
-                do {
-                    let rawBackgroundDecibel: Float = try await audioManager.meteringBackgroundNoise()
+            do {
+                try audioManager.meteringBackgroundNoise { averageDecibel in
+                    guard let averageDecibel else { return }
                     
                     // 측정된 평균 데시벨 값을 반올림하여 30, 35, 40, ..., 70 중 가장 가까운 값으로 저장
-                    let unRoundedBackgroundDecibel = rawBackgroundDecibel
+                    let unRoundedAverageDecibel = averageDecibel
                     
                     // 5의 배수로 반올림 (예: 32.69 -> 35, 47.823 -> 50)
-                    let roundedBackgroundDecibel = round(unRoundedBackgroundDecibel / 5.0) * 5.0
+                    let roundedDecibel = round(unRoundedAverageDecibel / 5.0) * 5.0
                     
                     // 30.0 ~ 70.0 사이로 범위를 제한
-                    let clampedBackgroundDecibel = min(max(roundedBackgroundDecibel, 30.0), 70.0)
+                    let clampedDecibel = min(max(roundedDecibel, 30.0), 70.0)
                     
-                    backgroundDecibel = clampedBackgroundDecibel
+                    backgroundDecibel = clampedDecibel
                     isShowingProgressView = false
-                } catch {
-                    // TODO: 만약 에러가 invalidBackgroundNoise라면 알러트 띄우기
-                    backgroundDecibel = 0
-                    isShowingProgressView = false
-                    print(error)
                 }
+            } catch {
+                backgroundDecibel = 0
+                isShowingProgressView = false
+                print("소음 측정 중 오류 발생: \(error)")
             }
         } label: {
             Label("주변 소음 측정", systemImage: "mic.circle.fill")
