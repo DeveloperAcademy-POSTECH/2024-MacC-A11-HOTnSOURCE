@@ -38,8 +38,8 @@ final class AudioManager: ObservableObject {
     
     private let decibelMeteringTimeInterval: TimeInterval = 0.1
     private let userNoiseStatusUpdateTimeInterval: TimeInterval = 2 // 2초마다 사용자의 소음 상태를 갱신
-    private var bufferWindowSize: Int {
-        Int(userNoiseStatusUpdateTimeInterval / decibelMeteringTimeInterval) // 소음 상태 버퍼 윈도우 크기; 2초 / 0.1초 = 20
+    private var bufferWindowSize: Int { // 소음 상태 버퍼 윈도우 크기; 2초 / 0.1초 = 20
+        Int(userNoiseStatusUpdateTimeInterval / decibelMeteringTimeInterval)
     }
     private let userDecibelBufferSize: Int = 1000
     
@@ -162,7 +162,6 @@ final class AudioManager: ObservableObject {
             throw AudioManagerError.invalidBackgroundNoise
         }
         
-        // 값 갱신은 메인 스레드에서
         backgroundDecibel = decibelAverage
     }
     
@@ -337,7 +336,7 @@ final class AudioManager: ObservableObject {
 enum AudioManagerError: Error {
     case audioSessionDeinitialized // 오디오 세션이 설정 안 됐을 때
     case permissionDenied // 마이크 권한이 없을 때
-    case invalidBackgroundNoise // 배경 소음이 유효하지 않을 때
+    case invalidBackgroundNoise // 배경 소음이 유효하지 않을 때(값이 튈 때)
 }
 
 /// dB 계산에 사용되는 메서드입니다.
