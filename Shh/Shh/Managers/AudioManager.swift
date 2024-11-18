@@ -11,16 +11,14 @@ import SwiftUI
 // MARK: - 소음을 측정하고 불러오는 역할을 합니다.
 final class AudioManager: ObservableObject {
     // MARK: Properties
+    // 현재 소음 측정 상황
+    @Published var isMetering: Bool = false
+    
     // 현재 사용자의 dB
     @Published var userDecibel: Float = 0.0 // 0.1초마다 갱신
     
     // 사용자의 dB를 저장해두는 버퍼; 소음 수준 갱신과 실시간 현황에 사용됨
     @Published var userDecibelBuffer: [Float] = []
-    private let userNoiseStatusUpdateTimeInterval: TimeInterval = 2 // 2초마다 사용자의 소음 상태를 갱신
-    private let userDecibelBufferSize: Int = 100
-    
-    // 현재 소음 측정 상황
-    @Published var isMetering: Bool = false
     
     // 현재 사용자의 소음 상태
     @Published var userNoiseStatus: NoiseStatus = .safe
@@ -59,24 +57,22 @@ final class AudioManager: ObservableObject {
     
     private let audioRecorder: AVAudioRecorder
     
-    private let backgroundDecibelMeteringTimeInterval: TimeInterval = 0.1
-    private let backgroundDecibelMeteringTime: Int = 3 // 3초 간의 소리를 받아와 배경 소음을 갱신
-    private let validationConstant: Float = 1.5 // 현재 소음이 평균 소음보다 얼만큼 더 커도 되는지; 튀는 값 찾기 위해 사용
-
-    private let decibelMeteringTimeInterval: TimeInterval = 0.1
-//    private let decibelBufferSize: Int = 5 // 0.5초 간의 소리로 데시벨을 갱신; 0.1 * 5 = 0.5
-    
-    private let loudnessMeteringTimeInterval: TimeInterval = 0.5
-    private let loudnessBufferSize: Int = 4 // 2초 지속됐을 경우 위험도를 갱신; 0.5 * 4 = 2
-    
     private let distanceFromOthers: Float = 1.0 // 유저와 상대방과의 거리는 1.0 미터로 가정
     private let distanceFromPhone: Float = 0.5 // 유저와 휴대전화 사이의 거리는 0.5 미터로 가정
     
+    private let decibelMeteringTimeInterval: TimeInterval = 0.1
+    private let userNoiseStatusUpdateTimeInterval: TimeInterval = 2 // 2초마다 사용자의 소음 상태를 갱신
+    private let userDecibelBufferSize: Int = 1000
+    
+    private let backgroundDecibelMeteringTimeInterval: TimeInterval = 0.1
+    private let backgroundDecibelMeteringTime: Int = 3 // 3초 간의 소리를 받아와 배경 소음을 갱신
+    private let validationConstant: Float = 1.5 // 현재 소음이 평균 소음보다 얼만큼 더 커도 되는지; 튀는 값 찾기 위해 사용
+    
+    private let loudnessMeteringTimeInterval: TimeInterval = 0.5
+    private let loudnessBufferSize: Int = 4 // 2초 지속됐을 경우 위험도를 갱신; 0.5 * 4 = 2
+
     // 소리 갱신을 위한 타이머; 주변 소음 측정 및, 현재 소음 측정에 이용
     private var timer: Timer?
-    
-    // 현재 사용자의 dB을 계산하기 위해 실시간 dB를 저장해두는 버퍼
-//    private var decibelBuffer: [Float] = []
     
     // 위험치를 계산하기 위해 loudness를 저장해두는 버퍼
     private var loudnessBuffer: [Float] = []
@@ -122,7 +118,7 @@ final class AudioManager: ObservableObject {
     
     /// 배경의 평균 소음을 측정합니다.
     /// 해당 함수 호출 전에 setAudioSession() 메서드를 호출해야 합니다. View의 .onAppear()를 활용하면 됩니다.
-    func meteringBackgroundNoise() async throws {
+    func meteringBackgroundDecibel() async throws {
         print(#function)
         // 권한 검사
         guard checkMicrophonePermissionStatus() else {
@@ -138,7 +134,7 @@ final class AudioManager: ObservableObject {
         
         // 배경 소음 수음
         var tempDecibelBuffer: [Float] = []
-        let tempDecibelBufferMaxSize: Int = Int(Double(backgroundDecibelMeteringTime) / decibelMeteringTimeInterval.magnitude)
+        let tempDecibelBufferMaxSize: Int = Int(Double(backgroundDecibelMeteringTime) / decibelMeteringTimeInterval.magnitude) // 3초 / 0.1초 = 30
         
         // 0.1초 간격으로 측정; 총 30회
         for _ in 0..<tempDecibelBufferMaxSize {
@@ -166,7 +162,10 @@ final class AudioManager: ObservableObject {
             throw AudioManagerError.invalidBackgroundNoise
         }
         
-        backgroundDecibel = decibelAverage
+        // 값 갱신은 메인 스레드에서
+        DispatchQueue.main.async {
+            self.backgroundDecibel = decibelAverage
+        }
     }
     
     /// 내 소리가 시끄러운지 소음 측정을 시작합니다.
@@ -229,8 +228,6 @@ final class AudioManager: ObservableObject {
                 self.userDecibelBuffer.removeFirst(bufferWindowSize) // 버퍼에서 20개씩 제거
                 userDecibelBufferCounter -= bufferWindowSize // 제거한 데이터만큼 카운터도 20 감소
             }
-            
-            print("버퍼: \(self.userDecibelBuffer)\n\n")
         }
     }
     
@@ -349,6 +346,7 @@ final class AudioManager: ObservableObject {
     
     /// dBFS를 dB SPL로 변환합니다.
     private func convertToSPL(dBFS: Float) -> Float {
+        // TODO: 기기에 따라 로직 개선
         let splDecibel = dBFS + 100 // 선형 변환으로 가정
         return max(0, splDecibel) // 데시벨 수준이 0보다 낮지 않도록 조정
     }
