@@ -24,35 +24,11 @@ final class AudioManager: ObservableObject {
     @Published var userNoiseStatus: NoiseStatus = .safe
     
     // 배경 dB
-    @Published var backgroundDecibel: Float = 0.0
+    var backgroundDecibel: Float = 0.0
     
     // 최대 dB; 배경 dB가 변경되면 변경됨
     var maximumDecibel: Int {
-        // 1. 분모에 해당하는 배경 소음의 Loudness 계산
-        let backgroundLoudness = convertToLoudness(decibel: backgroundDecibel)
-        
-        // 2. 분자에 해당하는 상대방이 느끼는 Loudness 계산
-        let distanceRatio: Float = distanceFromOthers / distanceFromPhone
-        var perceivedDecibel: Float = 0.0
-        var combinedDecibel: Float = 0.0
-        var combinedLoudness: Float = 0.0
-        
-        for tempDecibel in Int(backgroundDecibel)..<120 { // 최대 120dB까지 탐색
-            // 2-1. 상대방이 느끼는 dB 계산(사용자에 의해 생긴 dB)
-            perceivedDecibel = calculateDecibelAtDistance(originalDecibel: Float(tempDecibel), distanceRatio: distanceRatio)
-            
-            // 2-2. 합산된 데시벨 계산(배경 dB + 사용자 dB)
-            combinedDecibel = combineDecibels(backgroundDecibel: backgroundDecibel, noiseDecibel: perceivedDecibel)
-            
-            // 2-3. 상대방이 느끼는 Loudness 계산
-            combinedLoudness = convertToLoudness(decibel: combinedDecibel)
-            
-            // 3. 사용자가 낼 수 있는 dB 최댓값 찾기
-            if combinedLoudness >= NoiseStatus.loudnessCautionLevel * backgroundLoudness {
-                return tempDecibel
-            }
-        }
-        return 0 // 찾지 못한 경우
+        calculateMaximumDecibel()
     }
     
     private let audioRecorder: AVAudioRecorder
@@ -62,6 +38,9 @@ final class AudioManager: ObservableObject {
     
     private let decibelMeteringTimeInterval: TimeInterval = 0.1
     private let userNoiseStatusUpdateTimeInterval: TimeInterval = 2 // 2초마다 사용자의 소음 상태를 갱신
+    private var bufferWindowSize: Int {
+        Int(userNoiseStatusUpdateTimeInterval / decibelMeteringTimeInterval) // 소음 상태 버퍼 윈도우 크기; 2초 / 0.1초 = 20
+    }
     private let userDecibelBufferSize: Int = 1000
     
     private let backgroundDecibelMeteringTimeInterval: TimeInterval = 0.1
@@ -184,9 +163,7 @@ final class AudioManager: ObservableObject {
         }
         
         // 값 갱신은 메인 스레드에서
-        DispatchQueue.main.async {
-            self.backgroundDecibel = decibelAverage
-        }
+        backgroundDecibel = decibelAverage
     }
     
     /// 내 소리가 시끄러운지 소음 측정을 시작합니다.
@@ -218,36 +195,24 @@ final class AudioManager: ObservableObject {
             }
         }
         
+        var userDecibelBufferCounter: Int = 0 // 데시벨 갱신과 소음 상태 갱신을 별도로 진행
+        
         // 타이머 설정
         timer = Timer.scheduledTimer(withTimeInterval: decibelMeteringTimeInterval, repeats: true) { _ in
             // 실시간 데시벨 갱신
             self.updateUserDecibel()
             
             // 소음 상태 갱신
-            var userDecibelBufferCounter: Int = 0 // 데시벨 갱신과 소음 상태 갱신을 별도로 진행
-            let bufferWindowSize = Int(self.userNoiseStatusUpdateTimeInterval / self.decibelMeteringTimeInterval) // 소음 상태 버퍼 윈도우 크기; 2초 / 0.1초 = 20
-            
-            if userDecibelBufferCounter % bufferWindowSize == 0 { // 윈도우 끝에 도달하면
-                let startIndex = self.userDecibelBuffer.count - bufferWindowSize
-                
-                guard startIndex >= 0 else { return }
-                
-                let lastWindowDecibels = self.userDecibelBuffer[startIndex..<self.userDecibelBuffer.count] // 0~19, 20~39, 40~59 등 20개씩 끊은 것 중에서 마지막 윈도우에 해당하는 값
-                let userDecibelAverage: Float = lastWindowDecibels.reduce(0, +) / Float(lastWindowDecibels.count)
-                
-                if Int(userDecibelAverage) > self.maximumDecibel {
-                    self.userNoiseStatus = .caution
-                } else {
-                    self.userNoiseStatus = .safe
-                }
+            if userDecibelBufferCounter % self.bufferWindowSize == 0 { // 윈도우 끝에 도달하면
+                self.updateUserNoiseStatus()
             }
             
             userDecibelBufferCounter += 1
             
             // 버퍼 크기 관리
             if self.userDecibelBuffer.count >= self.userDecibelBufferSize {
-                self.userDecibelBuffer.removeFirst(bufferWindowSize) // 버퍼에서 20개씩 제거
-                userDecibelBufferCounter -= bufferWindowSize // 제거한 데이터만큼 카운터도 20 감소
+                self.userDecibelBuffer.removeFirst(self.bufferWindowSize) // 버퍼에서 20개씩 제거
+                userDecibelBufferCounter -= self.bufferWindowSize // 제거한 데이터만큼 카운터도 20 감소
             }
         }
     }
@@ -288,6 +253,40 @@ final class AudioManager: ObservableObject {
     }
     
     // MARK: Internal methods
+    // 최대 dB을 계산합니다.
+    private func calculateMaximumDecibel() -> Int {
+        // 0. 결괏값
+        var returnValue: Int = 0
+        
+        // 1. 분모에 해당하는 배경 소음의 Loudness 계산
+        let backgroundLoudness = convertToLoudness(decibel: backgroundDecibel)
+        
+        // 2. 분자에 해당하는 상대방이 느끼는 Loudness 계산
+        let distanceRatio: Float = distanceFromOthers / distanceFromPhone
+        var perceivedDecibel: Float = 0.0
+        var combinedDecibel: Float = 0.0
+        var combinedLoudness: Float = 0.0
+        
+        for tempDecibel in Int(backgroundDecibel)..<120 { // 최대 120dB까지 탐색
+            // 2-1. 상대방이 느끼는 dB 계산(사용자에 의해 생긴 dB)
+            perceivedDecibel = calculateDecibelAtDistance(originalDecibel: Float(tempDecibel), distanceRatio: distanceRatio)
+            
+            // 2-2. 합산된 데시벨 계산(배경 dB + 사용자 dB)
+            combinedDecibel = combineDecibels(backgroundDecibel: backgroundDecibel, noiseDecibel: perceivedDecibel)
+            
+            // 2-3. 상대방이 느끼는 Loudness 계산
+            combinedLoudness = convertToLoudness(decibel: combinedDecibel)
+            
+            // 3. 사용자가 낼 수 있는 dB 최댓값 찾기
+            if combinedLoudness >= NoiseStatus.loudnessCautionLevel * backgroundLoudness {
+                returnValue = tempDecibel
+                break
+            }
+        }
+        
+        return returnValue
+    }
+    
     /// 사용자 dB을 갱신합니다.
     private func updateUserDecibel() {
         audioRecorder.updateMeters()
@@ -299,6 +298,22 @@ final class AudioManager: ObservableObject {
         
         userDecibel = splDecibel // 데시벨 갱신
         userDecibelBuffer.append(userDecibel)
+    }
+    
+    /// 사용자 소음 상태를 갱신합니다.
+    private func updateUserNoiseStatus() {
+        let startIndex = self.userDecibelBuffer.count - self.bufferWindowSize
+        
+        guard startIndex >= 0 else { return }
+        
+        let lastWindowDecibels = self.userDecibelBuffer[startIndex..<self.userDecibelBuffer.count] // 0~19, 20~39, 40~59 등 20개씩 끊은 것 중에서 마지막 윈도우에 해당하는 값
+        let userDecibelAverage: Float = lastWindowDecibels.reduce(0, +) / Float(lastWindowDecibels.count)
+        
+        if Int(userDecibelAverage) > self.maximumDecibel {
+            self.userNoiseStatus = .caution
+        } else {
+            self.userNoiseStatus = .safe
+        }
     }
     
     /// 측정이 멈출 때, 값들을 초기화합니다.
