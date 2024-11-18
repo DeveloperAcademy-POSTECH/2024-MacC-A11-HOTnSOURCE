@@ -29,16 +29,6 @@ struct MeteringTabView: View {
                 .tag(Tabs.info)
         }
         .navigationBarBackButtonHidden(true)
-        .onAppear {
-            audioManager.isMetering = true
-        }
-        .onAppear {
-            // TODO: 측정 시작
-        }
-        .onDisappear {
-            audioManager.stopMetering()
-            NotificationManager.shared.removeAllNotifications()
-        }
         .onChange(of: audioManager.userNoiseStatus) {
            // TODO: 알림 보내기
         }

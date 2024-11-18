@@ -21,7 +21,7 @@ final class AudioManager: ObservableObject {
     @Published var userNoiseStatus: NoiseStatus = .safe
     
     // 배경 dB
-    var backgroundDecibel: Int = 0
+    @Published var backgroundDecibel: Int = 0
     
     private let audioRecorder: AVAudioRecorder
     
@@ -108,9 +108,10 @@ final class AudioManager: ObservableObject {
         // 배경 소음 수음
         var tempDecibelBuffer: [Float] = []
         let tempDecibelBufferMaxSize: Int = Int(Double(backgroundDecibelMeteringTime) / decibelMeteringTimeInterval.magnitude)
+        let adjustedTempDecibelBufferMaxSize = tempDecibelBufferMaxSize + 10
         
         // 0.1초 간격으로 측정; 총 30회
-        for _ in 0..<tempDecibelBufferMaxSize {
+        for _ in 0..<adjustedTempDecibelBufferMaxSize {
             // 비동기적으로 일정 시간 대기
             try await Task.sleep(nanoseconds: UInt64(decibelMeteringTimeInterval * 1_000_000_000))
             
@@ -126,16 +127,19 @@ final class AudioManager: ObservableObject {
         audioRecorder.stop()
         
         // 배경 소음 수음값의 평균 계산
-        let decibelAverage = tempDecibelBuffer.reduce(0, +) / Float(tempDecibelBuffer.count)
-        
+        let slice = tempDecibelBuffer.dropFirst(10) // 10번째 인덱스부터 끝까지 슬라이싱
+        let decibelAverage = slice.reduce(0, +) / Float(slice.count)
+
         // 평균값이 배경 소음으로 유효한지 검사
-        let isValid = tempDecibelBuffer.allSatisfy { $0 <= validationConstant * decibelAverage }
+        let isValid = slice.allSatisfy { $0 <= validationConstant * decibelAverage }
         
         guard isValid else {
             throw AudioManagerError.invalidBackgroundNoise
         }
         
-        backgroundDecibel = Int(decibelAverage.rounded())
+        DispatchQueue.main.async {
+            self.backgroundDecibel = Int(decibelAverage.rounded())
+        }
     }
     
     /// 내 소리가 시끄러운지 소음 측정을 시작합니다.

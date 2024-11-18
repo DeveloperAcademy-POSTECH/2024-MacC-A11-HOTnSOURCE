@@ -22,6 +22,18 @@ struct ShhWatch_Watch_AppApp: App {
             NavigationStack {
                 MainView()
             }
+            .onAppear {
+                do {
+                    try audioManager.setAudioSession()
+                } catch {
+                    // TODO: 문제 발생 알러트 띄우기
+                    print("오디오 세션 설정 중에 문제가 발생했습니다.")
+                }
+            }
+            .onDisappear {
+                audioManager.stopMetering()
+                NotificationManager.shared.removeAllNotifications()
+            }
         }
         .environmentObject(audioManager)
     }
