@@ -18,8 +18,4 @@ struct LiveDecibelTip: Tip {
     var message: Text? {
         Text("현재 내가 내고 있는 소리가 궁금하다면 이곳을 눌러주세요.")
     }
-    
-    var image: Image? {
-        Image(systemName: "lightbulb")
-    }
 }

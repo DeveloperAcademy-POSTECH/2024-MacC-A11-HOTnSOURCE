@@ -269,6 +269,7 @@
       }
     },
     "Shh-!는 앱을 나가거나 휴대전화를 잠궈도 들을 수 있어요. 마음 놓고 집중하세요!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -289,6 +290,7 @@
       }
     },
     "Shh-!의 소음 측정 방법이 궁금하면 이곳을 눌러주세요." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -582,6 +584,9 @@
         }
       }
     },
+    "스눅이 해줄 예정" : {
+
+    },
     "시끄러운 사무실이나 사람들 간의 활발한 토론 소리" : {
       "localizations" : {
         "en" : {
@@ -617,6 +622,9 @@
 
     },
     "실시간 현황" : {
+
+    },
+    "실시간 현황 시트" : {
 
     },
     "아주 조용한 방에서의 환경음" : {
@@ -1107,6 +1115,7 @@
 
     },
     "화면을 덮고 사용해보세요!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

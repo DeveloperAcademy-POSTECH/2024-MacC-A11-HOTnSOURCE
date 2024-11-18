@@ -16,7 +16,9 @@ struct MeteringView: View {
     
     @State private var isAnimating = false
     
-    @State private var showMeteringInfoSheet = false
+    @State private var showLiveDecibelSheet = false
+    
+    @State private var showMeteringInfoFullScreenCover = false
     
     private let meteringCircleAnimation = Animation
         .easeInOut(duration: 1.5)
@@ -60,40 +62,45 @@ struct MeteringView: View {
                         .font(.body)
                         .fontWeight(.regular)
                         .foregroundStyle(.gray)
-                        .contentShape(Rectangle())
                 }
+                .buttonStyle(.plain)
+                .contentShape(Rectangle())
             }
             
             ToolbarItemGroup(placement: .topBarTrailing) {
                 HStack(spacing: 10) {
                     Button {
-                        showMeteringInfoSheet = true
+                        withAnimation {
+                            showLiveDecibelSheet = true
+                        }
                     } label: {
                         Label("실시간 현황", systemImage: "chart.xyaxis.line")
                             .font(.body)
                             .fontWeight(.regular)
                             .foregroundStyle(.green)
-                            .contentShape(Rectangle())
                             .padding(.all, 6)
                             .background {
-                                if showMeteringInfoSheet {
+                                if showLiveDecibelSheet {
                                     RoundedRectangle(cornerRadius: 5)
                                         .fill(.green.opacity(0.3))
                                 }
                             }
                     }
+                    .contentShape(Rectangle())
                     .buttonStyle(.plain)
                     .popoverTip(LiveDecibelTip())
                     
                     Button {
-                        showMeteringInfoSheet = true
+                        withAnimation {
+                            showMeteringInfoFullScreenCover = true
+                        }
                     } label: {
                         Text("도움말")
                             .font(.body)
                             .fontWeight(.regular)
                             .foregroundStyle(.green)
-                            .contentShape(Rectangle())
                     }
+                    .contentShape(Rectangle())
                     .buttonStyle(.plain)
                 }
             }
@@ -116,10 +123,13 @@ struct MeteringView: View {
             audioManager.stopMetering()
             NotificationManager.shared.removeAllNotifications()
         }
-        .sheet(isPresented: $showMeteringInfoSheet) {
-            MeteringInfoSheet()
-                .presentationDetents([.large])
+        .sheet(isPresented: $showLiveDecibelSheet) {
+            LiveDecibelSheet()
+                .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
+        }
+        .fullScreenCover(isPresented: $showMeteringInfoFullScreenCover) {
+            MeteringInfoFullScreenCover()
         }
     }
     
@@ -248,6 +258,7 @@ struct MeteringCircle: View {
             .scaleEffect(scale)
     }
 }
+
 // MARK: - Preview
 #Preview {
     @Previewable @StateObject var audioManager: AudioManager = {
