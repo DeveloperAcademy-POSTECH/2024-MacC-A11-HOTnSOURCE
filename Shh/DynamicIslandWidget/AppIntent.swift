@@ -25,7 +25,7 @@ struct StartMeteringIntent: LiveActivityIntent, AudioRecordingIntent {
     func perform() async throws -> some IntentResult {
         DispatchQueue.main.async {
             // TODO: 배경 소음 인자 제거
-//            AudioManager.shared.startMetering(backgroundDecibel: )
+            AudioManager.shared.startMetering()
         }
         return .result()
     }
