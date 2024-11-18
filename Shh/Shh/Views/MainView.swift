@@ -71,13 +71,6 @@ struct MainView: View {
                         .fill(.accent)
                 }
         }
-        .onAppear {
-            do {
-                try audioManager.setAudioSession()
-            } catch {
-                print("웁스")
-            }
-        }
     }
 }
 
