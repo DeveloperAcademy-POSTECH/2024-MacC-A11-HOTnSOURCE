@@ -14,12 +14,6 @@ struct MeteringView: View {
     @EnvironmentObject var router: Router
     @EnvironmentObject var audioManager: AudioManager
     
-//    @State var selectedLocation: Location
-    
-    @State private var countdown = 3
-    @State private var showCountdown = true
-    @State private var countdownTimer: Timer?
-    
     @State private var isAnimating = false
     
     @State private var showMeteringInfoSheet = false
@@ -35,7 +29,9 @@ struct MeteringView: View {
     }
     
     private var outerCircleColor: Color {
-        audioManager.userNoiseStatus == .safe ? .accent : .indigo
+        audioManager.userNoiseStatus == .safe
+        ? .accent
+        : .indigo
     }
     
     private var innerCircleColors: [Color] {
@@ -46,45 +42,31 @@ struct MeteringView: View {
     
     // MARK: Body
     var body: some View {
-        ZStack {
-            VStack {
-                Spacer()
-                Text("배경소음\(audioManager.backgroundDecibel)")
-                Text("최대소음\(audioManager.maximumDecibel)")
-                Text("현재 소음\(audioManager.userDecibel)")
-                
-                ZStack {
-                    meteringCircles
-                        .hidden(!audioManager.isMetering) // 측정 중일 때
-                    
-                    meteringPausedCircle
-                        .hidden(audioManager.isMetering) // 측정을 멈추었을 때
-                }
-                
-                Spacer()
-                
-                HStack(alignment: .center) {
-                    userNoiseStatusInfo
-                    
-                    Spacer()
-                    
-                    meteringToggleButton
-                }
-                
-                TipView(BackgroundInlineTip())
-                
-                Spacer().frame(height: 20) // 아래 여백
-            }
-            .padding(.horizontal)
-            .hidden(showCountdown)// 카운트다운 중에는 보이지 않음
+        VStack {
+            Spacer()
             
-            if showCountdown {
-                countdownView
+            ZStack {
+                meteringCircles
+                    .hidden(!audioManager.isMetering) // 측정 중일 때
+                
+                meteringPausedCircle
+                    .hidden(audioManager.isMetering) // 측정을 멈추었을 때
             }
+            
+            Spacer()
+            
+            HStack(alignment: .center) {
+                userNoiseStatusInfo
+                
+                Spacer()
+                
+                meteringToggleButton
+            }
+            Spacer().frame(height: 20) // 아래 여백
         }
+        .padding(.horizontal)
         .background(.customBlack)
         .navigationBarTitleDisplayMode(.large)
-        .navigationBarHidden(showCountdown) // 카운트다운 중에는 보이지 않음
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button {
@@ -97,11 +79,6 @@ struct MeteringView: View {
                 }
                 .buttonStyle(.plain)
                 .popoverTip(infoPopoverTip, arrowEdge: .top)
-                .onChange(of: infoPopoverTipStatus) {
-                    if infoPopoverTipStatus == .invalidated(.tipClosed) {
-                        BackgroundInlineTip.isCurrentTip = true
-                    }
-                }
             }
         }
         .onChange(of: audioManager.userNoiseStatus) {
@@ -121,12 +98,10 @@ struct MeteringView: View {
             } catch {
                 // TODO: 문제 발생 알러트 띄우기
                 print("오디오 세션 설정 중에 문제가 발생했습니다.")
-                router.pop()
             }
         }
         .onDisappear {
             audioManager.stopMetering()
-            stopCountdown()
             NotificationManager.shared.removeAllNotifications()
         }
         .sheet(isPresented: $showMeteringInfoSheet) {
@@ -219,39 +194,25 @@ struct MeteringView: View {
         .accessibilityLabel(audioManager.isMetering ? "Pause metering" : "Resume metering")
         .accessibilityHint("Starts or pauses noise metering")
     }
-    
-    private var countdownView: some View {
-        Text("\(countdown)")
-            .font(.system(size: 100, weight: .bold, design: .default))
-            .foregroundColor(.customWhite)
-            .transition(.opacity)
-            .onAppear {
-                startCountdown()
-            }
-    }
 }
 
-extension MeteringView {
-    private func startCountdown() {
-        print(#function)
-        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            if countdown > 1 {
-                countdown -= 1
-            } else {
-                stopCountdown()
-                
-                withAnimation {
-                    showCountdown = false
-                }
-                
-                audioManager.startMetering()
+// MARK: - Preview
+#Preview {
+    @Previewable @StateObject var audioManager: AudioManager = {
+        do {
+            return try AudioManager()
+        } catch {
+            fatalError("AudioManager 초기화 실패: \(error.localizedDescription)")
+        }
+    }()
+
+    MeteringView()
+        .environmentObject(audioManager)
+        .onAppear {
+            do {
+                try audioManager.setAudioSession()
+            } catch {
+                print("oops")
             }
         }
-    }
-    
-    private func stopCountdown() {
-        print(#function)
-        countdownTimer?.invalidate() // 타이머 해지
-        countdownTimer = nil
-    }
 }
