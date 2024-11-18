@@ -20,7 +20,7 @@ struct ShhApp: App {
         WindowGroup {
             if isFirstLaunch {
                 NavigationStack(path: $router.onboardingPath) {
-                    WelcomeView()
+                    OnboardingView()
                         .navigationDestination(for: ShhView.self) { shhView in
                             shhView.view
                         }

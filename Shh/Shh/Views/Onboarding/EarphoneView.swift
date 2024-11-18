@@ -1,5 +1,5 @@
 //
-//  WelcomeView.swift
+//  EarphoneView.swift
 //  Shh
 //
 //  Created by Eom Chanwoo on 11/19/24.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct WelcomeView: View {
+struct EarphoneView: View {
     var body: some View {
-        Text("Welcome")
+        Text("Earphone")
     }
 }
 
 #Preview {
-    WelcomeView()
+    EarphoneView()
 }
