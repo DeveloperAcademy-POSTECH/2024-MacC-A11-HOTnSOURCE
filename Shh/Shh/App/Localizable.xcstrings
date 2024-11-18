@@ -477,9 +477,6 @@
         }
       }
     },
-    "배경소음: %f" : {
-
-    },
     "삭제" : {
       "extractionState" : "stale",
       "localizations" : {
