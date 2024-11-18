@@ -26,8 +26,8 @@ struct MainView: View {
             } label: {
                 Text("배경 소음 측정")
             }
-            CustomButton(text: "측정 뷰로 이동") {
-                router.push(view: .meteringView)
+            NavigationLink("로딩 뷰") {
+                LoadingView()
             }
         }
         .onAppear {
