@@ -12,9 +12,10 @@ struct MeteringTabView: View {
     // MARK: Properties
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var audioManager: AudioManager
-
+    
     @State private var tabSelection: Tabs = .home
-    @State private var backgroundNoise: Float = 0
+    
+    @Binding var backgroundDecibel: Float
     
     // MARK: Body
     var body: some View {
@@ -29,8 +30,12 @@ struct MeteringTabView: View {
                 .tag(Tabs.info)
         }
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            audioManager.startMetering(backgroundDecibel: backgroundDecibel)
+        }
         .onChange(of: audioManager.userNoiseStatus) {
-           // TODO: 알림 보내기
+            // TODO: 알림 보내기
+            
         }
     }
 }

@@ -11,7 +11,6 @@ struct MeteringView: View {
     // MARK: Properties
     @EnvironmentObject var audioManager: AudioManager
     
-    @State private var noiseStatus = "safe"
     @State private var isAnimating = false
     
     private let meteringCircleAnimation = Animation
@@ -19,11 +18,11 @@ struct MeteringView: View {
         .repeatForever(autoreverses: true)
     
     private var outerCircleColor: Color {
-        noiseStatus == "safe" ? .accent : .indigo
+        audioManager.userNoiseStatus == .safe ? .accent : .indigo
     }
     
     private var innerCircleColors: [Color] {
-        if noiseStatus == "safe" {
+        if audioManager.userNoiseStatus == .safe {
             return [.accent, .customLime]
         } else {
             return [.indigo, .purple]
@@ -33,12 +32,12 @@ struct MeteringView: View {
     var body: some View {
         ZStack {
             meteringCircles
-                .hidden(!audioManager.isMetering) // 측정 중일 때
+                .hidden(!audioManager.isMetering)
             
             meteringPausedCircle
-                .hidden(audioManager.isMetering) // 측정을 멈추었을 때
+                .hidden(audioManager.isMetering)
             
-            Text(noiseStatus == "safe" ? "양호" : "주의")
+            Text(audioManager.userNoiseStatus == .safe ? "양호" : "주의")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundStyle(.black)

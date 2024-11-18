@@ -12,52 +12,44 @@ struct MainView: View {
     // MARK: Properties
     @EnvironmentObject var audioManager: AudioManager
     
+    @State var backgroundDecibel: Float = 0
+    @State private var isNavigating: Bool = false
+    
     // MARK: Body
     var body: some View {
-        VStack(spacing: 40) {
-            VStack {
-                Text("Title")
-                    .font(.title)
-                
-                Text("Subtitle")
-                    .font(.subheadline)
-            }
-            
-//            NavigationLink {
-//                MeteringTabView()
-//            } label: {
-//                Button {
-//                    Task {
-//                        do {
-//                            try await audioManager.meteringBackgroundNoise()
-//                            
-//                            print("isMetering \(audioManager.isMetering)")
-//                            print("userNoiseStatus \(audioManager.userNoiseStatus)")
-//                            
-//                        } catch {
-//                            print("‼️ 배경 소음 측정 실패 \(error)")
-//                        }
-//                    }
-//                } label: {
-//                    Text("배경 소음 측정")
-//                }
-//            }
-        }
-        .onAppear {
-            Task {
-                do {
-                    try await audioManager.meteringBackgroundNoise()
+        NavigationStack {
+            VStack(spacing: 40) {
+                VStack {
+                    Text("Title")
+                        .font(.title)
                     
-                    print("isMetering \(audioManager.isMetering)")
-                    print("userNoiseStatus \(audioManager.userNoiseStatus)")
-                    
-                } catch {
-                    print("‼️ 배경 소음 측정 실패 \(error)")
+                    Text("Subtitle")
+                        .font(.subheadline)
                 }
+                
+                Text("배경 소음 측정")
+                    .onTapGesture {
+                        Task {
+                            do {
+                                // 배경 소음 측정
+                                try await audioManager.meteringBackgroundNoise()
+                                
+                                // (MeteringTabView에 넘겨주기 위해) backgroundDecibel 저장
+                                backgroundDecibel = Float(audioManager.backgroundDecibel)
+                                
+                                // MeteringTabView로 이동
+                                isNavigating = true
+                                
+                                // TODO: iOS의 로딩 뷰 머지 후, watch에도 배경 소음 측정 과정에 로딩 뷰 활용할 예정
+                            } catch {
+                                print("‼️ 배경 소음 측정 실패 \(error)")
+                            }
+                        }
+                    }
             }
-        }
-        .onChange(of: audioManager.userNoiseStatus) {
-            print("OnChange: userNoiseStatus \(audioManager.userNoiseStatus)")
+            .navigationDestination(isPresented: $isNavigating) {
+                MeteringTabView(backgroundDecibel: $backgroundDecibel)
+            }
         }
     }
 }
