@@ -10,23 +10,56 @@ import SwiftUI
 // MARK: - 로딩 화면; 로딩 중 배경 소음 측정
 struct LoadingView: View {
     // MARK: Properties
+    @EnvironmentObject var audioManager: AudioManager
+    
     @State private var progress: CGFloat = 0.0
-    @State private var isLoading: Bool = false
     @State private var message: LoadingMessage = .metering
+    @State private var isMeteringFinished: Bool = false
+    @State private var isMeteringFailed: Bool = false
+    @State private var isFirstMetering: Bool = true
+    @State private var pushMeteringView: Bool = false
     
     // MARK: Body
     var body: some View {
         VStack(spacing: 20) {
+            Spacer()
+            
             Text(message.text)
                 .font(.body)
                 .fontWeight(.bold)
                 .foregroundStyle(.gray)
             
             progressBar
+            
+            Spacer()
         }
         .padding(20)
-        .onAppear {
-            startLoading()
+        .background(.customBlack)
+        .navigationBarBackButtonHidden()
+        .navigationDestination(isPresented: $pushMeteringView) {
+            MeteringView()
+        }
+        .task {
+            await startLoading()
+        }
+        .onChange(of: isMeteringFinished) {
+            if isMeteringFinished && !isMeteringFailed {
+                pushMeteringView = true
+            }
+        }
+        .alert(isPresented: $isMeteringFailed) {
+            Alert(
+                title: Text("큰 소리를 들었어요"),
+                message: Text("비정상적으로 큰 소리가 들어가면 측정이 정확하지 않을 수 있어요. 다시 확인할까요?"),
+                primaryButton: .cancel(Text("괜찮아요")) {
+                    pushMeteringView = true
+                },
+                secondaryButton: .default(Text("다시 확인할게요")) {
+                    Task {
+                        await startLoading()
+                    }
+                }
+            )
         }
     }
     
@@ -36,19 +69,19 @@ struct LoadingView: View {
             RoundedRectangle(cornerRadius: 10)
                 .fill(.gray.opacity(0.3))
                 .frame(height: 15)
-            
+        
             RoundedRectangle(cornerRadius: 10)
                 .fill(.accent)
-                .frame(width: progress, height: 15)
-                .animation(.linear(duration: 3), value: progress)
+                .frame(maxWidth: progress)
+                .frame(height: 15)
         }
     }
-}
-
-// MARK: Action Handlers
-private extension LoadingView {
-    private func startLoading() {
-        isLoading = true
+    
+    // MARK: Action Handlers
+    private func startLoading() async {
+        isMeteringFinished = false
+        isMeteringFailed = false
+        message = .metering
         progress = 0.0
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
@@ -61,10 +94,25 @@ private extension LoadingView {
             progress = .infinity
         }
         
-        // TODO: 성공적으로 결과 반환받으면 로딩 상태 변경
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            isLoading = false
+        do {
+            try await meteringBackgroundDecibel()
+        } catch AudioManagerError.invalidBackgroundNoise {
+            isMeteringFailed = true
+        } catch {
+            // TODO: 구체적인 에러 핸들링 필요; 현재는 큰 소리가 감지됐을 때만 처리함
+            progress = 0.0
+            print(error.localizedDescription)
         }
+    }
+    
+    private func meteringBackgroundDecibel() async throws {
+        if isFirstMetering {
+            try audioManager.setAudioSession()
+            isFirstMetering = false
+        }
+        
+        try await audioManager.meteringBackgroundNoise()
+        isMeteringFinished = true
     }
 }
 
@@ -85,6 +133,16 @@ extension LoadingMessage {
     }
 }
 
+// MARK: - Preview
 #Preview {
+    @Previewable @StateObject var audioManager: AudioManager = {
+        do {
+            return try AudioManager()
+        } catch {
+            fatalError("AudioManager 초기화 실패: \(error.localizedDescription)")
+        }
+    }()
+    
     LoadingView()
+        .environmentObject(audioManager)
 }
