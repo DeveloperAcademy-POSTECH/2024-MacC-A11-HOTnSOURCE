@@ -21,12 +21,6 @@ struct MeteringView: View {
     private let meteringCircleAnimation = Animation
         .easeInOut(duration: 1.5)
         .repeatForever(autoreverses: true)
-
-    private let infoPopoverTip = InfoPopoverTip() // Tip 상태 접근을 위해 객체 미리 생성
-    
-    private var infoPopoverTipStatus: Tip.Status {
-        infoPopoverTip.status
-    }
     
     // MARK: Body
     var body: some View {
@@ -89,6 +83,7 @@ struct MeteringView: View {
                             }
                     }
                     .buttonStyle(.plain)
+                    .popoverTip(LiveDecibelTip())
                     
                     Button {
                         showMeteringInfoSheet = true
