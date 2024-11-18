@@ -27,8 +27,6 @@ struct MeteringView: View {
     // MARK: Body
     var body: some View {
         VStack(alignment: .center) {
-            Spacer().frame(height: 58)
-            
             userNoiseStatusInfo
                 .frame(maxWidth: .infinity)
             
@@ -139,13 +137,13 @@ struct MeteringView: View {
             MeteringCircle(
                 userNoiseStatus: $audioManager.userNoiseStatus,
                 isGradient: false,
-                scale: isAnimating ? 1.8 : 0.9
+                scale: isAnimating ? 1.6 : 0.9
             )
             
             MeteringCircle(
                 userNoiseStatus: $audioManager.userNoiseStatus,
                 isGradient: false,
-                scale: isAnimating ? 1.4 : 0.9
+                scale: isAnimating ? 1.3 : 0.9
             )
                 
             MeteringCircle(
@@ -251,33 +249,10 @@ struct MeteringCircle: View {
         )
     }
     
-    var body: some View  {
+    var body: some View {
         Circle()
             .fill(isGradient ? AnyShapeStyle(innerCircleGradient) : AnyShapeStyle(outerCircleColor))
             .opacity(isGradient ? 1.0 : 0.2)
             .scaleEffect(scale)
-    }
-}
-
-// MARK: - Preview
-#Preview {
-    @Previewable @StateObject var audioManager: AudioManager = {
-        do {
-            return try AudioManager()
-        } catch {
-            fatalError("AudioManager 초기화 실패: \(error.localizedDescription)")
-        }
-    }()
-
-    NavigationStack {
-        MeteringView()
-            .environmentObject(audioManager)
-            .onAppear {
-                do {
-                    try audioManager.setAudioSession()
-                } catch {
-                    print("oops")
-                }
-            }
     }
 }
