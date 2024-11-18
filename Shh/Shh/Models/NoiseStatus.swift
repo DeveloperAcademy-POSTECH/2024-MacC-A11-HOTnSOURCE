@@ -9,7 +9,8 @@ import SwiftUI
 
 enum NoiseStatus: String {
     case safe
-    case caution
+    case danger
+    case paused
 }
 
 extension NoiseStatus {
@@ -22,8 +23,10 @@ extension NoiseStatus {
         switch self {
         case .safe:
             return "양호"
-        case .caution:
+        case .danger:
             return "주의"
+        case .paused:
+            return "일시정지됨"
         }
     }
     
@@ -32,8 +35,10 @@ extension NoiseStatus {
         switch self {
         case .safe:
             return "지금 아주 잘하고 있어요!"
-        case .caution:
+        case .danger:
             return "이제 조금 조심해야 해요"
+        case .paused:
+            return "측정을 다시 시작해주세요"
         }
     }
 }

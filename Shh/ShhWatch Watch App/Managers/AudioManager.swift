@@ -280,7 +280,7 @@ final class AudioManager: ObservableObject {
             let loudnessAverage: Float = loudnessBuffer.reduce(0, +) / Float(loudnessBufferSize)
             
             if loudnessAverage > NoiseStatus.loudnessCautionLevel {
-                userNoiseStatus = .caution
+                userNoiseStatus = .danger
             } else {
                 userNoiseStatus = .safe
             }

@@ -45,6 +45,8 @@ struct MeteringView: View {
         VStack {
             Spacer()
             
+            userNoiseStatusInfo
+            
             ZStack {
                 meteringCircles
                     .hidden(!audioManager.isMetering) // 측정 중일 때
@@ -56,7 +58,7 @@ struct MeteringView: View {
             Spacer()
             
             HStack(alignment: .center) {
-                userNoiseStatusInfo
+                
                 
                 Spacer()
                 
@@ -69,21 +71,42 @@ struct MeteringView: View {
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
-                Button {
-                    showMeteringInfoSheet = true
-                } label: {
-                    Label("정보", systemImage: "info.circle")
-                        .font(.body)
-                        .fontWeight(.regular)
-                        .foregroundStyle(.accent)
+                HStack(alignment:.center, spacing: 10) {
+                    Button {
+                        withAnimation {
+                            showMeteringInfoSheet = true
+                        }
+                    } label: {
+                        Label("실시간 현황", systemImage: "chart.xyaxis.line")
+                            .font(.body)
+                            .fontWeight(.regular)
+                            .foregroundStyle(.green)
+                            .contentShape(Rectangle())
+                            .padding(.all, 6)
+                            .background {
+                                if showMeteringInfoSheet {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(.green.opacity(0.3))
+                                }
+                            }
+                    }
+                    .buttonStyle(.plain)
+                    
+                    Button {
+                        showMeteringInfoSheet = true
+                    } label: {
+                        Text("도움말")
+                            .font(.body)
+                            .fontWeight(.regular)
+                            .foregroundStyle(.green)
+                    }
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
-                .popoverTip(infoPopoverTip, arrowEdge: .top)
             }
         }
         .onChange(of: audioManager.userNoiseStatus) {
             Task {
-                if audioManager.userNoiseStatus == .caution {
+                if audioManager.userNoiseStatus == .danger {
                     await NotificationManager.shared.sendNotification(.caution)
                     await NotificationManager.shared.sendNotification(.persistent)
                     await NotificationManager.shared.sendNotification(.recurringAlert)
@@ -158,12 +181,12 @@ struct MeteringView: View {
     
     private var userNoiseStatusInfo: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(audioManager.isMetering ? audioManager.userNoiseStatus.message : "일시정지됨")
+            Text(audioManager.userNoiseStatus.message)
                 .font(.system(size: 56, weight: .bold, design: .default))
                 .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
             
-            Text(audioManager.isMetering ? audioManager.userNoiseStatus.writing : "측정을 다시 시작해주세요")
+            Text(audioManager.userNoiseStatus.writing)
                 .font(.callout)
                 .fontWeight(.medium)
                 .foregroundStyle(.customWhite)
@@ -206,13 +229,15 @@ struct MeteringView: View {
         }
     }()
 
-    MeteringView()
-        .environmentObject(audioManager)
-        .onAppear {
-            do {
-                try audioManager.setAudioSession()
-            } catch {
-                print("oops")
+    NavigationStack{
+        MeteringView()
+            .environmentObject(audioManager)
+            .onAppear {
+                do {
+                    try audioManager.setAudioSession()
+                } catch {
+                    print("oops")
+                }
             }
-        }
+    }
 }
