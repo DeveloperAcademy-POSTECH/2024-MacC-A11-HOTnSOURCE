@@ -34,14 +34,19 @@ struct MeteringTabView: View {
             audioManager.startMetering(backgroundDecibel: backgroundDecibel)
         }
         .onChange(of: audioManager.userNoiseStatus) {
-            Task {
-                if audioManager.userNoiseStatus == .caution {
-                    await NotificationManager.shared.sendNotification(.caution)
-                    await NotificationManager.shared.sendNotification(.persistent)
-                    await NotificationManager.shared.sendNotification(.recurringAlert)
-                } else {
-                    NotificationManager.shared.removeAllNotifications()
-                }
+            triggerNotification()
+        }
+    }
+    
+    // MARK: Function
+    private func triggerNotification() {
+        Task {
+            if audioManager.userNoiseStatus == .caution {
+                await NotificationManager.shared.sendNotification(.caution)
+                await NotificationManager.shared.sendNotification(.persistent)
+                await NotificationManager.shared.sendNotification(.recurringAlert)
+            } else {
+                NotificationManager.shared.removeAllNotifications()
             }
         }
     }
