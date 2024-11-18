@@ -19,17 +19,17 @@ struct MainView: View {
                 Spacer(minLength: 20)
                 
                 Text("반가워요!\n소음이 걱정이신가요?")
-                    .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.title)
                     .fontWeight(.bold)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Spacer(minLength: 15)
                 
                 Text("아래 버튼을 눌러 시작해주세요")
-                    .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.title3)
                     .fontWeight(.bold)
                     .foregroundStyle(.gray)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Spacer()
                     .frame(maxHeight: .infinity)
@@ -47,11 +47,13 @@ struct MainView: View {
             .padding(25)
             .background(.customBlack)
             
-            // TODO: 로딩 화면
-//            if showLoadingView {
-//                LoadingView()
-//                    .transition(.move(edge: .trailing))
-//            }
+            if showLoadingView {
+                LoadingView()
+                    .transition(.move(edge: .trailing))
+            }
+        }
+        .onDisappear {
+            showLoadingView = false
         }
     }
     
