@@ -100,7 +100,7 @@
 //    }
 //    
 //    private var reMeteringButton: some View {
-//        MeteringBackgroundNoiseButton(backgroundNoise: $backgroundNoise, isMetering: $isMetering, meteringAction: audioManager.meteringBackgroundNoise) {
+//        MeteringBackgroundNoiseButton(backgroundNoise: $backgroundNoise, isMetering: $isMetering, meteringAction: audioManager.meteringBackgroundDecibel) {
 //            Label("다시 측정하기", systemImage: "arrow.clockwise")
 //                .font(.footnote)
 //                .foregroundStyle(.white)
@@ -108,7 +108,7 @@
 //    }
 //    
 //    private var meteringButton: some View {
-//        MeteringBackgroundNoiseButton(backgroundNoise: $backgroundNoise, isMetering: $isMetering, meteringAction: audioManager.meteringBackgroundNoise) {
+//        MeteringBackgroundNoiseButton(backgroundNoise: $backgroundNoise, isMetering: $isMetering, meteringAction: audioManager.meteringBackgroundDecibel) {
 //            Text(isMetering ? "측정 중이에요..." : "측정하기")
 //                .font(.body)
 //                .fontWeight(.bold)

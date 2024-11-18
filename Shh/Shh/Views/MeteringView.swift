@@ -49,6 +49,9 @@ struct MeteringView: View {
         ZStack {
             VStack {
                 Spacer()
+                Text("배경소음\(audioManager.backgroundDecibel)")
+                Text("최대소음\(audioManager.maximumDecibel)")
+                Text("현재 소음\(audioManager.userDecibel)")
                 
                 ZStack {
                     meteringCircles
@@ -178,7 +181,6 @@ struct MeteringView: View {
             .frame(width: 120)
     }
     
-    
     private var userNoiseStatusInfo: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(audioManager.isMetering ? audioManager.userNoiseStatus.message : "일시정지됨")
@@ -198,7 +200,7 @@ struct MeteringView: View {
             if audioManager.isMetering {
                 audioManager.pauseMetering()
             } else {
-                audioManager.startMetering(backgroundDecibel: 40.0)
+                audioManager.startMetering()
             }
             
             isAnimating.toggle()
@@ -242,7 +244,7 @@ extension MeteringView {
                     showCountdown = false
                 }
                 
-                audioManager.startMetering(backgroundDecibel: 40.0)
+                audioManager.startMetering()
             }
         }
     }

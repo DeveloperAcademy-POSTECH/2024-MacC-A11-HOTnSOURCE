@@ -476,6 +476,9 @@
         }
       }
     },
+    "배경소음%f" : {
+
+    },
     "삭제" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -971,6 +974,9 @@
     "진짜 메인뷰" : {
 
     },
+    "최대소음%lld" : {
+
+    },
     "취소" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1075,6 +1081,9 @@
           }
         }
       }
+    },
+    "현재 소음%f" : {
+
     },
     "화면을 덮고 사용해보세요!" : {
       "localizations" : {
