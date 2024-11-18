@@ -188,7 +188,9 @@ final class AudioManager: ObservableObject {
         // 측정 시작
         audioRecorder.isMeteringEnabled = true
         audioRecorder.record()
+        
         isMetering = true
+        userNoiseStatus = .safe
         
         // 라이브 액티비티
         if !haveStartedMetering { // 최초 시작
@@ -230,6 +232,8 @@ final class AudioManager: ObservableObject {
         audioRecorder.pause()
         
         isMetering = false
+        userNoiseStatus = .paused
+        
         initializeProperties() // 데시벨 관련 프로퍼티 초기화
         
         // 라이브 액티비티 갱신
@@ -249,8 +253,10 @@ final class AudioManager: ObservableObject {
         audioRecorder.stop()
         
         isMetering = false
-        haveStartedMetering = false
         userNoiseStatus = .paused
+        
+        haveStartedMetering = false
+        
         initializeProperties() // 프로퍼티 초기화
         
         LiveActivityManager.shared.endLiveActivity() // 라이브 액티비티 종료

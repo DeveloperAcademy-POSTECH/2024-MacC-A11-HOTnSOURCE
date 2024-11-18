@@ -61,6 +61,7 @@
       }
     },
     "%lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -392,6 +393,9 @@
         }
       }
     },
+    "도움말" : {
+
+    },
     "뒤로" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -475,9 +479,6 @@
           }
         }
       }
-    },
-    "배경소음%f" : {
-
     },
     "버튼을 눌러 다시 시작해주세요" : {
 
@@ -611,6 +612,9 @@
           }
         }
       }
+    },
+    "실시간 현황" : {
+
     },
     "아주 조용한 방에서의 환경음" : {
       "localizations" : {
@@ -841,6 +845,7 @@
       }
     },
     "정보" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -869,6 +874,9 @@
           }
         }
       }
+    },
+    "종료" : {
+
     },
     "주변 소음 측정" : {
       "extractionState" : "stale",
@@ -978,9 +986,6 @@
       }
     },
     "진짜 메인뷰" : {
-
-    },
-    "최대소음%lld" : {
 
     },
     "취소" : {
@@ -1094,9 +1099,6 @@
           }
         }
       }
-    },
-    "현재 소음%f" : {
-
     },
     "화면을 덮고 사용해보세요!" : {
       "localizations" : {

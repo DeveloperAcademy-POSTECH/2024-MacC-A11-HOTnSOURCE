@@ -28,24 +28,15 @@ struct MeteringView: View {
         infoPopoverTip.status
     }
     
-    private var outerCircleColor: Color {
-        audioManager.userNoiseStatus == .safe
-        ? .accent
-        : .indigo
-    }
-    
-    private var innerCircleColors: [Color] {
-        audioManager.userNoiseStatus == .safe
-        ? [.accent, .customLime]
-        : [.indigo, .purple]
-    }
-    
     // MARK: Body
     var body: some View {
-        VStack {
-            Spacer()
+        VStack(alignment: .center) {
+            Spacer().frame(height: 58)
             
             userNoiseStatusInfo
+                .frame(maxWidth: .infinity)
+            
+            Spacer()
             
             ZStack {
                 meteringCircles
@@ -57,25 +48,32 @@ struct MeteringView: View {
             
             Spacer()
             
-            HStack(alignment: .center) {
+            meteringToggleButton
+                .frame(maxWidth: .infinity)
                 
-                
-                Spacer()
-                
-                meteringToggleButton
-            }
-            Spacer().frame(height: 20) // 아래 여백
+            Spacer()
         }
-        .padding(.horizontal)
         .background(.customBlack)
         .navigationBarTitleDisplayMode(.large)
+        .navigationBarBackButtonHidden()
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    // TODO: 뒤로가기
+                    router.pop()
+                } label: {
+                    Text("종료")
+                        .font(.body)
+                        .fontWeight(.regular)
+                        .foregroundStyle(.gray)
+                        .contentShape(Rectangle())
+                }
+            }
+            
             ToolbarItemGroup(placement: .topBarTrailing) {
-                HStack(alignment:.center, spacing: 10) {
+                HStack(spacing: 10) {
                     Button {
-                        withAnimation {
-                            showMeteringInfoSheet = true
-                        }
+                        showMeteringInfoSheet = true
                     } label: {
                         Label("실시간 현황", systemImage: "chart.xyaxis.line")
                             .font(.body)
@@ -99,6 +97,7 @@ struct MeteringView: View {
                             .font(.body)
                             .fontWeight(.regular)
                             .foregroundStyle(.green)
+                            .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
                 }
@@ -116,12 +115,7 @@ struct MeteringView: View {
             }
         }
         .onAppear {
-            do {
-                try audioManager.setAudioSession()
-            } catch {
-                // TODO: 문제 발생 알러트 띄우기
-                print("오디오 세션 설정 중에 문제가 발생했습니다.")
-            }
+            audioManager.startMetering()
         }
         .onDisappear {
             audioManager.stopMetering()
@@ -137,25 +131,23 @@ struct MeteringView: View {
     // MARK: SubViews
     private var meteringCircles: some View {
         ZStack(alignment: .center) {
-            Circle()
-                .fill(outerCircleColor)
-                .opacity(0.2)
-                .scaleEffect(isAnimating ? 1.8 : 0.9)
+            MeteringCircle(
+                userNoiseStatus: $audioManager.userNoiseStatus,
+                isGradient: false,
+                scale: isAnimating ? 1.8 : 0.9
+            )
+            
+            MeteringCircle(
+                userNoiseStatus: $audioManager.userNoiseStatus,
+                isGradient: false,
+                scale: isAnimating ? 1.4 : 0.9
+            )
                 
-            Circle()
-                .fill(outerCircleColor)
-                .opacity(0.2)
-                .scaleEffect(isAnimating ? 1.4 : 0.9)
-
-            Circle()
-                .fill(
-                    LinearGradient(
-                        gradient: Gradient(colors: innerCircleColors),
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .scaleEffect(isAnimating ? 1.0 : 0.9)
+            MeteringCircle(
+                userNoiseStatus: $audioManager.userNoiseStatus,
+                isGradient: true,
+                scale: isAnimating ? 1.0 : 0.9
+            )
         }
         .frame(width: 160)
         .onAppear {
@@ -180,16 +172,16 @@ struct MeteringView: View {
     }
     
     private var userNoiseStatusInfo: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .center, spacing: 12) {
             Text(audioManager.userNoiseStatus.message)
-                .font(.system(size: 56, weight: .bold, design: .default))
+                .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
             
             Text(audioManager.userNoiseStatus.writing)
                 .font(.callout)
                 .fontWeight(.medium)
-                .foregroundStyle(.customWhite)
+                .foregroundStyle(.gray2)
         }
     }
     
@@ -204,21 +196,63 @@ struct MeteringView: View {
             isAnimating.toggle()
         } label: {
             Image(systemName: audioManager.isMetering ? "pause.fill" : "play.fill")
-                .font(.largeTitle)
+                .font(.system(size: 46, weight: .bold, design: .default))
                 .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
-                .padding(.horizontal, 21)
-                .padding(.vertical, 16)
+                .padding(.horizontal, 29)
+                .padding(.vertical, 22)
                 .background {
                     Circle()
-                        .fill(.customBlack)
+                        .fill(Color.meteringToggleButton)
                 }
         }
+        // TODO: 한글로 현지화
         .accessibilityLabel(audioManager.isMetering ? "Pause metering" : "Resume metering")
         .accessibilityHint("Starts or pauses noise metering")
     }
 }
 
+struct MeteringCircle: View {
+    @Binding var userNoiseStatus: NoiseStatus
+    
+    let isGradient: Bool
+    let scale: Double
+    
+    private var outerCircleColor: Color {
+        userNoiseStatus == .safe
+        ? .green
+        : .pink
+    }
+    
+    private var innerCircleColors: [Color] {
+        userNoiseStatus == .safe
+        ? [.green, .linearGreen]
+        : [.pink, .linearPink]
+    }
+    
+    private var innerCircleGradient: LinearGradient {
+        LinearGradient(
+            gradient: Gradient(colors: innerCircleColors),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+    
+    private var pausedCircleGradient: LinearGradient {
+        LinearGradient(
+            gradient: Gradient(colors: [.gray, .white]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+    
+    var body: some View  {
+        Circle()
+            .fill(isGradient ? AnyShapeStyle(innerCircleGradient) : AnyShapeStyle(outerCircleColor))
+            .opacity(isGradient ? 1.0 : 0.2)
+            .scaleEffect(scale)
+    }
+}
 // MARK: - Preview
 #Preview {
     @Previewable @StateObject var audioManager: AudioManager = {
@@ -229,7 +263,7 @@ struct MeteringView: View {
         }
     }()
 
-    NavigationStack{
+    NavigationStack {
         MeteringView()
             .environmentObject(audioManager)
             .onAppear {
