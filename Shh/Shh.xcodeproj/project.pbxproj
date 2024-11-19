@@ -94,7 +94,6 @@
 				Managers/AudioManager.swift,
 				Managers/IOSConnectivityManager.swift,
 				Managers/LiveActivityManager.swift,
-				Managers/LocationManager.swift,
 				Managers/NotificationManager.swift,
 				Models/Location.swift,
 				Models/NoiseStatus.swift,
@@ -530,7 +529,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Shh/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 2UWGKS2UN5;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -571,7 +570,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Shh/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 2UWGKS2UN5;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -612,11 +611,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ShhWatch Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 2UWGKS2UN5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ShhWatch-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ShhWatch;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Shh-!는 주변 소음 측정을 위해 마이크 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.hotnsource.Shh;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -643,11 +643,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ShhWatch Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 2UWGKS2UN5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ShhWatch-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ShhWatch;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Shh-!는 주변 소음 측정을 위해 마이크 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.hotnsource.Shh;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -673,7 +674,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 2UWGKS2UN5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DynamicIslandWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DynamicIslandWidget;
@@ -701,7 +702,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 2UWGKS2UN5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DynamicIslandWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DynamicIslandWidget;
