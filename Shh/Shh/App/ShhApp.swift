@@ -11,7 +11,6 @@ import TipKit
 struct ShhApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    @StateObject private var router = Router()
     @StateObject private var audioManager: AudioManager = .shared
     
     @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
@@ -19,27 +18,17 @@ struct ShhApp: App {
     var body: some Scene {
         WindowGroup {
             if isFirstLaunch {
-                NavigationStack(path: $router.onboardingPath) {
-                    WelcomeView()
-                        .navigationDestination(for: ShhView.self) { shhView in
-                            shhView.view
-                        }
+                NavigationStack {
+                    OnboardingView()
                 }
-                .background(.customBlack)
             } else {
-                NavigationStack(path: $router.path) {
-                    // TODO: 도움말뷰 테스트를 위해 주석처리
-//                    MainView()
-//                        .navigationDestination(for: ShhView.self) { shhView in
-//                            shhView.view
-//                        }
-                    
-                    HelpView()
+                NavigationStack {
+                    MainView()
                 }
                 .task {
-                #if DEBUG
+                    #if DEBUG
                     try? Tips.resetDatastore() // 디버그를 위해 팁 상태 초기화, 실제 버전에서는 동작하진 않음
-                #endif
+                    #endif
                     try? Tips.configure( // 모든 팁을 로드
                         [
                             // TODO: 팁과 관련된 동작 수정 예정
@@ -50,7 +39,6 @@ struct ShhApp: App {
                 }
             }
         }
-        .environmentObject(router)
         .environmentObject(audioManager)
     }
 }

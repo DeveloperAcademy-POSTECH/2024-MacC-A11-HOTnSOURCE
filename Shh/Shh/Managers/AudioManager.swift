@@ -29,7 +29,7 @@ final class AudioManager: ObservableObject {
     @Published var userDecibelBuffer: [Float] = []
     
     // 현재 사용자의 소음 상태
-    @Published var userNoiseStatus: NoiseStatus = .safe
+    @Published var userNoiseStatus: NoiseStatus = .paused
     
     // 배경 dB
     var backgroundDecibel: Float = 0.0
@@ -188,7 +188,9 @@ final class AudioManager: ObservableObject {
         // 측정 시작
         audioRecorder.isMeteringEnabled = true
         audioRecorder.record()
+        
         isMetering = true
+        userNoiseStatus = .safe
         
         // 라이브 액티비티
         if !haveStartedMetering { // 최초 시작
@@ -230,6 +232,8 @@ final class AudioManager: ObservableObject {
         audioRecorder.pause()
         
         isMetering = false
+        userNoiseStatus = .paused
+        
         initializeProperties() // 데시벨 관련 프로퍼티 초기화
         
         // 라이브 액티비티 갱신
@@ -249,7 +253,10 @@ final class AudioManager: ObservableObject {
         audioRecorder.stop()
         
         isMetering = false
+        userNoiseStatus = .paused
+        
         haveStartedMetering = false
+        
         initializeProperties() // 프로퍼티 초기화
         
         LiveActivityManager.shared.endLiveActivity() // 라이브 액티비티 종료
@@ -317,7 +324,7 @@ final class AudioManager: ObservableObject {
         let userDecibelAverage: Float = lastWindowDecibels.reduce(0, +) / Float(lastWindowDecibels.count)
         
         if Int(userDecibelAverage) > self.maximumDecibel {
-            self.userNoiseStatus = .caution
+            self.userNoiseStatus = .danger
         } else {
             self.userNoiseStatus = .safe
         }
