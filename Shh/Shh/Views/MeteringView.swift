@@ -19,7 +19,7 @@ struct MeteringView: View {
     
     @State private var showLiveDecibelSheet = false
     
-    @State private var showMeteringInfoFullScreenCover = false
+    @State private var showHelpViewFullScreenCover = false
     
     private let meteringCircleAnimation = Animation
         .easeInOut(duration: 1.5)
@@ -91,7 +91,7 @@ struct MeteringView: View {
                     
                     Button {
                         withAnimation {
-                            showMeteringInfoFullScreenCover = true
+                            showHelpViewFullScreenCover = true
                         }
                     } label: {
                         Text("도움말")
@@ -127,8 +127,8 @@ struct MeteringView: View {
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
         }
-        .fullScreenCover(isPresented: $showMeteringInfoFullScreenCover) {
-            MeteringInfoFullScreenCover()
+        .fullScreenCover(isPresented: $showHelpViewFullScreenCover) {
+            HelpView()
         }
     }
     
