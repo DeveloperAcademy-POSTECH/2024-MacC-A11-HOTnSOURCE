@@ -58,7 +58,6 @@ struct OnboardingTabView: View {
     private var startButton: some View {
         Button {
             isFirstLaunch = false
-            print("start button")
         } label: {
             Text("시작하기")
                 .font(.body)
