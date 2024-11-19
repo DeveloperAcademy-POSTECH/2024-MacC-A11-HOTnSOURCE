@@ -23,10 +23,7 @@ struct ShhApp: App {
                 }
             } else {
                 NavigationStack {
-//                    MainView()
-                    
-                    // TODO: 테스트용
-                    HelpView()
+                    MainView()
                 }
                 .task {
                     #if DEBUG
