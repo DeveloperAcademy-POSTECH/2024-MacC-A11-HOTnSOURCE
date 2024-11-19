@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HelpView: View {
     // MARK: Properties
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.dismiss) var dismiss
     
     private let backgroundGradient = LinearGradient(
         gradient: Gradient(colors: [.accent, .customBlack]),
@@ -41,7 +41,7 @@ struct HelpView: View {
     // MARK: Subviews
     private var closeButton: some View {
         Button {
-            self.presentationMode.wrappedValue.dismiss()
+            dismiss()
         } label: {
             ZStack {
                 Circle()

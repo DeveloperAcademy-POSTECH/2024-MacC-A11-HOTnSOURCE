@@ -293,7 +293,7 @@ final class AudioManager: ObservableObject {
             combinedLoudness = convertToLoudness(decibel: combinedDecibel)
             
             // 3. 사용자가 낼 수 있는 dB 최댓값 찾기
-            if combinedLoudness >= NoiseStatus.loudnessCautionLevel * backgroundLoudness {
+            if combinedLoudness >= NoiseStatus.loudnessDangerLevel * backgroundLoudness {
                 returnValue = tempDecibel
                 break
             }
