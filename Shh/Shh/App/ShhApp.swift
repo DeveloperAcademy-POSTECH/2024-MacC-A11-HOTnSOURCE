@@ -41,4 +41,8 @@ struct ShhApp: App {
         }
         .environmentObject(audioManager)
     }
+    
+    init() {
+        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = .systemBlue
+    }
 }

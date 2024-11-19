@@ -107,18 +107,18 @@ final class NotificationManager {
 }
 
 enum NotificationType: String {
-    /// 주의 알림
-    case caution = "주의"
-    /// 주의 지속 알림. 소음 수준이 주의 상태에서 20초 동안 머무를 경우 사용자에게 알려줍니다.
-    case persistent = "주의 지속"
-    /// 주의 지속 반복 알림.  주의 지속 알림을 받은 이후에도 계속해서 주의 수준에 머물 경우 60초 간격으로 사용자에게 알려줍니다.
-    case recurringAlert = "주의 지속 반복"
+    /// 위험 알림
+    case danger = "위험"
+    /// 위험 지속 알림. 소음 수준이 위험 상태에서 20초 동안 머무를 경우 사용자에게 알려줍니다.
+    case persistent = "위험 지속"
+    /// 위험 지속 반복 알림.  위험 지속 알림을 받은 이후에도 계속해서 위험 수준에 머물 경우 60초 간격으로 사용자에게 알려줍니다.
+    case recurringAlert = "위험 지속 반복"
 }
 
 extension NotificationType {
     var delay: TimeInterval {
         switch self {
-        case .caution: return 0.1
+        case .danger: return 0.1
         case .persistent: return 20
         case .recurringAlert: return 60
         }
@@ -126,23 +126,23 @@ extension NotificationType {
     
     var title: String {
         switch self {
-        case .caution:
-            NSLocalizedString("🤫", comment: "주의 알림 제목")
+        case .danger:
+            NSLocalizedString("🤫", comment: "위험 알림 제목")
         case .persistent:
-            NSLocalizedString("‼️", comment: "주의 지속 푸시 알림 제목")
+            NSLocalizedString("‼️", comment: "위험 지속 푸시 알림 제목")
         case .recurringAlert:
-            NSLocalizedString("🚨", comment: "주의 지속 반복 푸시 알림 제목")
+            NSLocalizedString("🚨", comment: "위험 지속 반복 푸시 알림 제목")
         }
     }
     
     var subtitle: String {
         switch self {
-        case .caution:
-            NSLocalizedString("큰 소리를 들었어요!", comment: "주의 푸시 알림 내용")
+        case .danger:
+            NSLocalizedString("큰 소리를 들었어요!", comment: "위험 푸시 알림 내용")
         case .persistent:
-            NSLocalizedString("20초 동안 지속적인 소음이 발생했어요", comment: "주의 지속 푸시 알림 내용")
+            NSLocalizedString("20초 동안 지속적인 소음이 발생했어요", comment: "위험 지속 푸시 알림 내용")
         case .recurringAlert:
-            NSLocalizedString("큰 소리가 계속 들려요!", comment: "주의 지속 반복 푸시 알림 내용")
+            NSLocalizedString("큰 소리가 계속 들려요!", comment: "위험 지속 반복 푸시 알림 내용")
         }
     }
 }

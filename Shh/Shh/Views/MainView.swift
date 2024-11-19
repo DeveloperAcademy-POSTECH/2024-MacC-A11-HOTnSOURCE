@@ -10,6 +10,8 @@ import SwiftUI
 // MARK: - 메인 화면
 struct MainView: View {
     // MARK: Properties
+    @EnvironmentObject var audioManager: AudioManager
+    
     @State private var showLoadingView: Bool = false
     
     // MARK: Body
@@ -52,6 +54,9 @@ struct MainView: View {
                     .transition(.move(edge: .trailing))
             }
         }
+        .task {
+            await NotificationManager.shared.requestPermission()
+        }
         .onDisappear {
             showLoadingView = false
         }
@@ -60,8 +65,17 @@ struct MainView: View {
     // MARK: SubViews
     private var startButton: some View {
         Button {
-            withAnimation {
-                showLoadingView = true
+            Task {
+                await audioManager.requestMicrophonePermission()
+                if audioManager.checkMicrophonePermissionStatus() {
+                    withAnimation {
+                        showLoadingView = true
+                    }
+                } else {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        await UIApplication.shared.open(url)
+                    }
+                }
             }
         } label: {
             Image(systemName: "waveform")

@@ -42,7 +42,7 @@ struct MeteringTabView: View {
     private func triggerNotification() {
         Task {
             if audioManager.userNoiseStatus == .danger {
-                await NotificationManager.shared.sendNotification(.caution)
+                await NotificationManager.shared.sendNotification(.danger)
                 await NotificationManager.shared.sendNotification(.persistent)
                 await NotificationManager.shared.sendNotification(.recurringAlert)
             } else {
