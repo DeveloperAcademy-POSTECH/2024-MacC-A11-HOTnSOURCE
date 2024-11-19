@@ -17,15 +17,13 @@ struct MainView: View {
     
     // MARK: Body
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 20) {
-                welcomeText
-                startButton
-            }
-            .padding()
-            .navigationDestination(isPresented: $isNavigating) {
-                MeteringTabView(backgroundDecibel: $backgroundDecibel)
-            }
+        VStack(spacing: 20) {
+            welcomeText
+            startButton
+        }
+        .padding()
+        .navigationDestination(isPresented: $isNavigating) {
+            MeteringTabView(backgroundDecibel: $backgroundDecibel)
         }
     }
     
