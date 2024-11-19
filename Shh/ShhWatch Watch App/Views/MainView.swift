@@ -13,7 +13,7 @@ struct MainView: View {
     @EnvironmentObject var audioManager: AudioManager
     
     @State var backgroundDecibel: Float = 0
-    @State private var isNavigating: Bool = false
+    @State private var canNavigate: Bool = false
     
     // MARK: Body
     var body: some View {
@@ -23,7 +23,7 @@ struct MainView: View {
             startButton
         }
         .padding()
-        .navigationDestination(isPresented: $isNavigating) {
+        .navigationDestination(isPresented: $canNavigate) {
             MeteringTabView(backgroundDecibel: $backgroundDecibel)
         }
     }
@@ -66,7 +66,7 @@ struct MainView: View {
                 backgroundDecibel = Float(audioManager.backgroundDecibel)
                 
                 // MeteringTabView로 이동
-                isNavigating = true
+                canNavigate = true
                 
                 // TODO: iOS의 로딩 뷰 머지 후, watch에도 배경 소음 측정 과정에 로딩 뷰 활용할 예정
             } catch {
