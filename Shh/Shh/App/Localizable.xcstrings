@@ -38,6 +38,7 @@
 
     },
     "%.1f m" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -70,6 +71,7 @@
       }
     },
     "%lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -203,6 +205,7 @@
       "comment" : "주의 지속 반복 푸시 알림 제목"
     },
     "1m" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -213,6 +216,7 @@
       }
     },
     "2m" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -223,6 +227,7 @@
       }
     },
     "3m" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -277,6 +282,7 @@
       }
     },
     "Shh-!는 앱을 나가거나 휴대전화를 잠궈도 들을 수 있어요. 마음 놓고 집중하세요!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -300,6 +306,7 @@
 
     },
     "Shh-!의 소음 측정 방법이 궁금하면 이곳을 눌러주세요." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -422,6 +429,9 @@
         }
       }
     },
+    "도움말" : {
+
+    },
     "뒤로" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -445,6 +455,7 @@
     },
     "모든 준비가 완료되었어요!" : {
       "comment" : "온보딩 완료 제목",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -510,9 +521,6 @@
         }
       }
     },
-    "배경소음%f" : {
-
-    },
     "버튼 눌러 시작하기" : {
 
     },
@@ -535,6 +543,7 @@
     },
     "상대방과 얼마나 가깝나요?" : {
       "comment" : "측정 반경 입력 단계 설명",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -581,6 +590,7 @@
     },
     "소음 측정이 필요한 곳의 이름을 알려주세요" : {
       "comment" : "장소 이름 입력 단계 보조 설명",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -622,6 +632,9 @@
         }
       }
     },
+    "스눅이 해줄 예정" : {
+
+    },
     "시끄러운 사무실이나 사람들 간의 활발한 토론 소리" : {
       "localizations" : {
         "en" : {
@@ -634,6 +647,7 @@
     },
     "시끄러운 소리를 내면 알려드릴게요!" : {
       "comment" : "온보딩 완료 부제목",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -655,6 +669,15 @@
           }
         }
       }
+    },
+    "실시간 데시벨 현황" : {
+
+    },
+    "실시간 현황" : {
+
+    },
+    "실시간 현황 시트" : {
+
     },
     "아래 버튼을 눌러 시작해주세요" : {
 
@@ -696,6 +719,7 @@
     },
     "어디에서 사용하시나요?" : {
       "comment" : "장소 이름 입력 단계 설명",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -859,6 +883,7 @@
       }
     },
     "정도 떨어져 있어요" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -891,6 +916,7 @@
       }
     },
     "정보" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -923,6 +949,9 @@
         }
       }
     },
+    "종료" : {
+
+    },
     "주변 소음 측정" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -936,6 +965,7 @@
     },
     "주변보다 더 큰 소리를 내면 알려드릴게요\n아래의 버튼을 눌러주세요" : {
       "comment" : "배경 소음 입력 단계 보조 설명",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -947,6 +977,7 @@
     },
     "주위의 소리를 들려주세요!" : {
       "comment" : "배경 소음 입력 단계 설명",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1029,9 +1060,6 @@
           }
         }
       }
-    },
-    "최대소음%lld" : {
-
     },
     "취소" : {
       "extractionState" : "stale",
@@ -1142,6 +1170,7 @@
     },
     "해당 거리에서 어떻게 들리는지\n계산해서 알려드릴게요" : {
       "comment" : "측정 반경 입력 단계 보조 설명",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1151,10 +1180,11 @@
         }
       }
     },
-    "현재 소음%f" : {
+    "현재 내가 내고 있는 소리가 궁금하다면 이곳을 눌러주세요." : {
 
     },
     "화면을 덮고 사용해보세요!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
