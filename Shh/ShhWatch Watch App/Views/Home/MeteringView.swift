@@ -55,7 +55,7 @@ struct MeteringView: View {
             meteringPausedCircle
                 .hidden(audioManager.isMetering)
             
-            Text(audioManager.isMetering ? (audioManager.userNoiseStatus == .safe ? "양호" : "주의") : "일시정지")
+            Text(audioManager.isMetering ? (audioManager.userNoiseStatus == .safe ? "양호" : "주의") : "멈춤")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundStyle(.black)
