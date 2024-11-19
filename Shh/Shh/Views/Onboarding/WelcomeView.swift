@@ -9,9 +9,6 @@ import SwiftUI
 
 // MARK: - 온보딩 > 웰컴 페이지
 struct WelcomeView: View {
-    // MARK: Properties
-    @EnvironmentObject var router: Router
-    
     // MARK: Body
     var body: some View {
         VStack {
@@ -46,7 +43,7 @@ struct WelcomeView: View {
     private var startButton: some View {
         // TODO: 임시로 메인뷰로 이동
         CustomButton(text: "시작하기") {
-            router.push(view: .mainView)
+//            router.push(view: .mainView)
         }
     }
 }
@@ -54,5 +51,4 @@ struct WelcomeView: View {
 // MARK: - Preview
 #Preview {
     WelcomeView()
-        .environmentObject(Router())
 }

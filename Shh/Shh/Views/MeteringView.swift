@@ -11,7 +11,6 @@ import TipKit
 // MARK: - 측정 뷰; 사용자의 소음 정도를 나타냅니다.
 struct MeteringView: View {
     // MARK: Properties
-    @EnvironmentObject var router: Router
     @EnvironmentObject var audioManager: AudioManager
     
     @State private var isAnimating = false
@@ -54,7 +53,6 @@ struct MeteringView: View {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
                     // TODO: 뒤로가기
-                    router.pop()
                 } label: {
                     Text("종료")
                         .font(.body)
