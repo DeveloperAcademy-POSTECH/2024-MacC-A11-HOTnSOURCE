@@ -60,7 +60,7 @@ struct MainView: View {
         Task {
             do {
                 // 배경 소음 측정
-                try await audioManager.meteringBackgroundNoise()
+                try await audioManager.meteringBackgroundDecibel()
                 
                 // (MeteringTabView에 넘겨주기 위해) backgroundDecibel 저장
                 backgroundDecibel = Float(audioManager.backgroundDecibel)

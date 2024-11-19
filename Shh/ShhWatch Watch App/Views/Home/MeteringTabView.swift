@@ -31,7 +31,7 @@ struct MeteringTabView: View {
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
-            audioManager.startMetering(backgroundDecibel: backgroundDecibel)
+            audioManager.startMetering()
         }
         .onChange(of: audioManager.userNoiseStatus) {
             triggerNotification()
