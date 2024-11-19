@@ -11,65 +11,63 @@ struct MeteringView: View {
     // MARK: Properties
     @EnvironmentObject var audioManager: AudioManager
     
-    @State private var noiseStatus = "safe"
     @State private var isAnimating = false
+    @State private var isPaused = false
     
     private let meteringCircleAnimation = Animation
         .easeInOut(duration: 1.5)
         .repeatForever(autoreverses: true)
     
     private var outerCircleColor: Color {
-        noiseStatus == "safe" ? .accent : .indigo
+        audioManager.userNoiseStatus == .safe ? .accent : .indigo
     }
     
     private var innerCircleColors: [Color] {
-        if noiseStatus == "safe" {
+        if audioManager.userNoiseStatus == .safe {
             return [.accent, .customLime]
         } else {
             return [.indigo, .purple]
         }
     }
     
+    private var innerCircleGradient: LinearGradient {
+        LinearGradient(
+            gradient: Gradient(colors: innerCircleColors),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+    
+    private var pausedCircleGradient: LinearGradient {
+        LinearGradient(
+            gradient: Gradient(colors: [.gray, .white]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+    
+    // MARK: Body
     var body: some View {
         ZStack {
             meteringCircles
-                .hidden(!audioManager.isMetering) // 측정 중일 때
+                .hidden(!audioManager.isMetering)
             
             meteringPausedCircle
-                .hidden(audioManager.isMetering) // 측정을 멈추었을 때
+                .hidden(audioManager.isMetering)
             
-            Text(noiseStatus == "safe" ? "양호" : "주의")
+            Text(audioManager.isMetering ? (audioManager.userNoiseStatus == .safe ? "양호" : "주의") : "멈춤")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundStyle(.black)
         }
     }
     
-    // animation
+    // MARK: Subviews
     private var meteringCircles: some View {
         ZStack(alignment: .center) {
-            // 가장 옅은 바깥쪽 원
-            Circle()
-                .fill(outerCircleColor)
-                .opacity(0.2)
-                .scaleEffect(isAnimating ? 1.2 : 0.7)
-                
-            // 중간 원
-            Circle()
-                .fill(outerCircleColor)
-                .opacity(0.2)
-                .scaleEffect(isAnimating ? 1.0 : 0.7)
-
-            // 가장 진한 안쪽 원
-            Circle()
-                .fill(
-                    LinearGradient(
-                        gradient: Gradient(colors: innerCircleColors),
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .scaleEffect(isAnimating ? 0.8 : 0.7)
+            meteringCircle(isGradient: false, scale: isAnimating ? 1.2 : 0.7)
+            meteringCircle(isGradient: false, scale: isAnimating ? 1.0 : 0.7)
+            meteringCircle(isGradient: true, scale: isAnimating ? 0.8 : 0.7)
         }
         .onAppear {
             DispatchQueue.main.async {
@@ -80,15 +78,16 @@ struct MeteringView: View {
         }
     }
     
+    private func meteringCircle(isGradient: Bool, scale: Double) -> some View {
+        return Circle()
+            .fill(isGradient ? AnyShapeStyle(innerCircleGradient) : AnyShapeStyle(outerCircleColor))
+            .opacity(isGradient ? 1.0 : 0.2)
+            .scaleEffect(scale)
+    }
+    
     private var meteringPausedCircle: some View {
         Circle()
-            .fill(
-                LinearGradient(
-                    gradient: Gradient(colors: [.gray, .white]),
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            )
+            .fill(pausedCircleGradient)
             .frame(width: 120)
     }
 }

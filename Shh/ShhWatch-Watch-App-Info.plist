@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
+&lt;plist version="1.0"&gt;
+&lt;string&gt;Shh-!는 주변 소음 측정을 위해 마이크 접근 권한이 필요합니다.&lt;/string&gt;
+&lt;/plist&gt;
+</key>
+	<string></string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
