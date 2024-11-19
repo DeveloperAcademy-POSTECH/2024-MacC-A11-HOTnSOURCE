@@ -23,7 +23,7 @@ struct MainView: View {
         }
         .padding()
         .navigationDestination(isPresented: $canNavigate) {
-            MeteringTabView(backgroundDecibel: $backgroundDecibel)
+            LoadingView(backgroundDecibel: $backgroundDecibel)
         }
     }
     
@@ -48,29 +48,30 @@ struct MainView: View {
     
     private var startButton: some View {
         Button("시작하기") {
-            meterBackgroundNoise()
+//            meterBackgroundNoise()
+            canNavigate = true
         }
         .buttonStyle(BorderedButtonStyle(tint: .accent.opacity(10)))
         .foregroundStyle(.customWhite)
     }
     
     // MARK: Function
-    private func meterBackgroundNoise() {
-        Task {
-            do {
-                // 배경 소음 측정
-                try await audioManager.meteringBackgroundDecibel()
-                
-                // (MeteringTabView에 넘겨주기 위해) backgroundDecibel 저장
-                backgroundDecibel = Float(audioManager.backgroundDecibel)
-                
-                // MeteringTabView로 이동
-                canNavigate = true
-                
-                // TODO: iOS의 로딩 뷰 머지 후, watch에도 배경 소음 측정 과정에 로딩 뷰 활용할 예정
-            } catch {
-                print("‼️ 배경 소음 측정 실패 \(error)")
-            }
-        }
-    }
+//    private func meterBackgroundNoise() {
+//        Task {
+//            do {
+//                // 배경 소음 측정
+//                try await audioManager.meteringBackgroundDecibel()
+//                
+//                // (MeteringTabView에 넘겨주기 위해) backgroundDecibel 저장
+//                backgroundDecibel = Float(audioManager.backgroundDecibel)
+//                
+//                // MeteringTabView로 이동
+//                canNavigate = true
+//                
+//                // TODO: iOS의 로딩 뷰 머지 후, watch에도 배경 소음 측정 과정에 로딩 뷰 활용할 예정
+//            } catch {
+//                print("‼️ 배경 소음 측정 실패 \(error)")
+//            }
+//        }
+//    }
 }

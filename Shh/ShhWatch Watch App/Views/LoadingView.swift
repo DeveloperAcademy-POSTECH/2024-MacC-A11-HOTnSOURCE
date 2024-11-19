@@ -19,6 +19,8 @@ struct LoadingView: View {
     @State private var isFirstMetering: Bool = true
     @State private var pushMeteringView: Bool = false
     
+    @Binding var backgroundDecibel: Float
+    
     // MARK: Body
     var body: some View {
         VStack(spacing: 20) {
@@ -37,7 +39,7 @@ struct LoadingView: View {
         .background(.customBlack)
         .navigationBarBackButtonHidden()
         .navigationDestination(isPresented: $pushMeteringView) {
-            MeteringView()
+            MeteringTabView(backgroundDecibel: $backgroundDecibel)
         }
         .task {
             await startLoading()
@@ -126,9 +128,9 @@ extension LoadingMessage {
     var text: String {
         switch self {
         case .metering:
-        return NSLocalizedString("배경 소리를 확인하고 있어요!", comment: "로딩 화면 안내 텍스트1")
+        return NSLocalizedString("배경 소리를\n확인하고 있어요!", comment: "로딩 화면 안내 텍스트1")
         case .beQuiet:
-        return NSLocalizedString("조용한 상태를 유지하면 더 정확해져요!", comment: "로딩 화면 안내 텍스트2")
+        return NSLocalizedString("조용한 상태를 유지하면\n더 정확해져요!", comment: "로딩 화면 안내 텍스트2")
         }
     }
 }
