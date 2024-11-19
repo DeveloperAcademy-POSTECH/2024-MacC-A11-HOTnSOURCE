@@ -151,10 +151,12 @@ struct MeteringView: View {
             )
         }
         .frame(width: 160)
-        .onAppear {
-            DispatchQueue.main.async {
-                withAnimation(meteringCircleAnimation) {
-                    isAnimating = true
+        .onChange(of: audioManager.isMetering) {
+            if audioManager.isMetering {
+                DispatchQueue.main.async {
+                    withAnimation(meteringCircleAnimation) {
+                        isAnimating = true
+                    }
                 }
             }
         }
