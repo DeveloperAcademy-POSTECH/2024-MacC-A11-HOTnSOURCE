@@ -34,7 +34,9 @@ struct MeteringTabView: View {
             audioManager.startMetering()
         }
         .onChange(of: audioManager.userNoiseStatus) {
-            triggerNotification()
+            if audioManager.isMetering {
+                triggerNotification()
+            }
         }
     }
     
