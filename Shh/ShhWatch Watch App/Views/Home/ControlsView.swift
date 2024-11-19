@@ -33,8 +33,8 @@ struct ControlsView: View {
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
             }
-            // TODO: button color가 어둡게 나오는 이슈 발생. 해결방안을 찾기 전까지 opacity로 임시 대처.
-            .buttonStyle(BorderedButtonStyle(tint: Color.red.opacity(10)))
+            // TODO: button color가 어둡게 나오는 이슈 발생 -> opacity로 임시 대처
+            .buttonStyle(BorderedButtonStyle(tint: .red.opacity(10)))
             
             Text("종료")
         }
@@ -50,7 +50,6 @@ struct ControlsView: View {
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
             }
-            // TODO: button color가 어둡게 나오는 이슈 발생. (opacity로 임시 대처)
             .buttonStyle(BorderedButtonStyle(tint: .accent.opacity(audioManager.isMetering ? 2 : 10)))
             
             Text(audioManager.isMetering ? "일시정지" : "재개")

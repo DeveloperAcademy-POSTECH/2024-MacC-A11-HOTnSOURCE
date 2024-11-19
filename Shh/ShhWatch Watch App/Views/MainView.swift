@@ -17,7 +17,6 @@ struct MainView: View {
     
     // MARK: Body
     var body: some View {
-
         VStack(spacing: 20) {
             welcomeText
             startButton

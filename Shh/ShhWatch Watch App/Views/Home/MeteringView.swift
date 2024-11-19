@@ -55,7 +55,7 @@ struct MeteringView: View {
             meteringPausedCircle
                 .hidden(audioManager.isMetering)
             
-            Text(audioManager.userNoiseStatus == .safe ? "양호" : "주의")
+            Text(audioManager.isMetering ? (audioManager.userNoiseStatus == .safe ? "양호" : "주의") : "일시정지")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundStyle(.black)
@@ -80,7 +80,6 @@ struct MeteringView: View {
     
     private func meteringCircle(isGradient: Bool, scale: Double) -> some View {
         return Circle()
-            // TODO: 더 좋은 방법을 찾으면 AnyShapeStyle 제거 예정
             .fill(isGradient ? AnyShapeStyle(innerCircleGradient) : AnyShapeStyle(outerCircleColor))
             .opacity(isGradient ? 1.0 : 0.2)
             .scaleEffect(scale)
