@@ -15,8 +15,6 @@ struct MeteringTabView: View {
     
     @State private var tabSelection: Tabs = .home
     
-    @Binding var backgroundDecibel: Float
-    
     // MARK: Body
     var body: some View {
         TabView(selection: $tabSelection) {

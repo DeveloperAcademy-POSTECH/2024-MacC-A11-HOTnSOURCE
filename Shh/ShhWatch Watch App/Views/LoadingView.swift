@@ -19,8 +19,6 @@ struct LoadingView: View {
     @State private var isFirstMetering: Bool = true
     @State private var pushMeteringView: Bool = false
     
-    @Binding var backgroundDecibel: Float
-    
     // MARK: Body
     var body: some View {
         VStack(spacing: 20) {
@@ -39,7 +37,7 @@ struct LoadingView: View {
         .background(.customBlack)
         .navigationBarBackButtonHidden()
         .navigationDestination(isPresented: $pushMeteringView) {
-            MeteringTabView(backgroundDecibel: $backgroundDecibel)
+            MeteringTabView()
         }
         .task {
             await startLoading()
