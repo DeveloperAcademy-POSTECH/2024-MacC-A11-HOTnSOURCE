@@ -13,99 +13,98 @@ struct MeteringView: View {
     // MARK: Properties
     @EnvironmentObject var audioManager: AudioManager
     
-//    @State var selectedLocation: Location
-    
-    @State private var countdown = 3
-    @State private var showCountdown = true
-    @State private var countdownTimer: Timer?
-    
     @State private var isAnimating = false
     
-    @State private var showMeteringInfoSheet = false
+    @State private var showLiveDecibelSheet = false
+    
+    @State private var showMeteringInfoFullScreenCover = false
     
     private let meteringCircleAnimation = Animation
         .easeInOut(duration: 1.5)
         .repeatForever(autoreverses: true)
-
-    private let infoPopoverTip = InfoPopoverTip() // Tip 상태 접근을 위해 객체 미리 생성
-    
-    private var infoPopoverTipStatus: Tip.Status {
-        infoPopoverTip.status
-    }
-    
-    private var outerCircleColor: Color {
-        audioManager.userNoiseStatus == .safe ? .accent : .indigo
-    }
-    
-    private var innerCircleColors: [Color] {
-        audioManager.userNoiseStatus == .safe
-        ? [.accent, .customLime]
-        : [.indigo, .purple]
-    }
     
     // MARK: Body
     var body: some View {
-        ZStack {
-            VStack {
-                Spacer()
-                Text("배경소음\(audioManager.backgroundDecibel)")
-                Text("최대소음\(audioManager.maximumDecibel)")
-                Text("현재 소음\(audioManager.userDecibel)")
-                
-                ZStack {
-                    meteringCircles
-                        .hidden(!audioManager.isMetering) // 측정 중일 때
-                    
-                    meteringPausedCircle
-                        .hidden(audioManager.isMetering) // 측정을 멈추었을 때
-                }
-                
-                Spacer()
-                
-                HStack(alignment: .center) {
-                    userNoiseStatusInfo
-                    
-                    Spacer()
-                    
-                    meteringToggleButton
-                }
-                
-                TipView(BackgroundInlineTip())
-                
-                Spacer().frame(height: 20) // 아래 여백
-            }
-            .padding(.horizontal)
-            .hidden(showCountdown)// 카운트다운 중에는 보이지 않음
+        VStack(alignment: .center) {
+            Spacer()
             
-            if showCountdown {
-                countdownView
+            userNoiseStatusInfo
+                .frame(maxWidth: .infinity)
+            
+            Spacer()
+            
+            ZStack {
+                meteringCircles
+                    .hidden(!audioManager.isMetering) // 측정 중일 때
+                
+                meteringPausedCircle
+                    .hidden(audioManager.isMetering) // 측정을 멈추었을 때
             }
+            
+            Spacer()
+            
+            meteringToggleButton
+                .frame(maxWidth: .infinity)
+                
+            Spacer()
         }
         .background(.customBlack)
-        .navigationBarTitleDisplayMode(.large)
-        .navigationBarHidden(showCountdown) // 카운트다운 중에는 보이지 않음
+        .navigationBarBackButtonHidden()
         .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {
+            ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    showMeteringInfoSheet = true
+                    // TODO: 뒤로가기
                 } label: {
-                    Label("정보", systemImage: "info.circle")
+                    Text("종료")
                         .font(.body)
                         .fontWeight(.regular)
-                        .foregroundStyle(.accent)
+                        .foregroundStyle(.gray)
                 }
                 .buttonStyle(.plain)
-                .popoverTip(infoPopoverTip, arrowEdge: .top)
-                .onChange(of: infoPopoverTipStatus) {
-                    if infoPopoverTipStatus == .invalidated(.tipClosed) {
-                        BackgroundInlineTip.isCurrentTip = true
+                .contentShape(Rectangle())
+            }
+            
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                HStack(spacing: 10) {
+                    Button {
+                        withAnimation {
+                            showLiveDecibelSheet = true
+                        }
+                    } label: {
+                        Label("실시간 현황", systemImage: "chart.xyaxis.line")
+                            .font(.callout)
+                            .fontWeight(.regular)
+                            .foregroundStyle(.accent)
+                            .padding(.all, 6)
+                            .background {
+                                if showLiveDecibelSheet {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(.green.opacity(0.3))
+                                }
+                            }
                     }
+                    .contentShape(Rectangle())
+                    .buttonStyle(.plain)
+                    .popoverTip(LiveDecibelTip())
+                    
+                    Button {
+                        withAnimation {
+                            showMeteringInfoFullScreenCover = true
+                        }
+                    } label: {
+                        Text("도움말")
+                            .font(.body)
+                            .fontWeight(.regular)
+                            .foregroundStyle(.accent)
+                    }
+                    .contentShape(Rectangle())
+                    .buttonStyle(.plain)
                 }
             }
         }
         .onChange(of: audioManager.userNoiseStatus) {
             Task {
-                if audioManager.userNoiseStatus == .caution {
+                if audioManager.userNoiseStatus == .danger {
                     await NotificationManager.shared.sendNotification(.caution)
                     await NotificationManager.shared.sendNotification(.persistent)
                     await NotificationManager.shared.sendNotification(.recurringAlert)
@@ -115,48 +114,39 @@ struct MeteringView: View {
             }
         }
         .onAppear {
-            do {
-                try audioManager.setAudioSession()
-            } catch {
-                // TODO: 문제 발생 알러트 띄우기
-                print("오디오 세션 설정 중에 문제가 발생했습니다.")
-                // TODO: pop
-            }
+            audioManager.startMetering()
         }
         .onDisappear {
             audioManager.stopMetering()
-            stopCountdown()
             NotificationManager.shared.removeAllNotifications()
         }
-        .sheet(isPresented: $showMeteringInfoSheet) {
-            MeteringInfoSheet()
-                .presentationDetents([.large])
+        .sheet(isPresented: $showLiveDecibelSheet) {
+            LiveDecibelSheet()
+                .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
+        }
+        .fullScreenCover(isPresented: $showMeteringInfoFullScreenCover) {
+            MeteringInfoFullScreenCover()
         }
     }
     
     // MARK: SubViews
     private var meteringCircles: some View {
         ZStack(alignment: .center) {
-            Circle()
-                .fill(outerCircleColor)
-                .opacity(0.2)
-                .scaleEffect(isAnimating ? 1.8 : 0.9)
+            MeteringCircle(
+                isGradient: false,
+                scale: isAnimating ? 1.6 : 0.9
+            )
+            
+            MeteringCircle(
+                isGradient: false,
+                scale: isAnimating ? 1.3 : 0.9
+            )
                 
-            Circle()
-                .fill(outerCircleColor)
-                .opacity(0.2)
-                .scaleEffect(isAnimating ? 1.4 : 0.9)
-
-            Circle()
-                .fill(
-                    LinearGradient(
-                        gradient: Gradient(colors: innerCircleColors),
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .scaleEffect(isAnimating ? 1.0 : 0.9)
+            MeteringCircle(
+                isGradient: true,
+                scale: isAnimating ? 1.0 : 0.9
+            )
         }
         .frame(width: 160)
         .onAppear {
@@ -181,16 +171,16 @@ struct MeteringView: View {
     }
     
     private var userNoiseStatusInfo: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text(audioManager.isMetering ? audioManager.userNoiseStatus.message : "일시정지됨")
-                .font(.system(size: 56, weight: .bold, design: .default))
+        VStack(alignment: .center, spacing: 12) {
+            Text(audioManager.userNoiseStatus.message)
+                .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
             
-            Text(audioManager.isMetering ? audioManager.userNoiseStatus.writing : "측정을 다시 시작해주세요")
+            Text(audioManager.userNoiseStatus.writing)
                 .font(.callout)
                 .fontWeight(.medium)
-                .foregroundStyle(.customWhite)
+                .foregroundStyle(.gray2)
         }
     }
     
@@ -205,52 +195,60 @@ struct MeteringView: View {
             isAnimating.toggle()
         } label: {
             Image(systemName: audioManager.isMetering ? "pause.fill" : "play.fill")
-                .font(.largeTitle)
+                .font(.system(size: 46, weight: .bold, design: .default))
                 .fontWeight(.bold)
                 .foregroundStyle(.customWhite)
-                .padding(.horizontal, 21)
-                .padding(.vertical, 16)
+                .padding(.horizontal, 29)
+                .padding(.vertical, 22)
                 .background {
                     Circle()
-                        .fill(.customBlack)
+                        .fill(Color.meteringToggleButton)
                 }
         }
+        // TODO: 한글로 현지화
         .accessibilityLabel(audioManager.isMetering ? "Pause metering" : "Resume metering")
         .accessibilityHint("Starts or pauses noise metering")
     }
-    
-    private var countdownView: some View {
-        Text("\(countdown)")
-            .font(.system(size: 100, weight: .bold, design: .default))
-            .foregroundColor(.customWhite)
-            .transition(.opacity)
-            .onAppear {
-                startCountdown()
-            }
-    }
 }
 
-extension MeteringView {
-    private func startCountdown() {
-        print(#function)
-        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            if countdown > 1 {
-                countdown -= 1
-            } else {
-                stopCountdown()
-                
-                withAnimation {
-                    showCountdown = false
-                }
-                
-                audioManager.startMetering()
-            }
-        }
+struct MeteringCircle: View {
+    @EnvironmentObject var audioManager: AudioManager
+    
+    let isGradient: Bool
+    let scale: Double
+    
+    private var outerCircleColor: Color {
+        audioManager.userNoiseStatus == .safe
+        ? .green
+        : .pink
     }
     
-    private func stopCountdown() {
-        print(#function)
-        countdownTimer?.invalidate() // 타이머 해지
-        countdownTimer = nil
+    private var innerCircleColors: [Color] {
+        audioManager.userNoiseStatus == .safe
+        ? [.green, .linearGreen]
+        : [.pink, .linearPink]
+    }
+    
+    private var innerCircleGradient: LinearGradient {
+        LinearGradient(
+            gradient: Gradient(colors: innerCircleColors),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+    
+    private var pausedCircleGradient: LinearGradient {
+        LinearGradient(
+            gradient: Gradient(colors: [.gray, .white]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+    
+    var body: some View {
+        Circle()
+            .fill(isGradient ? AnyShapeStyle(innerCircleGradient) : AnyShapeStyle(outerCircleColor))
+            .opacity(isGradient ? 1.0 : 0.2)
+            .scaleEffect(scale)
     }
 }
