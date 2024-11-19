@@ -94,7 +94,6 @@
 				Managers/AudioManager.swift,
 				Managers/IOSConnectivityManager.swift,
 				Managers/LiveActivityManager.swift,
-				Managers/LocationManager.swift,
 				Managers/NotificationManager.swift,
 				Models/Location.swift,
 				Models/NoiseStatus.swift,

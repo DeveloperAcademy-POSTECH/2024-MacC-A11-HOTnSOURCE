@@ -38,6 +38,7 @@
 
     },
     "%.1f m" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -204,6 +205,7 @@
       "comment" : "주의 지속 반복 푸시 알림 제목"
     },
     "1m" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -214,6 +216,7 @@
       }
     },
     "2m" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -224,6 +227,7 @@
       }
     },
     "3m" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -451,6 +455,7 @@
     },
     "모든 준비가 완료되었어요!" : {
       "comment" : "온보딩 완료 제목",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -538,6 +543,7 @@
     },
     "상대방과 얼마나 가깝나요?" : {
       "comment" : "측정 반경 입력 단계 설명",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -584,6 +590,7 @@
     },
     "소음 측정이 필요한 곳의 이름을 알려주세요" : {
       "comment" : "장소 이름 입력 단계 보조 설명",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -640,6 +647,7 @@
     },
     "시끄러운 소리를 내면 알려드릴게요!" : {
       "comment" : "온보딩 완료 부제목",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -711,6 +719,7 @@
     },
     "어디에서 사용하시나요?" : {
       "comment" : "장소 이름 입력 단계 설명",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -874,6 +883,7 @@
       }
     },
     "정도 떨어져 있어요" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -955,6 +965,7 @@
     },
     "주변보다 더 큰 소리를 내면 알려드릴게요\n아래의 버튼을 눌러주세요" : {
       "comment" : "배경 소음 입력 단계 보조 설명",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -966,6 +977,7 @@
     },
     "주위의 소리를 들려주세요!" : {
       "comment" : "배경 소음 입력 단계 설명",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1158,6 +1170,7 @@
     },
     "해당 거리에서 어떻게 들리는지\n계산해서 알려드릴게요" : {
       "comment" : "측정 반경 입력 단계 보조 설명",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

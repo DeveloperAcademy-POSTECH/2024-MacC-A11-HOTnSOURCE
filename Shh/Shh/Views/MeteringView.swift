@@ -133,19 +133,16 @@ struct MeteringView: View {
     private var meteringCircles: some View {
         ZStack(alignment: .center) {
             MeteringCircle(
-                userNoiseStatus: $audioManager.userNoiseStatus,
                 isGradient: false,
                 scale: isAnimating ? 1.6 : 0.9
             )
             
             MeteringCircle(
-                userNoiseStatus: $audioManager.userNoiseStatus,
                 isGradient: false,
                 scale: isAnimating ? 1.3 : 0.9
             )
                 
             MeteringCircle(
-                userNoiseStatus: $audioManager.userNoiseStatus,
                 isGradient: true,
                 scale: isAnimating ? 1.0 : 0.9
             )
@@ -214,19 +211,19 @@ struct MeteringView: View {
 }
 
 struct MeteringCircle: View {
-    @Binding var userNoiseStatus: NoiseStatus
+    @EnvironmentObject var audioManager: AudioManager
     
     let isGradient: Bool
     let scale: Double
     
     private var outerCircleColor: Color {
-        userNoiseStatus == .safe
+        audioManager.userNoiseStatus == .safe
         ? .green
         : .pink
     }
     
     private var innerCircleColors: [Color] {
-        userNoiseStatus == .safe
+        audioManager.userNoiseStatus == .safe
         ? [.green, .linearGreen]
         : [.pink, .linearPink]
     }
