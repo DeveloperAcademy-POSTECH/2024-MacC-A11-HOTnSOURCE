@@ -311,7 +311,10 @@ final class AudioManager: ObservableObject {
         let splDecibel = convertToSPL(dBFS: dBFSDecibel)
         
         userDecibel = splDecibel // 데시벨 갱신
-        userDecibelBuffer.append(userDecibel)
+        
+        DispatchQueue.main.async {
+            self.userDecibelBuffer.append(splDecibel)
+        }
     }
     
     /// 사용자 소음 상태를 갱신합니다.
