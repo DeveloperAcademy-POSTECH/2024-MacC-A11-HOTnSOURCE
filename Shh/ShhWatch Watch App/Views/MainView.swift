@@ -17,6 +17,7 @@ struct MainView: View {
     
     // MARK: Body
     var body: some View {
+
         VStack(spacing: 20) {
             welcomeText
             startButton
@@ -51,7 +52,7 @@ struct MainView: View {
             meterBackgroundNoise()
         }
         .buttonStyle(BorderedButtonStyle(tint: .accent.opacity(10)))
-        .foregroundStyle(.white)
+        .foregroundStyle(.customWhite)
     }
     
     // MARK: Function
