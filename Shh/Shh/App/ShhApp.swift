@@ -18,8 +18,9 @@ struct ShhApp: App {
     var body: some Scene {
         WindowGroup {
             if isFirstLaunch {
-                WelcomeView()
-                    .background(.customBlack)
+                NavigationStack {
+                    OnboardingView()
+                }
             } else {
                 NavigationStack {
                     MainView()
