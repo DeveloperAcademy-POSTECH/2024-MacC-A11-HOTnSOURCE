@@ -26,7 +26,7 @@ struct LiveDecibelSheet: View {
                     .frame(height: geometry.size.height * 3 / 5)
                 
                 userDecibel
-                    .frame(height: geometry.size.height * 2 / 5) // 세 높이의 합은 1 1/5 + 3/5 + 1/5
+                    .frame(height: geometry.size.height * 1 / 5) // 세 높이의 합은 1 1/5 + 3/5 + 1/5
             }
             .padding(.vertical, 5)
             .background(.customBlack)
