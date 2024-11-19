@@ -26,6 +26,8 @@ struct MeteringView: View {
     // MARK: Body
     var body: some View {
         VStack(alignment: .center) {
+            Spacer()
+            
             userNoiseStatusInfo
                 .frame(maxWidth: .infinity)
             
@@ -47,7 +49,6 @@ struct MeteringView: View {
             Spacer()
         }
         .background(.customBlack)
-        .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -71,9 +72,9 @@ struct MeteringView: View {
                         }
                     } label: {
                         Label("실시간 현황", systemImage: "chart.xyaxis.line")
-                            .font(.body)
+                            .font(.callout)
                             .fontWeight(.regular)
-                            .foregroundStyle(.green)
+                            .foregroundStyle(.accent)
                             .padding(.all, 6)
                             .background {
                                 if showLiveDecibelSheet {
@@ -94,7 +95,7 @@ struct MeteringView: View {
                         Text("도움말")
                             .font(.body)
                             .fontWeight(.regular)
-                            .foregroundStyle(.green)
+                            .foregroundStyle(.accent)
                     }
                     .contentShape(Rectangle())
                     .buttonStyle(.plain)
