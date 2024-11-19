@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct HelpRowView: View {
+struct HelpRow: View {
     // MARK: Properties
-    let row: HelpRow
+    let row: HelpRowItem
     
     // MARK: Body
     var body: some View {
@@ -40,7 +40,7 @@ struct HelpRowView: View {
 }
 
 // MARK: - 도움말 row 케이스별 데이터
-enum HelpRow: CaseIterable {
+enum HelpRowItem: CaseIterable {
     case meteringMethod
     case levels
     case maxNoise
@@ -48,7 +48,7 @@ enum HelpRow: CaseIterable {
     case dangerStandard
 }
 
-extension HelpRow {
+extension HelpRowItem {
     var systemName: String {
         switch self {
         case .meteringMethod: "waveform.badge.microphone"

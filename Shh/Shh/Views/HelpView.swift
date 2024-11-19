@@ -83,8 +83,8 @@ struct HelpView: View {
             VStack(spacing: 20) {
                 Spacer()
                 
-                ForEach(HelpRow.allCases, id: \.self) { row in
-                    HelpRowView(row: row)
+                ForEach(HelpRowItem.allCases, id: \.self) { row in
+                    HelpRow(row: row)
                 }
             }
         }
