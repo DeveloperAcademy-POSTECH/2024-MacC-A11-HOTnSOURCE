@@ -19,14 +19,14 @@ struct MeteringView: View {
         .repeatForever(autoreverses: true)
     
     private var outerCircleColor: Color {
-        audioManager.userNoiseStatus == .safe ? .accent : .indigo
+        audioManager.userNoiseStatus == .safe ? .accent : .pink
     }
     
     private var innerCircleColors: [Color] {
         if audioManager.userNoiseStatus == .safe {
-            return [.accent, .customLime]
+            return [.accent, .linearGreen]
         } else {
-            return [.indigo, .purple]
+            return [.pink, .linearPink]
         }
     }
     
@@ -55,7 +55,7 @@ struct MeteringView: View {
             meteringPausedCircle
                 .hidden(audioManager.isMetering)
             
-            Text(audioManager.isMetering ? (audioManager.userNoiseStatus == .safe ? "양호" : "주의") : "멈춤")
+            Text(audioManager.isMetering ? (audioManager.userNoiseStatus == .safe ? "양호" : "위험") : "멈춤")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundStyle(.black)
