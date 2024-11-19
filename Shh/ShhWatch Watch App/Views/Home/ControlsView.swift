@@ -43,7 +43,11 @@ struct ControlsView: View {
     private var meteringToggleButton: some View {
         VStack {
             Button {
-                audioManager.isMetering.toggle()
+                if audioManager.isMetering {
+                    audioManager.pauseMetering()
+                } else {
+                    audioManager.startMetering()
+                }
             } label: {
                 Image(systemName: audioManager.isMetering ? "pause.fill" : "play.fill")
                     .font(.title3)
