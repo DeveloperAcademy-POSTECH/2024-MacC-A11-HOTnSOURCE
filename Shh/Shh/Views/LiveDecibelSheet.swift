@@ -26,11 +26,10 @@ struct LiveDecibelSheet: View {
                     .frame(height: geometry.size.height * 3 / 5)
                 
                 userDecibel
-                    .frame(height: geometry.size.height * 1 / 5) // 세 높이의 합은 1 1/5 + 3/5 + 1/5
+                    .frame(height: geometry.size.height * 1 / 5) // 세 높이의 합은 1(= 1/5 + 3/5 + 1/5)
             }
             .padding(.vertical, 5)
             .background(.customBlack)
-            
         }
     }
     
@@ -51,30 +50,26 @@ struct LiveDecibelSheet: View {
                 .fontWeight(.regular)
                 .foregroundStyle(.gray)
         }
-        
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private var decibelInfoForSE: some View {
         VStack(alignment: .leading, spacing: 5) {
-            HStack {
-                Text("배경 소음 | \(Int(audioManager.backgroundDecibel.rounded())) dB")
-                    .font(.caption)
-                    .fontWeight(.regular)
-                    .foregroundStyle(.gray2)
-                
-                Text("최대 소음 | \(audioManager.maximumDecibel) dB")
-                    .font(.caption)
-                    .fontWeight(.regular)
-                    .foregroundStyle(.gray2)
-            }
+            Text("배경 소음 | \(Int(audioManager.backgroundDecibel.rounded())) dB")
+                .font(.caption)
+                .fontWeight(.regular)
+                .foregroundStyle(.gray2)
+            
+            Text("최대 소음 | \(audioManager.maximumDecibel) dB")
+                .font(.caption)
+                .fontWeight(.regular)
+                .foregroundStyle(.gray2)
             
             Text("소음 정보는 계산에만 활용되고 저장되지 않습니다.")
                 .font(.caption2)
                 .fontWeight(.regular)
                 .foregroundStyle(.gray)
         }
-        
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     private var userDecibel: some View {
@@ -105,38 +100,24 @@ struct LiveDecibelChart: View {
     // MARK: body
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .center, vertical: .center)) {
-            Rectangle()
-                .fill(.gray.opacity(0.1))
-                .frame(maxWidth: .infinity)
+            maximumDecibelRectangle
                 .frame(height: frameHeight / 2) // 1/2 크기; 최대 소음에 해당하는 라인
             
             standardBar
                 .frame(height: frameHeight) // 전체 크기; 최대 소음 * 2에 해당하는 라인
             
-            HStack(spacing: barSpacing) {
-                // 실제 데시벨 막대
-                ForEach(audioManager.userDecibelBuffer, id: \.self) { decibel in
-                    RoundedRectangle(cornerRadius: 100)
-                        .fill(Int(decibel) > audioManager.maximumDecibel ? .pink : .green)
-                        .frame(width: barWidth, height: decibelRowHeight(decibel: decibel))
-                }
-                
-                // 반대편에 보이지 않는 막대
-                ForEach(audioManager.userDecibelBuffer.indices, id: \.self) { index in
-                    if index != 0 {
-                        Rectangle()
-                            .fill(.clear)
-                            .frame(width: barWidth)
-                    }
-                }
-            }
-            .clipShape(Rectangle())
-            .frame(width: frameWidth)
+            decibelBars
+                .frame(height: frameHeight) // 전체 크기
         }
-        
     }
     
     // MARK: subViews
+    private var maximumDecibelRectangle: some View {
+        Rectangle()
+            .fill(.gray.opacity(0.1))
+            .frame(maxWidth: .infinity)
+    }
+    
     private var standardBar: some View {
         VStack(alignment: .center, spacing: 0) {
             Circle()
@@ -154,9 +135,32 @@ struct LiveDecibelChart: View {
                 .offset(x: 0, y: -12)
         }
     }
+    
+    private var decibelBars: some View {
+        HStack(spacing: barSpacing) {
+            // 실제 데시벨 막대
+            ForEach(audioManager.userDecibelBuffer, id: \.self) { decibel in
+                RoundedRectangle(cornerRadius: 100)
+                    .fill(Int(decibel) > audioManager.maximumDecibel ? .pink : .green)
+                    .frame(width: barWidth, height: decibelRowHeight(decibel: decibel))
+            }
+            
+            // 반대편에 보이지 않는 막대
+            ForEach(audioManager.userDecibelBuffer.indices, id: \.self) { index in
+                if index != 0 { // 안 보이는 막대들의 개수는 (전체 - 1)개
+                    Rectangle()
+                        .fill(.clear)
+                        .frame(width: barWidth)
+                }
+            }
+        }
+        .clipShape(Rectangle())
+        .frame(width: frameWidth)
+    }
 
     // MARK: actionHandler
-    private func decibelRowHeight(decibel: Float) -> CGFloat { // 화면 비율에 맞게끔 높이 조정
+    /// 화면 비율에 맞게끔 높이를 조정합니다.
+    private func decibelRowHeight(decibel: Float) -> CGFloat {
         min(frameHeight * CGFloat(decibel) / CGFloat(audioManager.maximumDecibel * 2), frameHeight) // 최대 소음 * 2를 넘지 않게
     }
 }
