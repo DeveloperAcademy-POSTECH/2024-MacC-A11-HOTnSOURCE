@@ -56,7 +56,7 @@ struct MainView: View {
         Button("시작하기") {
             showLoadingView = true
         }
-        .buttonStyle(BorderedButtonStyle(tint: .accent.opacity(10)))
+        .buttonStyle(BorderedButtonStyle(tint: .accent.opacity(3.5)))
         .foregroundStyle(.customWhite)
     }
 }
