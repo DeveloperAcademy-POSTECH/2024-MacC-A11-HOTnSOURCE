@@ -301,7 +301,7 @@ final class AudioManager: ObservableObject {
         let userDecibelAverage: Float = lastWindowDecibels.reduce(0, +) / Float(lastWindowDecibels.count)
         
         if Int(userDecibelAverage) > self.maximumDecibel {
-            self.userNoiseStatus = .caution
+            self.userNoiseStatus = .danger
         } else {
             self.userNoiseStatus = .safe
         }
