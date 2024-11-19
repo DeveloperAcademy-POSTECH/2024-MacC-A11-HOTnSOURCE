@@ -71,6 +71,10 @@ struct MainView: View {
                     withAnimation {
                         showLoadingView = true
                     }
+                } else {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        await UIApplication.shared.open(url)
+                    }
                 }
             }
         } label: {
