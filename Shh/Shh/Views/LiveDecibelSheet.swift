@@ -17,14 +17,16 @@ struct LiveDecibelSheet: View {
         GeometryReader { geometry in
             VStack {
                 decibelInfo
-                    .frame(height: geometry.size.height * 3 / 15) // 3/15
+                    .frame(height: geometry.size.height * 1 / 5)
                     .padding(.leading)
                 
-                LiveDecibelChart(frameWidth: geometry.size.width, frameHeight: geometry.size.height * 2 / 3)
-                    .frame(height: geometry.size.height * 2 / 3) // 10/15
+                LiveDecibelChart(
+                    frameWidth: geometry.size.width,
+                    frameHeight: geometry.size.height * 3 / 5)
+                    .frame(height: geometry.size.height * 3 / 5)
                 
                 userDecibel
-                    .frame(height: geometry.size.height * 2 / 15) // 2/15; 세 개의 합은 1
+                    .frame(height: geometry.size.height * 2 / 5) // 세 높이의 합은 1 1/5 + 3/5 + 1/5
             }
             .padding(.vertical, 5)
             .background(.customBlack)
@@ -53,6 +55,28 @@ struct LiveDecibelSheet: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
+    private var decibelInfoForSE: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            HStack {
+                Text("배경 소음 | \(Int(audioManager.backgroundDecibel.rounded())) dB")
+                    .font(.caption)
+                    .fontWeight(.regular)
+                    .foregroundStyle(.gray2)
+                
+                Text("최대 소음 | \(audioManager.maximumDecibel) dB")
+                    .font(.caption)
+                    .fontWeight(.regular)
+                    .foregroundStyle(.gray2)
+            }
+            
+            Text("소음 정보는 계산에만 활용되고 저장되지 않습니다.")
+                .font(.caption2)
+                .fontWeight(.regular)
+                .foregroundStyle(.gray)
+        }
+        
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
     private var userDecibel: some View {
         HStack {
             Text("\(Int(audioManager.userDecibel.rounded()))")
