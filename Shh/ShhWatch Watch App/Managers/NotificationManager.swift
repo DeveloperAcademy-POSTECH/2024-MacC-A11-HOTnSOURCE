@@ -1,6 +1,6 @@
 //
 //  NotificationManager.swift
-//  Shh
+//  ShhWatch Watch App
 //
 //  Created by Jia Jang on 11/16/24.
 //
@@ -73,19 +73,19 @@ final class NotificationManager {
     /// 실제 푸시 알림 전송 함수
     private func scheduleNotificationFor(_ type: NotificationType) {
         let content = createNotificationContent(
-            subtitle: type.subtitle,
-            body: type.body
+            title: type.title,
+            subtitle: type.subtitle
         )
         
         scheduleNotification(content: content, type: type)
     }
     
     /// 푸시 알림 내용 생성
-    private func createNotificationContent(subtitle: String? = nil, body: String, sound: UNNotificationSound = .default) -> UNMutableNotificationContent {
+    private func createNotificationContent(title: String, subtitle: String, sound: UNNotificationSound = .default) -> UNMutableNotificationContent {
         let content = UNMutableNotificationContent()
         content.sound = sound
-        content.subtitle = subtitle ?? ""
-        content.body = body
+        content.title = title
+        content.subtitle = subtitle
         
         return content
     }
@@ -107,42 +107,42 @@ final class NotificationManager {
 }
 
 enum NotificationType: String {
-    /// 주의 알림
-    case caution = "주의"
-    /// 주의 지속 알림. 소음 수준이 주의 상태에서 20초 동안 머무를 경우 사용자에게 알려줍니다.
-    case persistent = "주의 지속"
-    /// 주의 지속 반복 알림.  주의 지속 알림을 받은 이후에도 계속해서 주의 수준에 머물 경우 60초 간격으로 사용자에게 알려줍니다.
-    case recurringAlert = "주의 지속 반복"
+    /// 위험 알림
+    case danger = "위험"
+    /// 위험 지속 알림. 소음 수준이 위험 상태에서 20초 동안 머무를 경우 사용자에게 알려줍니다.
+    case persistent = "위험 지속"
+    /// 위험 지속 반복 알림.  위험 지속 알림을 받은 이후에도 계속해서 위험 수준에 머물 경우 60초 간격으로 사용자에게 알려줍니다.
+    case recurringAlert = "위험 지속 반복"
 }
 
 extension NotificationType {
     var delay: TimeInterval {
         switch self {
-        case .caution: return 0.1
+        case .danger: return 0.1
         case .persistent: return 20
         case .recurringAlert: return 60
         }
     }
     
-    var subtitle: String {
+    var title: String {
         switch self {
-        case .caution:
-            NSLocalizedString("소음 수준: 주의", comment: "주의 알림 제목")
+        case .danger:
+            NSLocalizedString("🤫", comment: "위험 알림 제목")
         case .persistent:
-            NSLocalizedString("지속적인 소음 발생", comment: "주의 지속 푸시 알림 제목")
+            NSLocalizedString("‼️", comment: "위험 지속 푸시 알림 제목")
         case .recurringAlert:
-            NSLocalizedString("지속적인 소음 발생", comment: "주의 지속 반복 푸시 알림 제목")
+            NSLocalizedString("🚨", comment: "위험 지속 반복 푸시 알림 제목")
         }
     }
     
-    var body: String {
+    var subtitle: String {
         switch self {
-        case .caution:
-            NSLocalizedString("이제 조금 조심해야 해요", comment: "주의 푸시 알림 내용")
+        case .danger:
+            NSLocalizedString("큰 소리를 들었어요!", comment: "위험 푸시 알림 내용")
         case .persistent:
-            NSLocalizedString("소음 상태가 20초 동안 주의에 머물렀어요!", comment: "주의 지속 푸시 알림 내용")
+            NSLocalizedString("20초 동안 지속적인 소음이 발생했어요", comment: "위험 지속 푸시 알림 내용")
         case .recurringAlert:
-            NSLocalizedString("아직까지 조심해야할 수준의 소음이 발생하고 있어요!", comment: "주의 지속 반복 푸시 알림 내용")
+            NSLocalizedString("큰 소리가 계속 들려요!", comment: "위험 지속 반복 푸시 알림 내용")
         }
     }
 }

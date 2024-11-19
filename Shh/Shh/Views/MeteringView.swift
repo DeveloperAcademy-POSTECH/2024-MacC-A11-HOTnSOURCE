@@ -107,7 +107,7 @@ struct MeteringView: View {
         .onChange(of: audioManager.userNoiseStatus) {
             Task {
                 if audioManager.userNoiseStatus == .danger {
-                    await NotificationManager.shared.sendNotification(.caution)
+                    await NotificationManager.shared.sendNotification(.danger)
                     await NotificationManager.shared.sendNotification(.persistent)
                     await NotificationManager.shared.sendNotification(.recurringAlert)
                 } else {

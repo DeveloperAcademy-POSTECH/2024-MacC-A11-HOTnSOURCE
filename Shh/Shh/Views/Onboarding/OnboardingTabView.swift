@@ -35,7 +35,7 @@ struct OnboardingTabView: View {
             Text(tab.subtitle)
                 .font(.body)
                 .fontWeight(.bold)
-                .foregroundStyle(.gray)
+                .foregroundStyle(.gray2)
                 .multilineTextAlignment(.center)
             
             Spacer().frame(height: 10)
@@ -58,7 +58,6 @@ struct OnboardingTabView: View {
     private var startButton: some View {
         Button {
             isFirstLaunch = false
-            print("start button")
         } label: {
             Text("시작하기")
                 .font(.body)

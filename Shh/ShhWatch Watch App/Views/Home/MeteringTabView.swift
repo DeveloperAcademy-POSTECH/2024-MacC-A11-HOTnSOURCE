@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  MeteringTabView.swift
 //  ShhWatch Watch App
 //
 //  Created by Jia Jang on 10/30/24.
@@ -12,9 +12,10 @@ struct MeteringTabView: View {
     // MARK: Properties
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var audioManager: AudioManager
-
+    
     @State private var tabSelection: Tabs = .home
-    @State private var backgroundNoise: Float = 0
+    
+    @Binding var backgroundDecibel: Float
     
     // MARK: Body
     var body: some View {
@@ -30,17 +31,23 @@ struct MeteringTabView: View {
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
-            audioManager.isMetering = true
-        }
-        .onAppear {
-            // TODO: 측정 시작
-        }
-        .onDisappear {
-            audioManager.stopMetering()
-            NotificationManager.shared.removeAllNotifications()
+            audioManager.startMetering()
         }
         .onChange(of: audioManager.userNoiseStatus) {
-           // TODO: 알림 보내기
+            triggerNotification()
+        }
+    }
+    
+    // MARK: Function
+    private func triggerNotification() {
+        Task {
+            if audioManager.userNoiseStatus == .danger {
+                await NotificationManager.shared.sendNotification(.danger)
+                await NotificationManager.shared.sendNotification(.persistent)
+                await NotificationManager.shared.sendNotification(.recurringAlert)
+            } else {
+                NotificationManager.shared.removeAllNotifications()
+            }
         }
     }
 }
