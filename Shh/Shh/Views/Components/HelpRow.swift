@@ -18,7 +18,7 @@ struct HelpRow: View {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(row.boxColor)
                 
-                Image(systemName: row.systemName)
+                Image(systemName: "\(row.systemName)")
                     .font(.largeTitle)
                     .foregroundStyle(.white)
             }
@@ -49,7 +49,7 @@ enum HelpRowItem: CaseIterable {
 }
 
 extension HelpRowItem {
-    var systemName: String {
+    var systemName: LocalizedStringKey {
         switch self {
         case .meteringMethod: "waveform.badge.microphone"
         case .levels: "ring.circle"
@@ -79,7 +79,7 @@ extension HelpRowItem {
         }
     }
     
-    var description: String {
+    var description: LocalizedStringKey {
         switch self {
         case .meteringMethod: "기기 마이크를 사용해서 실시간으로 소음 수준을 확인하며, 배경 소음에 비해서 얼만큼 크게 들리는지 계산해요."
         case .levels: "소음 단계는 양호와 위험 두 단계로 이루어져 있어요. 양호일 땐 녹색, 위험일 땐 분홍색으로 소음 단계를 볼 수 있어요."
