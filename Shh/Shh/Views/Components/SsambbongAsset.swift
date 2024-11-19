@@ -20,5 +20,5 @@ struct SsambbongAsset: View {
 }
 
 #Preview {
-    SsambbongAsset(image: .backgroundNoiseInputAsset)
+//    SsambbongAsset(image: .backgroundNoiseInputAsset)
 }

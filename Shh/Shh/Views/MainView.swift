@@ -7,39 +7,76 @@
 
 import SwiftUI
 
+// MARK: - 메인 화면
 struct MainView: View {
-    @EnvironmentObject var router: Router
-    @EnvironmentObject var audioManager: AudioManager
+    // MARK: Properties
+    @State private var showLoadingView: Bool = false
     
+    // MARK: Body
     var body: some View {
-        // TODO: 디자인 예정
-        VStack {
-            Text("진짜 메인뷰")
-            Button {
-                Task {
-                    do {
-                        try await audioManager.meteringBackgroundDecibel()
-                    } catch {
-                        print("웁스")
-                    }
-                }
-            } label: {
-                Text("배경 소음 측정")
+        ZStack {
+            VStack(spacing: 0) {
+                Spacer(minLength: 20)
+                
+                Text("반가워요!\n소음이 걱정이신가요?")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Spacer(minLength: 15)
+                
+                Text("아래 버튼을 눌러 시작해주세요")
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.gray)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Spacer()
+                    .frame(maxHeight: .infinity)
+                
+                Text("버튼 눌러 시작하기")
+                    .font(.footnote)
+                    .foregroundStyle(.gray)
+                
+                Spacer(minLength: 20)
+                
+                startButton
+                
+                Spacer(minLength: 20)
             }
-            CustomButton(text: "측정 뷰로 이동") {
-                router.push(view: .meteringView)
+            .padding(25)
+            .background(.customBlack)
+            
+            if showLoadingView {
+                LoadingView()
+                    .transition(.move(edge: .trailing))
             }
         }
-        .onAppear {
-            do {
-                try audioManager.setAudioSession()
-            } catch {
-                print("웁스")
+        .onDisappear {
+            showLoadingView = false
+        }
+    }
+    
+    // MARK: SubViews
+    private var startButton: some View {
+        Button {
+            withAnimation {
+                showLoadingView = true
             }
+        } label: {
+            Image(systemName: "waveform")
+                .font(.system(size: 60))
+                .foregroundStyle(.white)
+                .frame(width: 130, height: 130)
+                .background {
+                    Circle()
+                        .fill(.accent)
+                }
         }
     }
 }
 
+// MARK: - Preview
 #Preview {
     MainView()
 }
