@@ -30,7 +30,6 @@ struct DynamicIslandWidgetLiveActivity: Widget {
             LockScreenAndBannerView(isMetering: context.state.isMetering)
         } dynamicIsland: { context in
             DynamicIsland {
-                // TODO: 디자인 리팩토링 필요
                 // Expanded UI; leading/trailing/center/bottom 로 구성
                 // Compact / minimal UI
                 DynamicIslandExpandedRegion(.leading) {
