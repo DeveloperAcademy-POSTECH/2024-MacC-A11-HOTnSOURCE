@@ -109,7 +109,22 @@ struct HelpView: View {
     }
     
     private var soundTable: some View {
-        Text("sound table")
+        List {
+            ForEach(SoundTableItem.backgroundDecibelOptions, id: \.self) { decibel in
+                HStack(spacing: 20) {
+                    Text("~\(Int(decibel)) dB")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                    
+                    Text(SoundTableItem.decibelWriting(decibel: decibel))
+                    
+                    Spacer()
+                }
+                .padding(.vertical, 10)
+            }
+        }
+        .fontWeight(.bold)
+        .scrollContentBackground(.hidden)
     }
 }
 
@@ -162,6 +177,41 @@ extension HelpType {
             return "기본 정보"
         case .soundTable:
             return "소리 기준표"
+        }
+    }
+}
+
+// MARK: - 소리 기준표 각 항목
+final class SoundTableItem {
+    static let backgroundDecibelOptions: [Float] = [30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0]
+    
+    /// 해당 데시벨에 대한 설명입니다. 이를 통해 사용자가 데시벨 정도를 가늠할 수 있습니다.
+    static func decibelWriting(decibel: Float) -> LocalizedStringKey {
+        let intDecibel = Int(decibel)
+        
+        switch intDecibel {
+        case 30:
+            return "아주 조용한 방에서의 환경음"
+        case 35:
+            return "냉장고, 바람 소리가 들리는 정도의 실내 소음"
+        case 40:
+            return "조용한 카페에서 나오는 배경 소음"
+        case 45:
+            return "주택가에서 들리는 적당한 실내 소음"
+        case 50:
+            return "조용한 사무실에서 들리는 일반적인 실내 소음"
+        case 55:
+            return "평소 대화 소리나 가정에서의 일상 소음"
+        case 60:
+            return "일상적인 대화 소리, 도로에서의 자동차 소음"
+        case 65:
+            return "시끄러운 사무실이나 사람들 간의 활발한 토론 소리"
+        case 70:
+            return "도로변에서 들리는 자동차와 사람들 소리"
+        case 0:
+            return ""
+        default:
+            return "데시벨 설명 없음"
         }
     }
 }
