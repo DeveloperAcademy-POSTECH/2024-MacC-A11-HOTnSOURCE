@@ -26,6 +26,16 @@ extension GuideRowItem {
         }
     }
     
+    var accessibilityLabel: String {
+        switch self {
+        case .meteringMethod: "마이크 심볼"
+        case .levels: "소음 측정 심볼"
+        case .maxNoise: "음량 심볼"
+        case .pushNotification: "종 모양 알림 심볼"
+        case .dangerStandard: "위험 경고 심볼"
+        }
+    }
+    
     var boxColor: Color {
         switch self {
         case .meteringMethod: .accent
