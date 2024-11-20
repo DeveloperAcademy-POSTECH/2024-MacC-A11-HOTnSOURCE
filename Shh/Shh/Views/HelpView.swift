@@ -11,6 +11,8 @@ struct HelpView: View {
     // MARK: Properties
     @Environment(\.dismiss) var dismiss
     
+    @State private var selectedHelpType: HelpType = .guide
+    
     private let backgroundGradient = LinearGradient(
         gradient: Gradient(colors: [.accent, .customBlack]),
         startPoint: .top,
@@ -31,7 +33,22 @@ struct HelpView: View {
                 
                 VStack {
                     introduce
-                    helpRows
+                    
+                    Picker("", selection: $selectedHelpType) {
+                        ForEach(HelpType.allCases, id: \.self) { type in
+                            Text(type.title)
+                                .tag(type)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .padding(.horizontal)
+                    
+                    switch selectedHelpType {
+                    case .guide:
+                        guideRows
+                    case .soundTable:
+                        soundTable
+                    }
                 }
                 .background(.customBlack)
             }
@@ -79,23 +96,27 @@ struct HelpView: View {
         .background(backgroundGradient)
     }
     
-    private var helpRows: some View {
+    private var guideRows: some View {
         ScrollView {
             VStack(spacing: 20) {
                 Spacer()
                 
-                ForEach(HelpRowItem.allCases, id: \.self) { row in
-                    HelpRow(row: row)
+                ForEach(GuideRowItem.allCases, id: \.self) { row in
+                    GuideRow(row: row)
                 }
             }
         }
     }
+    
+    private var soundTable: some View {
+        Text("sound table")
+    }
 }
 
 // MARK: - 도움말 하나 하나
-struct HelpRow: View {
+struct GuideRow: View {
     // MARK: Properties
-    let row: HelpRowItem
+    let row: GuideRowItem
     
     // MARK: Body
     var body: some View {
@@ -125,6 +146,23 @@ struct HelpRow: View {
             Spacer()
         }
         .padding(.horizontal)
+    }
+}
+
+// MARK: - 도움말 종류
+enum HelpType: CaseIterable {
+    case guide
+    case soundTable
+}
+
+extension HelpType {
+    var title: LocalizedStringKey {
+        switch self {
+        case .guide:
+            return "기본 정보"
+        case .soundTable:
+            return "소리 기준표"
+        }
     }
 }
 

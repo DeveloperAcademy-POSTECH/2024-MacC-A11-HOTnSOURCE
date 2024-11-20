@@ -76,7 +76,7 @@
 		8DE180EA2CD3A1450031D8D6 /* Exceptions for "Shh" folder in "ShhWatch Watch App" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Models/HelpRowItem.swift,
+				Models/GuideRowItem.swift,
 				Models/NoiseStatus.swift,
 			);
 			target = 8DE180B52CD27B6F0031D8D6 /* ShhWatch Watch App */;
@@ -94,7 +94,7 @@
 				Managers/AudioManager.swift,
 				Managers/LiveActivityManager.swift,
 				Managers/NotificationManager.swift,
-				Models/HelpRowItem.swift,
+				Models/GuideRowItem.swift,
 				Models/NoiseStatus.swift,
 				Resources/Assets.xcassets,
 			);
