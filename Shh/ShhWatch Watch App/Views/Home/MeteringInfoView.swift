@@ -11,7 +11,7 @@ import SwiftUI
 struct MeteringInfoView: View {
     var body: some View {
         ScrollView {
-            VStack(spacing: 40) {
+            VStack(spacing: 20) {
                 ForEach(Array(InfoItem.infoItemList.enumerated()), id: \.offset) { _, infoItem in
                     InfoRow(item: infoItem)
                 }
