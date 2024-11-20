@@ -30,7 +30,7 @@ struct WelcomeView: View {
             }
             .padding(.leading)
             
-            Image(.welcome)
+            Image(uiImage: tab.image)
                 .resizable()
                 .scaledToFit()
         }

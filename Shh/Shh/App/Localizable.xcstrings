@@ -635,7 +635,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Real-time Level"
+            "value" : "Real-time Status"
           }
         }
       }

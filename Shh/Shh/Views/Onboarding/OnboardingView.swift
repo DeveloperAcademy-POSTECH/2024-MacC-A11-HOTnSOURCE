@@ -66,8 +66,15 @@ enum OnboardingTab: CaseIterable {
 extension OnboardingTab {
     var image: UIImage {
         switch self {
-        case .welcome: .pushNotification
-        case .pushNotification: .pushNotification
+        case .welcome: .welcome
+        case .pushNotification: {
+            let currentLocale = Locale.current.language.languageCode?.identifier
+            switch currentLocale {
+            case "en": return .pushNotificationEn
+            case "ko": return .pushNotification
+            default: return .pushNotificationEn
+            }
+        }()
         case .earphone: .earphone
         case .background: .background
         }
@@ -81,7 +88,7 @@ extension OnboardingTab {
         case .background: "화면을 보지 않고도"
         }
     }
-
+    
     var subtitle: LocalizedStringKey {
         switch self {
         case .welcome: "내 소리가 시끄러울지 걱정되시나요?\n소음으로 주위의 따가운 시선을 받은 적이 있나요?"
@@ -90,7 +97,7 @@ extension OnboardingTab {
         case .background: "앱을 늘 켜고 있지 않아도\n백그라운드에서 계속 들어 드릴게요"
         }
     }
-
+    
     var subtext: LocalizedStringKey {
         switch self {
         case .welcome: "시끄러운지는 저희가 대신 듣고 알려 드릴 테니\n걱정 말고 편안하게 집중하세요!"
@@ -99,7 +106,7 @@ extension OnboardingTab {
         case .background: "* 라이브 액티비티로도 확인할 수 있어요"
         }
     }
-
+    
 }
 
 // MARK: - Preview
