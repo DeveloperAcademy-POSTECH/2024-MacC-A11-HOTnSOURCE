@@ -72,7 +72,7 @@ struct HelpView: View {
             
             VStack {
                 Text("측정 기준부터 알림까지")
-                Text("궁금할만한 정보를 알아보세요")
+                Text("궁금할 만한 정보를 알아보세요")
             }
             .font(.callout)
             
@@ -192,7 +192,7 @@ final class SoundTableItem {
         
         switch intDecibel {
         case 30:
-            return "아주 조용한 방에서의 환경음"
+            return "아주 조용한 방에서의 주변 소리"
         case 35:
             return "냉장고, 바람 소리가 들리는 정도의 실내 소음"
         case 40:
