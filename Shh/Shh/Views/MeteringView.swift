@@ -11,13 +11,15 @@ import TipKit
 // MARK: - 측정 뷰; 사용자의 소음 정도를 나타냅니다.
 struct MeteringView: View {
     // MARK: Properties
+    @Environment(\.dismiss) var dismiss
+    
     @EnvironmentObject var audioManager: AudioManager
     
     @State private var isAnimating = false
     
     @State private var showLiveDecibelSheet = false
     
-    @State private var showMeteringInfoFullScreenCover = false
+    @State private var showHelpViewFullScreenCover = false
     
     private let meteringCircleAnimation = Animation
         .easeInOut(duration: 1.5)
@@ -53,7 +55,7 @@ struct MeteringView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    // TODO: 뒤로가기
+                    dismiss()
                 } label: {
                     Text("종료")
                         .font(.body)
@@ -89,7 +91,7 @@ struct MeteringView: View {
                     
                     Button {
                         withAnimation {
-                            showMeteringInfoFullScreenCover = true
+                            showHelpViewFullScreenCover = true
                         }
                     } label: {
                         Text("도움말")
@@ -105,7 +107,7 @@ struct MeteringView: View {
         .onChange(of: audioManager.userNoiseStatus) {
             Task {
                 if audioManager.userNoiseStatus == .danger {
-                    await NotificationManager.shared.sendNotification(.caution)
+                    await NotificationManager.shared.sendNotification(.danger)
                     await NotificationManager.shared.sendNotification(.persistent)
                     await NotificationManager.shared.sendNotification(.recurringAlert)
                 } else {
@@ -125,8 +127,8 @@ struct MeteringView: View {
                 .presentationDetents([.medium])
                 .presentationDragIndicator(.visible)
         }
-        .fullScreenCover(isPresented: $showMeteringInfoFullScreenCover) {
-            MeteringInfoFullScreenCover()
+        .fullScreenCover(isPresented: $showHelpViewFullScreenCover) {
+            HelpView()
         }
     }
     
@@ -149,10 +151,12 @@ struct MeteringView: View {
             )
         }
         .frame(width: 160)
-        .onAppear {
-            DispatchQueue.main.async {
-                withAnimation(meteringCircleAnimation) {
-                    isAnimating = true
+        .onChange(of: audioManager.isMetering) {
+            if audioManager.isMetering {
+                DispatchQueue.main.async {
+                    withAnimation(meteringCircleAnimation) {
+                        isAnimating = true
+                    }
                 }
             }
         }
@@ -211,6 +215,7 @@ struct MeteringView: View {
     }
 }
 
+// MARK: - 중앙의 측정 원
 struct MeteringCircle: View {
     @EnvironmentObject var audioManager: AudioManager
     
