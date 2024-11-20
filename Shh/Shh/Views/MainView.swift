@@ -11,8 +11,6 @@ import SwiftUI
 struct MainView: View {
     // MARK: Properties
     @EnvironmentObject var audioManager: AudioManager
-    
-    @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
 
     @State private var showLoadingView: Bool = false
     @State private var showOnboardingFullScreen: Bool = false
