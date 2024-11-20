@@ -12,9 +12,11 @@ struct MainView: View {
     // MARK: Properties
     @EnvironmentObject var audioManager: AudioManager
     
+    @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
+
     @State private var showLoadingView: Bool = false
     @State private var showOnboardingFullScreen: Bool = false
-    
+
     // MARK: Body
     var body: some View {
         ZStack {
@@ -64,6 +66,11 @@ struct MainView: View {
         }
         .onDisappear {
             showLoadingView = false
+        }
+        .fullScreenCover(isPresented: $showOnboardingFullScreen) {
+            NavigationStack {
+                OnboardingView()
+            }
         }
     }
     

@@ -355,6 +355,9 @@
         }
       }
     },
+    "가 응원할게요" : {
+
+    },
     "건너뛰기" : {
 
     },
@@ -493,6 +496,7 @@
       }
     },
     "반가워요!\n소음이 걱정이신가요?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -710,9 +714,6 @@
     "실시간 현황" : {
 
     },
-    "아래 버튼을 눌러 시작해주세요" : {
-
-    },
     "아주 조용한 방에서의 환경음" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -761,6 +762,9 @@
         }
       }
     },
+    "오늘도 조용한 하루를\n보내봐요!" : {
+
+    },
     "오류" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -771,6 +775,9 @@
           }
         }
       }
+    },
+    "온보딩 가이드" : {
+
     },
     "완료" : {
       "extractionState" : "stale",
