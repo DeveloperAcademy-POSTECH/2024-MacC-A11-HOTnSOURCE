@@ -10,6 +10,8 @@ import SwiftUI
 // MARK: - 온보딩
 struct OnboardingView: View {
     // MARK: Properties
+    @Environment(\.dismiss) var dismiss
+    
     @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
     
     @State private var currentTab: OnboardingTab = .welcome
@@ -33,10 +35,20 @@ struct OnboardingView: View {
         .background(.customBlack)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("건너뛰기") {
-                    isFirstLaunch = false
+                Button {
+                    if isFirstLaunch {
+                        isFirstLaunch = false
+                    } else {
+                        dismiss()
+                    }
+                } label: {
+                    Text("건너뛰기")
+                        .font(.body)
+                        .fontWeight(.regular)
+                        .foregroundStyle(.gray)
                 }
-                .foregroundStyle(.gray)
+                .contentShape(Rectangle())
+                .buttonStyle(.plain)
                 .hidden(currentTab == .allCases.last)
             }
         }
