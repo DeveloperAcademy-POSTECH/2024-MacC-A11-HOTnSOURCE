@@ -1,5 +1,5 @@
 //
-//  HelpRowItem.swift
+//  GuideRowItem.swift
 //  Shh
 //
 //  Created by Jia Jang on 11/19/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum HelpRowItem: CaseIterable {
+enum GuideRowItem: CaseIterable {
     case meteringMethod
     case levels
     case maxNoise
@@ -15,7 +15,7 @@ enum HelpRowItem: CaseIterable {
     case dangerStandard
 }
 
-extension HelpRowItem {
+extension GuideRowItem {
     var systemName: String {
         switch self {
         case .meteringMethod: "waveform.badge.mic"
@@ -46,7 +46,7 @@ extension HelpRowItem {
         }
     }
     
-    var title: String {
+    var title: LocalizedStringKey {
         switch self {
         case .meteringMethod: "어떻게 측정하나요?"
         case .levels: "소음 단계는 어떻게 되나요?"

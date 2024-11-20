@@ -10,6 +10,8 @@ import SwiftUI
 // MARK: - 온보딩 각 탭 별 화면
 struct OnboardingTabView: View {
     // MARK: Properties
+    @Environment(\.dismiss) var dismiss
+    
     @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
     
     let tab: OnboardingTab
@@ -57,7 +59,11 @@ struct OnboardingTabView: View {
     // MARK: SubViews
     private var startButton: some View {
         Button {
-            isFirstLaunch = false
+            if isFirstLaunch {
+                isFirstLaunch = false
+            } else {
+                dismiss()
+            }
         } label: {
             Text("시작하기")
                 .font(.body)
