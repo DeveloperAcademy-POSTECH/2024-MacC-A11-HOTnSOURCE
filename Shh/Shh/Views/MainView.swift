@@ -51,6 +51,8 @@ struct MainView: View {
                     }
                     .contentShape(Rectangle())
                     .buttonStyle(.plain)
+                    .hidden(showLoadingView)
+                    .animation(nil, value: showLoadingView)
                 }
             }
             
