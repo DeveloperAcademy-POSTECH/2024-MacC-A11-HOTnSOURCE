@@ -37,6 +37,7 @@ struct ControlsView: View {
             
             Text("종료")
         }
+        .accessibilityHint("탭해서 측정을 마치고 메인 뷰로 돌아갈 수 있습니다.")
     }
     
     private var meteringToggleButton: some View {
@@ -57,5 +58,6 @@ struct ControlsView: View {
             
             Text(audioManager.isMetering ? "일시정지" : "재개")
         }
+        .accessibilityHint("탭해서 측정을 멈추거나 다시 시작할 수 있습니다.")
     }
 }
