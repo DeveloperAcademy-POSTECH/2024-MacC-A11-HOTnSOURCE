@@ -21,38 +21,25 @@ struct HelpView: View {
     
     // MARK: Body
     var body: some View {
-        ZStack {
-            Color.accent
-                .ignoresSafeArea()
+        VStack {
+            closeButton
+                .frame(maxWidth: .infinity, alignment: .trailing)
             
             VStack {
-                HStack {
-                    Spacer()
-                    closeButton
-                }
+                introduce
                 
-                VStack {
-                    introduce
-                    
-                    Picker("", selection: $selectedHelpType) {
-                        ForEach(HelpType.allCases, id: \.self) { type in
-                            Text(type.title)
-                                .tag(type)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                    .padding(.horizontal)
-                    
-                    switch selectedHelpType {
-                    case .guide:
-                        guideRows
-                    case .soundTable:
-                        soundTable
-                    }
+                segmentedPicker
+                
+                switch selectedHelpType {
+                case .guide:
+                    guideRows
+                case .soundTable:
+                    soundTable
                 }
-                .background(.customBlack)
             }
+            .background(.customBlack)
         }
+        .background(.accent)
     }
     
     // MARK: Subviews
@@ -69,7 +56,7 @@ struct HelpView: View {
                         .fill(.customBlack)
                 }
         }
-        .padding([.trailing], 20)
+        .padding(.trailing, 20)
     }
     
     private var introduce: some View {
@@ -96,6 +83,17 @@ struct HelpView: View {
         .background(backgroundGradient)
     }
     
+    private var segmentedPicker: some View {
+        Picker("", selection: $selectedHelpType) {
+            ForEach(HelpType.allCases, id: \.self) { type in
+                Text(type.title)
+                    .tag(type)
+            }
+        }
+        .pickerStyle(.segmented)
+        .padding(.horizontal)
+    }
+    
     private var guideRows: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -104,6 +102,8 @@ struct HelpView: View {
                 ForEach(GuideRowItem.allCases, id: \.self) { row in
                     GuideRow(row: row)
                 }
+                
+                Spacer()
             }
         }
     }
@@ -117,6 +117,7 @@ struct HelpView: View {
                         .foregroundStyle(.secondary)
                     
                     Text(SoundTableItem.decibelWriting(decibel: decibel))
+                        .foregroundStyle(.white)
                     
                     Spacer()
                 }
@@ -125,6 +126,23 @@ struct HelpView: View {
         }
         .fontWeight(.bold)
         .scrollContentBackground(.hidden)
+    }
+}
+
+// MARK: - 도움말 종류
+enum HelpType: CaseIterable {
+    case guide
+    case soundTable
+}
+
+extension HelpType {
+    var title: LocalizedStringKey {
+        switch self {
+        case .guide:
+            return "기본 정보"
+        case .soundTable:
+            return "소리 기준표"
+        }
     }
 }
 
@@ -161,23 +179,6 @@ struct GuideRow: View {
             Spacer()
         }
         .padding(.horizontal)
-    }
-}
-
-// MARK: - 도움말 종류
-enum HelpType: CaseIterable {
-    case guide
-    case soundTable
-}
-
-extension HelpType {
-    var title: LocalizedStringKey {
-        switch self {
-        case .guide:
-            return "기본 정보"
-        case .soundTable:
-            return "소리 기준표"
-        }
     }
 }
 
