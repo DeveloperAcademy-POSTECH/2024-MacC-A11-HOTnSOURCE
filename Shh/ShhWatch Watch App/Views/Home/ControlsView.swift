@@ -33,7 +33,6 @@ struct ControlsView: View {
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
             }
-            // TODO: button color가 어둡게 나오는 이슈 발생 -> opacity로 임시 대처
             .buttonStyle(BorderedButtonStyle(tint: .red.opacity(3.5)))
             
             Text("종료")

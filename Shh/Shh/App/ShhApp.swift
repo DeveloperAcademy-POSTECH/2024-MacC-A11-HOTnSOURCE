@@ -31,7 +31,6 @@ struct ShhApp: App {
                     #endif
                     try? Tips.configure( // 모든 팁을 로드
                         [
-                            // TODO: 팁과 관련된 동작 수정 예정
                             // .datastoreLocation(.applicationDefault) // 표시된 팁과 매개변수 재설정
                             // .displayFrequency(.immediate) // 팁이 보이는 시기. 바로 보이게
                         ]
