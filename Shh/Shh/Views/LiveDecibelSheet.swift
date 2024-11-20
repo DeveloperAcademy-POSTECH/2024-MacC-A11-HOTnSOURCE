@@ -72,6 +72,7 @@ struct LiveDecibelSheet: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
+    
     private var userDecibel: some View {
         HStack {
             Text("\(Int(audioManager.userDecibel.rounded()))")
