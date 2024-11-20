@@ -35,7 +35,7 @@ struct LoadingView: View {
         }
         .padding(20)
         .background(.customBlack)
-        .accessibilityHint("배경 소음을 측정하기 위한 로딩중입니다. 측정을 마치면 측정 뷰로 이동합니다.")
+        .accessibilityHint("배경 소음을 측정하기 위한 로딩 중입니다. 측정을 마치면 측정 뷰로 이동합니다.")
         .navigationBarBackButtonHidden()
         .navigationDestination(isPresented: $pushMeteringView) {
             MeteringTabView()
