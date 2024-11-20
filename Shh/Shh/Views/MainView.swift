@@ -13,6 +13,7 @@ struct MainView: View {
     @EnvironmentObject var audioManager: AudioManager
     
     @State private var showLoadingView: Bool = false
+    @State private var showOnboardingFullScreen: Bool = false
     
     // MARK: Body
     var body: some View {
@@ -20,34 +21,38 @@ struct MainView: View {
             VStack(spacing: 0) {
                 Spacer(minLength: 20)
                 
-                Text("반가워요!\n소음이 걱정이신가요?")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                welcomeWriting
                 
-                Spacer(minLength: 15)
+                Image("MainAsset")
+                    .resizable()
+                    .scaledToFit()
+                    .padding(.all, 40)
                 
-                Text("아래 버튼을 눌러 시작해주세요")
-                    .font(.title3)
-                    .fontWeight(.bold)
-                    .foregroundStyle(.gray)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                Spacer()
-                    .frame(maxHeight: .infinity)
-                
-                Text("버튼 눌러 시작하기")
-                    .font(.footnote)
-                    .foregroundStyle(.gray)
-                
-                Spacer(minLength: 20)
-                
-                startButton
+                VStack(spacing: 10) {
+                    Text("버튼 눌러 시작하기")
+                        .font(.footnote)
+                        .foregroundStyle(.tertiary)
+                    
+                    startButton
+                }
                 
                 Spacer(minLength: 20)
             }
-            .padding(25)
             .background(.customBlack)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showOnboardingFullScreen = true
+                    } label: {
+                        Label("온보딩 가이드", systemImage: "book.pages")
+                            .font(.body)
+                            .fontWeight(.regular)
+                            .foregroundStyle(.gray)
+                    }
+                    .contentShape(Rectangle())
+                    .buttonStyle(.plain)
+                }
+            }
             
             if showLoadingView {
                 LoadingView()
@@ -63,6 +68,26 @@ struct MainView: View {
     }
     
     // MARK: SubViews
+    private var welcomeWriting: some View {
+        VStack(spacing: 10) {
+            Text("오늘도 조용한 하루를\n보내봐요!")
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundStyle(.customWhite)
+                .multilineTextAlignment(.center)
+            
+            Text("Shh-!")
+                .font(.callout)
+                .fontWeight(.bold)
+                .foregroundStyle(.gray2)
+            + Text("가 응원할게요")
+                .font(.callout)
+                .fontWeight(.regular)
+                .foregroundStyle(.gray2)
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+    }
+    
     private var startButton: some View {
         Button {
             Task {
@@ -79,9 +104,9 @@ struct MainView: View {
             }
         } label: {
             Image(systemName: "waveform")
-                .font(.system(size: 60))
+                .font(.system(size: 46))
                 .foregroundStyle(.white)
-                .frame(width: 130, height: 130)
+                .frame(width: 100, height: 100)
                 .background {
                     Circle()
                         .fill(.accent)
@@ -92,5 +117,16 @@ struct MainView: View {
 
 // MARK: - Preview
 #Preview {
-    MainView()
+    @Previewable @StateObject var audioManager: AudioManager = {
+        do {
+            return try AudioManager()
+        } catch {
+            fatalError("AudioManager 초기화 실패: \(error.localizedDescription)")
+        }
+    }()
+        
+    NavigationStack {
+        MainView()
+            .environmentObject(audioManager)
+    }
 }
