@@ -30,6 +30,7 @@ struct LiveDecibelSheet: View {
             }
             .padding(.vertical, 5)
             .background(.customBlack)
+            .accessibilityHint("실시간으로 소음 상태를 나타냅니다. 반복해서 탭하면 바뀌는 데시벨 값을 실시간으로 확인할 수 있습니다.")
         }
     }
     
@@ -40,10 +41,13 @@ struct LiveDecibelSheet: View {
                 .font(.caption)
                 .fontWeight(.regular)
                 .foregroundStyle(.gray2)
+                .accessibilityLabel("배경 소음 \(Int(audioManager.backgroundDecibel.rounded())) 데시벨")
+            
             Text("최대 소음 | \(audioManager.maximumDecibel) dB")
                 .font(.caption)
                 .fontWeight(.regular)
                 .foregroundStyle(.gray2)
+                .accessibilityLabel("최대 소음 \(audioManager.maximumDecibel) 데시벨")
             
             Text("소음 정보는 계산에만 활용되고 저장되지 않습니다.")
                 .font(.caption2)
@@ -59,11 +63,13 @@ struct LiveDecibelSheet: View {
                 .font(.caption)
                 .fontWeight(.regular)
                 .foregroundStyle(.gray2)
+                .accessibilityLabel("배경 소음 \(Int(audioManager.backgroundDecibel.rounded())) 데시벨")
             
             Text("최대 소음 | \(audioManager.maximumDecibel) dB")
                 .font(.caption)
                 .fontWeight(.regular)
                 .foregroundStyle(.gray2)
+                .accessibilityLabel("최대 소음 \(audioManager.maximumDecibel) 데시벨")
             
             Text("소음 정보는 계산에만 활용되고 저장되지 않습니다.")
                 .font(.caption2)
@@ -85,6 +91,7 @@ struct LiveDecibelSheet: View {
                 .foregroundStyle(.gray)
         }
         .frame(maxWidth: .infinity, alignment: .center)
+        .accessibilityLabel("현재 \(Int(audioManager.userDecibel.rounded())) 데시벨입니다.")
     }
 }
 

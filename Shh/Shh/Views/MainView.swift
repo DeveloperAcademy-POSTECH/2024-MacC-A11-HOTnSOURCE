@@ -51,6 +51,8 @@ struct MainView: View {
                     }
                     .contentShape(Rectangle())
                     .buttonStyle(.plain)
+                    .hidden(showLoadingView)
+                    .animation(nil, value: showLoadingView)
                 }
             }
             
@@ -116,6 +118,8 @@ struct MainView: View {
                     Circle()
                         .fill(.accent)
                 }
+                .accessibilityLabel("시작하기")
+                .accessibilityHint("탭하면 측정을 시작합니다.")
         }
     }
 }

@@ -160,6 +160,7 @@ struct MeteringView: View {
                 }
             }
         }
+        .accessibilityHint(audioManager.isMetering ? "\(audioManager.userNoiseStatus) 상태를 \(audioManager.userNoiseStatus == .safe ? "초록색" : "분홍색")으로 나타내고 있습니다." : "일시정지된 상태입니다.")
     }
     
     private var meteringPausedCircle: some View {
@@ -208,10 +209,11 @@ struct MeteringView: View {
                     Circle()
                         .fill(Color.meteringToggleButton)
                 }
+                .accessibilityLabel(audioManager.isMetering ? "일시정지" : "재개")
         }
-        // TODO: 한글로 현지화
-        .accessibilityLabel(audioManager.isMetering ? "Pause metering" : "Resume metering")
-        .accessibilityHint("Starts or pauses noise metering")
+        // TODO: 영어 현지화
+        .accessibilityLabel(audioManager.isMetering ? "일시정지" : "재개")
+        .accessibilityHint("버튼을 탭해서 소음 측정을 시작하거나 멈출 수 있습니다.")
     }
 }
 

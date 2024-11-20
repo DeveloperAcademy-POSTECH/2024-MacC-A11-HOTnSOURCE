@@ -65,6 +65,7 @@ struct HelpView: View {
 
             Image(systemName: "lightbulb.max.fill")
                 .font(.system(size: 48))
+                .accessibilityLabel("반짝이는 전구")
             
             Text("Shh-! 측정 도움말")
                 .font(.title)
@@ -162,6 +163,7 @@ struct GuideRow: View {
                 Image(systemName: row.systemName)
                     .font(.largeTitle)
                     .foregroundStyle(.white)
+                    .accessibilityLabel(row.accessibilityLabel)
             }
             
             VStack(alignment: .leading, spacing: 5) {
