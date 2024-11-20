@@ -4,6 +4,9 @@
     "" : {
       "shouldTranslate" : false
     },
+    " dB" : {
+
+    },
     "‼️" : {
       "comment" : "위험 지속 푸시 알림 제목"
     },
@@ -74,7 +77,6 @@
       }
     },
     "%lld" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -505,7 +507,6 @@
       }
     },
     "배경 소음 | %lld dB" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -609,6 +610,9 @@
         }
       }
     },
+    "소음 정보는 계산에만 활용되고 저장되지 않습니다." : {
+
+    },
     "소음 측정이 필요한 곳의 이름을 알려주세요" : {
       "comment" : "장소 이름 입력 단계 보조 설명",
       "extractionState" : "stale",
@@ -695,9 +699,6 @@
 
     },
     "실시간 현황" : {
-
-    },
-    "실시간 현황 시트" : {
 
     },
     "아래 버튼을 눌러 시작해주세요" : {
@@ -1081,6 +1082,9 @@
           }
         }
       }
+    },
+    "최대 소음 | %lld dB" : {
+
     },
     "취소" : {
       "extractionState" : "stale",

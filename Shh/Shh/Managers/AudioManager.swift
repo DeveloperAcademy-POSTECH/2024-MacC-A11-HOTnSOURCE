@@ -189,18 +189,19 @@ final class AudioManager: ObservableObject {
         audioRecorder.isMeteringEnabled = true
         audioRecorder.record()
         
-        isMetering = true
-        userNoiseStatus = .safe
-        
-        // 라이브 액티비티
-        if !haveStartedMetering { // 최초 시작
-            // TODO: 임시로 비활성화
-            LiveActivityManager.shared.startLiveActivity(isMetering: self.isMetering)
+        DispatchQueue.main.async {
+            self.isMetering = true
+            self.userNoiseStatus = .safe
             
-            haveStartedMetering = true // 이제 최초 실행이 아님
-        } else {
-            Task { // 재개; 해당 동작은 업데이트
-                await LiveActivityManager.shared.updateLiveActivity(isMetering: self.isMetering)
+            // 라이브 액티비티
+            if !self.haveStartedMetering { // 최초 시작
+                LiveActivityManager.shared.startLiveActivity(isMetering: self.isMetering)
+                
+                self.haveStartedMetering = true // 이제 최초 실행이 아님
+            } else {
+                Task { // 재개; 해당 동작은 업데이트
+                    await LiveActivityManager.shared.updateLiveActivity(isMetering: self.isMetering)
+                }
             }
         }
         
@@ -231,14 +232,13 @@ final class AudioManager: ObservableObject {
         print(#function)
         audioRecorder.pause()
         
-        isMetering = false
-        userNoiseStatus = .paused
-        
-        initializeProperties() // 데시벨 관련 프로퍼티 초기화
-        
-        // 라이브 액티비티 갱신
-        Task {
-            await LiveActivityManager.shared.updateLiveActivity(isMetering: self.isMetering)
+        DispatchQueue.main.async {
+            self.isMetering = false
+            self.userNoiseStatus = .paused
+            self.initializeProperties()
+            Task {
+                await LiveActivityManager.shared.updateLiveActivity(isMetering: self.isMetering)
+            }
         }
         
         NotificationManager.shared.removeAllNotifications()
@@ -252,12 +252,13 @@ final class AudioManager: ObservableObject {
         audioRecorder.isMeteringEnabled = false
         audioRecorder.stop()
         
-        isMetering = false
-        userNoiseStatus = .paused
+        DispatchQueue.main.async {
+            self.isMetering = false
+            self.userNoiseStatus = .paused
+            self.initializeProperties()
+        }
         
-        haveStartedMetering = false
-        
-        initializeProperties() // 프로퍼티 초기화
+        self.haveStartedMetering = false
         
         LiveActivityManager.shared.endLiveActivity() // 라이브 액티비티 종료
         
@@ -292,7 +293,7 @@ final class AudioManager: ObservableObject {
             combinedLoudness = convertToLoudness(decibel: combinedDecibel)
             
             // 3. 사용자가 낼 수 있는 dB 최댓값 찾기
-            if combinedLoudness >= NoiseStatus.loudnessCautionLevel * backgroundLoudness {
+            if combinedLoudness >= NoiseStatus.loudnessDangerLevel * backgroundLoudness {
                 returnValue = tempDecibel
                 break
             }
@@ -311,7 +312,10 @@ final class AudioManager: ObservableObject {
         let splDecibel = convertToSPL(dBFS: dBFSDecibel)
         
         userDecibel = splDecibel // 데시벨 갱신
-        userDecibelBuffer.append(userDecibel)
+        
+        DispatchQueue.main.async {
+            self.userDecibelBuffer.append(splDecibel)
+        }
     }
     
     /// 사용자 소음 상태를 갱신합니다.
@@ -339,10 +343,14 @@ final class AudioManager: ObservableObject {
     // MARK: deinit
     deinit {
         audioRecorder.stop()
-        isMetering = false
+        DispatchQueue.main.async {
+            self.isMetering = false
+            self.userDecibel = 0.0
+            self.userDecibelBuffer.removeAll()
+            self.initializeProperties()
+        }
         
-        userDecibel = 0.0
-        userDecibelBuffer.removeAll()
+        haveStartedMetering = false
         
         timer?.invalidate()
     }

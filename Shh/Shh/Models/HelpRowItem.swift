@@ -18,7 +18,7 @@ enum HelpRowItem: CaseIterable {
 extension HelpRowItem {
     var systemName: String {
         switch self {
-        case .meteringMethod: "waveform.badge.microphone"
+        case .meteringMethod: "waveform.badge.mic"
         case .levels: "ring.circle"
         case .maxNoise: "speaker.wave.2.fill"
         case .pushNotification: "bell.badge.fill"

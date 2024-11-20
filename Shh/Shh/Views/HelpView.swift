@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HelpView: View {
     // MARK: Properties
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.dismiss) var dismiss
     
     private let backgroundGradient = LinearGradient(
         gradient: Gradient(colors: [.accent, .customBlack]),
@@ -41,19 +41,18 @@ struct HelpView: View {
     // MARK: Subviews
     private var closeButton: some View {
         Button {
-            self.presentationMode.wrappedValue.dismiss()
+            dismiss()
         } label: {
-            ZStack {
-                Circle()
-                    .fill(.customBlack)
-                    .frame(width: 30)
-                
-                Image(systemName: "xmark")
-                    .foregroundStyle(.gray2)
-                    .font(.callout)
-            }
-            .padding(.trailing, 20)
+            Image(systemName: "xmark")
+                .foregroundStyle(.gray2)
+                .font(.callout)
+                .padding(6)
+                .background {
+                    Circle()
+                        .fill(.customBlack)
+                }
         }
+        .padding([.trailing], 20)
     }
     
     private var introduce: some View {
@@ -90,6 +89,42 @@ struct HelpView: View {
                 }
             }
         }
+    }
+}
+
+// MARK: - 도움말 하나 하나
+struct HelpRow: View {
+    // MARK: Properties
+    let row: HelpRowItem
+    
+    // MARK: Body
+    var body: some View {
+        HStack(spacing: 20) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(row.boxColor)
+                    .frame(width: 80, height: 80)
+                
+                Image(systemName: row.systemName)
+                    .font(.largeTitle)
+                    .foregroundStyle(.white)
+            }
+            
+            VStack(alignment: .leading, spacing: 5) {
+                Text(row.title)
+                    .font(.body)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.white)
+                
+                Text(row.description)
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.gray)
+            }
+            
+            Spacer()
+        }
+        .padding(.horizontal)
     }
 }
 

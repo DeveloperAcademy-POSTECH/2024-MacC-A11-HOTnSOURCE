@@ -14,9 +14,9 @@ enum NoiseStatus: String {
 }
 
 extension NoiseStatus {
-    /// 소음 '주의'  단계의 기준치입니다.
+    /// 소음 '위험'  단계의 기준치입니다.
     /// 주의는 상대방이 소리를 인지하기 시작한 때입니다. 바로 소리를 줄여야 합니다.
-    static let loudnessCautionLevel: Float = 1.3
+    static let loudnessDangerLevel: Float = 1.3
     
     /// 위험도에 해당하는 메시지입니다.
     var message: LocalizedStringKey {
