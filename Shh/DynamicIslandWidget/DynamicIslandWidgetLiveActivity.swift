@@ -18,7 +18,7 @@ struct DynamicIslandWidgetAttributes: ActivityAttributes {
     }
     
     // 불변 Properties
-    var location: Location
+//    var location: Location
 }
 
 // MARK: - Live Activity 뷰
@@ -27,13 +27,9 @@ struct DynamicIslandWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: DynamicIslandWidgetAttributes.self) { context in
             // Lock screen / banner
-            LockScreenAndBannerView(
-                isMetering: context.state.isMetering,
-                location: context.attributes.location
-            )
+            LockScreenAndBannerView(isMetering: context.state.isMetering)
         } dynamicIsland: { context in
             DynamicIsland {
-                // TODO: 디자인 리팩토링 필요
                 // Expanded UI; leading/trailing/center/bottom 로 구성
                 // Compact / minimal UI
                 DynamicIslandExpandedRegion(.leading) {
@@ -43,46 +39,40 @@ struct DynamicIslandWidgetLiveActivity: Widget {
                         .foregroundStyle(.white)
                         .padding(.leading)
                 }
+                
                 DynamicIslandExpandedRegion(.trailing) {
-                    VStack {
-                        Spacer()
-                        Text("🤫")
-                            .font(.largeTitle)
-                            .fontWeight(.black)
-                    }
+                    
                 }
                 DynamicIslandExpandedRegion(.center) {
                     
                 }
                 DynamicIslandExpandedRegion(.bottom) {
                     HStack {
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text(context.state.isMetering ? "지금 소리를 듣는 중이에요!" : "측정이 일시정지되었습니다.")
-                                .font(.callout)
-                                .fontWeight(.medium)
-                                .foregroundStyle(.white)
-                            
-                            Text("\(context.attributes.location.name)")
-                                .font(.caption2)
-                                .fontWeight(.medium)
-                                .foregroundStyle(.gray)
-                        }
+                        Text(context.state.isMetering ? "소음을 대신 듣고 있어요!" : "버튼을 눌러 다시 시작해주세요")
+                            .font(.callout)
+                            .fontWeight(.medium)
+                            .foregroundStyle(.white)
+                        
                         Spacer()
+                        
+                        MeteringButton(isMetering: context.state.isMetering)
                     }
-                    .padding(.leading)
+                    .padding(.horizontal)
                 }
             } compactLeading: {
-                Text("🤫")
-                    .font(.caption2)
-                    .fontWeight(.regular)
+                Image(.shhIcon)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 35, height: 35)
             } compactTrailing: {
                 Text(context.state.isMetering ? "듣는 중!" : "일시정지됨")
                     .font(.caption2)
                     .fontWeight(.regular)
             } minimal: {
-                Text("🤫")
-                    .font(.caption2)
-                    .fontWeight(.regular)
+                Image(.shhIcon)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 35, height: 35)
             }
             .widgetURL(URL(string: "http://www.apple.com")) // 수정하지 않아도 호출한 지점으로 이동
             .keylineTint(.accent)

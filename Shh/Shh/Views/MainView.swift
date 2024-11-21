@@ -2,262 +2,140 @@
 //  MainView.swift
 //  Shh
 //
-//  Created by sseungwonnn on 10/14/24.
+//  Created by sseungwonnn on 11/16/24.
 //
 
 import SwiftUI
-import TipKit
 
-// MARK: - 메인 뷰; 사용자의 소음 정도를 나타냅니다.
+// MARK: - 메인 화면
 struct MainView: View {
     // MARK: Properties
-    @EnvironmentObject var routerManager: RouterManager
     @EnvironmentObject var audioManager: AudioManager
-    
-    @State private var countdown = 3
-    @State private var showCountdown = true
-    @State private var countdownTimer: Timer?
-    
-    @State private var isAnimating = false
-    
-    @State private var showMeteringInfoSheet = false
-    
-    let selectedLocation: Location
-    
-    private let meteringCircleAnimation = Animation
-        .easeInOut(duration: 1.5)
-        .repeatForever(autoreverses: true)
 
-    private var outerCircleColor: Color {
-        audioManager.userNoiseStatus == .safe ? .accent : .indigo
-    }
-    
-    private var innerCircleColors: [Color] {
-        audioManager.userNoiseStatus == .safe
-        ? [.accent, .customLime]
-        : [.indigo, .purple]
-    }
-    
+    @State private var showLoadingView: Bool = false
+    @State private var showOnboardingFullScreen: Bool = false
+
     // MARK: Body
     var body: some View {
         ZStack {
-            VStack {
-                locationInfo
-
-                Spacer()
+            VStack(spacing: 0) {
+                Spacer(minLength: 20)
                 
-                ZStack {
-                    meteringCircles
-                        .hidden(!audioManager.isMetering) // 측정 중일 때
+                welcomeWriting
+                
+                Image("MainAsset")
+                    .resizable()
+                    .scaledToFit()
+                    .padding(.all, 40)
+                
+                VStack(spacing: 10) {
+                    Text("버튼 눌러 시작하기")
+                        .font(.footnote)
+                        .foregroundStyle(.tertiary)
                     
-                    meteringPausedCircle
-                        .hidden(audioManager.isMetering) // 측정을 멈추었을 때
+                    startButton
                 }
                 
-                Spacer()
-                
-                HStack(alignment: .center) {
-                    userNoiseStatusInfo
-                    
-                    Spacer()
-                    
-                    meteringToggleButton
-                }
-                
-                TipView(BackgroundInlineTip())
-                
-                Spacer().frame(height: 20) // 아래 여백
+                Spacer(minLength: 20)
             }
-            .padding(.horizontal)
-            .hidden(showCountdown)// 카운트다운 중에는 보이지 않음
+            .background(.customBlack)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showOnboardingFullScreen = true
+                    } label: {
+                        Label("온보딩 가이드", systemImage: "book.pages")
+                            .font(.body)
+                            .fontWeight(.regular)
+                            .foregroundStyle(.gray)
+                    }
+                    .contentShape(Rectangle())
+                    .buttonStyle(.plain)
+                    .hidden(showLoadingView)
+                    .animation(nil, value: showLoadingView)
+                }
+            }
             
-            if showCountdown {
-                countdownView
+            if showLoadingView {
+                LoadingView()
+                    .transition(.move(edge: .trailing))
             }
         }
-        .navigationTitle(selectedLocation.name)
-        .navigationBarTitleDisplayMode(.large)
-        .navigationBarHidden(showCountdown) // 카운트다운 중에는 보이지 않음
-        .toolbar {
-            // TODO: 수정 버튼 살리기
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    showMeteringInfoSheet = true
-                } label: {
-                    Label("정보", systemImage: "info.circle")
-                        .font(.body)
-                        .fontWeight(.regular)
-                        .foregroundStyle(.accent)
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(.plain)
-                .popoverTip(InfoPopoverTip(), arrowEdge: .top)
-            }
-        }
-        .background(.customBlack)
-        .onAppear {
-            do {
-                try audioManager.setAudioSession()
-            } catch {
-                // TODO: 문제 발생 알러트 띄우기
-                print("오디오 세션 설정 중에 문제가 발생했습니다.")
-                routerManager.pop()
-            }
-        }
-        .onChange(of: audioManager.userNoiseStatus) {
-            Task {
-                if audioManager.userNoiseStatus == .caution {
-                    await NotificationManager.shared.sendNotification(.caution)
-                    await NotificationManager.shared.sendNotification(.persistent)
-                    await NotificationManager.shared.sendNotification(.recurringAlert)
-                } else {
-                    NotificationManager.shared.removeAllNotifications()
-                }
-            }
+        .task {
+            await NotificationManager.shared.requestPermission()
         }
         .onDisappear {
-            audioManager.stopMetering()
-            stopCountdown()
-            NotificationManager.shared.removeAllNotifications()
+            showLoadingView = false
         }
-        .sheet(isPresented: $showMeteringInfoSheet) {
-            MeteringInfoSheet()
-                .presentationDetents([.large])
-                .presentationDragIndicator(.visible)
+        .fullScreenCover(isPresented: $showOnboardingFullScreen) {
+            NavigationStack {
+                OnboardingView()
+            }
         }
     }
     
     // MARK: SubViews
-    private var meteringCircles: some View {
-        ZStack(alignment: .center) {
-            Circle()
-                .fill(outerCircleColor)
-                .opacity(0.2)
-                .scaleEffect(isAnimating ? 1.8 : 0.9)
-                
-            Circle()
-                .fill(outerCircleColor)
-                .opacity(0.2)
-                .scaleEffect(isAnimating ? 1.4 : 0.9)
-
-            Circle()
-                .fill(
-                    LinearGradient(
-                        gradient: Gradient(colors: innerCircleColors),
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .scaleEffect(isAnimating ? 1.0 : 0.9)
+    private var welcomeWriting: some View {
+        VStack(spacing: 10) {
+            Text("오늘도 조용한 하루를\n보내봐요!")
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundStyle(.customWhite)
+                .multilineTextAlignment(.center)
+            
+            Text("Shh-!")
+                .font(.callout)
+                .fontWeight(.bold)
+                .foregroundStyle(.gray2)
+            + Text("가 응원할게요")
+                .font(.callout)
+                .fontWeight(.regular)
+                .foregroundStyle(.gray2)
         }
-        .frame(width: 160)
-        .onAppear {
-            DispatchQueue.main.async {
-                withAnimation(meteringCircleAnimation) {
-                    isAnimating = true
+        .frame(maxWidth: .infinity, alignment: .center)
+    }
+    
+    private var startButton: some View {
+        Button {
+            Task {
+                await audioManager.requestMicrophonePermission()
+                if audioManager.checkMicrophonePermissionStatus() {
+                    withAnimation {
+                        showLoadingView = true
+                    }
+                } else {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        await UIApplication.shared.open(url)
+                    }
                 }
             }
-        }
-    }
-    
-    private var meteringPausedCircle: some View {
-        Circle()
-            .fill(
-                LinearGradient(
-                    gradient: Gradient(colors: [.gray, .white]),
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            )
-            .frame(width: 120)
-    }
-    
-    private var locationInfo: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text("배경 소음 | \(Int(selectedLocation.backgroundDecibel)) dB")
-                
-                Text("측정 반경 | \(String(format: "%.1f", selectedLocation.distance)) m")
-            }
-            .font(.body)
-            .fontWeight(.regular)
-            .foregroundStyle(.gray)
-            
-            Spacer()
-        }
-    }
-    
-    private var userNoiseStatusInfo: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text(audioManager.isMetering ? audioManager.userNoiseStatus.message : "일시정지됨")
-                .font(.system(size: 56, weight: .bold, design: .default))
-                .fontWeight(.bold)
-                .foregroundStyle(.customWhite)
-            
-            Text(audioManager.isMetering ? audioManager.userNoiseStatus.writing : "측정을 다시 시작해주세요")
-                .font(.callout)
-                .fontWeight(.medium)
-                .foregroundStyle(.customWhite)
-        }
-    }
-    
-    private var meteringToggleButton: some View {
-        Button {
-            if audioManager.isMetering {
-                audioManager.pauseMetering()
-            } else {
-                audioManager.startMetering(location: selectedLocation)
-            }
-            
-            isAnimating.toggle()
         } label: {
-            Image(systemName: audioManager.isMetering ? "pause.fill" : "play.fill")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundStyle(.customWhite)
-                .padding(.horizontal, 21)
-                .padding(.vertical, 16)
+            Image(systemName: "waveform")
+                .font(.system(size: 46))
+                .foregroundStyle(.white)
+                .frame(width: 100, height: 100)
                 .background {
                     Circle()
-                        .fill(.customBlack)
+                        .fill(.accent)
                 }
+                .accessibilityLabel("시작하기")
+                .accessibilityHint("탭하면 측정을 시작합니다.")
         }
-        .accessibilityLabel(audioManager.isMetering ? "Pause metering" : "Resume metering")
-        .accessibilityHint("Starts or pauses noise metering")
-    }
-    
-    private var countdownView: some View {
-        Text("\(countdown)")
-            .font(.system(size: 100, weight: .bold, design: .default))
-            .foregroundColor(.customWhite)
-            .transition(.opacity)
-            .onAppear {
-                startCountdown()
-            }
     }
 }
 
-extension MainView {
-    private func startCountdown() {
-        print(#function)
-        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            if countdown > 1 {
-                countdown -= 1
-            } else {
-                stopCountdown()
-                
-                withAnimation {
-                    showCountdown = false
-                }
-                
-                audioManager.startMetering(location: selectedLocation)
-            }
+// MARK: - Preview
+#Preview {
+    @Previewable @StateObject var audioManager: AudioManager = {
+        do {
+            return try AudioManager()
+        } catch {
+            fatalError("AudioManager 초기화 실패: \(error.localizedDescription)")
         }
-    }
-    
-    private func stopCountdown() {
-        print(#function)
-        countdownTimer?.invalidate() // 타이머 해지
-        countdownTimer = nil
+    }()
+        
+    NavigationStack {
+        MainView()
+            .environmentObject(audioManager)
     }
 }
