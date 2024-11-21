@@ -528,7 +528,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Shh/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 888VRTGCXU;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -549,7 +549,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hotnsource.Shh;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hotnsource.shh-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -569,7 +569,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Shh/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 888VRTGCXU;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -590,7 +590,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hotnsource.Shh;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hotnsource.shh-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -610,20 +610,20 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ShhWatch Watch App/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 888VRTGCXU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ShhWatch-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ShhWatch;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Shh-!는 주변 소음 측정을 위해 마이크 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.hotnsource.Shh;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.hotnsource.shh-";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hotnsource.Shh.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hotnsource.shh-.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -642,20 +642,20 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ShhWatch Watch App/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 888VRTGCXU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ShhWatch-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ShhWatch;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Shh-!는 주변 소음 측정을 위해 마이크 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.hotnsource.Shh;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.hotnsource.shh-";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hotnsource.Shh.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hotnsource.shh-.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -673,7 +673,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 888VRTGCXU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DynamicIslandWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DynamicIslandWidget;
@@ -685,7 +685,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hotnsource.Shh.DynamicIslandWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hotnsource.shh-.DynamicIslandWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -701,7 +701,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 56LCM2KZR8;
+				DEVELOPMENT_TEAM = 888VRTGCXU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DynamicIslandWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DynamicIslandWidget;
@@ -713,7 +713,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hotnsource.Shh.DynamicIslandWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hotnsource.shh-.DynamicIslandWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
