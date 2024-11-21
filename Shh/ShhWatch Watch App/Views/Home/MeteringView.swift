@@ -57,8 +57,8 @@ struct MeteringView: View {
                 .hidden(audioManager.isMetering)
                 .accessibilityHint("일시정지된 상태입니다.")
             
-            Text(audioManager.isMetering ? (audioManager.userNoiseStatus == .safe ? "양호" : "위험") : "멈춤")
-                .font(.title)
+            Text(audioManager.isMetering ? (audioManager.userNoiseStatus == .safe ? "양호" : "위험") : "일시정지됨")
+                .font(.title2)
                 .fontWeight(.bold)
                 .foregroundStyle(.black)
         }
