@@ -208,21 +208,23 @@ final class AudioManager: ObservableObject {
         var userDecibelBufferCounter: Int = 0 // 데시벨 갱신과 소음 상태 갱신을 별도로 진행
         
         // 타이머 설정
-        timer = Timer.scheduledTimer(withTimeInterval: decibelMeteringTimeInterval, repeats: true) { _ in
-            // 실시간 데시벨 갱신
-            self.updateUserDecibel()
-            
-            // 소음 상태 갱신
-            if userDecibelBufferCounter % self.bufferWindowSize == 0 { // 윈도우 끝에 도달하면
-                self.updateUserNoiseStatus()
-            }
-            
-            userDecibelBufferCounter += 1
-            
-            // 버퍼 크기 관리
-            if self.userDecibelBuffer.count >= self.userDecibelBufferSize {
-                self.userDecibelBuffer.removeFirst(self.bufferWindowSize) // 버퍼에서 20개씩 제거
-                userDecibelBufferCounter -= self.bufferWindowSize // 제거한 데이터만큼 카운터도 20 감소
+        DispatchQueue.main.async {
+            self.timer = Timer.scheduledTimer(withTimeInterval: self.decibelMeteringTimeInterval, repeats: true) { _ in
+                // 실시간 데시벨 갱신
+                self.updateUserDecibel()
+                
+                // 소음 상태 갱신
+                if userDecibelBufferCounter % self.bufferWindowSize == 0 { // 윈도우 끝에 도달하면
+                    self.updateUserNoiseStatus()
+                }
+                
+                userDecibelBufferCounter += 1
+                
+                // 버퍼 크기 관리
+                if self.userDecibelBuffer.count >= self.userDecibelBufferSize {
+                    self.userDecibelBuffer.removeFirst(self.bufferWindowSize) // 버퍼에서 20개씩 제거
+                    userDecibelBufferCounter -= self.bufferWindowSize // 제거한 데이터만큼 카운터도 20 감소
+                }
             }
         }
     }
