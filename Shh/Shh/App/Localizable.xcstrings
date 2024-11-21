@@ -5,74 +5,62 @@
 
     },
     " dB" : {
-
-    },
-    "‼️" : {
-      "comment" : "위험 지속 푸시 알림 제목"
-    },
-    "‘양호’ 수준을 유지하면서 낼 수 있는 소리의 최대 크기예요. 이 이상 큰 소리를 내면 시끄럽다고 느낄 수 있어요." : {
-
-    },
-    "'주의' 단계는 상대방이 내 소리를 인지하기 시작하는 시점이에요!" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "‘Caution’ is when the other person starts to recognize my noise!"
+            "value" : " dB"
+          }
+        }
+      }
+    },
+    "‼️" : {
+      "comment" : "위험 지속 푸시 알림 제목",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "‼️"
+          }
+        }
+      }
+    },
+    "‘양호’ 수준을 유지하면서 낼 수 있는 소리의 최대 크기예요. 이 이상 큰 소리를 내면 시끄럽다고 느낄 수 있어요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The maximum volume that can be maintained at the ‘Safe’ status. If it exceeds this, it may feel noisy."
           }
         }
       }
     },
     "* 라이브 액티비티로도 확인할 수 있어요" : {
-
-    },
-    "* 알림 권한을 허용해주세요" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Please allow notification permission"
+            "value" : "* You can also check it via Live Activities."
           }
         }
       }
     },
     "* 애플 워치를 사용하시면 워치로도 알림을 드려요" : {
-
-    },
-    "* 전화 중에는 마이크를 동시에 사용할 수 없으니\n통화를 마치고 다시 시작해주세요" : {
-
-    },
-    "%.1f m" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%.1f m"
+            "value" : "* If you use Apple Watch, you'll receive notifications on it as well."
           }
         }
       }
     },
-    "%@" : {
-      "extractionState" : "stale",
+    "* 통화 중에는 마이크를 동시에 사용할 수 없으니\n통화를 마치고 다시 시작해 주세요" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@"
-          }
-        }
-      }
-    },
-    "%@ 삭제" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ delete"
+            "value" : "* The microphone cannot be used simultaneously during a call. Please restart after finishing the call."
           }
         }
       }
@@ -84,125 +72,65 @@
             "state" : "translated",
             "value" : "%lld"
           }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld"
-          }
-        }
-      }
-    },
-    "%lld dB" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld dB"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld dB"
-          }
-        }
-      }
-    },
-    "%lld/%lld" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld/%lld"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
         }
       }
     },
     "~%lld dB" : {
-
-    },
-    "◦ 2초 간의 평균 소음이 '주의'에 해당하면 알림을 보내요!" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "◦ You’ll got a notification if the average noise for 2 seconds corresponds to 'caution'"
+            "value" : "~%lld dB"
           }
         }
       }
     },
-    "◦ 또한 '주의' 소음이 일정시간 지속되면 추가적인 알림을 보내요!" : {
-      "extractionState" : "stale",
+    "✸ 소음 상태는 어떻게 되나요?" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "◦ Also, if the 'caution' noise lasts for a certain amount of time, we send additional notifications"
+            "value" : "✸ What are the noise states?"
           }
         }
       }
     },
-    "◦ 조심해야 할 경우 푸시 알림으로 알려드려요." : {
-      "extractionState" : "stale",
+    "✸ 알림은 언제 오나요?" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "◦ If you need to be careful, we'll notify you with a push notification."
+            "value" : "✸ When do notifications arrive?"
           }
         }
       }
     },
-    "◦ 화면을 매번 볼 필요 없이 핸드폰을 내려놓고 편안하게 작업하세요 :)" : {
-      "extractionState" : "stale",
+    "✸ 어떻게 측정하나요?" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "◦ Without having to look at the screen every time, put your phone down and work comfortably"
+            "value" : "✸ How is it measured?"
           }
         }
       }
     },
-    "✅ '주의'는 어떤 걸 의미하나요?" : {
-      "extractionState" : "stale",
+    "✸ 언제 ‘위험’이 되나요?" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "✅ What does 'caution' mean?"
+            "value" : "✸ When does it become 'Danger?"
           }
         }
       }
     },
-    "✅ 내가 시끄러운지 어떻게 알 수 있나요?" : {
-      "extractionState" : "stale",
+    "✸ 최대 소음이 뭔가요?" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "✅ How do I know if I'm loud?"
-          }
-        }
-      }
-    },
-    "✅ 알림은 언제 오나요?" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✅ When do I get the notification?"
+            "value" : "✸ What is the maximum noise?"
           }
         }
       }
@@ -219,76 +147,43 @@
       }
     },
     "🚨" : {
-      "comment" : "위험 지속 반복 푸시 알림 제목"
-    },
-    "1m" : {
-      "extractionState" : "stale",
+      "comment" : "위험 지속 반복 푸시 알림 제목",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1m"
+            "value" : "🚨"
           }
         }
       }
     },
-    "2m" : {
-      "extractionState" : "stale",
+    "2초 동안 ‘소음'이 지속될 경우 혹은 지나치게 큰 소리가 감지되었을 때, 소음 상태가 ‘위험'이 돼요." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "2m"
+            "value" : "If noise persists for 2 seconds or excessively loud sound is detected, the noise status becomes 'Danger'."
           }
         }
       }
     },
-    "2초 동안 ‘소음'이 지속될 경우 혹은 지나치게 큰 소리가 감지되었을 때, 소음 단계가 ‘위험'이 돼요." : {
-
-    },
-    "3m" : {
-      "extractionState" : "stale",
+    "2초 동안 소음이 지속되거나, 지나치게 큰 소리가 감지되면 ‘위험'이 돼요." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "3m"
+            "value" : "If noise persists for 2 seconds or an excessively loud sound is detected, it becomes 'Danger'."
           }
         }
       }
     },
     "20초 동안 지속적인 소음이 발생했어요" : {
-      "comment" : "위험 지속 푸시 알림 내용"
-    },
-    "Edit" : {
-      "extractionState" : "stale",
+      "comment" : "위험 지속 푸시 알림 내용",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Edit"
-          }
-        }
-      }
-    },
-    "Pause metering" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pause metering"
-          }
-        }
-      }
-    },
-    "Resume metering" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Resume metering"
+            "value" : "Continuous noise has been detected for 20 seconds."
           }
         }
       }
@@ -304,135 +199,131 @@
       }
     },
     "Shh-! 측정 도움말" : {
-
-    },
-    "Shh-!는 앱을 나가거나 휴대전화를 잠궈도 들을 수 있어요. 마음 놓고 집중하세요!" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "‘Shh-!’ can listen to your noise even when you turn the screen off. Feel free to focus!"
+            "value" : "Shh-! Measurement Guide"
           }
         }
       }
     },
-    "Shh-!는 장소의 배경 소음, 상대방과의 거리 등을 바탕으로 파악하고 있어요!" : {
-      "extractionState" : "stale",
+    "Shh-!을\n소개합니다" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "‘Shh-!’ is figuring out based on the background noise of the place, the distance from the other person, etc"
-          }
-        }
-      }
-    },
-    "Shh-!를\n소개합니다" : {
-
-    },
-    "Shh-!의 소음 측정 방법이 궁금하면 이곳을 눌러주세요." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "If you want to know about the noise metering method, check this out."
-          }
-        }
-      }
-    },
-    "Starts or pauses noise metering" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Starts or pauses noise metering"
-          }
-        }
-      }
-    },
-    "Trash" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trash"
+            "value" : "Introducing Shh-!"
           }
         }
       }
     },
     "가 응원할게요" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "‘ll cheer you on"
+          }
+        }
+      }
     },
     "건너뛰기" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip"
+          }
+        }
+      }
     },
     "괜찮아요" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It's okay"
+          }
+        }
+      }
     },
-    "궁금할만한 정보를 알아보세요" : {
-
+    "궁금할 만한 정보를 알아보세요" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find answers to your questions."
+          }
+        }
+      }
     },
-    "기기 마이크를 사용해서 실시간으로 소음 수준을 확인하며, 배경 소음에 비해서 얼만큼 크게 들리는지 계산해요." : {
-
+    "기기 마이크를 사용해서 실시간으로 소음 수준을 확인하며, 배경 소음에 비해서 얼마만큼 크게 들리는지 계산해요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The device microphone checks noise levels in real-time and calculates how much louder it is compared to background noise."
+          }
+        }
+      }
     },
     "기본 정보" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basic Information"
+          }
+        }
+      }
     },
-    "내 소리가 시끄러울까봐 걱정되시나요?\n소음으로 인해 주위의 따가운 시선을 받은 적이 있나요?" : {
-
+    "내 소리가 시끄러울지 걱정되시나요?\n소음으로 주위의 따가운 시선을 받은 적이 있나요?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Worried about your noise being too loud? Have you ever received annoyed looks due to noise?"
+          }
+        }
+      }
     },
-    "내 소리가 주변보다 시끄러우면\n푸시 알림으로 알려드려요" : {
-
+    "내 소리가 주변보다 시끄러우면\n푸시 알림으로 알려 드려요" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If your noise is louder than the surroundings, you'll be notified with a push alert."
+          }
+        }
+      }
     },
     "냉장고, 바람 소리가 들리는 정도의 실내 소음" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Indoor noise level similar to the sound of a refrigerator or wind"
+            "value" : "Indoor noise comparable to a refrigerator or the sound of wind."
           }
         }
       }
     },
     "노래를 들으면서도 걱정 없이" : {
-
-    },
-    "다시 측정하기" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Metering again"
+            "value" : "Enjoy music without worries."
           }
         }
       }
     },
     "다시 확인할게요" : {
-
-    },
-    "다음 단계로 이동" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Move to next step"
-          }
-        }
-      }
-    },
-    "다음으로" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Next"
+            "value" : "I'll check again."
           }
         }
       }
@@ -442,7 +333,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No decibel explanation"
+            "value" : "No decibel description available."
           }
         }
       }
@@ -452,32 +343,17 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The noise level of cars and people typically heard near a roadside"
-          }
-        }
-      }
-    },
-    "도서관" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library"
+            "value" : "Sounds of cars and people near a roadside."
           }
         }
       }
     },
     "도움말" : {
-
-    },
-    "뒤로" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Previous"
+            "value" : "Help"
           }
         }
       }
@@ -487,25 +363,22 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hearing!"
+            "value" : "Listening!"
           }
         }
       }
     },
-    "모든 준비가 완료되었어요!" : {
-      "comment" : "온보딩 완료 제목",
-      "extractionState" : "stale",
+    "멈춤" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Everything’s ready!"
+            "value" : "Stop"
           }
         }
       }
     },
-    "반가워요!\n소음이 걱정이신가요?" : {
-      "extractionState" : "stale",
+    "반가워요!" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -516,153 +389,173 @@
       }
     },
     "반짝이는 전구" : {
-
-    },
-    "배경 소리를 확인하고 있어요!" : {
-      "comment" : "로딩 화면 안내 텍스트1"
-    },
-    "배경 소음" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Background Noise"
+            "value" : "Glowing bulb"
+          }
+        }
+      }
+    },
+    "배경 소리를\n확인하고 있어요!" : {
+      "comment" : "로딩 화면 안내 텍스트1",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checking the background noise!"
+          }
+        }
+      }
+    },
+    "배경 소리를 확인하고 있어요!" : {
+      "comment" : "로딩 화면 안내 텍스트1",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checking the background noise!"
           }
         }
       }
     },
     "배경 소음 %lld 데시벨" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Background noise %lld decibels"
+          }
+        }
+      }
     },
     "배경 소음 | %lld dB" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Background Noise | %lld dB"
+            "value" : "Background noise | %lld dB"
           }
         }
       }
     },
-    "배경 소음 예시" : {
-      "extractionState" : "stale",
+    "배경 소음을 측정하기 위한 로딩 중입니다. 측정을 마치면 측정 뷰로 이동합니다." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Examples"
+            "value" : "Loading to measure background noise. You'll be directed to the measurement view once completed."
           }
         }
       }
-    },
-    "배경 소음 측정" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Background Noise Metering"
-          }
-        }
-      }
-    },
-    "배경 소음을 측정하기 위한 로딩중입니다. 측정을 마치면 측정 뷰로 이동합니다." : {
-
     },
     "버튼 눌러 시작하기" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press the button to start."
+          }
+        }
+      }
     },
     "버튼을 눌러 다시 시작해주세요" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please press the button to restart."
+          }
+        }
+      }
     },
     "버튼을 탭해서 소음 측정을 시작하거나 멈출 수 있습니다." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap the button to start or stop noise measurement."
+          }
+        }
+      }
     },
     "비정상적으로 큰 소리가 들어가면 측정이 정확하지 않을 수 있어요. 다시 확인할까요?" : {
-
-    },
-    "삭제" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete"
-          }
-        }
-      }
-    },
-    "상대방과 얼마나 가깝나요?" : {
-      "comment" : "측정 반경 입력 단계 설명",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "How close are you to the other person?"
-          }
-        }
-      }
-    },
-    "생성하기" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create"
+            "value" : "If an abnormally loud sound is detected, the measurement may be inaccurate. Shall we check again?"
           }
         }
       }
     },
     "소리 기준표" : {
-
-    },
-    "소음 단계가 ‘위험’이 되었을 때, 알림이 와요. 또한 ‘위험’이 지속될 경우, 20초마다 알림을 보내요." : {
-
-    },
-    "소음 단계는 양호와 위험 두 단계로 이루어져 있어요. 양호일 땐 녹색, 위험일 땐 분홍색으로 소음 단계를 볼 수 있어요." : {
-
-    },
-    "소음 단계는 어떻게 되나요?" : {
-
-    },
-    "소음 상태가 20초 동안 주의에 머물렀어요!" : {
-      "comment" : "주의 지속 푸시 알림 내용",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The noise level has remained in the caution zone for 20 seconds!"
+            "value" : "Noise Reference Table"
           }
         }
       }
     },
-    "소음 수준: 주의" : {
-      "comment" : "주의 알림 제목",
-      "extractionState" : "stale",
+    "소음 상태가 ‘위험’이 되었을 때 알림이 오고, 그 상태가 지속될 경우 20초마다 알림을 보내요." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Noise Level: Caution"
+            "value" : "When the noise status reaches 'Danger', a notification is sent. If it persists, notifications are sent every 20 seconds."
+          }
+        }
+      }
+    },
+    "소음 상태가 ‘위험’이 되었을 때, 알림이 와요. 또한 ‘위험’이 지속될 경우, 20초마다 알림을 보내요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When the noise status changes to 'Danger', a notification is sent. If it persists, notifications are sent every 20 seconds."
+          }
+        }
+      }
+    },
+    "소음 상태는 양호(초록)와 위험(분홍) 두 단계로 이루어져 있어요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noise states consist of two stages: Safe (green) and Danger (pink)."
+          }
+        }
+      }
+    },
+    "소음 상태는 양호와 위험 두 단계로 이루어져 있어요. 양호일 땐 녹색, 위험일 땐 분홍색으로 소음 단계를 볼 수 있어요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noise status is divided into two stages: Safe and Danger. When it's Safe, the indicator is green, and when it's Danger, the indicator is pink."
+          }
+        }
+      }
+    },
+    "소음 상태는 어떻게 되나요?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What are the noise status?"
           }
         }
       }
     },
     "소음 정보는 계산에만 활용되고 저장되지 않습니다." : {
-
-    },
-    "소음 측정이 필요한 곳의 이름을 알려주세요" : {
-      "comment" : "장소 이름 입력 단계 보조 설명",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Please write the name of the place where the noise metering is needed"
+            "value" : "Noise data is only used for calculation and is not stored."
           }
         }
       }
@@ -672,29 +565,17 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We’re hearing the noise instead!"
+            "value" : "We’re listening to the noise for you!"
           }
         }
       }
     },
-    "소음이 걱정될 땐? Shh-!" : {
-      "extractionState" : "stale",
+    "소음이 걱정이신가요?" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Worried about your noise?\nJust use Shh-!"
-          }
-        }
-      }
-    },
-    "수정하기" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit"
+            "value" : "Worried about noise?"
           }
         }
       }
@@ -704,69 +585,120 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The noise of a loud office or lively discussions between people"
+            "value" : "Loud office or active discussion sounds."
           }
         }
       }
     },
-    "시끄러운 소리를 내면 알려드릴게요!" : {
-      "comment" : "온보딩 완료 부제목",
-      "extractionState" : "stale",
+    "시끄러운지는 저희가 대신 듣고 알려 드릴 테니\n걱정 말고 편안하게 집중하세요!" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We’ll let you know if there's a loud noise!"
+            "value" : "We’ll listen for how loud it is and notify you, so relax and focus with peace of mind!"
           }
         }
       }
-    },
-    "시끄러운지는 저희가 대신 듣고 알려드릴테니\n걱정 말고 편안하게 집중하세요!" : {
-
     },
     "시작하기" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Start"
+            "value" : "Get Started"
+          }
+        }
+      }
+    },
+    "시작해주세요" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please start."
           }
         }
       }
     },
     "실시간 데시벨 현황" : {
-
-    },
-    "실시간 현황" : {
-
-    },
-    "아주 조용한 방에서의 환경음" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The ambient noise in a very quiet room"
+            "value" : "Real-time Decibel Level"
           }
         }
       }
     },
-    "아직까지 조심해야할 수준의 소음이 발생하고 있어요!" : {
-      "comment" : "주의 지속 반복 푸시 알림 내용",
-      "extractionState" : "stale",
+    "실시간 현황" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Noise is still at a level that requires caution!"
+            "value" : "Real-time Status"
+          }
+        }
+      }
+    },
+    "실시간으로 내 소음 수준이 배경 소음에 비해 얼마나 크게 들리는지 계산해요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculates in real-time how loud your noise is compared to the background noise."
+          }
+        }
+      }
+    },
+    "실시간으로 소음 상태를 나타냅니다. 반복해서 탭하면 바뀌는 데시벨 값을 실시간으로 확인할 수 있습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Displays the noise status in real-time. By repeatedly tapping, you can check the changing decibel levels in real-time."
+          }
+        }
+      }
+    },
+    "아래 버튼을 눌러" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press the button below to"
+          }
+        }
+      }
+    },
+    "아주 조용한 방에서의 주변 소리" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Background noise in a very quiet room."
           }
         }
       }
     },
     "알림은 언제 오나요?" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When do notifications arrive?"
+          }
+        }
+      }
     },
-    "앱을 늘 켜고 있지 않아도\n백그라운드에서 계속 들어드릴게요" : {
-
+    "앱을 늘 켜고 있지 않아도\n백그라운드에서 계속 들어 드릴게요" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Even if you don't keep the app open, we'll continue monitoring in the background."
+          }
+        }
+      }
     },
     "양호" : {
       "localizations" : {
@@ -778,92 +710,62 @@
         }
       }
     },
-    "어디에서 사용하시나요?" : {
-      "comment" : "장소 이름 입력 단계 설명",
-      "extractionState" : "stale",
+    "어떻게 측정하나요?" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Where are you going to use it?"
+            "value" : "How is it measured?"
           }
         }
       }
     },
-    "어떻게 측정하나요?" : {
-
-    },
     "언제 ‘위험’이 되나요?" : {
-
-    },
-    "오늘도 조용한 하루를\n보내봐요!" : {
-
-    },
-    "오류" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Error"
+            "value" : "When does it become 'Danger'?"
+          }
+        }
+      }
+    },
+    "오늘도 조용한 하루를\n보내봐요!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Have a peaceful day today!"
           }
         }
       }
     },
     "온보딩 가이드" : {
-
-    },
-    "완료" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Complete"
+            "value" : "Onboarding Guide"
           }
         }
       }
     },
-    "완료하기" : {
-      "extractionState" : "stale",
+    "위험" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Done"
-          }
-        }
-      }
-    },
-    "이름" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Name"
-          }
-        }
-      }
-    },
-    "이름을 입력해주세요" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Please enter name"
+            "value" : "Danger"
           }
         }
       }
     },
     "이제 조금 조심해야 해요" : {
-      "comment" : "주의 푸시 알림 내용",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You need to be a little cautious now"
+            "value" : "You should be a bit careful now."
           }
         }
       }
@@ -873,13 +775,30 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The sound of everyday conversations and traffic noise from the road"
+            "value" : "Everyday conversation or street noise from cars."
           }
         }
       }
     },
     "일시정지" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause"
+          }
+        }
+      }
+    },
+    "일시정지된 상태입니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It is currently paused."
+          }
+        }
+      }
     },
     "일시정지됨" : {
       "localizations" : {
@@ -891,114 +810,22 @@
         }
       }
     },
-    "일지정지" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pause"
-          }
-        }
-      }
-    },
-    "자세한 정보" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detail"
-          }
-        }
-      }
-    },
-    "자주 묻는 질문" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "FAQ"
-          }
-        }
-      }
-    },
-    "장소 생성" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create new location"
-          }
-        }
-      }
-    },
-    "장소 선택" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select Location"
-          }
-        }
-      }
-    },
     "재개" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resume"
+          }
+        }
+      }
     },
     "재시작" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Play"
-          }
-        }
-      }
-    },
-    "정도 떨어져 있어요" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "It's about that away!"
-          }
-        }
-      }
-    },
-    "정도의 느낌이군요!" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "That's how it feels!"
-          }
-        }
-      }
-    },
-    "정말 삭제하시겠습니까?" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Are you sure you want to delete?"
-          }
-        }
-      }
-    },
-    "정보" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Information"
+            "value" : "Restart"
           }
         }
       }
@@ -1008,58 +835,49 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Typical indoor noise heard in a quiet office"
+            "value" : "Typical indoor noise in a quiet office."
+          }
+        }
+      }
+    },
+    "조용한 상태를 유지하면\n더 정확해져요!" : {
+      "comment" : "로딩 화면 안내 텍스트2",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maintaining silence improves accuracy!"
           }
         }
       }
     },
     "조용한 상태를 유지하면 더 정확해져요!" : {
-      "comment" : "로딩 화면 안내 텍스트2"
+      "comment" : "로딩 화면 안내 텍스트2",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maintaining silence improves accuracy!"
+          }
+        }
+      }
     },
     "조용한 카페에서 나오는 배경 소음" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Background noise in a quiet café"
+            "value" : "Background noise in a quiet café."
           }
         }
       }
     },
     "종료" : {
-
-    },
-    "주변 소음 측정" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Meter the ambient noise"
-          }
-        }
-      }
-    },
-    "주변보다 더 큰 소리를 내면 알려드릴게요\n아래의 버튼을 눌러주세요" : {
-      "comment" : "배경 소음 입력 단계 보조 설명",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "We’ll let you know if you are louder than the average noise of the location.\nPress the metering button below!"
-          }
-        }
-      }
-    },
-    "주위의 소리를 들려주세요!" : {
-      "comment" : "배경 소음 입력 단계 설명",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Let us hear the surrounding sound"
+            "value" : "Exit"
           }
         }
       }
@@ -1079,40 +897,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Moderate indoor noise heard in a residential area"
-          }
-        }
-      }
-    },
-    "중복되는 이름이 존재합니다!" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A duplicate name exists"
-          }
-        }
-      }
-    },
-    "즉, 내가 내는 소리를 '소음'으로 인식할 수 있어서 소리를 줄여야 해요." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "In other words, the sound you make can be recognized as 'noise' by others, so you may have to be careful then."
-          }
-        }
-      }
-    },
-    "지금 소리를 듣는 중이에요!" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "We’re hearing the noise now!"
+            "value" : "Moderate indoor noise heard in residential areas."
           }
         }
       }
@@ -1122,81 +907,77 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You’re doing great right now!"
-          }
-        }
-      }
-    },
-    "지속적인 소음 발생" : {
-      "comment" : "주의 지속 반복 푸시 알림 제목\n주의 지속 푸시 알림 제목",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Continuous noise detected"
+            "value" : "You're doing great right now!"
           }
         }
       }
     },
     "최대 소음 %lld 데시벨" : {
-
-    },
-    "최대 소음 | %lld dB" : {
-
-    },
-    "최대 소음이 뭔가요?" : {
-
-    },
-    "취소" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cancel"
+            "value" : "Maximum Noise: %lld Decibels"
+          }
+        }
+      }
+    },
+    "최대 소음 | %lld dB" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum Noise | %lld dB"
+          }
+        }
+      }
+    },
+    "최대 소음은 ‘양호’ 상태에서 낼 수 있는 가장 큰 소리예요. 그보다 더 큰 소리를 내면 시끄럽다고 느낄 수 있어요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The maximum noise is the loudest sound you can make while staying in the ‘Safe’ status. Louder sounds may feel noisy."
+          }
+        }
+      }
+    },
+    "최대 소음이 뭔가요?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What is the maximum noise?"
           }
         }
       }
     },
     "측정 기준부터 알림까지" : {
-
-    },
-    "측정 반경" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Metering Radius"
-          }
-        }
-      }
-    },
-    "측정 반경 | %@ m" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Metering Radius | %@ m"
+            "value" : "From Measurement to Notification"
           }
         }
       }
     },
     "측정 시작" : {
-
-    },
-    "측정 일시정지" : {
-
-    },
-    "측정 중이에요..." : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "In progress"
+            "value" : "Start Measurement"
+          }
+        }
+      }
+    },
+    "측정 일시정지" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause Measurement"
           }
         }
       }
@@ -1206,92 +987,132 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Press the button to resume metering"
-          }
-        }
-      }
-    },
-    "측정이 일시정지되었습니다." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The metering is paused.\n"
-          }
-        }
-      }
-    },
-    "측정하기" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start metering"
+            "value" : "Please restart the measurement."
           }
         }
       }
     },
     "큰 소리가 계속 들려요!" : {
-      "comment" : "위험 지속 반복 푸시 알림 내용"
+      "comment" : "위험 지속 반복 푸시 알림 내용",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loud noises continue to be detected!"
+          }
+        }
+      }
     },
     "큰 소리를 들었어요" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loud noise detected"
+          }
+        }
+      }
     },
     "큰 소리를 들었어요!" : {
-      "comment" : "위험 푸시 알림 내용"
+      "comment" : "위험 푸시 알림 내용",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loud noise detected!"
+          }
+        }
+      }
     },
     "탭하면 측정을 시작합니다." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to start measurement."
+          }
+        }
+      }
     },
-    "편하게 음악을 들어도 괜찮아요\n소음은 저희가 대신 들어드릴게요" : {
-
+    "탭해서 측정을 마치고 메인 뷰로 돌아갈 수 있습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to finish measurement and return to the main view."
+          }
+        }
+      }
+    },
+    "탭해서 측정을 멈추거나 다시 시작할 수 있습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to stop or restart the measurement."
+          }
+        }
+      }
+    },
+    "편하게 음악을 들어도 괜찮아요\n소음은 저희가 대신 들어 드릴게요" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feel free to enjoy your music. We'll handle the noise for you."
+          }
+        }
+      }
     },
     "평소 대화 소리나 가정에서의 일상 소음" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Everyday conversation sounds or typical household noise"
+            "value" : "Normal conversation or everyday household noise."
           }
         }
       }
     },
     "푸시 알림으로 빠른 안내" : {
-
-    },
-    "해당 거리에서 어떻게 들리는지\n계산해서 알려드릴게요" : {
-      "comment" : "측정 반경 입력 단계 보조 설명",
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We calculate and let you know how it sounds from that distance"
+            "value" : "Quick updates via push notifications."
           }
         }
       }
     },
     "현재 %lld 데시벨입니다." : {
-
-    },
-    "현재 내가 내고 있는 소리가 궁금하다면 이곳을 눌러주세요." : {
-
-    },
-    "화면을 덮고 사용해보세요!" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You can turn off the screen!"
+            "value" : "Currently %lld decibels."
+          }
+        }
+      }
+    },
+    "현재 내가 내는 소리가 궁금하다면 이곳을 눌러주세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap here if you're curious about your current noise level."
           }
         }
       }
     },
     "화면을 보지 않고도" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Without looking at the screen."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

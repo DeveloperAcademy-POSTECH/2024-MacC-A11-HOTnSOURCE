@@ -49,14 +49,13 @@ struct MeteringView: View {
     // MARK: Body
     var body: some View {
         ZStack {
-            VStack {
-                meteringCircles
-                    .hidden(!audioManager.isMetering)
-                
-                meteringPausedCircle
-                    .hidden(audioManager.isMetering)
-            }
-            .accessibilityHint(audioManager.isMetering ? "\(audioManager.userNoiseStatus) 상태를 \(audioManager.userNoiseStatus == .safe ? "초록색" : "분홍색")으로 나타내고 있습니다." : "일시정지된 상태입니다.")
+            meteringCircles
+                .hidden(!audioManager.isMetering)
+                .accessibilityHint("\(audioManager.userNoiseStatus) 상태를 \(audioManager.userNoiseStatus == .safe ? "초록색" : "분홍색")으로 나타내고 있습니다.")
+            
+            meteringPausedCircle
+                .hidden(audioManager.isMetering)
+                .accessibilityHint("일시정지된 상태입니다.")
             
             Text(audioManager.isMetering ? (audioManager.userNoiseStatus == .safe ? "양호" : "위험") : "멈춤")
                 .font(.title)
