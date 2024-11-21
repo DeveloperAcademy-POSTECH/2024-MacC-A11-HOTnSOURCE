@@ -28,6 +28,8 @@ struct LoadingView: View {
                 .font(.body)
                 .fontWeight(.bold)
                 .foregroundStyle(.gray)
+                .lineLimit(3, reservesSpace: true)
+                .multilineTextAlignment(.center)
             
             progressBar
             

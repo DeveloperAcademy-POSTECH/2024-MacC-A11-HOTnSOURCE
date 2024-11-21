@@ -368,22 +368,12 @@
         }
       }
     },
-    "멈춤" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stop"
-          }
-        }
-      }
-    },
     "반가워요!" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nice to meet you!"
+            "value" : "Welcome!"
           }
         }
       }
@@ -575,7 +565,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Worried about noise?"
+            "value" : "Worried about\nyour noise?"
           }
         }
       }
@@ -606,16 +596,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Get Started"
-          }
-        }
-      }
-    },
-    "시작해주세요" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Please start."
           }
         }
       }
@@ -656,16 +636,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Displays the noise status in real-time. By repeatedly tapping, you can check the changing decibel levels in real-time."
-          }
-        }
-      }
-    },
-    "아래 버튼을 눌러" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Press the button below to"
           }
         }
       }

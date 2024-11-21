@@ -17,8 +17,9 @@ struct MainView: View {
     // MARK: Body
     var body: some View {
         ZStack {
-            VStack(spacing: 20) {
+            VStack {
                 welcomeText
+                Spacer()
                 startButton
             }
             .padding()
@@ -35,21 +36,14 @@ struct MainView: View {
     
     // MARK: Subviews
     private var welcomeText: some View {
-        VStack {
-            VStack(spacing: 0) {
-                Text("반가워요!")
-                Text("소음이 걱정이신가요?")
-            }
-            .font(.title3)
-            .bold()
-            
-            VStack(spacing: 0) {
-                Text("아래 버튼을 눌러")
-                Text("시작해주세요")
-            }
-            .font(.subheadline)
-            .foregroundStyle(.gray)
+        VStack(spacing: 0) {
+            Text("반가워요!")
+            Text("소음이 걱정이신가요?")
+                .lineLimit(2, reservesSpace: true)
+                .multilineTextAlignment(.center)
         }
+        .font(.title3)
+        .bold()
     }
     
     private var startButton: some View {
