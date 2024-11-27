@@ -65,7 +65,7 @@ final class AudioManager: ObservableObject {
     init() throws {
         let settings: [String: Any] = [
             AVFormatIDKey: Int(kAudioFormatAppleLossless),
-            AVSampleRateKey: 44100.0,
+            AVSampleRateKey: 16000.0, // 최소 Sample Rate
             AVNumberOfChannelsKey: 1
         ]
 
