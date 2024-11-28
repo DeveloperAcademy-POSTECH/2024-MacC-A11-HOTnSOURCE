@@ -616,7 +616,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = ShhWatch;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Shh-!는 주변 소음 측정을 위해 마이크 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.hotnsource.Shh;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.hotnsource.shh-";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -647,7 +647,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = ShhWatch;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Shh-!는 주변 소음 측정을 위해 마이크 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.hotnsource.Shh;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.hotnsource.shh-";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
