@@ -853,6 +853,7 @@
       }
     },
     "주의" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

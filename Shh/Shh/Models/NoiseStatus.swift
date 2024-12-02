@@ -24,7 +24,7 @@ extension NoiseStatus {
         case .safe:
             return "양호"
         case .danger:
-            return "주의"
+            return "위험"
         case .paused:
             return "일시정지됨"
         }
